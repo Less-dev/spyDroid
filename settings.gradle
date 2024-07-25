@@ -1,2 +1,3 @@
 include ':vnc'
 rootProject.name = "spyDroid"
+include ':app'
