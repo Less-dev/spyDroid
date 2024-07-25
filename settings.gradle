@@ -1,2 +1,2 @@
-include ':app'
-rootProject.name = "droidVNC-NG"
+include ':vnc'
+rootProject.name = "spyDroid"
