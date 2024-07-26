@@ -120,13 +120,9 @@ public class MainActivity extends AppCompatActivity {
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 startForegroundService(intent);
-                Intent intentCompose = new Intent(MainActivity.this, net.christianbeier.droidvnc_ng.sockets.MainActivity.class);
-                startActivity(intentCompose);
 
             } else {
                 startService(intent);
-                Intent intentCompose = new Intent(MainActivity.this, net.christianbeier.droidvnc_ng.sockets.MainActivity.class);
-                startActivity(intentCompose);
             }
         });
 

@@ -52,28 +52,17 @@ android {
 }
 
 dependencies {
-    //-------------------COMPOSE----------------------------------
-    implementation("androidx.compose.compiler:compiler:1.1.1")
-    implementation("androidx.compose.runtime:runtime:1.1.1")
-    implementation("androidx.compose.ui:ui:1.1.1")
-    implementation("androidx.compose.foundation:foundation:1.1.1")
-    implementation("androidx.compose.material:material:1.1.1")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.activity:activity-compose:1.8.2")
-    implementation("com.squareup.okhttp3:logging-interceptor:4.9.3")
-
-    //------------------------------------------------------------
 
     implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("androidx.preference:preference:1.2.1")
+    implementation(libs.androidx.preference)
     implementation("androidx.core:core:1.12.0")
     implementation("com.google.android.material:material:1.10.0")
     implementation("androidx.compose.foundation:foundation-layout-android:1.5.4")
-    testImplementation("junit:junit:4.13.2")
+    testImplementation(libs.junit)
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.9.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.5.1")
+    implementation(libs.kotlinx.serialization.json)
 }
 
 repositories {
