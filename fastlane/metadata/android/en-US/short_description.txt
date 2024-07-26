@@ -1,1 +1,0 @@
-VNC server app that does not require root privileges.
