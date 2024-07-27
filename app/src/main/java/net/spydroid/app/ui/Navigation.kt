@@ -39,7 +39,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-
+import net.spydroid.feature.templates.TemplateButton
 
 
 @Composable
@@ -62,7 +62,7 @@ fun MainNavigation() {
 
                 NavHost(navController = navController, startDestination = "globalChat") {
 
-                    composable("globalChat") { Text("Hi")}
+                    composable("globalChat") { TemplateButton() }
                     // TODO: Add more destinations
                 }
             }

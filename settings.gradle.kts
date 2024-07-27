@@ -6,7 +6,9 @@ pluginManagement {
     }
 }
 
-include(":vnc")
 include(":app")
-rootProject.name = "spyDroid"
 include(":core-ui")
+include(":feature-vnc")
+include(":feature-templates")
+
+rootProject.name = "spyDroid"
