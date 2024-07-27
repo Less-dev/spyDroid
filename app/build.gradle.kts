@@ -53,7 +53,9 @@ android {
 
 
 dependencies {
+
     implementation(project(":vnc"))
+    implementation(project(":core-ui"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
@@ -75,4 +77,6 @@ dependencies {
 
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.androidx.test.ext.junit)
 }

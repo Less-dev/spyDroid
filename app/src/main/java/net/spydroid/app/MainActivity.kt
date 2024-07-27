@@ -15,6 +15,7 @@ import androidx.compose.ui.Modifier
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
+import net.spydroid.app.ui.MainNavigation
 import net.spydroid.app.ui.theme.SpyDroidTheme
 
 @Suppress("DEPRECATION")
@@ -28,9 +29,14 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Button(onClick = { startMainService() }) {
+                    /*
+                                        Button(onClick = { startMainService() }) {
                         Text(text = "Show Test")
                     }
+                     */
+
+                    MainNavigation()
+
                 }
             }
         }
