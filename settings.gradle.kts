@@ -9,3 +9,4 @@ pluginManagement {
 include(":vnc")
 include(":app")
 rootProject.name = "spyDroid"
+include(":core-ui")
