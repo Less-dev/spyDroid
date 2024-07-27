@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     /*
-                                        Button(onClick = { startMainService() }) {
+                    Button(onClick = { startMainService() }) {
                         Text(text = "Show Test")
                     }
                      */

@@ -12,7 +12,8 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core-ui" />
-            <option value="$PROJECT_DIR$/vnc" />
+            <option value="$PROJECT_DIR$/feature-templates" />
+            <option value="$PROJECT_DIR$/feature-vnc" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
