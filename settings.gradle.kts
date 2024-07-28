@@ -12,3 +12,5 @@ include(":feature-vnc")
 include(":feature-templates")
 
 rootProject.name = "spyDroid"
+include(":core-database")
+include(":core-data")
