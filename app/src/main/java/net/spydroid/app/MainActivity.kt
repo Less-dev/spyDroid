@@ -12,6 +12,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
+import dagger.hilt.android.AndroidEntryPoint
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
@@ -19,6 +20,7 @@ import net.spydroid.app.ui.MainNavigation
 import net.spydroid.app.ui.theme.SpyDroidTheme
 
 @Suppress("DEPRECATION")
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

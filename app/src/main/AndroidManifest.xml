@@ -43,7 +43,9 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.SpyDroid">
+        android:theme="@style/Theme.SpyDroid"
+        android:name=".App">
+
         <receiver android:name="net.christianbeier.droidvnc_ng.OnBootReceiver"
             android:exported="true">
             <intent-filter>
