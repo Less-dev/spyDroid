@@ -1,4 +1,4 @@
-package net.spydroid.feature.templates.testUI
+package net.spydroid.feature.templates.Sample.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,12 +15,12 @@ import net.spydroid.core.data.repository.ChatBubbleRepository
 import javax.inject.Inject
 
 @HiltViewModel
-class TestViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val chatBubbleRepository: ChatBubbleRepository
 ): ViewModel() {
 
     val chatBubbleUiState: StateFlow<ChatBubbleUiState> = chatBubbleRepository
-        .chatBubble.map<List<ChatBubbleImp>, ChatBubbleUiState> {ChatBubbleUiState.Success(data = it)}
+        .chatBubble.map<List<ChatBubbleImp>, ChatBubbleUiState> { ChatBubbleUiState.Success(data = it) }
         .catch { emit(ChatBubbleUiState.Error(it)) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ChatBubbleUiState.Loading)
 

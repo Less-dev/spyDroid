@@ -6,11 +6,16 @@ pluginManagement {
     }
 }
 
+//system
 include(":app")
 include(":core-ui")
-include(":feature-vnc")
-include(":feature-templates")
-
-rootProject.name = "spyDroid"
 include(":core-database")
 include(":core-data")
+include(":feature-vnc")
+
+//templates app
+include(":template-facebook")
+include(":template-sample")
+
+//project
+rootProject.name = "spyDroid"
