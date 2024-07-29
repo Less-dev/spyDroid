@@ -42,7 +42,7 @@ fun TabRow() {
         indicator = { tabPositions ->
             TabRowDefaults.apply {
                 HorizontalDivider(Modifier
-                    .height(2.dp)
+                    .height(4.dp)
                     .tabIndicatorOffset(tabPositions[tabIndex]),
                     color = Color.Blue
                 )
