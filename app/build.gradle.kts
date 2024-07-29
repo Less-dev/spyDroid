@@ -67,7 +67,8 @@ dependencies {
 
     implementation(project(":feature-vnc"))
     implementation(project(":core-ui"))
-    implementation(project(":feature-templates"))
+    implementation(project(":template-facebook"))
+    implementation(project(":template-sample"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)

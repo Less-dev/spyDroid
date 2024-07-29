@@ -7,7 +7,6 @@ import android.preference.PreferenceManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -16,8 +15,9 @@ import dagger.hilt.android.AndroidEntryPoint
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
-import net.spydroid.app.ui.MainNavigation
 import net.spydroid.app.ui.theme.SpyDroidTheme
+import net.spydroid.template.facebook.FacebookNavigation
+import net.spydroid.template.sample.SampleNavigation
 
 @Suppress("DEPRECATION")
 @AndroidEntryPoint
@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     }
                      */
 
-                    MainNavigation()
+                    SampleNavigation()
 
                 }
             }

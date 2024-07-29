@@ -1,4 +1,4 @@
-package net.spydroid.feature.templates.testUI
+package net.spydroid.template.facebook.presentation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -22,31 +21,13 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import net.spydroid.core.data.models.ChatBubbleImp
 
 @Composable
-fun TestUI(testViewModel: TestViewModel = hiltViewModel()) {
+internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
 
-    val users = testViewModel.chatBubbleUiState.collectAsState().value
-
-    /*
-        LaunchedEffect(Unit) {
-        this.launch(Dispatchers.IO) {
-            testViewModel.insertUser(
-                ChatBubbleImp(
-                    userName = "uot;Less",
-                    description ="Hi, i like a music",
-                    dateTime = "19:00",
-                    contentType = "file"
-                )
-            )
-        }
-    }
-     */
+    val users = homeViewModel.chatBubbleUiState.collectAsState().value
 
     when (users) {
         is ChatBubbleUiState.Error -> {
@@ -66,7 +47,7 @@ fun TestUI(testViewModel: TestViewModel = hiltViewModel()) {
 }
 
 @Composable
-fun ViewUsers(users: List<ChatBubbleImp>) {
+private fun ViewUsers(users: List<ChatBubbleImp>) {
     Box(
         modifier = Modifier
             .fillMaxSize()
