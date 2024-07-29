@@ -2,6 +2,7 @@ package net.spydroid.template.facebook
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,6 +27,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import net.spydroid.template.facebook.components.tabs.TabRow
 import net.spydroid.template.facebook.presentation.HomeScreen
 
 @Composable
@@ -34,7 +36,13 @@ fun FacebookNavigation() {
     val navController = rememberNavController()
 
     Scaffold(
-        topBar = { TopAppBarNavigation(title = "view") },
+        topBar = {
+            Column {
+                TopAppBarNavigation(title = "view")
+                TabRow()
+            }
+            
+        },
         bottomBar = { BottomAppNavigation(navController = navController, view = "view") }
     ) {
         Surface(

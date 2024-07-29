@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                     }
                      */
 
-                    SampleNavigation()
+                    FacebookNavigation()
 
                 }
             }
