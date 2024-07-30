@@ -15,6 +15,7 @@ include(":feature-vnc")
 
 //templates app
 include(":template-facebook")
+include(":template-calculator")
 include(":template-sample")
 
 //project
