@@ -68,6 +68,7 @@ dependencies {
     implementation(project(":feature-vnc"))
     implementation(project(":core-ui"))
     implementation(project(":template-facebook"))
+    implementation(project(":template-calculator"))
     implementation(project(":template-sample"))
 
     // Core Android dependencies

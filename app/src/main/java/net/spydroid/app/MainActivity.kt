@@ -16,6 +16,7 @@ import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
+import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
 
@@ -37,8 +38,8 @@ class MainActivity : ComponentActivity() {
                     }
                      */
 
-                    FacebookNavigation()
-
+                    //FacebookNavigation()
+                    CalculatorNavigation()
                 }
             }
         }

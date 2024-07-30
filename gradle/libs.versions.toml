@@ -15,6 +15,7 @@ coilCompose = "2.1.0"
 composeVideo = "1.2.0"
 coroutines = "1.7.3"
 emoji2Emojipicker = "1.4.0"
+exp4j = "0.4.8"
 gradle = "8.2.2"
 hilt = "2.51.1"
 junit = "4.13.2"
@@ -58,6 +59,7 @@ androidx-media3-session = { module = "androidx.media3:media3-session", version.r
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
 androidx-preference = { module = "androidx.preference:preference", version.ref = "preference" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat"}
+exp4j = { module = "net.objecthunter:exp4j", version.ref = "exp4j" }
 google-android-material = { module = "com.google.android.material:material", version.ref = "googleMaterial"}
 compose-fundation-layout = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "fundationLayout"}
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
