@@ -74,13 +74,13 @@ private fun TextFieldCalculator(text: String) {
         modifier = Modifier
             .fillMaxWidth(1f)
             .clip(RoundedCornerShape(15.dp))
-            .height(60.dp)
-            .background(color = Color.Gray.copy(alpha = 0.85f))
+            .height(80.dp)
+            .background(color = Color.Transparent)
     ) {
         Text(
             text = text,
             style = TextStyle(
-                fontSize = 25.sp,
+                fontSize = 30.sp,
                 fontWeight = FontWeight.ExtraBold,
                 color = if (text != CONSTANTS.MATH_ERROR) Color.White.copy(alpha = 0.85F) else Color.Red
             ),

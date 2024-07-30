@@ -1,6 +1,7 @@
 package net.spydroid.template.calculator.components
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.size
@@ -29,6 +30,7 @@ internal fun IconNumber(
         modifier = Modifier
             .size(80.dp)
             .clip(CircleShape)
+            .border(width = 2.dp, color = Color(0x61FFADAD), shape = CircleShape)
             .background(color = color)
             .clickable { onClick() },
         contentAlignment = Alignment.Center

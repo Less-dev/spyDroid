@@ -10,7 +10,7 @@ object OPERATIONS {
     const val DEL = "DEL"
     const val PERCENT = "%"
     const val DIVIDER = "÷"
-    const val MULTIPLY = "X"
+    const val MULTIPLY = "x"
     const val LESS = "-"
     const val MORE = "+"
     const val POINT = "."
