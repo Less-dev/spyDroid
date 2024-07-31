@@ -21,6 +21,6 @@ import androidx.compose.runtime.Composable
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-fun ObjetivScreen(objetiveViewModel: ObjetiveViewModel = viewModel()) {
+fun ObjetiveScreen(objetiveViewModel: ObjetiveViewModel = viewModel()) {
     
 }
