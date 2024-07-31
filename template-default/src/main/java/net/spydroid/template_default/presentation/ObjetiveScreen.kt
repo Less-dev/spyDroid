@@ -15,16 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.app
+package net.spydroid.template_default.presentation
 
-/*
-*   Names of app templates
-*
-* 0) default
-* 1) facebook
-* 2) calculator
-* 3) sample
-*
- */
+import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 
-internal val template_app = "default"
+@Composable
+fun ObjetivScreen(objetiveViewModel: ObjetiveViewModel = viewModel()) {
+    
+}

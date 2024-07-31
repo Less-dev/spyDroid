@@ -16,6 +16,7 @@
             <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/feature-vnc" />
             <option value="$PROJECT_DIR$/template-calculator" />
+            <option value="$PROJECT_DIR$/template-default" />
             <option value="$PROJECT_DIR$/template-facebook" />
             <option value="$PROJECT_DIR$/template-sample" />
           </set>

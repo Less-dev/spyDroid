@@ -15,16 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.app
+package net.spydroid.template_default.presentation
 
-/*
-*   Names of app templates
-*
-* 0) default
-* 1) facebook
-* 2) calculator
-* 3) sample
-*
- */
+import androidx.lifecycle.ViewModel
 
-internal val template_app = "default"
+class ObjetiveViewModel: ViewModel() {
+}

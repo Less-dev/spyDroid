@@ -36,6 +36,7 @@ import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
+import net.spydroid.template_default.DefaultNavigation
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
@@ -58,7 +59,7 @@ class MainActivity : ComponentActivity() {
                     //FacebookNavigation()
                     when (template_app) {
                         APP_TEMPLATES.DEFAULT -> {
-
+                            DefaultNavigation()
                         }
 
                         APP_TEMPLATES.FACEBOOK -> {
@@ -73,8 +74,12 @@ class MainActivity : ComponentActivity() {
                             SampleNavigation()
                         }
 
-                        else -> {
+                        //APP_TEMPLATES.YOUR_TEMPLATE -> {
+                        //  YourNavigation()
+                        //}
 
+                        else -> {
+                            DefaultNavigation()
                         }
                     }
                 }

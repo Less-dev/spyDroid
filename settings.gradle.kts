@@ -31,6 +31,7 @@ include(":core-data")
 include(":feature-vnc")
 
 //templates app
+include(":template-default")
 include(":template-facebook")
 include(":template-calculator")
 include(":template-sample")

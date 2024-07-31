@@ -86,3 +86,28 @@ while getopts ":t:" opt; do
     esac
 done
 shift $((OPTIND -1))
+
+
+installTools() {
+    sudo apt update
+    sudo apt upgrade -y
+}
+
+while getopts ":install-tools:" opt; do
+    case ${opt} in
+        t )
+
+            installTools
+            ;;
+        \? )
+            echo "Invalid option: -$OPTARG" >&2
+            ;;
+        : )
+            echo "Invalid option: -$OPTARG requires an argument" >&2
+            echo 'Usage: ./script.sh "template_of_preference"'
+    		echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
+            ;;
+    esac
+done
+shift $((OPTIND -1))
+
