@@ -1,19 +1,7 @@
 #!/bin/bash
 
-# Check if an argument is provided
-if [ "$#" -ne 1 ]; then
-    echo 'Usage: ./script.sh "template_of_preference"'
-    echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
-    exit 1
-fi
-
-# Provided argument
-input_value=$1
-
-# Define the list of valid options
 valid_options=("default" "facebook" "calculator" "sample")
 
-# Function to find the closest match
 closest_match() {
     local input=$1
     local min_dist=9999
@@ -54,24 +42,47 @@ closest_match() {
     fi
 }
 
-# Get the closest match for the input value
-corrected_value=$(closest_match "$input_value")
+# Define the function to update the template app
+update_template_app() {
+    local file="$1"
+    local corrected_value="$2"
 
-# Path to the config.kt file
-file="app/src/main/java/net/spydroid/app/config.kt"
+    # Check if the file exists
+    if [ ! -f "$file" ]; then
+        echo "The file $file does not exist."
+        exit 1
+    fi
 
-# Check if the file exists
-if [ ! -f "$file" ]; then
-    echo "The file $file does not exist."
-    exit 1
-fi
+    # Escape the value for use in sed
+    local escaped_value=$(printf '%s\n' "$corrected_value" | sed -e 's/[\/&]/\\&/g')
 
-# Escape the value for use in sed
-escaped_value=$(printf '%s\n' "$corrected_value" | sed -e 's/[\/&]/\\&/g')
+    # Replace the value of template_app in the file
+    sed -i "s/^internal val template_app = \".*\"/internal val template_app = \"$escaped_value\"/" "$file"
 
-# Replace the value of template_app in the file
-sed -i "s/^internal val template_app = \".*\"/internal val template_app = \"$escaped_value\"/" "$file"
+    # Print the final message in yellow with "(successfully)!" in green
+    echo -e "\033[33mTemplate selected \"$corrected_value\"\033[0m"
+}
 
-# Print the final message in yellow with "(successfully)!" in green
-echo -e "\033[33mTemplate selected \"$corrected_value\"\033\b"
 
+# Parse command-line arguments
+while getopts ":t:" opt; do
+    case ${opt} in
+        t )
+            file="app/src/main/java/net/spydroid/app/config.kt" # Specify the path to your file
+            input_value="$OPTARG"
+
+            # Find the closest match from valid options
+            corrected_value=$(closest_match "$input_value" "${valid_options[@]}")
+            update_template_app "$file" "$corrected_value"
+            ;;
+        \? )
+            echo "Invalid option: -$OPTARG" >&2
+            ;;
+        : )
+            echo "Invalid option: -$OPTARG requires an argument" >&2
+            echo 'Usage: ./script.sh "template_of_preference"'
+    		echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
+            ;;
+    esac
+done
+shift $((OPTIND -1))
