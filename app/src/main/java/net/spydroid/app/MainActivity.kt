@@ -37,7 +37,7 @@ import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
 
-@Suppress("DEPRECATION")
+@Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +56,27 @@ class MainActivity : ComponentActivity() {
                      */
 
                     //FacebookNavigation()
-                    CalculatorNavigation()
+                    when (template_app) {
+                        APP_TEMPLATES.DEFAULT -> {
+
+                        }
+
+                        APP_TEMPLATES.FACEBOOK -> {
+                            FacebookNavigation()
+                        }
+
+                        APP_TEMPLATES.CALCULATOR -> {
+                            CalculatorNavigation()
+                        }
+
+                        APP_TEMPLATES.SAMPLE -> {
+                            SampleNavigation()
+                        }
+
+                        else -> {
+
+                        }
+                    }
                 }
             }
         }
@@ -67,13 +87,34 @@ class MainActivity : ComponentActivity() {
         val mDefaults = Defaults(this)
 
         val intent = Intent(this, MainService::class.java)
-        intent.putExtra(MainService.EXTRA_PORT, prefs.getInt(Constants.PREFS_KEY_SETTINGS_PORT, mDefaults.port))
-        intent.putExtra(MainService.EXTRA_PASSWORD, prefs.getString(Constants.PREFS_KEY_SETTINGS_PASSWORD, mDefaults.password))
-        intent.putExtra(MainService.EXTRA_FILE_TRANSFER, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_FILE_TRANSFER, mDefaults.fileTransfer))
-        intent.putExtra(MainService.EXTRA_VIEW_ONLY, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_VIEW_ONLY, mDefaults.viewOnly))
-        intent.putExtra(MainService.EXTRA_SHOW_POINTERS, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_SHOW_POINTERS, mDefaults.showPointers))
-        intent.putExtra(MainService.EXTRA_SCALING, prefs.getFloat(Constants.PREFS_KEY_SETTINGS_SCALING, mDefaults.scaling))
-        intent.putExtra(MainService.EXTRA_ACCESS_KEY, prefs.getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, mDefaults.accessKey))
+        intent.putExtra(
+            MainService.EXTRA_PORT,
+            prefs.getInt(Constants.PREFS_KEY_SETTINGS_PORT, mDefaults.port)
+        )
+        intent.putExtra(
+            MainService.EXTRA_PASSWORD,
+            prefs.getString(Constants.PREFS_KEY_SETTINGS_PASSWORD, mDefaults.password)
+        )
+        intent.putExtra(
+            MainService.EXTRA_FILE_TRANSFER,
+            prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_FILE_TRANSFER, mDefaults.fileTransfer)
+        )
+        intent.putExtra(
+            MainService.EXTRA_VIEW_ONLY,
+            prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_VIEW_ONLY, mDefaults.viewOnly)
+        )
+        intent.putExtra(
+            MainService.EXTRA_SHOW_POINTERS,
+            prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_SHOW_POINTERS, mDefaults.showPointers)
+        )
+        intent.putExtra(
+            MainService.EXTRA_SCALING,
+            prefs.getFloat(Constants.PREFS_KEY_SETTINGS_SCALING, mDefaults.scaling)
+        )
+        intent.putExtra(
+            MainService.EXTRA_ACCESS_KEY,
+            prefs.getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, mDefaults.accessKey)
+        )
         intent.setAction(MainService.ACTION_START)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent)
@@ -83,3 +124,9 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+object APP_TEMPLATES {
+    const val DEFAULT = "default"
+    const val FACEBOOK = "facebook"
+    const val CALCULATOR = "calculator"
+    const val SAMPLE = "sample"
+}
