@@ -147,7 +147,7 @@ private sealed class Screens(
     val content: @Composable () -> Unit
 ) {
     private data object HOME : Screens(
-        icon = R.drawable.home_ic,
+        icon = R.drawable.toto_list_ic,
         title = TITLES.HOME,
         route = ROUTES.HOME,
         content = {

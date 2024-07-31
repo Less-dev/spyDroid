@@ -39,6 +39,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.spydroid.core.data.models.ChatBubbleImp
+import net.spydroid.template.facebook.components.post.Post
 
 @Composable
 internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
@@ -46,7 +47,8 @@ internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
     val users = homeViewModel.chatBubbleUiState.collectAsState().value
 
-    when (users) {
+    /*
+        when (users) {
         is ChatBubbleUiState.Error -> {
 
         }
@@ -59,6 +61,11 @@ internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
             val data = users.data
             ViewUsers(users = data)
         }
+    }
+     */
+
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
+        Post()
     }
 
 }
