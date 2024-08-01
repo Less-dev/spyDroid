@@ -17,6 +17,7 @@
 
 package net.spydroid.template.facebook.presentation
 
+import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background
@@ -34,18 +35,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.spydroid.core.data.models.ChatBubbleImp
 import net.spydroid.template.facebook.components.post.Post
+import net.spydroid.template.facebook.components.whatYouThink.WhatDoYouThink
 
 @Composable
 internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
 
+    val context = LocalContext.current
     val users = homeViewModel.chatBubbleUiState.collectAsState().value
+    val textWhatDoYouThink = homeViewModel.textWhatDoYouThink.collectAsState().value
 
     /*
         when (users) {
@@ -64,8 +69,15 @@ internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
     }
      */
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center){
-        Post()
+    Box(modifier = Modifier.fillMaxSize()) {
+        Column {
+            WhatDoYouThink(
+                valueTextField = textWhatDoYouThink,
+                onChangeValue = { homeViewModel.addTextToWhatDoYouThink(it) }) {
+                Toast.makeText(context, "Abriendo galería", Toast.LENGTH_SHORT).show()
+            }
+            Post()
+        }
     }
 
 }
