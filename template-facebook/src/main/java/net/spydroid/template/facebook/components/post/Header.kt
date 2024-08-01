@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import net.spydroid.template.facebook.R
 
 @Composable
-fun Header() {
+internal fun Header() {
     Row(
         Modifier
             .fillMaxWidth(1F)

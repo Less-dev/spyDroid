@@ -18,9 +18,10 @@ fun Post() {
             .padding(4.dp)
             .background(color = Color.White.copy(alpha = 0.95F))
     ) {
-        Column {
+        Column(modifier = Modifier.padding(top = 8.dp)) {
             Header()
             ContentPost()
+            Bottom()
         }
     }
 }
