@@ -20,14 +20,21 @@ package net.spydroid.template.facebook.components.post
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import net.spydroid.template.facebook.R
 
 
@@ -41,7 +48,7 @@ internal object REACTIONS {
 }
 
 @Composable
-internal fun Likes(listReactions: List<String>? = null) {
+internal fun Likes(listReactions: List<String>? = null, likes: Int? = null) {
 
     val reactions = mapOf(
         REACTIONS.FAVORITE to R.drawable.favorite_ic,
@@ -52,18 +59,35 @@ internal fun Likes(listReactions: List<String>? = null) {
         REACTIONS.IMPORT to R.drawable.import_ic
     )
 
-    Row {
+    Row(verticalAlignment = Alignment.CenterVertically) {
         reactions.map { reaction ->
             listReactions?.map {
                 if (it == reaction.key) {
                     Image(
                         painter = painterResource(id = reaction.value),
                         contentDescription = null,
-                        modifier = Modifier.size(25.dp),
+                        modifier = Modifier.size(
+                            when (reaction.key) {
+                                REACTIONS.LIKE -> 29.5.dp
+                                REACTIONS.ANGRY -> 31.44.dp
+                                REACTIONS.FAVORITE -> 27.dp
+                                REACTIONS.SAD -> 29.dp
+                                else -> 21.5.dp
+                            }
+                        ),
                         contentScale = ContentScale.Crop,
                     )
                 }
             }
         }
+
+        Spacer(modifier = Modifier.width(5.dp))
+
+        Text(
+            text = "${likes ?: 0}",
+            style = TextStyle(color = Color.Black),
+            fontWeight = FontWeight.SemiBold,
+            fontSize = 14.sp
+        )
     }
 }

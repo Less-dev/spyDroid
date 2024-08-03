@@ -25,19 +25,26 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
 internal fun Bottom() {
-    Box(modifier = Modifier.fillMaxWidth()){
+    Box(modifier = Modifier.fillMaxWidth()) {
         Column {
             HorizontalDivider(color = Color.Gray.copy(alpha = 0.15F))
             Row(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
-                Likes(listReactions = listOf(REACTIONS.IMPORT, REACTIONS.ANGRY))
+                Likes(
+                    listReactions = listOf(
+                        REACTIONS.IMPORT,
+                        REACTIONS.ANGRY,
+                        REACTIONS.SAD
+                    )
+                )
                 Spacer(modifier = Modifier.weight(1F))
-                Shares()
+                Shares(modifier = Modifier.align(Alignment.Bottom).padding(5.dp))
             }
             HorizontalDivider(color = Color.Gray.copy(alpha = 0.15F))
 

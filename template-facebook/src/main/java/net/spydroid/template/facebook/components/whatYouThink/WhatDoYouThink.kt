@@ -33,6 +33,10 @@ internal fun WhatDoYouThink(
     onChangeValue: (String) -> Unit,
     onClickImage: () -> Unit
 ) {
+    HorizontalDivider(
+        color = Color.Gray.copy(alpha = 0.54F)
+    )
+
     Row(
         Modifier
             .fillMaxWidth()
@@ -53,9 +57,7 @@ internal fun WhatDoYouThink(
         }
     }
     HorizontalDivider(
-        color = Color.Gray.copy(alpha = 0.54F),
-        modifier = Modifier
-    )
+        color = Color.Gray.copy(alpha = 0.54F))
 }
 
 
