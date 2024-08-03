@@ -33,9 +33,7 @@ internal fun WhatDoYouThink(
     onChangeValue: (String) -> Unit,
     onClickImage: () -> Unit
 ) {
-    HorizontalDivider(
-        color = Color.Gray.copy(alpha = 0.54F)
-    )
+    HorizontalDivider(color = Color.Gray.copy(alpha = 0.54F))
 
     Row(
         Modifier
@@ -56,8 +54,7 @@ internal fun WhatDoYouThink(
             onClickImage()
         }
     }
-    HorizontalDivider(
-        color = Color.Gray.copy(alpha = 0.54F))
+    HorizontalDivider(color = Color.Gray.copy(alpha = 0.54F))
 }
 
 

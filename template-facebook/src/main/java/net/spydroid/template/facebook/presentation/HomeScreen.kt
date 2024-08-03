@@ -17,6 +17,7 @@
 
 package net.spydroid.template.facebook.presentation
 
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import net.spydroid.core.data.models.ChatBubbleImp
 import net.spydroid.template.facebook.components.post.Post
 import net.spydroid.template.facebook.components.whatYouThink.WhatDoYouThink
+import net.spydroid.template.facebook.models.POST
 
 @Composable
 internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
@@ -76,11 +78,36 @@ internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                 onChangeValue = { homeViewModel.addTextToWhatDoYouThink(it) }) {
                 Toast.makeText(context, "Abriendo galería", Toast.LENGTH_SHORT).show()
             }
-            Post()
+            Post(
+                data = POST(showShares = false)
+                ,
+                onClickOptionsHeader = {
+                    //todo
+                    todoTest(context, "Options Header")
+                },
+                onClickImagePost = {
+                    //todo
+                    todoTest(context, "Click ImagePost")
+                },
+                onClickLike = {
+                    //todo
+                    todoTest(context, "Click Like")
+                },
+                onClickComment = {
+                    //todo
+                    todoTest(context, "Click Comment")
+                },
+                onClickShares = {
+                    //todo
+                    todoTest(context, "Click Compartir")
+                })
         }
     }
 
 }
+
+private fun todoTest(context: Context, text: String) =
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 
 @Composable
 private fun ViewUsers(users: List<ChatBubbleImp>) {

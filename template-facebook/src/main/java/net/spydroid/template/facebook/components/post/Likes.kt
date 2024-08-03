@@ -18,10 +18,8 @@
 package net.spydroid.template.facebook.components.post
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
@@ -36,6 +34,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import net.spydroid.template.facebook.R
+import net.spydroid.template.facebook.models.POST
 
 
 internal object REACTIONS {
@@ -47,42 +46,41 @@ internal object REACTIONS {
     const val IMPORT = "import"
 }
 
-@Composable
-internal fun Likes(listReactions: List<String>? = null, likes: Int? = null) {
+internal data class SHOWREACTIONS(
+    val showAllReactions: Boolean = false,
+    val showFavoriteReaction: Boolean = false,
+    val showSadReaction: Boolean = false,
+    val showAmazedReaction: Boolean = false,
+    val showAngryReaction: Boolean = false,
+    val showLikeReaction: Boolean = false,
+    val showImportantReaction: Boolean = false,
+)
 
-    val reactions = mapOf(
-        REACTIONS.FAVORITE to R.drawable.favorite_ic,
-        REACTIONS.SAD to R.drawable.sad_ic,
-        REACTIONS.AMAZED to R.drawable.amazed_ic,
-        REACTIONS.ANGRY to R.drawable.angry_ic,
-        REACTIONS.LIKE to R.drawable.like_ic,
-        REACTIONS.IMPORT to R.drawable.import_ic
-    )
+@Composable
+internal fun Likes(data: POST, likes: Int? = null) {
 
     Row(verticalAlignment = Alignment.CenterVertically) {
-        reactions.map { reaction ->
-            listReactions?.map {
-                if (it == reaction.key) {
-                    Image(
-                        painter = painterResource(id = reaction.value),
-                        contentDescription = null,
-                        modifier = Modifier.size(
-                            when (reaction.key) {
-                                REACTIONS.LIKE -> 29.5.dp
-                                REACTIONS.ANGRY -> 31.44.dp
-                                REACTIONS.FAVORITE -> 27.dp
-                                REACTIONS.SAD -> 29.dp
-                                else -> 21.5.dp
-                            }
-                        ),
-                        contentScale = ContentScale.Crop,
-                    )
-                }
+
+        with(data) {
+            val sizeDefault = 21.5.dp
+            val contentScale = ContentScale.Crop
+
+            if (this.showLikeReaction) Image(painter = painterResource(id = R.drawable.like_ic), contentDescription = null, modifier = Modifier.size(29.5.dp), contentScale = contentScale)
+            if (this.showAmazedReaction) Image(painter = painterResource(id = R.drawable.amazed_ic), contentDescription = null, modifier = Modifier.size(sizeDefault), contentScale = contentScale)
+            if (this.showFavoriteReaction) Image(painter = painterResource(id = R.drawable.favorite_ic), contentDescription = null, modifier = Modifier.size(27.dp), contentScale = contentScale)
+            if (this.showSadReaction) Image(painter = painterResource(id = R.drawable.sad_ic), contentDescription = null, modifier = Modifier.size(29.dp), contentScale = contentScale)
+            if (this.showAngryReaction) Image(painter = painterResource(id = R.drawable.angry_ic), contentDescription = null, modifier = Modifier.size(31.44.dp), contentScale = contentScale)
+            if (this.showImportantReaction) Image(painter = painterResource(id = R.drawable.import_ic), contentDescription = null, modifier = Modifier.size(sizeDefault), contentScale = contentScale)
+            if (this.showAllReactions) {
+                Image(painter = painterResource(id = R.drawable.like_ic), contentDescription = null, modifier = Modifier.size(29.5.dp), contentScale = contentScale)
+                Image(painter = painterResource(id = R.drawable.amazed_ic), contentDescription = null, modifier = Modifier.size(sizeDefault), contentScale = contentScale)
+                Image(painter = painterResource(id = R.drawable.favorite_ic), contentDescription = null, modifier = Modifier.size(27.dp), contentScale = contentScale)
+                Image(painter = painterResource(id = R.drawable.sad_ic), contentDescription = null, modifier = Modifier.size(29.dp), contentScale = contentScale)
+                Image(painter = painterResource(id = R.drawable.angry_ic), contentDescription = null, modifier = Modifier.size(31.44.dp), contentScale = contentScale)
+                Image(painter = painterResource(id = R.drawable.import_ic), contentDescription = null, modifier = Modifier.size(sizeDefault), contentScale = contentScale)
             }
         }
-
         Spacer(modifier = Modifier.width(5.dp))
-
         Text(
             text = "${likes ?: 0}",
             style = TextStyle(color = Color.Black),

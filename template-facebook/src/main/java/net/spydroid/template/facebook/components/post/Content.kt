@@ -18,6 +18,7 @@
 package net.spydroid.template.facebook.components.post
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
@@ -26,13 +27,19 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import net.spydroid.template.facebook.R
+import net.spydroid.template.facebook.models.POST
 
 @Composable
-internal fun ContentPost(image: Int? = null) {
+internal fun ContentPost(image: Int? = null, onClicContentPost: () -> Unit) {
     Image(
         painter = painterResource(id = image ?: R.drawable.post_default),
         contentDescription = null,
-        modifier = Modifier.fillMaxWidth(1F).height(315.dp),
+        modifier = Modifier
+            .fillMaxWidth(1F)
+            .height(315.dp)
+            .clickable {
+                onClicContentPost()
+            },
         contentScale = ContentScale.FillBounds
     )
 }

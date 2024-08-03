@@ -39,19 +39,27 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import net.spydroid.template.facebook.R
+import net.spydroid.template.facebook.models.POST
 
 @Composable
-internal fun Header() {
+internal fun Header(data: POST, options: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth(1F)
     ) {
-        ImageProfile(modifier = Modifier.align(Alignment.Top))
+        ImageProfile(
+            modifier = Modifier.align(Alignment.Top),
+            image = data.imageProfile
+        )
         Spacer(modifier = Modifier.width(4.dp))
-        NameAndHour(modifier = Modifier.align(Alignment.Top))
+        NameAndHour(
+            modifier = Modifier.align(Alignment.Top),
+            name = data.nameUser,
+            hour = data.hour
+        )
         Spacer(modifier = Modifier.weight(1F))
         Options {
-
+            options()
         }
     }
 }

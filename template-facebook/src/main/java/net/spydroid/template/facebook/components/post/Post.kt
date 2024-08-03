@@ -26,9 +26,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import net.spydroid.template.facebook.models.POST
 
 @Composable
-fun Post() {
+internal fun Post(
+    data: POST,
+    onClickOptionsHeader: () -> Unit,
+    onClickImagePost: () -> Unit,
+    onClickLike: () -> Unit,
+    onClickComment: () -> Unit,
+    onClickShares: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxWidth(1F)
@@ -36,9 +44,25 @@ fun Post() {
             .background(color = Color.White.copy(alpha = 0.95F))
     ) {
         Column(modifier = Modifier.padding(top = 8.dp)) {
-            Header()
-            ContentPost()
-            Bottom()
+
+            Header(data = data) {
+                onClickOptionsHeader()
+            }
+            ContentPost(image = data.content) {
+                onClickImagePost()
+            }
+            Bottom(
+                data = data,
+                onClickLike = {
+                    onClickLike()
+                },
+                onClickComment = {
+                    onClickComment()
+                },
+                onClickShares = {
+                    onClickShares()
+                }
+            )
         }
     }
 }

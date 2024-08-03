@@ -29,26 +29,48 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import net.spydroid.template.facebook.models.POST
 
 @Composable
-internal fun Bottom() {
+internal fun Bottom(
+    data: POST,
+    onClickLike: () -> Unit,
+    onClickComment: () -> Unit,
+    onClickShares: () -> Unit
+) {
+
+    var listOptions = mutableListOf<String>()
+
     Box(modifier = Modifier.fillMaxWidth()) {
         Column {
             HorizontalDivider(color = Color.Gray.copy(alpha = 0.15F))
             Row(modifier = Modifier.padding(horizontal = 15.dp, vertical = 10.dp)) {
                 Likes(
-                    listReactions = listOf(
-                        REACTIONS.IMPORT,
-                        REACTIONS.ANGRY,
-                        REACTIONS.SAD
-                    )
+                    data = data,
+                    likes = data.reactions
                 )
                 Spacer(modifier = Modifier.weight(1F))
-                Shares(modifier = Modifier.align(Alignment.Bottom).padding(5.dp))
+                Shares(
+                    modifier = Modifier
+                        .align(Alignment.Bottom)
+                        .padding(5.dp),
+                    shares = data.shares
+                )
             }
             HorizontalDivider(color = Color.Gray.copy(alpha = 0.15F))
 
-            OptionsPost(listOptions = listOf(OPTIONS.COMMENT, OPTIONS.LIKE, OPTIONS.SHARE))
+            OptionsPost(
+                data = data,
+                onClickLike = {
+                    onClickLike()
+                },
+                onClickComment = {
+                    onClickComment()
+                },
+                onClickShares = {
+                    onClickShares()
+                }
+            )
         }
     }
 }
