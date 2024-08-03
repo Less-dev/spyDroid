@@ -15,12 +15,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.template_default.presentation
+package net.spydroid.template.facebook.components.post
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 
 @Composable
-fun ObjetiveScreen(objetiveViewModel: ObjetiveViewModel = viewModel()) {
-    
+internal fun Shares(modifier: Modifier = Modifier, shares: Int? = null) {
+    Text(
+        text = if (shares != null) "$shares compartidos" else "", style = TextStyle(
+            color = Color.Black.copy(alpha = 0.65F)
+        ),
+        modifier = modifier
+    )
 }

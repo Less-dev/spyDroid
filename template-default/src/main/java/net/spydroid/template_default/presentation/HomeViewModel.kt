@@ -18,6 +18,38 @@
 package net.spydroid.template_default.presentation
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
+import net.spydroid.core.data.models.ChatBubbleImp
+import net.spydroid.core.data.repository.ChatBubbleRepository
+import javax.inject.Inject
 
-class HomeViewModel: ViewModel() {
+
+@HiltViewModel
+class HomeViewModel @Inject constructor(
+    private val chatBubbleRepository: ChatBubbleRepository
+) : ViewModel() {
+
+    private val _newTask = MutableStateFlow("")
+    val newTask: StateFlow<String> = _newTask
+
+    fun addNewTextToTask(text: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _newTask.value = text
+        }
+
+    fun createTask() =
+        viewModelScope.launch(Dispatchers.IO) {
+            chatBubbleRepository.insert(
+                ChatBubbleImp(
+                    userName = "",
+                    contentType = "",
+                    dateTime = ""
+                )
+            )
+        }
 }

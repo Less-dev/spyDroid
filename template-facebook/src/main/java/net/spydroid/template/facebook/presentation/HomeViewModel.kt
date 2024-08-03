@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -41,6 +42,8 @@ internal class HomeViewModel @Inject constructor(
         .catch { emit(ChatBubbleUiState.Error(it)) }
         .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5000), ChatBubbleUiState.Loading)
 
+    private val _textWhatDoYouThink = MutableStateFlow("")
+    val textWhatDoYouThink: StateFlow<String> = _textWhatDoYouThink
 
     fun insertUser(user: ChatBubbleImp) =
         viewModelScope.launch(Dispatchers.IO) {
@@ -57,6 +60,11 @@ internal class HomeViewModel @Inject constructor(
             chatBubbleRepository.delete(user)
         }
 
+
+    fun addTextToWhatDoYouThink(text: String) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _textWhatDoYouThink.value = text
+        }
 }
 
 sealed interface ChatBubbleUiState {

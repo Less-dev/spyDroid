@@ -50,6 +50,8 @@ import androidx.navigation.compose.rememberNavController
 import net.spydroid.template_default.presentation.HomeScreen
 import androidx.compose.material3.BottomAppBar
 import androidx.compose.ui.unit.dp
+import net.spydroid.template_default.presentation.AchievementScreen
+import net.spydroid.template_default.presentation.ObjetiveScreen
 
 @Composable
 fun DefaultNavigation() {
@@ -70,6 +72,7 @@ fun DefaultNavigation() {
                 screens.forEach { screen ->
                     composable(screen.route) {
                         title = screen.title
+                        screen.content()
                     }
                 }
             }
@@ -140,24 +143,34 @@ private object TITLES {
 private sealed class Screens(
     val icon: Int,
     val title: String,
-    val route: String
+    val route: String,
+    val content: @Composable () -> Unit
 ) {
     private data object HOME : Screens(
-        icon = R.drawable.home_ic,
+        icon = R.drawable.toto_list_ic,
         title = TITLES.HOME,
-        route = ROUTES.HOME
+        route = ROUTES.HOME,
+        content = {
+            HomeScreen()
+        }
     )
 
     private data object OBJETIVE : Screens(
         icon = R.drawable.objetive_ic,
         title = TITLES.OBJETIVE,
-        route = ROUTES.OBJETIVE
+        route = ROUTES.OBJETIVE,
+        content = {
+            ObjetiveScreen()
+        }
     )
 
     private data object ACHIEVEMENT : Screens(
         icon = R.drawable.achievement_ic,
         title = TITLES.ACHIEVEMENT,
-        route = ROUTES.ACHIEVEMENT
+        route = ROUTES.ACHIEVEMENT,
+        content = {
+            AchievementScreen()
+        }
     )
 
     companion object SCREENS {

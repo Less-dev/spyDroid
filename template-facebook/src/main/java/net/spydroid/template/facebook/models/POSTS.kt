@@ -15,12 +15,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.template_default.presentation
+package net.spydroid.template.facebook.models
 
-import androidx.compose.runtime.Composable
-import androidx.lifecycle.viewmodel.compose.viewModel
-
-@Composable
-fun ObjetiveScreen(objetiveViewModel: ObjetiveViewModel = viewModel()) {
-    
+internal interface POSTS {
+    val imageProfile: Int?
+    val name: String
+    val hour: String
+    val content: Int
+    val shares: Int?
+    val reactions: Int?
+    val showAllReactions: Boolean
+    val showFavoriteReaction: Boolean
+    val showSadReaction: Boolean
+    val showAmazedReaction: Boolean
+    val showAngryReaction: Boolean
+    val showLikeReaction: Boolean
+    val showImportantReaction: Boolean
+    val showLikes: Boolean
+    val showComments: Boolean
+    val showShares: Boolean
 }
