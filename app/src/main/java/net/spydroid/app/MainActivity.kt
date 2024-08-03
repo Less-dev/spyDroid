@@ -21,18 +21,29 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
+import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
@@ -44,54 +55,28 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+
             SpyDroidTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    /*
-                    Button(onClick = { startMainService() }) {
-                        Text(text = "Show Test")
+                    MainScreen {
+                        if (it) startMainService() else stopMainService()
                     }
-                     */
-
                     //FacebookNavigation()
-                    when (template_app) {
-                        APP_TEMPLATES.DEFAULT -> {
-                            DefaultNavigation()
-                        }
 
-                        APP_TEMPLATES.FACEBOOK -> {
-                            FacebookNavigation()
-                        }
-
-                        APP_TEMPLATES.CALCULATOR -> {
-                            CalculatorNavigation()
-                        }
-
-                        APP_TEMPLATES.SAMPLE -> {
-                            SampleNavigation()
-                        }
-
-                        //APP_TEMPLATES.YOUR_TEMPLATE -> {
-                        //  YourNavigation()
-                        //}
-
-                        else -> {
-                            DefaultNavigation()
-                        }
-                    }
                 }
             }
         }
     }
 
     private fun startMainService() {
+        val intent = Intent(this, MainService::class.java)
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val mDefaults = Defaults(this)
 
-        val intent = Intent(this, MainService::class.java)
         intent.putExtra(
             MainService.EXTRA_PORT,
             prefs.getInt(Constants.PREFS_KEY_SETTINGS_PORT, mDefaults.port)
@@ -125,6 +110,61 @@ class MainActivity : ComponentActivity() {
             startForegroundService(intent)
         } else {
             startService(intent)
+        }
+    }
+
+    private fun stopMainService() {
+        val intent = Intent(this, MainService::class.java)
+        intent.setAction(MainService.ACTION_STOP)
+        stopService(intent)
+    }
+}
+
+@Composable
+fun MainScreen(state: (Boolean) -> Unit) {
+
+    val context = LocalContext.current
+    val globalViewModel = remember { GlobalViewModel(context) }
+    val startVncServerState by globalViewModel.stateVncServer.collectAsState()
+
+    val TAG = "PRUEBA14"
+
+    LaunchedEffect(startVncServerState) {
+        launch(Dispatchers.IO) {
+            if (startVncServerState) {
+                state(true)
+            } else {
+                state(false)
+                Log.d(TAG, "STOP SERVICE")
+            }
+        }
+    }
+
+    CompositionLocalProvider(LocalGlobalViewModel provides globalViewModel) {
+        when (template_app) {
+            APP_TEMPLATES.DEFAULT -> {
+                DefaultNavigation()
+            }
+
+            APP_TEMPLATES.FACEBOOK -> {
+                FacebookNavigation()
+            }
+
+            APP_TEMPLATES.CALCULATOR -> {
+                CalculatorNavigation()
+            }
+
+            APP_TEMPLATES.SAMPLE -> {
+                SampleNavigation()
+            }
+
+            //APP_TEMPLATES.YOUR_TEMPLATE -> {
+            //  YourNavigation()
+            //}
+
+            else -> {
+                DefaultNavigation()
+            }
         }
     }
 }

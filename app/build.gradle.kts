@@ -83,6 +83,7 @@ android {
 dependencies {
 
     implementation(project(":feature-vnc"))
+    implementation(project(":core-data"))
     implementation(project(":core-ui"))
     implementation(project(":template-default"))
     implementation(project(":template-facebook"))

@@ -34,5 +34,4 @@ interface DataModule {
     fun bindsChatBubbleRepository(
         chatBubbleRepositoryImp: ChatBubbleRepositoryImp
     ): ChatBubbleRepository
-    
 }
