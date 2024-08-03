@@ -50,8 +50,7 @@ fun SampleNavigation() {
     val navController = rememberNavController()
 
     Scaffold(
-        topBar = { TopAppBarNavigation(title = "view") },
-        bottomBar = { BottomAppNavigation(navController = navController, view = "view") }
+        topBar = { TopAppBarNavigation(title = "VNC") },
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -62,9 +61,9 @@ fun SampleNavigation() {
                     .padding(it)
             ) {
 
-                NavHost(navController = navController, startDestination = "globalChat") {
+                NavHost(navController = navController, startDestination = "/home") {
 
-                    composable("globalChat") { HomeScreen() }
+                    composable("/home") { HomeScreen() }
                     // TODO: Add more destinations
                 }
             }
@@ -88,43 +87,8 @@ private fun TopAppBarNavigation(title: String) {
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
-            titleContentColor = Color.Black
+            containerColor = Color(0xFF460000),
+            titleContentColor = Color.White
         )
     )
-}
-
-
-@Composable
-private fun BottomAppNavigation(navController: NavHostController, view: String) {
-
-
-    BottomAppBar(
-        modifier = Modifier
-            .height(120.dp)
-            .systemBarsPadding(),
-        containerColor = Color.White,
-
-        ) {
-        LazyRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-
-        }
-    }
-}
-
-
-private sealed class Screens(
-    val route: String,
-    val icon: Int,
-    val title: String,
-    val index: Int
-) {
-
-
-    companion object {
-
-    }
 }

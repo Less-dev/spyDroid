@@ -59,12 +59,16 @@ android {
 dependencies {
 
     implementation(project(":core-database"))
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
+
+    //datastore
+    implementation(libs.androidx.datastore.preferences)
+
 
     // Arch Components
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
     implementation(libs.kotlinx.coroutines.android)
 
     // Local tests: jUnit, coroutines, Android runner
