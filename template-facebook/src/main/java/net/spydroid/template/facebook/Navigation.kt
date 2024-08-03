@@ -18,6 +18,7 @@
 package net.spydroid.template.facebook
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,8 +33,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
-import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -61,7 +62,7 @@ import net.spydroid.template.facebook.presentation.MarketplaceScreen
 import net.spydroid.template.facebook.presentation.MenuScreen
 import net.spydroid.template.facebook.presentation.NotificationsScreen
 import net.spydroid.template.facebook.presentation.ShortScreen
-import androidx.compose.material3.TabRow
+import net.spydroid.core.ui.R
 
 @Composable
 fun FacebookNavigation() {
@@ -72,7 +73,18 @@ fun FacebookNavigation() {
     Scaffold(
         topBar = {
             Column {
-                TopAppBarNavigation(title = "facebook")
+                TopAppBarNavigation(
+                    title = "facebook",
+                    onClickAdd = {
+                        //todo
+                    },
+                    onClickSearch = {
+                        //todo
+                    },
+                    onClickMessenger = {
+                        //todo
+                    }
+                )
                 TabRow(navHostController = navController)
             }
         }
@@ -106,7 +118,12 @@ fun FacebookNavigation() {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun TopAppBarNavigation(title: String) {
+private fun TopAppBarNavigation(
+    title: String,
+    onClickAdd: () -> Unit,
+    onClickSearch: () -> Unit,
+    onClickMessenger: () -> Unit
+) {
 
     TopAppBar(
         title = {
@@ -116,7 +133,7 @@ private fun TopAppBarNavigation(title: String) {
                     fontWeight = FontWeight.ExtraBold,
                     fontSize = 27.5.sp,
                     color = Color.Blue.copy(alpha = 0.85F),
-                    fontFamily = FontFamily(Font(R.raw.facebook_sansn_bold))
+                    fontFamily = FontFamily(Font(net.spydroid.template.facebook.R.raw.facebook_sansn_bold))
                 )
             )
         },
@@ -126,10 +143,18 @@ private fun TopAppBarNavigation(title: String) {
         ),
         actions = {
             val icons = listOf(R.drawable.add_ic, R.drawable.search_ic, R.drawable.messenger_ic)
-            icons.map {
+            icons.map { icon ->
                 Icon(
-                    painter = painterResource(id = it),
-                    modifier = Modifier.size(25.5.dp),
+                    painter = painterResource(id = icon),
+                    modifier = Modifier
+                        .size(25.5.dp)
+                        .clickable {
+                            when (icon) {
+                                R.drawable.add_ic -> onClickAdd()
+                                R.drawable.search_ic -> onClickSearch()
+                                R.drawable.messenger_ic -> onClickMessenger()
+                            }
+                        },
                     contentDescription = null,
                     tint = Color.Black
                 )
@@ -145,12 +170,12 @@ fun TabRow(navHostController: NavHostController) {
     var tabIndex by remember { mutableIntStateOf(0) }
 
     val tabs = listOf(
-        net.spydroid.core.ui.R.drawable.home_ic,
-        net.spydroid.core.ui.R.drawable.play_video_ic,
-        net.spydroid.core.ui.R.drawable.people_ic,
-        net.spydroid.core.ui.R.drawable.store_ic,
-        net.spydroid.core.ui.R.drawable.campaign_ic,
-        net.spydroid.core.ui.R.drawable.menu_ic
+        R.drawable.home_ic,
+        R.drawable.play_video_ic,
+        R.drawable.people_ic,
+        R.drawable.store_ic,
+        R.drawable.campaign_ic,
+        R.drawable.menu_ic
     )
     TabRow(selectedTabIndex = tabIndex, containerColor = Color.White,
         indicator = { tabPositions ->

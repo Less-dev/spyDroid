@@ -29,14 +29,16 @@ import net.spydroid.template.facebook.R
 
 @Composable
 internal fun WhatDoYouThink(
+    modifier: Modifier = Modifier,
     valueTextField: String,
+    onClickImageProfile: () -> Unit,
     onChangeValue: (String) -> Unit,
     onClickImage: () -> Unit
 ) {
     HorizontalDivider(color = Color.Gray.copy(alpha = 0.54F))
 
     Row(
-        Modifier
+        modifier
             .fillMaxWidth()
             .padding(10.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
@@ -44,7 +46,9 @@ internal fun WhatDoYouThink(
     ) {
 
 
-        ImageProfile()
+        ImageProfile {
+            onClickImageProfile()
+        }
 
         TextFieldTask(valueTextField) {
             onChangeValue(it)
@@ -59,13 +63,14 @@ internal fun WhatDoYouThink(
 
 
 @Composable
-private fun ImageProfile(image: Int? = null) {
+private fun ImageProfile(image: Int? = null, onClickImageProfile: () -> Unit) {
     Image(
         painter = painterResource(id = image ?: R.drawable.profile_default),
         contentDescription = null,
         modifier = Modifier
             .size(40.dp)
             .clip(CircleShape)
+            .clickable { onClickImageProfile() }
     )
 }
 

@@ -24,9 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 
 @Composable
-internal fun Shares(modifier: Modifier = Modifier, shares: String? = null) {
+internal fun Shares(modifier: Modifier = Modifier, shares: Int? = null) {
     Text(
-        text = "${shares ?: 5} compartidos", style = TextStyle(
+        text = if (shares != null) "$shares compartidos" else "", style = TextStyle(
             color = Color.Black.copy(alpha = 0.65F)
         ),
         modifier = modifier

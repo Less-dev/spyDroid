@@ -24,6 +24,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -42,13 +43,18 @@ import net.spydroid.template.facebook.R
 import net.spydroid.template.facebook.models.POST
 
 @Composable
-internal fun Header(data: POST, options: () -> Unit) {
+internal fun Header(data: POST, onClickImageProfile: () -> Unit, onClickOptions: () -> Unit) {
     Row(
         Modifier
             .fillMaxWidth(1F)
+            .padding(horizontal = 8.dp)
     ) {
         ImageProfile(
-            modifier = Modifier.align(Alignment.Top),
+            modifier = Modifier
+                .align(Alignment.Top)
+                .clickable {
+                    onClickImageProfile()
+                },
             image = data.imageProfile
         )
         Spacer(modifier = Modifier.width(4.dp))
@@ -59,7 +65,7 @@ internal fun Header(data: POST, options: () -> Unit) {
         )
         Spacer(modifier = Modifier.weight(1F))
         Options {
-            options()
+            onClickOptions()
         }
     }
 }

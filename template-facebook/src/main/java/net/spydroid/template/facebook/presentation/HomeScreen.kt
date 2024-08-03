@@ -17,10 +17,6 @@
 
 package net.spydroid.template.facebook.presentation
 
-import android.content.Context
-import android.widget.Toast
-import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -32,82 +28,89 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import net.spydroid.core.data.models.ChatBubbleImp
 import net.spydroid.template.facebook.components.post.Post
 import net.spydroid.template.facebook.components.whatYouThink.WhatDoYouThink
+import net.spydroid.template.facebook.data.PostImp
 import net.spydroid.template.facebook.models.POST
 
 @Composable
 internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
 
-    val context = LocalContext.current
-    val users = homeViewModel.chatBubbleUiState.collectAsState().value
     val textWhatDoYouThink = homeViewModel.textWhatDoYouThink.collectAsState().value
-
-    /*
-        when (users) {
-        is ChatBubbleUiState.Error -> {
-
-        }
-
-        is ChatBubbleUiState.Loading -> {
-
-        }
-
-        is ChatBubbleUiState.Success -> {
-            val data = users.data
-            ViewUsers(users = data)
-        }
-    }
-     */
+    val post = listOf(PostImp.POST_01, PostImp.POST_02, PostImp.POST_03)
 
     Box(modifier = Modifier.fillMaxSize()) {
-        Column {
-            WhatDoYouThink(
-                valueTextField = textWhatDoYouThink,
-                onChangeValue = { homeViewModel.addTextToWhatDoYouThink(it) }) {
-                Toast.makeText(context, "Abriendo galería", Toast.LENGTH_SHORT).show()
+
+        LazyColumn {
+
+            item {
+                WhatDoYouThink(
+                    modifier = Modifier.height(65.dp),
+                    valueTextField = textWhatDoYouThink,
+                    onClickImageProfile = {
+                        //todo
+                    },
+                    onChangeValue = { homeViewModel.addTextToWhatDoYouThink(it) }) {
+                    //todo
+                }
             }
-            Post(
-                data = POST(showShares = false)
-                ,
-                onClickOptionsHeader = {
-                    //todo
-                    todoTest(context, "Options Header")
-                },
-                onClickImagePost = {
-                    //todo
-                    todoTest(context, "Click ImagePost")
-                },
-                onClickLike = {
-                    //todo
-                    todoTest(context, "Click Like")
-                },
-                onClickComment = {
-                    //todo
-                    todoTest(context, "Click Comment")
-                },
-                onClickShares = {
-                    //todo
-                    todoTest(context, "Click Compartir")
-                })
+            items(post) {
+                Post(
+                    data = POST(
+                        imageProfile = it.imageProfile,
+                        hour = it.hour,
+                        nameUser = it.name,
+                        content = it.content,
+                        shares = it.shares,
+                        reactions = it.reactions,
+                        showAllReactions = it.showAllReactions,
+                        showLikeReaction = it.showLikeReaction,
+                        showSadReaction = it.showSadReaction,
+                        showAmazedReaction = it.showAmazedReaction,
+                        showAngryReaction = it.showAngryReaction,
+                        showImportantReaction = it.showImportantReaction,
+                        showFavoriteReaction = it.showFavoriteReaction,
+                        showShares = it.showShares,
+                        showComments = it.showComments,
+                        showLikes = it.showLikes
+                    ),
+                    onClickImageProfile = {
+                        //todo
+                    },
+                    onClickOptionsHeader = {
+                        //todo
+                    },
+                    onClickImagePost = {
+                        //todo
+                    },
+                    onClickLike = {
+                        //todo
+                    },
+                    onClickComment = {
+                        //todo
+                    },
+                    onClickShares = {
+                        //todo
+                    })
+                Spacer(modifier = Modifier.height(7.dp))
+            }
         }
     }
 
 }
 
-private fun todoTest(context: Context, text: String) =
-    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 
 @Composable
 private fun ViewUsers(users: List<ChatBubbleImp>) {

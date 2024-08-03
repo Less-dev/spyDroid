@@ -31,6 +31,7 @@ import net.spydroid.template.facebook.models.POST
 @Composable
 internal fun Post(
     data: POST,
+    onClickImageProfile: () -> Unit,
     onClickOptionsHeader: () -> Unit,
     onClickImagePost: () -> Unit,
     onClickLike: () -> Unit,
@@ -40,12 +41,11 @@ internal fun Post(
     Box(
         modifier = Modifier
             .fillMaxWidth(1F)
-            .padding(4.dp)
             .background(color = Color.White.copy(alpha = 0.95F))
     ) {
         Column(modifier = Modifier.padding(top = 8.dp)) {
 
-            Header(data = data) {
+            Header(data = data, onClickImageProfile = { onClickImageProfile() }) {
                 onClickOptionsHeader()
             }
             ContentPost(image = data.content) {

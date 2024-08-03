@@ -82,7 +82,7 @@ internal fun Likes(data: POST, likes: Int? = null) {
         }
         Spacer(modifier = Modifier.width(5.dp))
         Text(
-            text = "${likes ?: 0}",
+            text = "${likes ?: ""}",
             style = TextStyle(color = Color.Black),
             fontWeight = FontWeight.SemiBold,
             fontSize = 14.sp

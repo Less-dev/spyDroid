@@ -64,7 +64,7 @@ internal fun OptionsPost(
                 text = "Comentar",
                 onClick = { onClickComment() })
             if (showShares) Options(
-                icon = R.drawable.option_like,
+                icon = R.drawable.option_shares,
                 text = "Compartir",
                 onClick = { onClickShares() })
         }

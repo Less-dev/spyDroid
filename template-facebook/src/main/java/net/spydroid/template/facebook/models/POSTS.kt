@@ -17,21 +17,21 @@
 
 package net.spydroid.template.facebook.models
 
-internal data class POST(
-    val imageProfile: Int? = null,
-    val nameUser: String? = null,
-    val hour: String? = null,
-    val content: Int? = null,
-    val reactions: Int? = null,
-    val shares: Int? = null,
-    val showAllReactions: Boolean = false,
-    val showFavoriteReaction: Boolean = false,
-    val showSadReaction: Boolean = false,
-    val showAmazedReaction: Boolean = false,
-    val showAngryReaction: Boolean = false,
-    val showLikeReaction: Boolean = false,
-    val showImportantReaction: Boolean = false,
-    val showLikes: Boolean = true,
-    val showComments: Boolean = true,
-    val showShares: Boolean = true
-)
+internal interface POSTS {
+    val imageProfile: Int?
+    val name: String
+    val hour: String
+    val content: Int
+    val shares: Int?
+    val reactions: Int?
+    val showAllReactions: Boolean
+    val showFavoriteReaction: Boolean
+    val showSadReaction: Boolean
+    val showAmazedReaction: Boolean
+    val showAngryReaction: Boolean
+    val showLikeReaction: Boolean
+    val showImportantReaction: Boolean
+    val showLikes: Boolean
+    val showComments: Boolean
+    val showShares: Boolean
+}
