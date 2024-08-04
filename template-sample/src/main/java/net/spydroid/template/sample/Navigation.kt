@@ -17,15 +17,9 @@
 
 package net.spydroid.template.sample
 
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.systemBarsPadding
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -37,21 +31,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.template.sample.presentation.HomeScreen
 
 @Composable
 fun SampleNavigation() {
     val navController = rememberNavController()
+    val globalViewModel = LocalGlobalViewModel.current
 
     Scaffold(
-        topBar = { TopAppBarNavigation(title = "view") },
-        bottomBar = { BottomAppNavigation(navController = navController, view = "view") }
+        topBar = { TopAppBarNavigation(title = "VNC") },
     ) {
         Surface(
             modifier = Modifier.fillMaxSize()
@@ -62,9 +55,8 @@ fun SampleNavigation() {
                     .padding(it)
             ) {
 
-                NavHost(navController = navController, startDestination = "globalChat") {
-
-                    composable("globalChat") { HomeScreen() }
+                NavHost(navController = navController, startDestination = "/home") {
+                    composable("/home") { HomeScreen(globalViewModel = globalViewModel) }
                     // TODO: Add more destinations
                 }
             }
@@ -88,43 +80,8 @@ private fun TopAppBarNavigation(title: String) {
             )
         },
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = Color.White,
-            titleContentColor = Color.Black
+            containerColor = Color(0xFF460000),
+            titleContentColor = Color.White
         )
     )
-}
-
-
-@Composable
-private fun BottomAppNavigation(navController: NavHostController, view: String) {
-
-
-    BottomAppBar(
-        modifier = Modifier
-            .height(120.dp)
-            .systemBarsPadding(),
-        containerColor = Color.White,
-
-        ) {
-        LazyRow(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-
-        }
-    }
-}
-
-
-private sealed class Screens(
-    val route: String,
-    val icon: Int,
-    val title: String,
-    val index: Int
-) {
-
-
-    companion object {
-
-    }
 }
