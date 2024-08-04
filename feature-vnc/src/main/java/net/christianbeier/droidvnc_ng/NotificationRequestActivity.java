@@ -16,7 +16,7 @@ import androidx.preference.PreferenceManager;
 
 public class NotificationRequestActivity extends AppCompatActivity {
 
-    private static final String TAG = "NotificationRequestActivity";
+    private static final String TAG = "PERMISOS";
     private static final int REQUEST_POST_NOTIFICATION = 45;
     private static final String PREFS_KEY_POST_NOTIFICATION_PERMISSION_ASKED_BEFORE = "post_notification_permission_asked_before";
 
@@ -37,7 +37,8 @@ public class NotificationRequestActivity extends AppCompatActivity {
             final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
             if (!prefs.getBoolean(PREFS_KEY_POST_NOTIFICATION_PERMISSION_ASKED_BEFORE, false)) {
-                new AlertDialog.Builder(this)
+                /*
+                   new AlertDialog.Builder(this)
                         .setCancelable(false)
                         .setTitle(R.string.notification_title)
                         .setMessage(R.string.notification_msg)
@@ -47,7 +48,7 @@ public class NotificationRequestActivity extends AppCompatActivity {
                 SharedPreferences.Editor ed = prefs.edit();
                 ed.putBoolean(PREFS_KEY_POST_NOTIFICATION_PERMISSION_ASKED_BEFORE, true);
                 ed.apply();
-            } else {
+                 */
                 postResultAndFinish(false);
             }
         } else {
