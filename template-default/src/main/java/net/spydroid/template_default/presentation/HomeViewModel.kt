@@ -25,7 +25,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.models.ChatBubbleImp
-import net.spydroid.core.data.repository.ChatBubbleRepository
+import net.spydroid.core.data.domain.ChatBubbleRepository
 import javax.inject.Inject
 
 

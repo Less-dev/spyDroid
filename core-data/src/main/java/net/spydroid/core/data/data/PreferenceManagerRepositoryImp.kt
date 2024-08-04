@@ -15,25 +15,26 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.core.data.local
+package net.spydroid.core.data.data
 
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.compose.runtime.mutableStateOf
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
+import dagger.hilt.android.qualifiers.ApplicationContext
+import net.spydroid.core.data.domain.PreferenceManagerRepository
+import javax.inject.Inject
 
-class PreferencesManager(context: Context) {
+class PreferenceManagerRepositoryImp @Inject constructor(
+    @ApplicationContext private val context: Context
+) : PreferenceManagerRepository {
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("SpyDroidPrefs", Context.MODE_PRIVATE)
 
-    fun saveData(key: String, value: Boolean) {
+    override fun saveData(key: String, value: Boolean) {
         val editor = sharedPreferences.edit()
         editor.putBoolean(key, value)
         editor.apply()
     }
 
-    fun getData(key: String, defaultValue: Boolean = false): Boolean {
-        return sharedPreferences.getBoolean(key, defaultValue)
-    }
+    override fun getData(key: String, defaultValue: Boolean): Boolean =
+        sharedPreferences.getBoolean(key, defaultValue)
 }

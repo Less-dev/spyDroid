@@ -15,29 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.core.data.repository
+package net.spydroid.core.data.data
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import net.spydroid.core.data.domain.ChatBubbleRepository
 import net.spydroid.core.data.models.ChatBubbleImp
 import net.spydroid.core.database.daos.ChatBubble
 import net.spydroid.core.database.daos.ChatBubbleDao
 import javax.inject.Inject
-
-interface ChatBubbleRepository {
-    val chatBubble: Flow<List<ChatBubbleImp>>
-    suspend fun insert(
-        ChatBubbleImp: ChatBubbleImp
-    )
-
-    suspend fun update(
-        ChatBubbleImp: ChatBubbleImp
-    )
-
-    suspend fun delete(
-        ChatBubbleImp: ChatBubbleImp
-    )
-}
 
 class ChatBubbleRepositoryImp @Inject constructor(
     private val chatBubbleDao: ChatBubbleDao

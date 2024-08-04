@@ -29,7 +29,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.models.ChatBubbleImp
-import net.spydroid.core.data.repository.ChatBubbleRepository
+import net.spydroid.core.data.domain.ChatBubbleRepository
 import javax.inject.Inject
 
 @HiltViewModel
