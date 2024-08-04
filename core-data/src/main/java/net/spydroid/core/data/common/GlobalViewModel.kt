@@ -17,32 +17,31 @@
 
 package net.spydroid.core.data.common
 
-import android.content.Context
 import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import net.spydroid.core.data.local.PreferencesManager
-
+import net.spydroid.core.data.repository.PreferenceManagerRepository
+import javax.inject.Inject
 
 
 val LocalGlobalViewModel = compositionLocalOf<GlobalViewModel> { error("No GlobalViewModel found!") }
 
-class GlobalViewModel(
-    private val context: Context
+@HiltViewModel
+class GlobalViewModel  @Inject constructor(
+    private val preferenceManagerRepository: PreferenceManagerRepository
 ): ViewModel() {
 
-    private val preferencesManager = PreferencesManager(context)
-    private val _stateVncServer = MutableStateFlow(preferencesManager.getData("state"))
+    private val _stateVncServer = MutableStateFlow(preferenceManagerRepository.getData("state"))
     val stateVncServer: StateFlow<Boolean> = _stateVncServer
 
     fun changeValueVncServer(value: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
-            preferencesManager.saveData(key = "state", value = value)
+            preferenceManagerRepository.saveData(key = "state", value = value)
             _stateVncServer.value = value
         }
-
 }

@@ -17,12 +17,16 @@
 
 package net.spydroid.core.data.di
 
+import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import net.spydroid.core.data.repository.ChatBubbleRepository
 import net.spydroid.core.data.repository.ChatBubbleRepositoryImp
+import net.spydroid.core.data.repository.PreferenceManagerRepository
+import net.spydroid.core.data.repository.PreferenceManagerRepositoryImp
 import javax.inject.Singleton
 
 @Module
@@ -34,4 +38,11 @@ interface DataModule {
     fun bindsChatBubbleRepository(
         chatBubbleRepositoryImp: ChatBubbleRepositoryImp
     ): ChatBubbleRepository
+
+    @Binds
+    @Singleton
+    fun bindPreferenceManagerRepository(
+        preferenceManagerRepositoryImp: PreferenceManagerRepositoryImp
+    ): PreferenceManagerRepository
+
 }

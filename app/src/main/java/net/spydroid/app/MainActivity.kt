@@ -35,6 +35,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -121,10 +122,9 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(state: (Boolean) -> Unit) {
+fun MainScreen(globalViewModel: GlobalViewModel = hiltViewModel(),state: (Boolean) -> Unit) {
 
     val context = LocalContext.current
-    val globalViewModel = remember { GlobalViewModel(context) }
     val startVncServerState by globalViewModel.stateVncServer.collectAsState()
 
     val TAG = "PRUEBA14"
