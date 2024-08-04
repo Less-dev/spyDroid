@@ -15,24 +15,19 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.core.data.repository
+package net.spydroid.core.data.data
 
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
+import net.spydroid.core.data.domain.PreferenceManagerRepository
 import javax.inject.Inject
-
-interface PreferenceManagerRepository {
-    val sharedPreferences: SharedPreferences
-    fun saveData(key: String, value: Boolean)
-    fun getData(key: String, defaultValue: Boolean = false): Boolean
-}
 
 class PreferenceManagerRepositoryImp @Inject constructor(
     @ApplicationContext private val context: Context
 ) : PreferenceManagerRepository {
-    override val sharedPreferences: SharedPreferences
-        get() = context.getSharedPreferences("SpyDroidPrefs", Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("SpyDroidPrefs", Context.MODE_PRIVATE)
 
     override fun saveData(key: String, value: Boolean) {
         val editor = sharedPreferences.edit()

@@ -17,16 +17,14 @@
 
 package net.spydroid.core.data.di
 
-import android.content.Context
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
-import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import net.spydroid.core.data.repository.ChatBubbleRepository
-import net.spydroid.core.data.repository.ChatBubbleRepositoryImp
-import net.spydroid.core.data.repository.PreferenceManagerRepository
-import net.spydroid.core.data.repository.PreferenceManagerRepositoryImp
+import net.spydroid.core.data.data.ChatBubbleRepositoryImp
+import net.spydroid.core.data.data.PreferenceManagerRepositoryImp
+import net.spydroid.core.data.domain.ChatBubbleRepository
+import net.spydroid.core.data.domain.PreferenceManagerRepository
 import javax.inject.Singleton
 
 @Module

@@ -25,7 +25,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import net.spydroid.core.data.repository.PreferenceManagerRepository
+import net.spydroid.core.data.domain.PreferenceManagerRepository
 import javax.inject.Inject
 
 
