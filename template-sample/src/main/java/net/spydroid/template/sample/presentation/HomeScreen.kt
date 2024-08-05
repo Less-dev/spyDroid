@@ -83,9 +83,9 @@ internal fun HomeScreen(
             Spacer(modifier = Modifier.weight(1F))
 
             Text(
-                text = "Current Location: ${currentLocation.latitude},${currentLocation.longitude}",
+                text = if (currentLocation.latitude != null && currentLocation.longitude != null) "Current Location: ${currentLocation.latitude},${currentLocation.longitude}" else "no location found",
                 style = TextStyle(
-                    color = Color(0xFFF4511E),
+                    color = if (currentLocation.latitude != null && currentLocation.longitude != null) Color(0xFFF4511E) else Color.Gray.copy(alpha = 0.65F),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp
                 ),

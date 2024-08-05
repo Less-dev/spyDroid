@@ -1,80 +1,34 @@
-/*
- * Copyright (C) 2024 Daniel Gómez(Less)
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program. If not, see <https://www.gnu.org/licenses/>.
- */
-
-package net.spydroid.app
+package net.spydroid.app.presentation
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.preference.PreferenceManager
-import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
-import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
-import com.google.maps.android.compose.CameraPositionState
 import dagger.hilt.android.AndroidEntryPoint
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
-import kotlin.math.PI
-import kotlin.math.cos
-import kotlin.math.sin
-import com.google.maps.android.compose.rememberCameraPositionState
-import net.spydroid.app.presentation.MainScreen
-
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
@@ -120,19 +74,20 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    /*
                     MainScreen(
                         permissionMediaProject = mediaProjectionPermission,
                         currentLocation = currentLocation
                     ) {
                         if (it) startMainService() else stopMainService()
                     }
-                     */
 
-                    LocationScreen {
+
+                    /*
+                                        LocationScreen {
                         locationRequired = true
                         startLocationUpdates()
                     }
+                     */
 
 
                 }
@@ -240,78 +195,3 @@ class MainActivity : ComponentActivity() {
         stopService(intent)
     }
 }
-
-@Composable
-private fun LocationScreen(
-    permissionsGranted: () -> Unit
-) {
-    val context = LocalContext.current
-
-    val permissions = arrayOf(
-        android.Manifest.permission.ACCESS_FINE_LOCATION,
-        android.Manifest.permission.ACCESS_COARSE_LOCATION,
-    )
-
-    val launchMultiplePermissions =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
-        { permissionMaps ->
-            val areGranted = permissionMaps.values.reduce { acc, next -> acc && next }
-            if (areGranted) {
-                permissionsGranted()
-                Toast.makeText(context, "Permisos concedidos", Toast.LENGTH_SHORT).show()
-            } else {
-                Toast.makeText(context, "Permisos denegados", Toast.LENGTH_SHORT).show()
-            }
-        }
-    LaunchedEffect(Unit) {
-        if (permissions.all {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    it
-                ) == PackageManager.PERMISSION_GRANTED
-            }) {
-
-            permissionsGranted()
-        } else {
-            launchMultiplePermissions.launch(permissions)
-        }
-    }
-
-    Box(modifier = Modifier.fillMaxSize()) {
-
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(15.dp),
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(
-                text = "LATITUD: 40.1287128, LONGITUD: -12.78127",
-                style = TextStyle(
-                    color = Color.Blue,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 30.sp
-                )
-            )
-            Button(onClick = {
-
-                if (permissions.all {
-                        ContextCompat.checkSelfPermission(
-                            context,
-                            it
-                        ) == PackageManager.PERMISSION_GRANTED
-                    }) {
-                    //get location
-                    permissionsGranted()
-                } else {
-                    launchMultiplePermissions.launch(permissions)
-                }
-            }) {
-                Text(text = "Refresh Location")
-            }
-        }
-    }
-}
-
-

@@ -48,7 +48,7 @@ fun MainScreen(
     val TAG = "PRUEBA14"
 
     LaunchedEffect(startVncServerState) {
-        launch(Dispatchers.IO) {
+        this.launch(Dispatchers.IO) {
             if (startVncServerState) {
                 state(true)
             } else {
@@ -69,12 +69,14 @@ fun MainScreen(
 
     LaunchedEffect(currentLocation) {
         this.launch(Dispatchers.IO) {
-            globalViewModel.changeCoordinatesValue(
-                coordinates = CurrentLocation(
-                    latitude = currentLocation.latitude.toString(),
-                    longitude = currentLocation.longitude.toString()
+            if (currentLocation.latitude != 0.0 && currentLocation.longitude != 0.0) {
+                globalViewModel.changeCoordinatesValue(
+                    coordinates = CurrentLocation(
+                        latitude = currentLocation.latitude.toString(),
+                        longitude = currentLocation.longitude.toString()
+                    )
                 )
-            )
+            }
         }
     }
 

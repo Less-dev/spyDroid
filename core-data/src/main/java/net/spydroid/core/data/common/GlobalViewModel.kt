@@ -45,7 +45,7 @@ class GlobalViewModel  @Inject constructor(
     private val _privateIpAddress = MutableStateFlow("")
     val privateIpAddress: StateFlow<String> = _privateIpAddress
 
-    private val _currentLocation = MutableStateFlow(CurrentLocation("", ""))
+    private val _currentLocation = MutableStateFlow(CurrentLocation())
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
 
     fun changeValueVncServer(value: Boolean) =
