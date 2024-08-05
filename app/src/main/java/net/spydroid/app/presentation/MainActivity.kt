@@ -12,6 +12,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -37,11 +38,14 @@ import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
+import net.spydroid.core.data.common.GlobalViewModel
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+
+    private val globalViewModel: GlobalViewModel by viewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
     private var locationRequired: Boolean = false
@@ -54,6 +58,8 @@ class MainActivity : ComponentActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         setContent {
+
+
 
             var stateLocation by remember {
                  mutableStateOf(false)
@@ -86,20 +92,21 @@ class MainActivity : ComponentActivity() {
                     }
 
                     if (stateLocation){
-                        LocationScreen {
+                        LocationScreen(globalViewModel = globalViewModel) {
                             locationRequired = true
                             startLocationUpdates()
                         }
                     }
 
                     MainScreen(
+                        globalViewModel = globalViewModel,
                         permissionMediaProject = mediaProjectionPermission,
                         currentLocation = currentLocation,
                         stateVncServer = {
                             if (it) startMainService() else stopMainService()
                         },
                         stateLocation = {
-                            stateLocation = true
+                            stateLocation = it
                         }
                     )
                 }
@@ -210,6 +217,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun LocationScreen(
+    globalViewModel: GlobalViewModel,
     permissionsGranted: () -> Unit
 ) {
     val context = LocalContext.current
@@ -228,6 +236,7 @@ private fun LocationScreen(
                 Toast.makeText(context, "Permisos concedidos", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Permisos denegados", Toast.LENGTH_SHORT).show()
+                globalViewModel.changeStateLocation(false)
             }
         }
     LaunchedEffect(Unit) {

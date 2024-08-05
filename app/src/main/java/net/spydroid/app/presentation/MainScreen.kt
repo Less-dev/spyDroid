@@ -38,7 +38,7 @@ import net.spydroid.template_default.DefaultNavigation
 @Composable
 fun MainScreen(
     permissionMediaProject: Int,
-    globalViewModel: GlobalViewModel = hiltViewModel(),
+    globalViewModel: GlobalViewModel,
     currentLocation: LatLng,
     stateVncServer: (Boolean) -> Unit,
     stateLocation: (Boolean) -> Unit
