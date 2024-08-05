@@ -72,8 +72,6 @@ android {
 
 dependencies {
 
-    implementation(project(":core-data"))
-
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.preference)
     implementation(libs.androidx.core.ktx)

@@ -17,23 +17,29 @@
 
 package net.spydroid.template.sample.presentation
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
 
 @Composable
@@ -43,12 +49,21 @@ internal fun HomeScreen(
 ) {
 
     val startVncServerState by globalViewModel.stateVncServer.collectAsState()
+    val privateIpAddress by globalViewModel.privateIpAddress.collectAsState()
+    val context = LocalContext.current
+
+    LaunchedEffect(globalViewModel) {
+        this.launch(Dispatchers.IO) {
+            globalViewModel.get_private_ip_address()
+        }
+    }
 
     Box(modifier = Modifier.fillMaxSize()) {
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+
             Text(
                 text = "Server vnc state: $startVncServerState", style = TextStyle(
                     color = if (startVncServerState) Color.Green else Color.Red,
@@ -63,6 +78,20 @@ internal fun HomeScreen(
             }) {
                 Text(text = "Change state to ${if (startVncServerState) !startVncServerState else !startVncServerState}")
             }
+
+            Spacer(modifier = Modifier.weight(1F))
+
+            AnimatedVisibility (visible = startVncServerState) {
+                Text(
+                    text = "host: $privateIpAddress:5300", style = TextStyle(
+                        color = Color(0xFFA79000),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 20.sp
+                    ),
+                    modifier = Modifier.padding(bottom = 20.dp)
+                )
+            }
+
         }
     }
 }
