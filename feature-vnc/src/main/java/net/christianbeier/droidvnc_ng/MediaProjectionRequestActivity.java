@@ -31,10 +31,11 @@ import android.content.Intent;
 import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 public class MediaProjectionRequestActivity extends AppCompatActivity {
 
-    private static final String TAG = "MPRequestActivity";
+    private static final String TAG = "PERMISO_CAPTURA";
     private static final int REQUEST_MEDIA_PROJECTION = 42;
 
     @Override
@@ -57,6 +58,7 @@ public class MediaProjectionRequestActivity extends AppCompatActivity {
         if (requestCode == REQUEST_MEDIA_PROJECTION) {
             if (resultCode != Activity.RESULT_OK)
                 Log.i(TAG, "User cancelled");
+                //Toast.makeText(this, "Usuario canceló permiso", Toast.LENGTH_SHORT).show();
             else
                 Log.i(TAG, "User acknowledged");
 

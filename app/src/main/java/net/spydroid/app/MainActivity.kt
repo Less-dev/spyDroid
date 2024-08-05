@@ -22,6 +22,7 @@ import android.os.Build
 import android.os.Bundle
 import android.preference.PreferenceManager
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -32,7 +33,10 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,7 +57,10 @@ import net.spydroid.template_default.DefaultNavigation
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private var mediaProjectionPermission by mutableIntStateOf(-1)
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContent {
 
@@ -63,7 +70,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    MainScreen {
+                    MainScreen(mediaProjectionPermission) {
                         if (it) startMainService() else stopMainService()
                     }
                     //FacebookNavigation()
@@ -114,6 +121,24 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        when (MainService.isMediaProjectionEnabled()) {
+            0 -> {
+                mediaProjectionPermission = 0
+            }
+
+            1 -> {
+                mediaProjectionPermission = 1
+            }
+
+            -1 -> {
+                mediaProjectionPermission = -1
+                //unknown
+            }
+        }
+    }
+
     private fun stopMainService() {
         val intent = Intent(this, MainService::class.java)
         intent.setAction(MainService.ACTION_STOP)
@@ -122,9 +147,12 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainScreen(globalViewModel: GlobalViewModel = hiltViewModel(),state: (Boolean) -> Unit) {
+fun MainScreen(
+    permissionMediProject: Int,
+    globalViewModel: GlobalViewModel = hiltViewModel(),
+    state: (Boolean) -> Unit
+) {
 
-    val context = LocalContext.current
     val startVncServerState by globalViewModel.stateVncServer.collectAsState()
 
     val TAG = "PRUEBA14"
@@ -135,8 +163,17 @@ fun MainScreen(globalViewModel: GlobalViewModel = hiltViewModel(),state: (Boolea
                 state(true)
             } else {
                 state(false)
-                Log.d(TAG, "STOP SERVICE")
             }
+        }
+    }
+
+    LaunchedEffect(permissionMediProject) {
+        if (permissionMediProject == 1) {
+            state(true)
+            globalViewModel.changeValueVncServer(true)
+        } else {
+            state(false)
+            globalViewModel.changeValueVncServer(false)
         }
     }
 
