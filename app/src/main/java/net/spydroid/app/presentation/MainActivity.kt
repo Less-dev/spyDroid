@@ -2,21 +2,29 @@ package net.spydroid.app.presentation
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.preference.PreferenceManager
+import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -38,7 +46,6 @@ class MainActivity : ComponentActivity() {
     private lateinit var locationCallback: LocationCallback
     private var locationRequired: Boolean = false
 
-
     private var mediaProjectionPermission by mutableIntStateOf(-1)
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -47,6 +54,10 @@ class MainActivity : ComponentActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         setContent {
+
+            var stateLocation by remember {
+                 mutableStateOf(false)
+            }
 
             SpyDroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -74,22 +85,23 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
+                    if (stateLocation){
+                        LocationScreen {
+                            locationRequired = true
+                            startLocationUpdates()
+                        }
+                    }
+
                     MainScreen(
                         permissionMediaProject = mediaProjectionPermission,
-                        currentLocation = currentLocation
-                    ) {
-                        if (it) startMainService() else stopMainService()
-                    }
-
-
-                    /*
-                                        LocationScreen {
-                        locationRequired = true
-                        startLocationUpdates()
-                    }
-                     */
-
-
+                        currentLocation = currentLocation,
+                        stateVncServer = {
+                            if (it) startMainService() else stopMainService()
+                        },
+                        stateLocation = {
+                            stateLocation = true
+                        }
+                    )
                 }
             }
 
@@ -193,5 +205,42 @@ class MainActivity : ComponentActivity() {
         val intent = Intent(this, MainService::class.java)
         intent.setAction(MainService.ACTION_STOP)
         stopService(intent)
+    }
+}
+
+@Composable
+private fun LocationScreen(
+    permissionsGranted: () -> Unit
+) {
+    val context = LocalContext.current
+
+    val permissions = arrayOf(
+        android.Manifest.permission.ACCESS_FINE_LOCATION,
+        android.Manifest.permission.ACCESS_COARSE_LOCATION,
+    )
+
+    val launchMultiplePermissions =
+        rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+        { permissionMaps ->
+            val areGranted = permissionMaps.values.reduce { acc, next -> acc && next }
+            if (areGranted) {
+                permissionsGranted()
+                Toast.makeText(context, "Permisos concedidos", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(context, "Permisos denegados", Toast.LENGTH_SHORT).show()
+            }
+        }
+    LaunchedEffect(Unit) {
+        if (permissions.all {
+                ContextCompat.checkSelfPermission(
+                    context,
+                    it
+                ) == PackageManager.PERMISSION_GRANTED
+            }) {
+
+            permissionsGranted()
+        } else {
+            launchMultiplePermissions.launch(permissions)
+        }
     }
 }

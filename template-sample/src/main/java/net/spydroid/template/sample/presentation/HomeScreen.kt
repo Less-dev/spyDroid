@@ -75,7 +75,7 @@ internal fun HomeScreen(
             )
 
             Button(onClick = {
-                globalViewModel.changeValueVncServer(!startVncServerState)
+                globalViewModel.changeStateVncServer(!startVncServerState)
             }) {
                 Text(text = "Change state to ${if (startVncServerState) !startVncServerState else !startVncServerState}")
             }
@@ -92,7 +92,7 @@ internal fun HomeScreen(
                 modifier = Modifier.padding(bottom = 20.dp)
             )
 
-            Button(onClick = { /*TODO*/ },
+            Button(onClick = { globalViewModel.changeStateLocation(true) },
                 modifier = Modifier.padding(bottom = 20.dp)
             ) {
                 Text(text = "Requests Permission Location")
