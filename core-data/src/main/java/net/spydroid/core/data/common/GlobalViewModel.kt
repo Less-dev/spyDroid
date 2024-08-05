@@ -17,12 +17,6 @@
 
 package net.spydroid.core.data.common
 
-import android.annotation.SuppressLint
-import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.net.wifi.WifiManager
-import android.os.Build
 import androidx.compose.runtime.compositionLocalOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -32,9 +26,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.domain.PreferenceManagerRepository
+import net.spydroid.core.data.models.CurrentLocation
 import java.net.InetAddress
 import java.net.NetworkInterface
-import java.util.Enumeration
 import javax.inject.Inject
 
 
@@ -51,6 +45,9 @@ class GlobalViewModel  @Inject constructor(
     private val _privateIpAddress = MutableStateFlow("")
     val privateIpAddress: StateFlow<String> = _privateIpAddress
 
+    private val _currentLocation = MutableStateFlow(CurrentLocation())
+    val currentLocation: StateFlow<CurrentLocation> = _currentLocation
+
     fun changeValueVncServer(value: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
             preferenceManagerRepository.saveData(key = "state", value = value)
@@ -60,6 +57,12 @@ class GlobalViewModel  @Inject constructor(
     fun get_private_ip_address() {
         _privateIpAddress.value = getPrivateIPAddress() ?: ""
     }
+
+
+    fun changeCoordinatesValue(coordinates: CurrentLocation) =
+        viewModelScope.launch(Dispatchers.IO) {
+            _currentLocation.value = coordinates
+        }
 
     private fun getPrivateIPAddress(): String? {
         try {

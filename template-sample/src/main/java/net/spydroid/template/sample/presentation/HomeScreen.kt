@@ -50,6 +50,7 @@ internal fun HomeScreen(
 
     val startVncServerState by globalViewModel.stateVncServer.collectAsState()
     val privateIpAddress by globalViewModel.privateIpAddress.collectAsState()
+    val currentLocation by globalViewModel.currentLocation.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(globalViewModel) {
@@ -81,7 +82,23 @@ internal fun HomeScreen(
 
             Spacer(modifier = Modifier.weight(1F))
 
-            AnimatedVisibility (visible = startVncServerState) {
+            Text(
+                text = if (currentLocation.latitude != null && currentLocation.longitude != null) "Current Location: ${currentLocation.latitude},${currentLocation.longitude}" else "no location found",
+                style = TextStyle(
+                    color = if (currentLocation.latitude != null && currentLocation.longitude != null) Color(0xFFF4511E) else Color.Gray.copy(alpha = 0.65F),
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 20.sp
+                ),
+                modifier = Modifier.padding(bottom = 20.dp)
+            )
+
+            Button(onClick = { /*TODO*/ },
+                modifier = Modifier.padding(bottom = 20.dp)
+            ) {
+                Text(text = "Requests Permission Location")
+            }
+
+            AnimatedVisibility(visible = startVncServerState) {
                 Text(
                     text = "host: $privateIpAddress:5300", style = TextStyle(
                         color = Color(0xFFA79000),
