@@ -50,7 +50,7 @@ internal fun HomeScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "State: $startVncServerState", style = TextStyle(
+                text = "Server vnc state: $startVncServerState", style = TextStyle(
                     color = if (startVncServerState) Color.Green else Color.Red,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.ExtraBold

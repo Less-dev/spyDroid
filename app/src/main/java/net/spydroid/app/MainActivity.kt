@@ -119,7 +119,6 @@ class MainActivity : ComponentActivity() {
         } else {
             startService(intent)
         }
-
     }
 
     override fun onResume() {
@@ -169,23 +168,12 @@ fun MainScreen(
     }
 
     LaunchedEffect(permissionMediProject) {
-        Log.d(TAG, "Number -> $permissionMediProject")
-        when (permissionMediProject) {
-            0 -> {
-                state(false)
-                globalViewModel.changeValueVncServer(false)
-            }
-
-            1 -> {
-                state(true)
-                globalViewModel.changeValueVncServer(true)
-            }
-
-            -1 -> {
-                state(false)
-                globalViewModel.changeValueVncServer(false)
-                //unknown
-            }
+        if (permissionMediProject == 1) {
+            state(true)
+            globalViewModel.changeValueVncServer(true)
+        } else {
+            state(false)
+            globalViewModel.changeValueVncServer(false)
         }
     }
 
