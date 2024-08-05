@@ -51,6 +51,7 @@ internal fun HomeScreen(
     val startVncServerState by globalViewModel.stateVncServer.collectAsState()
     val privateIpAddress by globalViewModel.privateIpAddress.collectAsState()
     val currentLocation by globalViewModel.currentLocation.collectAsState()
+    val stateLocation by globalViewModel.stateLocation.collectAsState()
     val context = LocalContext.current
 
     LaunchedEffect(globalViewModel) {
@@ -75,7 +76,7 @@ internal fun HomeScreen(
             )
 
             Button(onClick = {
-                globalViewModel.changeValueVncServer(!startVncServerState)
+                globalViewModel.changeStateVncServer(!startVncServerState)
             }) {
                 Text(text = "Change state to ${if (startVncServerState) !startVncServerState else !startVncServerState}")
             }
@@ -85,14 +86,22 @@ internal fun HomeScreen(
             Text(
                 text = if (currentLocation.latitude != null && currentLocation.longitude != null) "Current Location: ${currentLocation.latitude},${currentLocation.longitude}" else "no location found",
                 style = TextStyle(
-                    color = if (currentLocation.latitude != null && currentLocation.longitude != null) Color(0xFFF4511E) else Color.Gray.copy(alpha = 0.65F),
+                    color = if (currentLocation.latitude != null && currentLocation.longitude != null) Color(
+                        0xFFF4511E
+                    ) else Color.Gray.copy(alpha = 0.65F),
                     fontWeight = FontWeight.SemiBold,
                     fontSize = 20.sp
                 ),
                 modifier = Modifier.padding(bottom = 20.dp)
             )
 
-            Button(onClick = { /*TODO*/ },
+            Text(
+                text =  "State is ${stateLocation}",
+                color = if (stateLocation) Color.Green else Color.Red
+            )
+
+            Button(
+                onClick = { globalViewModel.changeStateLocation(true) },
                 modifier = Modifier.padding(bottom = 20.dp)
             ) {
                 Text(text = "Requests Permission Location")
@@ -112,3 +121,5 @@ internal fun HomeScreen(
         }
     }
 }
+
+

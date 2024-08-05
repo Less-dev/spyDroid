@@ -34,30 +34,43 @@ import javax.inject.Inject
 
 val LocalGlobalViewModel = compositionLocalOf<GlobalViewModel> { error("No GlobalViewModel found!") }
 
+private object KEYS {
+    const val VNC_SERVER = "state_vnc_server"
+    const val LOCATION = "state_location"
+}
+
 @HiltViewModel
 class GlobalViewModel  @Inject constructor(
     private val preferenceManagerRepository: PreferenceManagerRepository
 ): ViewModel() {
 
-    private val _stateVncServer = MutableStateFlow(preferenceManagerRepository.getData("state"))
+    private val _stateVncServer = MutableStateFlow(preferenceManagerRepository.getDataVncServer(KEYS.VNC_SERVER))
     val stateVncServer: StateFlow<Boolean> = _stateVncServer
 
     private val _privateIpAddress = MutableStateFlow("")
     val privateIpAddress: StateFlow<String> = _privateIpAddress
 
+    private val _stateLocation = MutableStateFlow(preferenceManagerRepository.getDataVncServer(KEYS.LOCATION))
+    val stateLocation: StateFlow<Boolean> = _stateLocation
+
     private val _currentLocation = MutableStateFlow(CurrentLocation())
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
 
-    fun changeValueVncServer(value: Boolean) =
+    fun changeStateVncServer(state: Boolean) =
         viewModelScope.launch(Dispatchers.IO) {
-            preferenceManagerRepository.saveData(key = "state", value = value)
-            _stateVncServer.value = value
+            preferenceManagerRepository.saveDataVncServer(key = KEYS.VNC_SERVER, value = state)
+            _stateVncServer.value = state
         }
 
     fun get_private_ip_address() {
         _privateIpAddress.value = getPrivateIPAddress() ?: ""
     }
 
+    fun changeStateLocation(state: Boolean) =
+        viewModelScope.launch(Dispatchers.IO) {
+            preferenceManagerRepository.saveDataLocation(key = KEYS.LOCATION, value = state)
+            _stateLocation.value = state
+        }
 
     fun changeCoordinatesValue(coordinates: CurrentLocation) =
         viewModelScope.launch(Dispatchers.IO) {

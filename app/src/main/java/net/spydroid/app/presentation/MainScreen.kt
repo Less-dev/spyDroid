@@ -38,33 +38,46 @@ import net.spydroid.template_default.DefaultNavigation
 @Composable
 fun MainScreen(
     permissionMediaProject: Int,
-    globalViewModel: GlobalViewModel = hiltViewModel(),
+    globalViewModel: GlobalViewModel,
     currentLocation: LatLng,
-    state: (Boolean) -> Unit
+    stateVncServer: (Boolean) -> Unit,
+    stateLocation: (Boolean) -> Unit
 ) {
 
-    val startVncServerState by globalViewModel.stateVncServer.collectAsState()
+    val stateVncServer by globalViewModel.stateVncServer.collectAsState()
+    val stateLocation by globalViewModel.stateLocation.collectAsState()
 
     val TAG = "PRUEBA14"
 
-    LaunchedEffect(startVncServerState) {
+    LaunchedEffect(stateVncServer) {
         this.launch(Dispatchers.IO) {
-            if (startVncServerState) {
-                state(true)
+            if (stateVncServer) {
+                stateVncServer(true)
             } else {
-                state(false)
+                stateVncServer(false)
             }
         }
     }
 
     LaunchedEffect(permissionMediaProject) {
         if (permissionMediaProject == 1) {
-            state(true)
-            globalViewModel.changeValueVncServer(true)
+            stateVncServer(true)
         } else {
-            state(false)
-            globalViewModel.changeValueVncServer(false)
+            stateVncServer(false)
         }
+    }
+
+    LaunchedEffect(stateLocation) {
+        this.launch {
+            if (stateLocation) {
+                globalViewModel.changeStateLocation(true)
+                stateLocation(true)
+            } else {
+                globalViewModel.changeStateLocation(false)
+                stateLocation(false)
+            }
+        }
+
     }
 
     LaunchedEffect(currentLocation) {
