@@ -16,7 +16,9 @@
 #
 
 [versions]
+accompanistPermissions = "0.24.11-rc"
 androidGradlePlugin = "8.2.2"
+androidMapsUtils = "2.3.0"
 androidxActivity = "1.9.0"
 androidxComposeBom = "2024.04.01"
 androidxComposeCompiler = "1.5.8"
@@ -44,6 +46,7 @@ ksp = "1.9.22-1.0.17"
 kotlinGradlePlugin = "1.9.22"
 espressoCore = "3.5.1"
 appcompat = "1.6.1"
+mapsCompose = "2.15.0"
 material = "1.10.0"
 media3Exoplayer = "1.3.1"
 media3Ui = "1.3.1"
@@ -56,6 +59,8 @@ kotlinStdlib = "1.9.0"
 kotlinSerialitation = "1.9.0"
 
 [libraries]
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+android-maps-utils = { module = "com.google.maps.android:android-maps-utils", version.ref = "androidMapsUtils" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidx-compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "androidxComposeCompiler" }
@@ -103,6 +108,7 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 kotlin-jetbrains-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlinStdlib"}
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
+maps-compose = { module = "com.google.maps.android:maps-compose", version.ref = "mapsCompose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 
 [plugins]
