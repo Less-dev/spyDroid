@@ -28,8 +28,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.app.template_app
 import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.common.LocalGlobalViewModel
+import net.spydroid.core.data.data.LOCATION_STATES
 import net.spydroid.core.data.models.CurrentLocation
 import net.spydroid.core.data.models.STATES_LOCATION
 import net.spydroid.template.calculator.CalculatorNavigation

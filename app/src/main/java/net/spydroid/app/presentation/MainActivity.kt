@@ -4,15 +4,12 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.preference.PreferenceManager
-import android.provider.Settings
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -30,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -45,7 +41,7 @@ import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.common.LOCATION_STATES
+import net.spydroid.core.data.data.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")

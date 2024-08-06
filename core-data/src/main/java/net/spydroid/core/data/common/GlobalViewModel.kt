@@ -27,6 +27,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.domain.PreferenceManagerRepository
 import net.spydroid.core.data.models.CurrentLocation
+import net.spydroid.core.data.data.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
 import java.net.InetAddress
 import java.net.NetworkInterface
@@ -41,11 +42,7 @@ private object KEYS {
     const val LOCATION = "state_location"
 }
 
-object LOCATION_STATES {
-    const val UN_REQUEST = "unRequest"
-    const val GRANTED = "granted"
-    const val DENIED = "denied"
-}
+
 
 @HiltViewModel
 class GlobalViewModel @Inject constructor(
