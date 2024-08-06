@@ -15,9 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.core.data.models
-enum class STATES_LOCATION {
-    UN_REQUEST,
-    GRANTED,
-    DENIED
+package net.spydroid.core.data.data
+object LOCATION_STATES {
+    const val UN_REQUEST = "unRequest"
+    const val GRANTED = "granted"
+    const val DENIED = "denied"
 }

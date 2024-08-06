@@ -44,7 +44,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.common.LOCATION_STATES
+import net.spydroid.core.data.data.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
 import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
 
