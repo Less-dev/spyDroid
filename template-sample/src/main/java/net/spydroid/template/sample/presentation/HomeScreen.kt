@@ -17,7 +17,6 @@
 
 package net.spydroid.template.sample.presentation
 
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -31,6 +30,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -44,6 +46,7 @@ import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
+import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
 
 @Composable
 internal fun HomeScreen(
@@ -55,6 +58,7 @@ internal fun HomeScreen(
     val privateIpAddress by globalViewModel.privateIpAddress.collectAsState()
     val currentLocation by globalViewModel.currentLocation.collectAsState()
     val stateLocation by globalViewModel.stateLocation.collectAsState()
+    var showDialogLocation by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     LaunchedEffect(globalViewModel) {
@@ -124,7 +128,7 @@ internal fun HomeScreen(
 
                         LOCATION_STATES.DENIED -> {
                             //show settings for the app
-                            Toast.makeText(context, "Abriendo configuración de la aplicación", Toast.LENGTH_SHORT).show()
+                            showDialogLocation = true
                         }
                     }
                 },
@@ -145,6 +149,10 @@ internal fun HomeScreen(
             }
 
         }
+    }
+
+    PermissionLocationDialog(context = context, state = showDialogLocation) {
+        showDialogLocation = false
     }
 }
 
