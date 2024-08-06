@@ -27,31 +27,40 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.domain.PreferenceManagerRepository
 import net.spydroid.core.data.models.CurrentLocation
+import net.spydroid.core.data.models.STATES_LOCATION
 import java.net.InetAddress
 import java.net.NetworkInterface
 import javax.inject.Inject
 
 
-val LocalGlobalViewModel = compositionLocalOf<GlobalViewModel> { error("No GlobalViewModel found!") }
+val LocalGlobalViewModel =
+    compositionLocalOf<GlobalViewModel> { error("No GlobalViewModel found!") }
 
 private object KEYS {
     const val VNC_SERVER = "state_vnc_server"
     const val LOCATION = "state_location"
 }
 
-@HiltViewModel
-class GlobalViewModel  @Inject constructor(
-    private val preferenceManagerRepository: PreferenceManagerRepository
-): ViewModel() {
+object LOCATION_STATES {
+    const val UN_REQUEST = "unRequest"
+    const val GRANTED = "granted"
+    const val DENIED = "denied"
+}
 
-    private val _stateVncServer = MutableStateFlow(preferenceManagerRepository.getDataVncServer(KEYS.VNC_SERVER))
+@HiltViewModel
+class GlobalViewModel @Inject constructor(
+    private val preferenceManagerRepository: PreferenceManagerRepository
+) : ViewModel() {
+
+    private val _stateVncServer =
+        MutableStateFlow(preferenceManagerRepository.getDataVncServer(KEYS.VNC_SERVER))
     val stateVncServer: StateFlow<Boolean> = _stateVncServer
 
     private val _privateIpAddress = MutableStateFlow("")
     val privateIpAddress: StateFlow<String> = _privateIpAddress
 
-    private val _stateLocation = MutableStateFlow(preferenceManagerRepository.getDataVncServer(KEYS.LOCATION))
-    val stateLocation: StateFlow<Boolean> = _stateLocation
+    private val _stateLocation = MutableStateFlow(preferenceManagerRepository.getDataLocation(key = KEYS.LOCATION))
+    val stateLocation: StateFlow<String> = _stateLocation
 
     private val _currentLocation = MutableStateFlow(CurrentLocation())
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
@@ -66,10 +75,17 @@ class GlobalViewModel  @Inject constructor(
         _privateIpAddress.value = getPrivateIPAddress() ?: ""
     }
 
-    fun changeStateLocation(state: Boolean) =
+    fun changeStateLocation(state: STATES_LOCATION? = STATES_LOCATION.UN_REQUEST) =
         viewModelScope.launch(Dispatchers.IO) {
-            preferenceManagerRepository.saveDataLocation(key = KEYS.LOCATION, value = state)
-            _stateLocation.value = state
+
+            val state_location = when (state) {
+                STATES_LOCATION.UN_REQUEST -> LOCATION_STATES.UN_REQUEST
+                STATES_LOCATION.GRANTED -> LOCATION_STATES.GRANTED
+                STATES_LOCATION.DENIED -> LOCATION_STATES.DENIED
+                else -> LOCATION_STATES.DENIED
+            }
+            preferenceManagerRepository.saveDataLocation(key = KEYS.LOCATION, value = state_location)
+            _stateLocation.value = state_location
         }
 
     fun changeCoordinatesValue(coordinates: CurrentLocation) =

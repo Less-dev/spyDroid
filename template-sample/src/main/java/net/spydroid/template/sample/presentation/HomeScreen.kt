@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.models.STATES_LOCATION
 
 @Composable
 internal fun HomeScreen(
@@ -97,11 +98,11 @@ internal fun HomeScreen(
 
             Text(
                 text =  "State is ${stateLocation}",
-                color = if (stateLocation) Color.Green else Color.Red
+                color = if (stateLocation == "granted") Color.Green else Color.Red
             )
 
             Button(
-                onClick = { globalViewModel.changeStateLocation(true) },
+                onClick = { globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED) },
                 modifier = Modifier.padding(bottom = 20.dp)
             ) {
                 Text(text = "Requests Permission Location")

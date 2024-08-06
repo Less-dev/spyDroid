@@ -38,12 +38,12 @@ class PreferenceManagerRepositoryImp @Inject constructor(
     override fun getDataVncServer(key: String, defaultValue: Boolean): Boolean =
         sharedPreferences.getBoolean(key, defaultValue)
 
-    override fun saveDataLocation(key: String, value: Boolean) {
+    override fun saveDataLocation(key: String, value: String) {
         val editor = sharedPreferences.edit()
-        editor.putBoolean(key, value)
+        editor.putString(key, value)
         editor.apply()
     }
 
-    override fun getDataLocation(key: String, defaultValue: Boolean): Boolean =
-        sharedPreferences.getBoolean(key, defaultValue)
+    override fun getDataLocation(key: String, defaultValue: String?): String =
+        sharedPreferences.getString(key, defaultValue?: "unRequest") ?: "unRequest"
 }

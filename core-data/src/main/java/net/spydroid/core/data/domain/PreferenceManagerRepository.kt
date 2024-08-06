@@ -21,7 +21,7 @@ interface PreferenceManagerRepository {
     fun saveDataVncServer(key: String, value: Boolean)
     fun getDataVncServer(key: String, defaultValue: Boolean = false): Boolean
 
-    fun saveDataLocation(key: String, value: Boolean)
-    fun getDataLocation(key: String, defaultValue: Boolean): Boolean
+    fun saveDataLocation(key: String, value: String)
+    fun getDataLocation(key: String, defaultValue: String? = null): String
 }
 
