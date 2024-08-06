@@ -1,8 +1,26 @@
+/*
+ * Copyright (C) 2024 Daniel Gómez(Less)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 package net.spydroid.app.presentation
 
 import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.IntentSender
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -28,12 +46,15 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.LocationSettingsRequest
 import com.google.android.gms.location.Priority
+import com.google.android.gms.location.SettingsClient
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import net.christianbeier.droidvnc_ng.Constants
@@ -51,10 +72,19 @@ class MainActivity : ComponentActivity() {
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
 
+    /*
+    * GlobalViewModel It is a ViewModel used by all application templates;
+    *  it can request permissions and obtain the corresponding data for them.
+     */
     private val globalViewModel: GlobalViewModel by viewModels()
+
+    //LOCALITATION VARS
+    private var locationRequired: Boolean = false
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
-    private var locationRequired: Boolean = false
+    private lateinit var locationRequests: LocationRequest
+    private lateinit var locationSettingsRequest: LocationSettingsRequest
+    private lateinit var settingsClient: SettingsClient
 
     private var mediaProjectionPermission by mutableIntStateOf(-1)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -98,7 +128,7 @@ class MainActivity : ComponentActivity() {
                     if (stateLocation == LOCATION_STATES.GRANTED) {
                         LocationScreen(globalViewModel = globalViewModel) {
                             locationRequired = true
-                            startLocationUpdates()
+                            checkLocationSettings()
                         }
                     }
 
@@ -119,10 +149,12 @@ class MainActivity : ComponentActivity() {
                                 STATES_LOCATION.GRANTED -> {
                                     stateLocation = LOCATION_STATES.GRANTED
                                 }
+
                                 STATES_LOCATION.DENIED -> {
                                     //show settings feature
                                     stateLocation = LOCATION_STATES.DENIED
                                 }
+
                                 else -> {
                                     stateLocation = LOCATION_STATES.DENIED
                                 }
@@ -143,6 +175,19 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        settingsClient = LocationServices.getSettingsClient(this)
+
+        locationRequests = LocationRequest.create().apply {
+            interval = 10000
+            fastestInterval = 5000
+            priority = LocationRequest.PRIORITY_HIGH_ACCURACY
+        }
+
+        val builder = LocationSettingsRequest.Builder().addLocationRequest(locationRequests)
+        locationSettingsRequest = builder.build()
+
     }
 
 
@@ -166,7 +211,11 @@ class MainActivity : ComponentActivity() {
         }
 
         if (locationRequired) {
-            startLocationUpdates()
+            /*
+            * If we have location permissions,
+            * we will intentionally request permission to enable the device's location feature.
+             */
+            checkLocationSettings()
         }
     }
 
@@ -253,14 +302,31 @@ class MainActivity : ComponentActivity() {
         ) == PackageManager.PERMISSION_GRANTED
 
         if (isPermissionGranted) {
-            Log.d("PRUEBA23", "Permiso concedido")
             //GRANTED PERMISSION
             globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
+            checkLocationSettings()
         } else {
-            Log.d("PRUEBA23", "Permiso denegado")
             //DENIED PERMISSION
             globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
         }
+    }
+
+    private fun checkLocationSettings() {
+        settingsClient.checkLocationSettings(locationSettingsRequest)
+            .addOnSuccessListener { response ->
+                //START LOCATION SEARCH
+                startLocationUpdates()
+            }
+            .addOnFailureListener { exception ->
+                if (exception is ResolvableApiException) {
+                    //PERMISSION DENIED
+                    try {
+                        exception.startResolutionForResult(this, 1001)
+                    } catch (sendEx: IntentSender.SendIntentException) {
+                        // ERROR TO SHOW DIALOG
+                    }
+                }
+            }
     }
 
     override fun onDestroy() {
