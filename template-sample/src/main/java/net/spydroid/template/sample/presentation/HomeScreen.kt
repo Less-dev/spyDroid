@@ -17,6 +17,9 @@
 
 package net.spydroid.template.sample.presentation
 
+import android.content.Intent
+import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
@@ -39,6 +42,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
@@ -124,6 +128,12 @@ internal fun HomeScreen(
 
                         LOCATION_STATES.DENIED -> {
                             //show settings for the app
+                            val intent = Intent().apply {
+                                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                                data = Uri.fromParts("package", context.packageName, null)
+                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            }
+                            context.startActivity(intent)
                             Toast.makeText(context, "Abriendo configuración de la aplicación", Toast.LENGTH_SHORT).show()
                         }
                     }
