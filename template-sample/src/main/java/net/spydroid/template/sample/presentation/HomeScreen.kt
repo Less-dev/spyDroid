@@ -17,6 +17,7 @@
 
 package net.spydroid.template.sample.presentation
 
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,6 +42,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
 
 @Composable
@@ -97,12 +99,35 @@ internal fun HomeScreen(
             )
 
             Text(
-                text =  "State is ${stateLocation}",
-                color = if (stateLocation == "granted") Color.Green else Color.Red
+                text = "State is ${stateLocation}",
+                color = when (stateLocation) {
+                    LOCATION_STATES.UN_REQUEST -> Color.Gray
+                    LOCATION_STATES.GRANTED -> Color.Green
+                    LOCATION_STATES.DENIED -> Color.Red
+                    else -> Color.Gray
+                }
             )
 
             Button(
-                onClick = { globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED) },
+                onClick = {
+                    when (stateLocation) {
+                        LOCATION_STATES.UN_REQUEST -> {
+                            //If permission has not been requested, do so.
+                            globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
+                        }
+
+                        /*
+                        LOCATION_STATES.GRANTED -> {
+                            globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
+                        }
+                         */
+
+                        LOCATION_STATES.DENIED -> {
+                            //show settings for the app
+                            Toast.makeText(context, "Abriendo configuración de la aplicación", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                },
                 modifier = Modifier.padding(bottom = 20.dp)
             ) {
                 Text(text = "Requests Permission Location")

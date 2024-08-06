@@ -44,6 +44,7 @@ import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
@@ -65,7 +66,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             var stateLocation by remember {
-                mutableStateOf(false)
+                mutableStateOf(LOCATION_STATES.UN_REQUEST)
             }
 
             SpyDroidTheme {
@@ -94,7 +95,8 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    if (stateLocation) {
+
+                    if (stateLocation == LOCATION_STATES.GRANTED) {
                         LocationScreen(globalViewModel = globalViewModel) {
                             locationRequired = true
                             startLocationUpdates()
@@ -112,18 +114,18 @@ class MainActivity : ComponentActivity() {
                             when (it) {
                                 STATES_LOCATION.UN_REQUEST -> {
                                     //no do make nothing
+                                    stateLocation = LOCATION_STATES.UN_REQUEST
                                 }
 
                                 STATES_LOCATION.GRANTED -> {
-                                    stateLocation = true
+                                    stateLocation = LOCATION_STATES.GRANTED
                                 }
                                 STATES_LOCATION.DENIED -> {
                                     //show settings feature
-                                    stateLocation = false
-                                    Toast.makeText(this, "Opening setting of the app", Toast.LENGTH_SHORT).show()
+                                    stateLocation = LOCATION_STATES.DENIED
                                 }
                                 else -> {
-                                    stateLocation = false
+                                    stateLocation = LOCATION_STATES.DENIED
                                 }
                             }
                         }
