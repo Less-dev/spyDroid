@@ -28,8 +28,10 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.app.template_app
 import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.models.CurrentLocation
+import net.spydroid.core.data.models.STATES_LOCATION
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
@@ -41,7 +43,7 @@ fun MainScreen(
     globalViewModel: GlobalViewModel,
     currentLocation: LatLng,
     stateVncServer: (Boolean) -> Unit,
-    stateLocation: (Boolean) -> Unit
+    stateLocation: (STATES_LOCATION) -> Unit
 ) {
 
     val stateVncServer by globalViewModel.stateVncServer.collectAsState()
@@ -69,15 +71,29 @@ fun MainScreen(
 
     LaunchedEffect(stateLocation) {
         this.launch {
-            if (stateLocation) {
-                globalViewModel.changeStateLocation(true)
-                stateLocation(true)
-            } else {
-                globalViewModel.changeStateLocation(false)
-                stateLocation(false)
+            when (stateLocation) {
+
+                LOCATION_STATES.UN_REQUEST -> {
+                    globalViewModel.changeStateLocation(STATES_LOCATION.UN_REQUEST)
+                    stateLocation(STATES_LOCATION.UN_REQUEST)
+                }
+
+                LOCATION_STATES.GRANTED -> {
+                    stateLocation(STATES_LOCATION.GRANTED)
+                }
+
+                LOCATION_STATES.DENIED -> {
+                    globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
+                    stateLocation(STATES_LOCATION.DENIED)
+                }
+
+                else -> {
+                    globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
+                    stateLocation(STATES_LOCATION.DENIED)
+                }
+
             }
         }
-
     }
 
     LaunchedEffect(currentLocation) {

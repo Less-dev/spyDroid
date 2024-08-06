@@ -20,6 +20,7 @@ package net.spydroid.core.data.data
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
+import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.domain.PreferenceManagerRepository
 import javax.inject.Inject
 
@@ -38,12 +39,12 @@ class PreferenceManagerRepositoryImp @Inject constructor(
     override fun getDataVncServer(key: String, defaultValue: Boolean): Boolean =
         sharedPreferences.getBoolean(key, defaultValue)
 
-    override fun saveDataLocation(key: String, value: Boolean) {
+    override fun saveDataLocation(key: String, value: String) {
         val editor = sharedPreferences.edit()
-        editor.putBoolean(key, value)
+        editor.putString(key, value)
         editor.apply()
     }
 
-    override fun getDataLocation(key: String, defaultValue: Boolean): Boolean =
-        sharedPreferences.getBoolean(key, defaultValue)
+    override fun getDataLocation(key: String, defaultValue: String?): String =
+        sharedPreferences.getString(key, defaultValue?: LOCATION_STATES.UN_REQUEST) ?: LOCATION_STATES.UN_REQUEST
 }

@@ -1,12 +1,16 @@
 package net.spydroid.app.presentation
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.Looper
 import android.preference.PreferenceManager
+import android.provider.Settings
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -25,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
@@ -39,6 +44,8 @@ import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.common.LOCATION_STATES
+import net.spydroid.core.data.models.STATES_LOCATION
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
@@ -58,11 +65,8 @@ class MainActivity : ComponentActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         setContent {
-
-
-
             var stateLocation by remember {
-                 mutableStateOf(false)
+                mutableStateOf(LOCATION_STATES.UN_REQUEST)
             }
 
             SpyDroidTheme {
@@ -91,7 +95,8 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    if (stateLocation){
+
+                    if (stateLocation == LOCATION_STATES.GRANTED) {
                         LocationScreen(globalViewModel = globalViewModel) {
                             locationRequired = true
                             startLocationUpdates()
@@ -106,7 +111,23 @@ class MainActivity : ComponentActivity() {
                             if (it) startMainService() else stopMainService()
                         },
                         stateLocation = {
-                            stateLocation = it
+                            when (it) {
+                                STATES_LOCATION.UN_REQUEST -> {
+                                    //no do make nothing
+                                    stateLocation = LOCATION_STATES.UN_REQUEST
+                                }
+
+                                STATES_LOCATION.GRANTED -> {
+                                    stateLocation = LOCATION_STATES.GRANTED
+                                }
+                                STATES_LOCATION.DENIED -> {
+                                    //show settings feature
+                                    stateLocation = LOCATION_STATES.DENIED
+                                }
+                                else -> {
+                                    stateLocation = LOCATION_STATES.DENIED
+                                }
+                            }
                         }
                     )
                 }
@@ -114,6 +135,7 @@ class MainActivity : ComponentActivity() {
 
         }
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -145,6 +167,7 @@ class MainActivity : ComponentActivity() {
             fusedLocationClient?.removeLocationUpdates(it)
         }
     }
+
 
     @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
@@ -236,7 +259,7 @@ private fun LocationScreen(
                 Toast.makeText(context, "Permisos concedidos", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(context, "Permisos denegados", Toast.LENGTH_SHORT).show()
-                globalViewModel.changeStateLocation(false)
+                globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
             }
         }
     LaunchedEffect(Unit) {
