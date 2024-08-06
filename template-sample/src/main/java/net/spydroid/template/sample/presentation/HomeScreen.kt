@@ -34,6 +34,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -48,6 +51,7 @@ import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
+import net.spydroid.core.ui.components.dialogs.PermissionLocation
 
 @Composable
 internal fun HomeScreen(
@@ -59,6 +63,7 @@ internal fun HomeScreen(
     val privateIpAddress by globalViewModel.privateIpAddress.collectAsState()
     val currentLocation by globalViewModel.currentLocation.collectAsState()
     val stateLocation by globalViewModel.stateLocation.collectAsState()
+    var showDialogLocation by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
     LaunchedEffect(globalViewModel) {
@@ -128,13 +133,7 @@ internal fun HomeScreen(
 
                         LOCATION_STATES.DENIED -> {
                             //show settings for the app
-                            val intent = Intent().apply {
-                                action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                                data = Uri.fromParts("package", context.packageName, null)
-                                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                            }
-                            context.startActivity(intent)
-                            Toast.makeText(context, "Abriendo configuración de la aplicación", Toast.LENGTH_SHORT).show()
+                            showDialogLocation = true
                         }
                     }
                 },
@@ -155,6 +154,10 @@ internal fun HomeScreen(
             }
 
         }
+    }
+
+    PermissionLocation(context = context, state = showDialogLocation) {
+        showDialogLocation = false
     }
 }
 
