@@ -17,10 +17,6 @@
 
 package net.spydroid.template.sample.presentation
 
-import android.content.Intent
-import android.net.Uri
-import android.provider.Settings
-import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -45,13 +41,12 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat.startActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
-import net.spydroid.core.ui.components.dialogs.PermissionLocation
+import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
 
 @Composable
 internal fun HomeScreen(
@@ -156,7 +151,7 @@ internal fun HomeScreen(
         }
     }
 
-    PermissionLocation(context = context, state = showDialogLocation) {
+    PermissionLocationDialog(context = context, state = showDialogLocation) {
         showDialogLocation = false
     }
 }

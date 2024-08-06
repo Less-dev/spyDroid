@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.os.Looper
 import android.preference.PreferenceManager
 import android.provider.Settings
@@ -51,6 +52,8 @@ import net.spydroid.core.data.models.STATES_LOCATION
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable: Runnable
 
     private val globalViewModel: GlobalViewModel by viewModels()
     private lateinit var fusedLocationClient: FusedLocationProviderClient
@@ -133,6 +136,16 @@ class MainActivity : ComponentActivity() {
                 }
             }
 
+            LaunchedEffect(key1 = stateLocation) {
+                if (stateLocation != LOCATION_STATES.UN_REQUEST) {
+                    runnable = Runnable {
+                        handler.postDelayed(runnable, 3000)
+                        checkLocationPermission()
+                    }
+
+                    handler.post(runnable)
+                }
+            }
         }
     }
 
@@ -236,6 +249,28 @@ class MainActivity : ComponentActivity() {
         intent.setAction(MainService.ACTION_STOP)
         stopService(intent)
     }
+
+    private fun checkLocationPermission() {
+        val isPermissionGranted = ContextCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+
+        if (isPermissionGranted) {
+            Log.d("PRUEBA23", "Permiso concedido")
+            //GRANTED PERMISSION
+            globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
+        } else {
+            Log.d("PRUEBA23", "Permiso denegado")
+            //DENIED PERMISSION
+            globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        handler.removeCallbacks(runnable)
+    }
 }
 
 @Composable
@@ -256,9 +291,7 @@ private fun LocationScreen(
             val areGranted = permissionMaps.values.reduce { acc, next -> acc && next }
             if (areGranted) {
                 permissionsGranted()
-                Toast.makeText(context, "Permisos concedidos", Toast.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(context, "Permisos denegados", Toast.LENGTH_SHORT).show()
                 globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
             }
         }
