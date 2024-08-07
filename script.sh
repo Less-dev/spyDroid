@@ -1,5 +1,23 @@
 #!/bin/bash
 
+ #
+ # Copyright (C) 2024 Daniel Gómez(Less)
+ #
+ # This program is free software: you can redistribute it and/or modify
+ # it under the terms of the GNU General Public License as published by
+ # the Free Software Foundation, either version 3 of the License, or
+ #  any later version.
+ #
+ # This program is distributed in the hope that it will be useful,
+ # but WITHOUT ANY WARRANTY; without even the implied warranty of
+ # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ # GNU General Public License for more details.
+ #
+ # You should have received a copy of the GNU General Public License
+ # along with this program. If not, see <https://www.gnu.org/licenses/>.
+ #
+
+
 changeIconApp() {
   local nuevo_icono="$1"
   local archivo="app/src/main/AndroidManifest.xml"
@@ -113,28 +131,3 @@ while getopts ":t:" opt; do
     esac
 done
 shift $((OPTIND -1))
-
-
-installTools() {
-    sudo apt update
-    sudo apt upgrade -y
-}
-
-while getopts ":install-tools:" opt; do
-    case ${opt} in
-        t )
-
-            installTools
-            ;;
-        \? )
-            echo "Invalid option: -$OPTARG" >&2
-            ;;
-        : )
-            echo "Invalid option: -$OPTARG requires an argument" >&2
-            echo 'Usage: ./script.sh "template_of_preference"'
-    		echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
-            ;;
-    esac
-done
-shift $((OPTIND -1))
-
