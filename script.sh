@@ -20,27 +20,26 @@
 
 changeIconApp() {
   local nuevo_icono="$1"
-  local archivo="app/src/main/AndroidManifest.xml"
+  local file="app/src/main/AndroidManifest.xml"
 
-  # Utilizamos sed para realizar los cambios en el archivo
-  sed -i "s/android:icon=\"@mipmap\/ic_launcher_[^\"]*\"/android:icon=\"@mipmap\/ic_launcher_$nuevo_icono\"/" "$archivo"
-  sed -i "s/android:roundIcon=\"@mipmap\/ic_launcher_round_[^\"]*\"/android:roundIcon=\"@mipmap\/ic_launcher_round_$nuevo_icono\"/" "$archivo"
+  sed -i "s/android:icon=\"@mipmap\/ic_launcher_[^\"]*\"/android:icon=\"@mipmap\/ic_launcher_$nuevo_icono\"/" "$file"
+  sed -i "s/android:roundIcon=\"@mipmap\/ic_launcher_round_[^\"]*\"/android:roundIcon=\"@mipmap\/ic_launcher_round_$nuevo_icono\"/" "$file"
 }
-changeAppName() {
-  local nuevo_nombre="$1"
-  local archivo="app/src/main/res/values/strings.xml"
 
-  # Definimos las excepciones
-  if [ "$nuevo_nombre" == "calculator" ]; then
-    nuevo_nombre="calculadora"
-  elif [ "$nuevo_nombre" == "default" ]; then
-    nuevo_nombre="Lista de tareas"
-  elif [ "$nuevo_nombre" == "sample" ]; then
-    nuevo_nombre="ejemplo"
+changeAppName() {
+  local new_name="$1"
+  local file="app/src/main/res/values/strings.xml"
+
+  # Exceptions
+  if [ "$new_name" == "calculator" ]; then
+    new_name="calculadora"
+  elif [ "$new_name" == "default" ]; then
+    new_name="Lista de tareas"
+  elif [ "$new_name" == "sample" ]; then
+    new_name="ejemplo"
   fi
 
-  # Utilizamos sed para realizar los cambios en el archivo
-  sed -i "s/<string name=\"app_name\">[^<]*<\/string>/<string name=\"app_name\">$nuevo_nombre<\/string>/" "$archivo"
+  sed -i "s/<string name=\"app_name\">[^<]*<\/string>/<string name=\"app_name\">$new_name<\/string>/" "$file"
 }
 
 valid_options=("default" "facebook" "calculator" "sample")
