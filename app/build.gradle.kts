@@ -106,16 +106,10 @@ dependencies {
     implementation(libs.androidx.hilt.navigation.compose)
 
     //google maps
-    implementation (libs.maps.compose)
-    implementation ("com.google.android.gms:play-services-maps:18.2.0")
-    implementation (libs.android.maps.utils)
-
-    implementation ("androidx.compose.runtime:runtime-livedata:1.6.1")
+    implementation (libs.play.services.maps)
 
     // Google Play Services - Location
-    implementation ("com.google.android.gms:play-services-location:21.1.0")
-    //permission handling in compose
-    implementation (libs.accompanist.permissions)
+    implementation (libs.play.services.location)
 
     // Compose
     val composeBom = platform(libs.androidx.compose.bom)
@@ -123,6 +117,8 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+    //permission handling in compose
+    implementation (libs.accompanist.permissions)
 
     // Tooling
     debugImplementation(libs.androidx.compose.ui.tooling)
