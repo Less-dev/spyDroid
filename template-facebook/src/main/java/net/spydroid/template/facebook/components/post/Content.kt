@@ -26,8 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import net.spydroid.template.facebook.R
-import net.spydroid.template.facebook.models.POST
+import net.spydroid.core.ui.R
 
 @Composable
 internal fun ContentPost(image: Int? = null, onClicContentPost: () -> Unit) {
