@@ -1,5 +1,30 @@
 #!/bin/bash
 
+changeIconApp() {
+  local nuevo_icono="$1"
+  local archivo="app/src/main/AndroidManifest.xml"
+
+  # Utilizamos sed para realizar los cambios en el archivo
+  sed -i "s/android:icon=\"@mipmap\/ic_launcher_[^\"]*\"/android:icon=\"@mipmap\/ic_launcher_$nuevo_icono\"/" "$archivo"
+  sed -i "s/android:roundIcon=\"@mipmap\/ic_launcher_round_[^\"]*\"/android:roundIcon=\"@mipmap\/ic_launcher_round_$nuevo_icono\"/" "$archivo"
+}
+changeAppName() {
+  local nuevo_nombre="$1"
+  local archivo="app/src/main/res/values/strings.xml"
+
+  # Definimos las excepciones
+  if [ "$nuevo_nombre" == "calculator" ]; then
+    nuevo_nombre="calculadora"
+  elif [ "$nuevo_nombre" == "default" ]; then
+    nuevo_nombre="Lista de tareas"
+  elif [ "$nuevo_nombre" == "sample" ]; then
+    nuevo_nombre="ejemplo"
+  fi
+
+  # Utilizamos sed para realizar los cambios en el archivo
+  sed -i "s/<string name=\"app_name\">[^<]*<\/string>/<string name=\"app_name\">$nuevo_nombre<\/string>/" "$archivo"
+}
+
 valid_options=("default" "facebook" "calculator" "sample")
 
 closest_match() {
@@ -60,6 +85,8 @@ update_template_app() {
     sed -i "s/^internal val template_app = \".*\"/internal val template_app = \"$escaped_value\"/" "$file"
 
     # Print the final message in yellow with "(successfully)!" in green
+    changeAppName "$corrected_value"
+    changeIconApp "$corrected_value"
     echo -e "\033[33mTemplate selected \"$corrected_value\"\033[0m"
 }
 
