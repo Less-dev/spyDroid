@@ -39,8 +39,9 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import net.spydroid.template.facebook.R
 import net.spydroid.template.facebook.models.POST
+import net.spydroid.core.ui.R
+
 
 @Composable
 internal fun Header(data: POST, onClickImageProfile: () -> Unit, onClickOptions: () -> Unit) {
