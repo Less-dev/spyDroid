@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="ic_launcher_background_calculator">#C9FFA0</color>
+    <color name="ic_launcher_background_default">#020303</color>
     <color name="ic_launcher_background_sample">#0E3850</color>
+    <color name="ic_launcher_background_calculator">#C9FFA0</color>
+    <color name="ic_launcher_background_facebook">#FFFFFF</color>
 </resources>
