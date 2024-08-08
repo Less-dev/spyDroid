@@ -18,7 +18,9 @@
 1. [`Guia de instalación`](#guia-de-instalación)  
     
      1.1. [`Clone el proyecto`](#clone-el-proyecto)
-     1.2. [`Cambie de directorio`](#cambie-de-directorio.al-del-proyecto)
+     
+     1.2. [`Cambie de directorio`]#cambie-de-directorio-al-del-proyecto)
+
      1.3. [`Instale dependencias`](#instale-las-dependencias)
 
 
