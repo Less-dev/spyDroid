@@ -15,7 +15,7 @@
 
 <br>
 
-1. [`Guia de instalación`](#guia-de-instalación)  
+1. [`Guia de instalación`](#guía-de-instalación)  
     
     1.1. [`Clone el proyecto`](#clone-el-proyecto)
      
