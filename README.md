@@ -63,15 +63,17 @@
 
   #### 3.1. [`Instale android studio`](#instale-android-studio)
    
-  #### 3.2. [`Cree una nueva librería`](#cree-una-nueva-librería)
+  #### 3.2. [`Siga el contenido del post`](#siga-el-contenido-de-este-post)
     
-  #### 3.3. [`Primer Hola mundo`](#primer-hola-mundo)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_03.png" width="1000">
 </p>
 
 <br>
+
+> [!WARNING]
+> ####  El desarrollador de este software no asume ninguna responsabilidad por cualquier error, pérdida o problema que pueda surgir del uso del mismo. Utilícelo bajo su propio riesgo.
 
 # Guía de instalación:
 
@@ -154,15 +156,14 @@
 
 [![Watch this video](https://img.youtube.com/vi/tdkjCZ03Aj4/0.jpg)](https://www.youtube.com/watch?v=tdkjCZ03Aj4)
 
-## Cree una nueva librería
+## Siga el contenido de este post
+    
 
-> [!NOTE]
-> TODO
+<h3 style="display: inline;"><img src="https://media.tenor.com/CsqnkjKnojgAAAAi/dm4uz3-foekoe.gif" height="35" width="35">   <a href="https://less-dev.github.io/src/blog/post_02.html" target="_blank"> Post</a> </h3>
 
-## Primer hola mundo
-
-> [!NOTE]
-> TODO
+<h3>
+     
+ </h3>
 
 
 #### by: [Less](https://github.com/less-dev/)
