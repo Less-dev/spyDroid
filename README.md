@@ -1,12 +1,18 @@
 ![banner) (1)](https://github.com/user-attachments/assets/743b8003-f09b-4c92-b3a3-f92d5bd23d22)
 
-<h2 align="center">Spydroid</h2>
+![banner) (1)](https://github.com/user-attachments/assets/743b8003-f09b-4c92-b3a3-f92d5bd23d22)
+
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/591e2a51-30a1-4844-8ac1-12a751967c86">
+</p>
+
+
 <p align="center">
     <img src="https://github.com/user-attachments/assets/df3f0def-babd-495f-ae17-3dc649d76b34" width="180" height="180">
 </p>
 
-
-<h3 align="center">¿Tener control sobre un android? Eso me gusta ¡Yoo-hoo!</h3>
+<h3 align="center">¿Hacking android? ¡Yoo-hoo!</h3>
 
 
 <p align="center">
@@ -23,6 +29,19 @@
 
     1.3. [`Instale dependencias`](#instale-las-dependencias)
 
+2. [`Compilación y uso de scripts`](#compilación-y-uso-de-scripts)
+
+    2.1. [`Flags de script.sh`](#flags-de-el-script-script.sh)
+
+    2.2. [`Uso de script.sh`](#uso-de-script.sh)     
+
+    2.3. [`Creación de el APK`](#creación-de-el-apk)
+
+3. [`Cree un APK personalizado`](#cree-un-apk-personalizado)
+
+    3.1. [`paso 1`](#paso-1)
+   
+    3.2. [`paso 2`](#paso-2)
 
 <p align="start">
 <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/gothic_divider_01.gif">
@@ -47,5 +66,7 @@
 ## Instale las dependencias
     
     chmod +x script.sh && ./script.sh -i
+
+# Compilación y uso de scripts
 
 #### by: [Less](https://github.com/less-dev/)
