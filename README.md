@@ -49,9 +49,9 @@
 
 ## 2. [`Compilación y uso de scripts`](#compilación-y-uso-de-scripts)
 
-  #### 2.1. [`Flags de script.sh`](#flags-de-el-script-script.sh)
+  #### 2.1. [`Flags de script.sh`](#flags-de-el-scriptsh)
 
-  #### 2.2. [`Uso de script.sh`](#uso-de-script.sh)     
+  #### 2.2. [`Uso de script.sh`](#uso-de-scriptsh)     
 
    ##### 2.2.1. [`Plantillas por defecto`](#plantillas-por-defecto)
         
