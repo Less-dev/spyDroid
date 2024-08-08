@@ -6,7 +6,7 @@
 </p>
 
 
-<h3 align="center">Obtén datos de un dispositvo android Yoo-hoo!</h3>
+<h3 align="center">¿Tener control sobre un android? ¡Yoo-hoo!</h3>
 
 
 <p align="center">
