@@ -108,13 +108,80 @@ update_template_app() {
 }
 
 
+install_programs() {
+    local programs_to_install=("$@")
+    local missing_programs=()
 
-# Función para instalar dependencias
-install_dependencies() {
-    echo -e "\033[1;32mDependencias instaladas correctamente\033[0m"
+    # Detected SO
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        if [[ -f /etc/debian_version ]]; then
+            OS="Debian"
+            PACKAGE_MANAGER="apt"
+            UPDATE_CMD="sudo apt update"
+            INSTALL_CMD="sudo apt install -y"
+            SEARCH_CMD="apt-cache search"
+        elif [[ -f /etc/fedora-release ]]; then
+            OS="Fedora"
+            PACKAGE_MANAGER="dnf"
+            UPDATE_CMD="sudo dnf check-update"
+            INSTALL_CMD="sudo dnf install -y"
+            SEARCH_CMD="dnf search"
+        elif [[ -f /etc/arch-release ]]; then
+            OS="Arch"
+            PACKAGE_MANAGER="pacman"
+            UPDATE_CMD="sudo pacman -Sy"
+            INSTALL_CMD="sudo pacman -S --noconfirm"
+            SEARCH_CMD="pacman -Ss"
+        else
+            echo "Distribución Linux no soportada."
+            exit 1
+        fi
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        OS="macOS"
+        PACKAGE_MANAGER="brew"
+        UPDATE_CMD="brew update"
+        INSTALL_CMD="brew install"
+        SEARCH_CMD="brew search"
+    else
+        echo "Sistema operativo no soportado."
+        exit 1
+    fi
+
+
+    # update repos
+    $UPDATE_CMD
+
+    # check if the program exists in the repositories
+    for program in "${programs_to_install[@]}"; do
+        if $SEARCH_CMD "$program" >/dev/null 2>&1; then
+            echo "$program está disponible en los repositorios."
+            missing_programs+=("$program")
+        else
+            echo "$program no está disponible en los repositorios."
+        fi
+    done
+
+    # install missing programs
+    if [ ${#missing_programs[@]} -gt 0 ]; then
+        echo "Instalando programas: ${missing_programs[*]}"
+        $INSTALL_CMD "${missing_programs[@]}"
+    else
+        echo "Todos los programas están ya instalados o no disponibles en los repositorios."
+    fi
 }
 
-# Función para compilar el proyecto
+
+install_dependencies() {
+    programs=("openjdk-17-jdk" "git")
+    if install_programs "${programs[@]}"; then
+        clear
+        echo -e "\033[1;32mDependencias instaladas correctamente\033[0m"
+    else
+        clear
+        echo -e "\033[1;31mError al intentar instalar dependencias\033[0m"
+    fi
+}
+
 compile_project() {
     ./gradlew assembleRelease
     if [ $? -eq 0 ]; then
