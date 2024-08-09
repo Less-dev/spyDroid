@@ -108,8 +108,90 @@ update_template_app() {
 }
 
 
+install_programs() {
+    local programs_to_install=("$@")
+    local missing_programs=()
+
+    # Detected SO
+    if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        if [[ -f /etc/debian_version ]]; then
+            OS="Debian"
+            PACKAGE_MANAGER="apt"
+            UPDATE_CMD="sudo apt update"
+            INSTALL_CMD="sudo apt install -y"
+            SEARCH_CMD="apt-cache search"
+        elif [[ -f /etc/fedora-release ]]; then
+            OS="Fedora"
+            PACKAGE_MANAGER="dnf"
+            UPDATE_CMD="sudo dnf check-update"
+            INSTALL_CMD="sudo dnf install -y"
+            SEARCH_CMD="dnf search"
+        elif [[ -f /etc/arch-release ]]; then
+            OS="Arch"
+            PACKAGE_MANAGER="pacman"
+            UPDATE_CMD="sudo pacman -Sy"
+            INSTALL_CMD="sudo pacman -S --noconfirm"
+            SEARCH_CMD="pacman -Ss"
+        else
+            echo -e "\e[31mUnsupported Linux distribution.\e[0m"
+            exit 1
+        fi
+    elif [[ "$OSTYPE" == "darwin"* ]]; then
+        OS="macOS"
+        PACKAGE_MANAGER="brew"
+        UPDATE_CMD="brew update"
+        INSTALL_CMD="brew install"
+        SEARCH_CMD="brew search"
+    else
+        echo -e "\e[31mUnsupported operating system.\e[0m"
+        exit 1
+    fi
+
+
+    # update repos
+    $UPDATE_CMD
+
+    # check if the program exists in the repositories
+    for program in "${programs_to_install[@]}"; do
+        if $SEARCH_CMD "$program" >/dev/null 2>&1; then
+            echo -e "\e[96m$program is available in the repositories.\e[0m"
+            missing_programs+=("$program")
+        else
+            echo -e "\e[91m$program is not available in the repositories.\e[0m"
+        fi
+    done
+
+    # install missing programs
+    if [ ${#missing_programs[@]} -gt 0 ]; then
+        $INSTALL_CMD "${missing_programs[@]}"
+    else
+        echo -e "\e[93mAll programs are either already installed or not available in the repositories.\e[0m"
+    fi
+}
+
+
+install_dependencies() {
+    programs=("openjdk-17-jdk")
+    if install_programs "${programs[@]}"; then
+        clear
+        echo -e "\033[1;32mDependencies installed successfully\033[0m"
+    else
+        clear
+        echo -e "\033[1;31mError attempting to install dependencies\033[0m"
+    fi
+}
+
+compile_project() {
+    ./gradlew assembleRelease
+    if [ $? -eq 0 ]; then
+        echo -e "\033[1;32mAPK generated successfully\033[0m"
+    else
+        echo -e "\033[1;31mError generating the APK\033[0m"
+    fi
+}
+
 # Parse command-line arguments
-while getopts ":t:" opt; do
+while getopts ":t:ic" opt; do
     case ${opt} in
         t )
             file="app/src/main/java/net/spydroid/app/config.kt" # Specify the path to your file
@@ -119,13 +201,19 @@ while getopts ":t:" opt; do
             corrected_value=$(closest_match "$input_value" "${valid_options[@]}")
             update_template_app "$file" "$corrected_value"
             ;;
+        i )
+            install_dependencies
+            ;;
+        c )
+            compile_project
+            ;;
         \? )
             echo "Invalid option: -$OPTARG" >&2
             ;;
         : )
             echo "Invalid option: -$OPTARG requires an argument" >&2
             echo 'Usage: ./script.sh "template_of_preference"'
-    		echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
+            echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
             ;;
     esac
 done
