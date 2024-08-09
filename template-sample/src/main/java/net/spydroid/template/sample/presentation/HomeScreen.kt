@@ -44,6 +44,7 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
+import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.data.LOCATION_STATES
 import net.spydroid.core.data.models.STATES_LOCATION
 import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
@@ -51,9 +52,9 @@ import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
 @Composable
 internal fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel(),
-    globalViewModel: GlobalViewModel
 ) {
 
+    val globalViewModel = LocalGlobalViewModel.current
     val startVncServerState by globalViewModel.stateVncServer.collectAsState()
     val privateIpAddress by globalViewModel.privateIpAddress.collectAsState()
     val currentLocation by globalViewModel.currentLocation.collectAsState()
