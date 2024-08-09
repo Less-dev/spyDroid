@@ -200,7 +200,7 @@
 
 ## Arquitectura de módulos
 
-![archithecture_modules](https://github.com/user-attachments/assets/0310adff-65e1-4575-8e93-a8175197faca)
+![archithecture_modules](https://github.com/user-attachments/assets/9bf1b892-003c-4eb7-a3f1-3ca03e137d8e)
 
 ## Arquitectura de base de datos
 
