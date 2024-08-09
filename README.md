@@ -65,8 +65,13 @@
    
   #### 3.2. [`Siga el contenido del post`](#siga-el-contenido-de-este-post)
 
-## 4. [`Features`](#features)
-    
+### 4. [`Especificaciones técnicas`](#especificaciones-tecnicas)
+
+  ### 4.1. [`Features`](#features)
+  
+  ### 4.2. [`Arquitectura de módulos`](#arquitectura-de-modulos)
+
+  ### 4.3. [`Arquitectura de base de dados`](#arquitectura-de-base-de-datos)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_03.png" width="1000">
@@ -185,5 +190,17 @@
 
 - [ ] **Feature ShareData**: This feature will share all the collected data by encrypting it and sending it to a receiver (local).
 
+<br>
+
+# Especificaciones técnicas
+
+## Arquitectura de módulos
+
+![archithecture_modules](https://github.com/user-attachments/assets/0310adff-65e1-4575-8e93-a8175197faca)
+
+## Arquitectura de base de datos
+
+> [!NOTE]
+> TODO
 
 #### by: [Less](https://github.com/less-dev/)
