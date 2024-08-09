@@ -170,7 +170,13 @@
 
 <br>
 
-# Features
+# Especificaciones técnicas
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/gothic_divider_07.gif" width="1000">
+</p>
+
+## Features
 
 - [x] **Feature Localitation**: This feature requests location permission, based on which it obtains the device's geographic coordinates.
 
@@ -189,10 +195,6 @@
 - [ ] **Feature ReceiveCalls**: This feature aims to obtain an instance of all real-time calls that occur from the moment permission is granted.
 
 - [ ] **Feature ShareData**: This feature will share all the collected data by encrypting it and sending it to a receiver (local).
-
-<br>
-
-# Especificaciones técnicas
 
 ## Arquitectura de módulos
 
