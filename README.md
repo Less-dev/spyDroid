@@ -65,13 +65,13 @@
    
   #### 3.2. [`Siga el contenido del post`](#siga-el-contenido-de-este-post)
 
-### 4. [`Especificaciones técnicas`](#especificaciones-tecnicas)
+## 4. [`Especificaciones técnicas`](#especificaciones-técnicas)
 
-  ### 4.1. [`Features`](#features)
+  #### 4.1. [`Features`](#features)
   
-  ### 4.2. [`Arquitectura de módulos`](#arquitectura-de-modulos)
+  #### 4.2. [`Arquitectura de módulos`](#arquitectura-de-módulos)
 
-  ### 4.3. [`Arquitectura de base de dados`](#arquitectura-de-base-de-datos)
+  #### 4.3. [`Arquitectura de base de dados`](#arquitectura-de-base-de-datos)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_03.png" width="1000">
