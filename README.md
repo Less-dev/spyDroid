@@ -196,6 +196,11 @@
 
 - [ ] **Feature ShareData**: This feature will share all the collected data by encrypting it and sending it to a receiver (local).
 
+<br>
+
+> [!NOTE]
+> arquitecturas en version `alpha`
+
 ## Arquitectura de módulos
 
 ![archithecture_modules](https://github.com/user-attachments/assets/0310adff-65e1-4575-8e93-a8175197faca)
