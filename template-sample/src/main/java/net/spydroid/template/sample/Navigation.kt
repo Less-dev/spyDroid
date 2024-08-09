@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
@@ -56,7 +57,11 @@ fun SampleNavigation() {
             ) {
 
                 NavHost(navController = navController, startDestination = "/home") {
-                    composable("/home") { HomeScreen(globalViewModel = globalViewModel) }
+                    composable("/home") {
+                        CompositionLocalProvider(LocalGlobalViewModel provides globalViewModel) {
+                            HomeScreen()
+                        }
+                    }
                     // TODO: Add more destinations
                 }
             }

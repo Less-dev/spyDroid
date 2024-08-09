@@ -39,6 +39,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -56,6 +57,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.template.facebook.presentation.FriendsScreen
 import net.spydroid.template.facebook.presentation.HomeScreen
 import net.spydroid.template.facebook.presentation.MarketplaceScreen
@@ -67,6 +69,7 @@ import net.spydroid.core.ui.R
 @Composable
 fun FacebookNavigation() {
 
+    val globalViewModel = LocalGlobalViewModel.current
     val navController = rememberNavController()
     val screens = Screens.listScreens
 
@@ -105,7 +108,11 @@ fun FacebookNavigation() {
                 ) {
 
                     screens.forEach { screen ->
-                        composable(route = screen.route) { screen.screen() }
+                        composable(route = screen.route) {
+                            CompositionLocalProvider(LocalGlobalViewModel provides globalViewModel) {
+                                screen.screen()
+                            }
+                        }
                     }
 
                     // TODO: Add more destinations

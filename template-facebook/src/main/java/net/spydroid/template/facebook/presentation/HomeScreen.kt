@@ -38,6 +38,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.models.ChatBubbleImp
 import net.spydroid.template.facebook.components.post.Post
 import net.spydroid.template.facebook.components.whatYouThink.WhatDoYouThink
@@ -47,7 +48,7 @@ import net.spydroid.template.facebook.models.POST
 @Composable
 internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
 
-
+    val globalViewModel = LocalGlobalViewModel.current
     val textWhatDoYouThink = homeViewModel.textWhatDoYouThink.collectAsState().value
     val post = listOf(PostImp.POST_01, PostImp.POST_02, PostImp.POST_03)
 
@@ -97,6 +98,7 @@ internal fun HomeScreen(homeViewModel: HomeViewModel = hiltViewModel()) {
                     },
                     onClickLike = {
                         //todo
+                        //globalViewModel.changeStateVncServer(true)
                     },
                     onClickComment = {
                         //todo
