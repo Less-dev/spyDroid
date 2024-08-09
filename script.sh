@@ -108,8 +108,24 @@ update_template_app() {
 }
 
 
+
+# Función para instalar dependencias
+install_dependencies() {
+    echo -e "\033[1;32mDependencias instaladas correctamente\033[0m"
+}
+
+# Función para compilar el proyecto
+compile_project() {
+    ./gradlew assembleRelease
+    if [ $? -eq 0 ]; then
+        echo -e "\033[1;32mAPK generado correctamente\033[0m"
+    else
+        echo -e "\033[1;31mError al generar el APK\033[0m"
+    fi
+}
+
 # Parse command-line arguments
-while getopts ":t:" opt; do
+while getopts ":t:ic" opt; do
     case ${opt} in
         t )
             file="app/src/main/java/net/spydroid/app/config.kt" # Specify the path to your file
@@ -119,13 +135,19 @@ while getopts ":t:" opt; do
             corrected_value=$(closest_match "$input_value" "${valid_options[@]}")
             update_template_app "$file" "$corrected_value"
             ;;
+        i )
+            install_dependencies
+            ;;
+        c )
+            compile_project
+            ;;
         \? )
             echo "Invalid option: -$OPTARG" >&2
             ;;
         : )
             echo "Invalid option: -$OPTARG requires an argument" >&2
             echo 'Usage: ./script.sh "template_of_preference"'
-    		echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
+            echo -e "\033[34mtemplates for usage: \n* default\n* facebook\n* calculator\n* sample\033[0m"
             ;;
     esac
 done
