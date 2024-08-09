@@ -79,9 +79,6 @@
 
 <br>
 
-> [!WARNING]
-> ####  El desarrollador de este software no asume ninguna responsabilidad por cualquier error, pérdida o problema que pueda surgir del uso del mismo. Utilícelo bajo su propio riesgo.
-
 # Guía de instalación:
 
 <p align="center">
@@ -210,4 +207,29 @@
 > [!NOTE]
 > TODO
 
-#### by: [Less](https://github.com/less-dev/)
+<br>
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/glitch_divider_11.gif" width="1000" height="5">
+</p>
+
+<br>
+
+<div align="center">
+    <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_09.gif">
+    <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_10.gif">
+</div>
+
+> [!WARNING]
+> ####  El desarrollador de este software no asume ninguna responsabilidad por cualquier error, pérdida o problema que pueda surgir del uso del mismo. Utilícelo bajo su responsabilidad.
+<br>
+
+<p align="center">
+    <img src="https://github.com/user-attachments/assets/0a483af2-fcde-4494-b435-0adea89a4a6e">
+</p>
+
+
+<p align="center">
+    <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/medieval_divider_05.png" width="1000">
+</p>
+
