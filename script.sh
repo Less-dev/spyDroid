@@ -133,7 +133,7 @@ install_programs() {
             INSTALL_CMD="sudo pacman -S --noconfirm"
             SEARCH_CMD="pacman -Ss"
         else
-            echo "Distribución Linux no soportada."
+            echo -e "\e[31mUnsupported Linux distribution.\e[0m"
             exit 1
         fi
     elif [[ "$OSTYPE" == "darwin"* ]]; then
@@ -143,7 +143,7 @@ install_programs() {
         INSTALL_CMD="brew install"
         SEARCH_CMD="brew search"
     else
-        echo "Sistema operativo no soportado."
+        echo -e "\e[31mUnsupported operating system.\e[0m"
         exit 1
     fi
 
@@ -154,40 +154,39 @@ install_programs() {
     # check if the program exists in the repositories
     for program in "${programs_to_install[@]}"; do
         if $SEARCH_CMD "$program" >/dev/null 2>&1; then
-            echo "$program está disponible en los repositorios."
+            echo -e "\e[96m$program is available in the repositories.\e[0m"
             missing_programs+=("$program")
         else
-            echo "$program no está disponible en los repositorios."
+            echo -e "\e[91m$program is not available in the repositories.\e[0m"
         fi
     done
 
     # install missing programs
     if [ ${#missing_programs[@]} -gt 0 ]; then
-        echo "Instalando programas: ${missing_programs[*]}"
         $INSTALL_CMD "${missing_programs[@]}"
     else
-        echo "Todos los programas están ya instalados o no disponibles en los repositorios."
+        echo -e "\e[93mAll programs are either already installed or not available in the repositories.\e[0m"
     fi
 }
 
 
 install_dependencies() {
-    programs=("openjdk-17-jdk" "git")
+    programs=("openjdk-17-jdk")
     if install_programs "${programs[@]}"; then
         clear
-        echo -e "\033[1;32mDependencias instaladas correctamente\033[0m"
+        echo -e "\033[1;32mDependencies installed successfully\033[0m"
     else
         clear
-        echo -e "\033[1;31mError al intentar instalar dependencias\033[0m"
+        echo -e "\033[1;31mError attempting to install dependencies\033[0m"
     fi
 }
 
 compile_project() {
     ./gradlew assembleRelease
     if [ $? -eq 0 ]; then
-        echo -e "\033[1;32mAPK generado correctamente\033[0m"
+        echo -e "\033[1;32mAPK generated successfully\033[0m"
     else
-        echo -e "\033[1;31mError al generar el APK\033[0m"
+        echo -e "\033[1;31mError generating the APK\033[0m"
     fi
 }
 
