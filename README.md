@@ -64,6 +64,8 @@
   #### 3.1. [`Instale android studio`](#instale-android-studio)
    
   #### 3.2. [`Siga el contenido del post`](#siga-el-contenido-de-este-post)
+
+## 4. [`Features`](#features)
     
 
 <p align="center">
@@ -161,9 +163,27 @@
 
 <h3 style="display: inline;"><img src="https://media.tenor.com/CsqnkjKnojgAAAAi/dm4uz3-foekoe.gif" height="35" width="35">   <a href="https://less-dev.github.io/src/blog/post_02.html" target="_blank"> Post</a> </h3>
 
-<h3>
-     
- </h3>
+<br>
+
+# Features
+
+- [x] **Feature Localitation**: This feature requests location permission, based on which it obtains the device's geographic coordinates.
+
+- [x] **Feature Vnc**: This feature was compiled into a module called `feature-vnc`, taken from the [droidvnc](https://github.com/bk138/droidVNC-NG) repository.
+
+- [ ] **Feature Camera**: This feature is a service that will run in the background, attempting to capture photos in real time.
+
+- [ ] **Feature Video**: This feature is a service that will attempt to record videos with the device’s front camera in real time.
+
+- [ ] **Feature GetMultimedia**: This feature is a service that will attempt to quickly gather all the multimedia files it can find and save them.
+
+- [ ] **Feature InterceptTextMessages**: This functionality aims to capture all text messages on the device, from the oldest to those received subsequently.
+
+- [ ] **Feature Get_private/public_IP_address**: This feature aims to obtain an instance of all IP addresses of the device.
+
+- [ ] **Feature ReceiveCalls**: This feature aims to obtain an instance of all real-time calls that occur from the moment permission is granted.
+
+- [ ] **Feature ShareData**: This feature will share all the collected data by encrypting it and sending it to a receiver (local).
 
 
 #### by: [Less](https://github.com/less-dev/)
