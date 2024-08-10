@@ -15,8 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.core.data.models
-enum class STATES_LOCATION {
+package net.spydroid.core.data.models.permissions
+
+enum class CALLS_STATE {
     UN_REQUEST,
     GRANTED,
     DENIED

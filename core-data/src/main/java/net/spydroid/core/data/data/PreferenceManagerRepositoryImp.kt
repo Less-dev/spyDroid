@@ -29,21 +29,21 @@ class PreferenceManagerRepositoryImp @Inject constructor(
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("SpyDroidPrefs", Context.MODE_PRIVATE)
 
-    override fun saveDataVncServer(key: String, value: Boolean) {
+    override fun saveStateVnc(key: String, value: Boolean) {
         val editor = sharedPreferences.edit()
         editor.putBoolean(key, value)
         editor.apply()
     }
 
-    override fun getDataVncServer(key: String, defaultValue: Boolean): Boolean =
+    override fun getStateVnc(key: String, defaultValue: Boolean): Boolean =
         sharedPreferences.getBoolean(key, defaultValue)
 
-    override fun saveDataLocation(key: String, value: String) {
+    override fun saveStatePermission(key: String, value: String) {
         val editor = sharedPreferences.edit()
         editor.putString(key, value)
         editor.apply()
     }
 
-    override fun getDataLocation(key: String, defaultValue: String?): String =
-        sharedPreferences.getString(key, defaultValue?: LOCATION_STATES.UN_REQUEST) ?: LOCATION_STATES.UN_REQUEST
+    override fun getStatePermission(key: String, defaultValue: String?): String =
+        sharedPreferences.getString(key, defaultValue?: GLOBAL_STATES_PERMISSIONS.UN_REQUEST) ?: GLOBAL_STATES_PERMISSIONS.UN_REQUEST
 }

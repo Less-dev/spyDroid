@@ -15,16 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.app
+package net.spydroid.core.data.data
 
-/*
-*   Names of app templates
-*
-* 0) default
-* 1) facebook
-* 2) calculator
-* 3) sample
-*
- */
-
-internal val template_app = "sample"
+object GLOBAL_STATES_PERMISSIONS {
+    const val UN_REQUEST = "unRequest"
+    const val GRANTED = "granted"
+    const val DENIED = "denied"
+}

@@ -15,16 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.app
+package net.spydroid.core.data.models.permissions
 
-/*
-*   Names of app templates
-*
-* 0) default
-* 1) facebook
-* 2) calculator
-* 3) sample
-*
- */
-
-internal val template_app = "sample"
+enum class CONTACTS_STATE {
+    UN_REQUEST,
+    GRANTED,
+    DENIED
+}

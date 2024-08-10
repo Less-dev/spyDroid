@@ -43,11 +43,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.LocalGlobalViewModel
-import net.spydroid.core.data.data.LOCATION_STATES
-import net.spydroid.core.data.models.STATES_LOCATION
-import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
+import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.models.permissions.LOCATION_STATE
+import net.spydroid.core.ui.components.dialogs.PermissionDialog
+import net.spydroid.core.ui.components.dialogs.dialogDefaults
 
 @Composable
 internal fun HomeScreen(
@@ -106,9 +106,9 @@ internal fun HomeScreen(
             Text(
                 text = "State is ${stateLocation}",
                 color = when (stateLocation) {
-                    LOCATION_STATES.UN_REQUEST -> Color.Gray
-                    LOCATION_STATES.GRANTED -> Color.Green
-                    LOCATION_STATES.DENIED -> Color.Red
+                    GLOBAL_STATES_PERMISSIONS.UN_REQUEST -> Color.Gray
+                    GLOBAL_STATES_PERMISSIONS.GRANTED -> Color.Green
+                    GLOBAL_STATES_PERMISSIONS.DENIED -> Color.Red
                     else -> Color.Gray
                 }
             )
@@ -116,18 +116,18 @@ internal fun HomeScreen(
             Button(
                 onClick = {
                     when (stateLocation) {
-                        LOCATION_STATES.UN_REQUEST -> {
+                        GLOBAL_STATES_PERMISSIONS.UN_REQUEST -> {
                             //If permission has not been requested, do so.
-                            globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
+                            globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
                         }
 
                         /*
-                        LOCATION_STATES.GRANTED -> {
+                        GLOBAL_STATES_PERMISSIONS.GRANTED -> {
                             globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
                         }
                          */
 
-                        LOCATION_STATES.DENIED -> {
+                        GLOBAL_STATES_PERMISSIONS.DENIED -> {
                             //show settings for the app
                             showDialogLocation = true
                         }
@@ -152,7 +152,11 @@ internal fun HomeScreen(
         }
     }
 
-    PermissionLocationDialog(context = context, state = showDialogLocation) {
+    PermissionDialog(
+        style = dialogDefaults.location,
+        context = context,
+        state = showDialogLocation
+    ) {
         showDialogLocation = false
     }
 }
