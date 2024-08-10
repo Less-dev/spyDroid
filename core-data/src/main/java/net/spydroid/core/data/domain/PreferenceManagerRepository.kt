@@ -18,10 +18,10 @@
 package net.spydroid.core.data.domain
 
 interface PreferenceManagerRepository {
-    fun saveDataVncServer(key: String, value: Boolean)
-    fun getDataVncServer(key: String, defaultValue: Boolean = false): Boolean
+    fun saveStateVnc(key: String, value: Boolean)
+    fun getStateVnc(key: String, defaultValue: Boolean = false): Boolean
 
-    fun saveDataLocation(key: String, value: String)
-    fun getDataLocation(key: String, defaultValue: String? = null): String
+    fun saveStatePermission(key: String, value: String)
+    fun getStatePermission(key: String, defaultValue: String? = null): String
 }
 

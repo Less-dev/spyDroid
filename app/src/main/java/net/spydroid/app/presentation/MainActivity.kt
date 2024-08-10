@@ -27,7 +27,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.preference.PreferenceManager
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
@@ -62,8 +61,8 @@ import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.data.LOCATION_STATES
-import net.spydroid.core.data.models.STATES_LOCATION
+import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.models.permissions.LOCATION_STATE
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
@@ -95,7 +94,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             var stateLocation by remember {
-                mutableStateOf(LOCATION_STATES.UN_REQUEST)
+                mutableStateOf(GLOBAL_STATES_PERMISSIONS.UN_REQUEST)
             }
 
             SpyDroidTheme {
@@ -125,7 +124,7 @@ class MainActivity : ComponentActivity() {
                     }
 
 
-                    if (stateLocation == LOCATION_STATES.GRANTED) {
+                    if (stateLocation == GLOBAL_STATES_PERMISSIONS.GRANTED) {
                         LocationScreen(globalViewModel = globalViewModel) {
                             locationRequired = true
                             checkLocationSettings()
@@ -141,22 +140,22 @@ class MainActivity : ComponentActivity() {
                         },
                         stateLocation = {
                             when (it) {
-                                STATES_LOCATION.UN_REQUEST -> {
+                                LOCATION_STATE.UN_REQUEST -> {
                                     //no do make nothing
-                                    stateLocation = LOCATION_STATES.UN_REQUEST
+                                    stateLocation = GLOBAL_STATES_PERMISSIONS.UN_REQUEST
                                 }
 
-                                STATES_LOCATION.GRANTED -> {
-                                    stateLocation = LOCATION_STATES.GRANTED
+                                LOCATION_STATE.GRANTED -> {
+                                    stateLocation = GLOBAL_STATES_PERMISSIONS.GRANTED
                                 }
 
-                                STATES_LOCATION.DENIED -> {
+                                LOCATION_STATE.DENIED -> {
                                     //show settings feature
-                                    stateLocation = LOCATION_STATES.DENIED
+                                    stateLocation = GLOBAL_STATES_PERMISSIONS.DENIED
                                 }
 
                                 else -> {
-                                    stateLocation = LOCATION_STATES.DENIED
+                                    stateLocation = GLOBAL_STATES_PERMISSIONS.DENIED
                                 }
                             }
                         }
@@ -165,7 +164,7 @@ class MainActivity : ComponentActivity() {
             }
 
             LaunchedEffect(key1 = stateLocation) {
-                if (stateLocation != LOCATION_STATES.UN_REQUEST) {
+                if (stateLocation != GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     runnable = Runnable {
                         handler.postDelayed(runnable, 3000)
                         checkLocationPermission()
@@ -303,11 +302,11 @@ class MainActivity : ComponentActivity() {
 
         if (isPermissionGranted) {
             //GRANTED PERMISSION
-            globalViewModel.changeStateLocation(STATES_LOCATION.GRANTED)
+            globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
             checkLocationSettings()
         } else {
             //DENIED PERMISSION
-            globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
+            globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
         }
     }
 
@@ -354,7 +353,7 @@ private fun LocationScreen(
             if (areGranted) {
                 permissionsGranted()
             } else {
-                globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
+                globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
             }
         }
     LaunchedEffect(Unit) {

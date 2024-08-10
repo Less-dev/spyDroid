@@ -15,16 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.app
+package net.spydroid.core.ui.components.dialogs
 
-/*
-*   Names of app templates
-*
-* 0) default
-* 1) facebook
-* 2) calculator
-* 3) sample
-*
- */
-
-internal val template_app = "sample"
+interface dialog {
+    val icon: Int
+    val title: String
+    val description: String
+}

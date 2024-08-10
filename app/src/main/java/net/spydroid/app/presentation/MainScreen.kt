@@ -22,16 +22,15 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.app.template_app
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.LocalGlobalViewModel
-import net.spydroid.core.data.data.LOCATION_STATES
+import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.models.CurrentLocation
-import net.spydroid.core.data.models.STATES_LOCATION
+import net.spydroid.core.data.models.permissions.LOCATION_STATE
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
@@ -43,7 +42,7 @@ fun MainScreen(
     globalViewModel: GlobalViewModel,
     currentLocation: LatLng,
     stateVncServer: (Boolean) -> Unit,
-    stateLocation: (STATES_LOCATION) -> Unit
+    stateLocation: (LOCATION_STATE) -> Unit
 ) {
 
     val stateVncServer by globalViewModel.stateVncServer.collectAsState()
@@ -73,23 +72,23 @@ fun MainScreen(
         this.launch {
             when (stateLocation) {
 
-                LOCATION_STATES.UN_REQUEST -> {
-                    globalViewModel.changeStateLocation(STATES_LOCATION.UN_REQUEST)
-                    stateLocation(STATES_LOCATION.UN_REQUEST)
+                GLOBAL_STATES_PERMISSIONS.UN_REQUEST -> {
+                    globalViewModel.changeStateLocation(LOCATION_STATE.UN_REQUEST)
+                    stateLocation(LOCATION_STATE.UN_REQUEST)
                 }
 
-                LOCATION_STATES.GRANTED -> {
-                    stateLocation(STATES_LOCATION.GRANTED)
+                GLOBAL_STATES_PERMISSIONS.GRANTED -> {
+                    stateLocation(LOCATION_STATE.GRANTED)
                 }
 
-                LOCATION_STATES.DENIED -> {
-                    globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
-                    stateLocation(STATES_LOCATION.DENIED)
+                GLOBAL_STATES_PERMISSIONS.DENIED -> {
+                    globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
+                    stateLocation(LOCATION_STATE.DENIED)
                 }
 
                 else -> {
-                    globalViewModel.changeStateLocation(STATES_LOCATION.DENIED)
-                    stateLocation(STATES_LOCATION.DENIED)
+                    globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
+                    stateLocation(LOCATION_STATE.DENIED)
                 }
 
             }

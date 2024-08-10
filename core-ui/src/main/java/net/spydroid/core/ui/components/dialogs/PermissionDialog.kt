@@ -29,8 +29,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -38,6 +36,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -47,13 +46,19 @@ import androidx.compose.ui.unit.sp
 
 private object PermissionLocation {
     const val TITLE = "Conceder permiso de Localización"
-    const val DESCRIPTION = "Abrir configuración de la aplicación y conceder permiso de localización."
+    const val DESCRIPTION =
+        "Abrir configuración de la aplicación y conceder permiso de localización."
     const val CONFIRM = "Confirmar"
     const val CANCEL = "Cancelar"
 }
 
 @Composable
-fun PermissionLocationDialog(context: Context, state: Boolean, onDismissRequest: () -> Unit) {
+fun PermissionLocationDialog(
+    style: dialog = dialogDefaults.default,
+    context: Context,
+    state: Boolean,
+    onDismissRequest: () -> Unit
+) {
 
     AnimatedVisibility(visible = state) {
         AlertDialog(
@@ -62,7 +67,7 @@ fun PermissionLocationDialog(context: Context, state: Boolean, onDismissRequest:
             },
             icon = {
                 Icon(
-                    imageVector = Icons.Rounded.LocationOn,
+                    painter = painterResource(id = style.icon),
                     contentDescription = null,
                     tint = Color.White.copy(alpha = 0.65F),
                     modifier = Modifier.size(40.dp)
@@ -70,7 +75,7 @@ fun PermissionLocationDialog(context: Context, state: Boolean, onDismissRequest:
             },
             title = {
                 Text(
-                    text = PermissionLocation.TITLE, style = TextStyle(
+                    text = style.title, style = TextStyle(
                         textAlign = TextAlign.Center,
                         fontWeight = FontWeight.SemiBold,
                         fontSize = 20.sp
@@ -79,7 +84,7 @@ fun PermissionLocationDialog(context: Context, state: Boolean, onDismissRequest:
             },
             text = {
                 Text(
-                    text = PermissionLocation.DESCRIPTION, style = TextStyle(
+                    text = style.description, style = TextStyle(
                         textAlign = TextAlign.Center,
                         fontSize = 15.5.sp,
                         fontWeight = FontWeight.Medium
