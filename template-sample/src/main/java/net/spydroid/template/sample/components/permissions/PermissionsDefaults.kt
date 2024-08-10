@@ -1,18 +1,19 @@
 package net.spydroid.template.sample.components.permissions
 
+import android.Manifest
 import net.spydroid.template.sample.R
 
 internal object PERMISSIONS {
     const val DEFAULT = "default"
-    const val LOCATION = "location"
-    const val INTERNET = "internet"
-    const val CONTACTS = "contacts"
-    const val CALLS = "calls"
-    const val CAMERA = "camera"
-    const val VIDEO = "video"
+    const val LOCATION = Manifest.permission.ACCESS_FINE_LOCATION
+    const val INTERNET = Manifest.permission.INTERNET
+    const val CONTACTS = Manifest.permission.READ_CONTACTS
+    const val CALLS = Manifest.permission.CALL_PHONE
+    const val CAMERA = Manifest.permission.CAMERA
+    const val VIDEO = Manifest.permission.CAMERA
     const val VNC = "vnc"
-    const val MULTIMEDIA = "multimedia"
-    const val TEXT_SMS = "text_sms"
+    const val MULTIMEDIA = Manifest.permission.READ_EXTERNAL_STORAGE
+    const val TEXT_SMS = Manifest.permission.READ_SMS
 }
 
 internal object PermissionsDefaults {
