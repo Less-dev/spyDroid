@@ -46,7 +46,7 @@ import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.models.permissions.LOCATION_STATE
-import net.spydroid.core.ui.components.dialogs.PermissionLocationDialog
+import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
 
 @Composable
@@ -152,8 +152,8 @@ internal fun HomeScreen(
         }
     }
 
-    PermissionLocationDialog(
-        //style = dialogDefaults.location,
+    PermissionDialog(
+        style = dialogDefaults.location,
         context = context,
         state = showDialogLocation
     ) {

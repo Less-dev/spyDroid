@@ -53,7 +53,7 @@ private object PermissionLocation {
 }
 
 @Composable
-fun PermissionLocationDialog(
+fun PermissionDialog(
     style: dialog = dialogDefaults.default,
     context: Context,
     state: Boolean,
