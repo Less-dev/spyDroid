@@ -1,5 +1,25 @@
-package net.spydroid.template.sample.components.permissions
+/*
+ * Copyright (C) 2024 Daniel Gómez(Less)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
 
+package net.spydroid.core.ui.components.permissions
+
+import android.content.pm.PackageManager
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -14,10 +34,13 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,23 +52,28 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.data.PERMISSIONS
 import net.spydroid.core.data.models.permissions.CALLS_STATE
 import net.spydroid.core.data.models.permissions.CAMERA_STATE
 import net.spydroid.core.data.models.permissions.CONTACTS_STATE
+import net.spydroid.core.data.models.permissions.INTERNET_STATE
 import net.spydroid.core.data.models.permissions.LOCATION_STATE
 import net.spydroid.core.data.models.permissions.MULTIMEDIA_STATE
 import net.spydroid.core.data.models.permissions.TEXT_SMS_STATE
 import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
-import net.spydroid.core.ui.components.permissions.PermissionsImp
-import net.spydroid.core.ui.components.permissions.RequestPermissionComponent
 
 @Composable
-internal fun ItemPermission(
+fun RequestPermission(
     globalViewModel: GlobalViewModel,
-    style: permission = PermissionsDefaults.default
+    permission: Permissions = PermissionsDefaults.default,
+    showUi: Boolean = false
 ) {
 
     val context = LocalContext.current
@@ -76,56 +104,56 @@ internal fun ItemPermission(
 
 
     // CHANGE COLOR BACKGROUND IF THE PERMISSION IS GRANTED
-    if (style.permission == PERMISSIONS.LOCATION && stateLocation == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+    if (permission.permission == PERMISSIONS.LOCATION && stateLocation == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.LOCATION && stateLocation == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.LOCATION && stateLocation == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
-    if (style.permission == PERMISSIONS.CAMERA && stateCamera == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+    if (permission.permission == PERMISSIONS.CAMERA && stateCamera == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.CAMERA && stateCamera == GLOBAL_STATES_PERMISSIONS.DENIED) {
-        colorBackground = COLOR_DENIED
-    }
-
-
-    if (style.permission == PERMISSIONS.VIDEO && stateVideo == GLOBAL_STATES_PERMISSIONS.GRANTED) {
-        colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.VIDEO && stateVideo == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.CAMERA && stateCamera == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
 
-    if (style.permission == PERMISSIONS.MULTIMEDIA && stateMultimedia == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+    if (permission.permission == PERMISSIONS.VIDEO && stateVideo == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.MULTIMEDIA && stateMultimedia == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.VIDEO && stateVideo == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
 
-    if (style.permission == PERMISSIONS.TEXT_SMS && stateTextSms == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+    if (permission.permission == PERMISSIONS.MULTIMEDIA && stateMultimedia == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.TEXT_SMS && stateTextSms == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.MULTIMEDIA && stateMultimedia == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
 
-    if (style.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+    if (permission.permission == PERMISSIONS.TEXT_SMS && stateTextSms == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
-        colorBackground = COLOR_DENIED
-    }
-
-    if (style.permission == PERMISSIONS.CONTACTS && stateContacts == GLOBAL_STATES_PERMISSIONS.GRANTED) {
-        colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.TEXT_SMS && stateTextSms == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
 
-    if (style.permission == PERMISSIONS.INTERNET && stateInternet == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+    if (permission.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (style.permission == PERMISSIONS.INTERNET && stateInternet == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
+        colorBackground = COLOR_DENIED
+    }
+
+    if (permission.permission == PERMISSIONS.CONTACTS && stateContacts == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+        colorBackground = COLOR_GRANTED
+    } else if (permission.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
+        colorBackground = COLOR_DENIED
+    }
+
+
+    if (permission.permission == PERMISSIONS.INTERNET && stateInternet == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+        colorBackground = COLOR_GRANTED
+    } else if (permission.permission == PERMISSIONS.INTERNET && stateInternet == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
@@ -135,10 +163,11 @@ internal fun ItemPermission(
      */
 
     //REQUEST LOCATION PERMISSION
-    if (style.permission == PERMISSIONS.LOCATION) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.LOCATION) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.location,
+            permissions = PermissionsDefaults.location,
+            runPermissionRequestOut = stateLocation != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateLocation == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -169,10 +198,11 @@ internal fun ItemPermission(
     }
 
     //REQUEST CAMERA PERMISSION
-    if (style.permission == PERMISSIONS.CAMERA) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.CAMERA) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.camera,
+            permissions = PermissionsDefaults.camera,
+            runPermissionRequestOut = stateCamera != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateCamera == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -203,10 +233,11 @@ internal fun ItemPermission(
     }
 
     //REQUEST VIDEO PERMISSION
-    if (style.permission == PERMISSIONS.VIDEO) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.VIDEO) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.video,
+            permissions = PermissionsDefaults.video,
+            runPermissionRequestOut = stateVideo != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateVideo == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -237,10 +268,11 @@ internal fun ItemPermission(
     }
 
     //REQUEST CALLS PERMISSION
-    if (style.permission == PERMISSIONS.CALLS) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.CALLS) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.calls,
+            permissions = PermissionsDefaults.calls,
+            runPermissionRequestOut = stateCalls != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateCalls == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -271,10 +303,11 @@ internal fun ItemPermission(
     }
 
     //REQUEST MULTIMEDIA PERMISSION
-    if (style.permission == PERMISSIONS.MULTIMEDIA) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.MULTIMEDIA) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.multimedia,
+            permissions = PermissionsDefaults.multimedia,
+            runPermissionRequestOut = stateMultimedia != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -305,10 +338,11 @@ internal fun ItemPermission(
     }
 
     //REQUEST TEXT_SMS PERMISSION
-    if (style.permission == PERMISSIONS.TEXT_SMS) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.TEXT_SMS) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.text_sms,
+            permissions = PermissionsDefaults.text_sms,
+            runPermissionRequestOut = stateTextSms != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateTextSms == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -323,7 +357,7 @@ internal fun ItemPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateTextSms(TEXT_SMS_STATE.DENIED)
+                globalViewModel.changeStateTextSms(TEXT_SMS_STATE.GRANTED)
             } else {
                 globalViewModel.changeStateTextSms(TEXT_SMS_STATE.DENIED)
             }
@@ -339,10 +373,11 @@ internal fun ItemPermission(
     }
 
     //REQUEST CONTACTS PERMISSION
-    if (style.permission == PERMISSIONS.CONTACTS) {
-        RequestPermissionComponent(
+    if (permission.permission == PERMISSIONS.CONTACTS) {
+        PermissionRequest(
             showPermission = showRequestPermission,
-            permissions = PermissionsImp.contacts,
+            permissions = PermissionsDefaults.contacts,
+            runPermissionRequestOut = stateContacts != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
             permissionsRequest = {
                 if (stateContacts == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
@@ -351,14 +386,13 @@ internal fun ItemPermission(
                         globalViewModel.changeStateContacts(CONTACTS_STATE.DENIED)
                         showDialogPermission = true
                     }
-                } else if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.DENIED) {
+                } else if (stateContacts == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
                 }
                 showRequestPermission = false
             }) {
             if (it) {
                 globalViewModel.changeStateContacts(CONTACTS_STATE.GRANTED)
-
             } else {
                 globalViewModel.changeStateContacts(CONTACTS_STATE.DENIED)
             }
@@ -373,36 +407,73 @@ internal fun ItemPermission(
         }
     }
 
-
-    Box(
-        modifier = Modifier
-            .clip(RoundedCornerShape(20.dp))
-            .fillMaxWidth()
-            .height(80.dp)
-            .background(color = colorBackground)
-            .clickable {
-                showRequestPermission = true
+    //REQUEST INTERNET PERMISSION
+    if (permission.permission == PERMISSIONS.INTERNET) {
+        PermissionRequest(
+            showPermission = showRequestPermission,
+            runPermissionRequestOut = stateInternet != GLOBAL_STATES_PERMISSIONS.UN_REQUEST,
+            permissionsRequest = {
+                if (stateInternet == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
+                    if (it) {
+                        globalViewModel.changeStateInternet(INTERNET_STATE.GRANTED)
+                    } else {
+                        globalViewModel.changeStateInternet(INTERNET_STATE.DENIED)
+                        showDialogPermission = true
+                    }
+                } else if (stateInternet == GLOBAL_STATES_PERMISSIONS.DENIED) {
+                    showDialogPermission = true
+                }
+                showRequestPermission = false
+            }) {
+            if (it) {
+                globalViewModel.changeStateInternet(INTERNET_STATE.GRANTED)
+            } else {
+                globalViewModel.changeStateInternet(INTERNET_STATE.DENIED)
             }
-    ) {
-        Column(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .padding(10.dp)
+        }
+
+        PermissionDialog(
+            context = context,
+            state = showDialogPermission,
+            style = dialogDefaults.internet
         ) {
-            TitlePermission(
-                title = style.title
-            )
-            DescriptionPermission(
-                description = style.description,
-                modifier = Modifier.verticalScroll(rememberScrollState())
+            showDialogPermission = false
+        }
+    }
+
+
+
+    if (showUi) {
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(20.dp))
+                .fillMaxWidth()
+                .height(80.dp)
+                .background(color = colorBackground)
+                .clickable {
+                    showRequestPermission = true
+                }
+        ) {
+            Column(
+                modifier = Modifier
+                    .align(Alignment.TopStart)
+                    .padding(10.dp)
+            ) {
+                TitlePermission(
+                    title = permission.title
+                )
+                DescriptionPermission(
+                    description = permission.description,
+                    modifier = Modifier.verticalScroll(rememberScrollState())
+                )
+            }
+            IconPermission(
+                icon = permission.icon,
+                modifier = Modifier
+                    .align(Alignment.CenterEnd)
+                    .padding(10.dp)
             )
         }
-        IconPermission(
-            icon = style.icon,
-            modifier = Modifier
-                .align(Alignment.CenterEnd)
-                .padding(10.dp)
-        )
     }
 }
 
@@ -437,4 +508,65 @@ private fun IconPermission(modifier: Modifier = Modifier, icon: Int) {
         modifier = modifier.size(23.5.dp),
         tint = Color.White.copy(alpha = 0.76F)
     )
+}
+
+@Composable
+private fun PermissionRequest(
+    showPermission: Boolean,
+    permissions: Permissions = PermissionsDefaults.default,
+    runPermissionRequestOut: Boolean,
+    permissionsRequest: (Boolean) -> Unit,
+    permissionOutApp: (Boolean) -> Unit
+) {
+    val context = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+
+    if (showPermission) {
+        val launchMultiplePermissions =
+            rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
+            { permissionMaps ->
+                val areGranted = permissionMaps.values.reduce { acc, next -> acc && next }
+                permissionsRequest(areGranted)
+            }
+
+        LaunchedEffect(Unit) {
+            if (permissions.permissions.all {
+                    ContextCompat.checkSelfPermission(
+                        context,
+                        it
+                    ) == PackageManager.PERMISSION_GRANTED
+                }) {
+                permissionsRequest(true)
+            } else {
+                launchMultiplePermissions.launch(permissions.permissions)
+            }
+        }
+    }
+
+    if (runPermissionRequestOut){
+        DisposableEffect(Unit) {
+            val job = coroutineScope.launch(Dispatchers.IO) {
+                while (true) {
+                    delay(1200)  // delay de 1.2 segundos
+                    val arePermissionsGranted = permissions.permissions.all {
+                        ContextCompat.checkSelfPermission(
+                            context,
+                            it
+                        ) == PackageManager.PERMISSION_GRANTED
+                    }
+
+                    if (arePermissionsGranted) {
+                        permissionOutApp(true)
+                        break
+                    } else {
+                        permissionOutApp(false)
+                    }
+                }
+            }
+
+            onDispose {
+                job.cancel()  // Cancelar la coroutine cuando se desecha el composable
+            }
+        }
+    }
 }

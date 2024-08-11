@@ -15,12 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.core.ui.components.permissions
+package net.spydroid.core.data.data
 
-interface Permissions {
-    val permissions: Array<String>
-    val title: String
-    val description: String
-    val icon: Int
-    val permission: String
+object PERMISSIONS {
+    const val DEFAULT = "default"
+    const val LOCATION = "location"
+    const val INTERNET = "interner"
+    const val CONTACTS = "contacts"
+    const val CALLS = "calls"
+    const val CAMERA = "camera"
+    const val VIDEO = "video"
+    const val VNC = "vnc"
+    const val MULTIMEDIA = "multimedia"
+    const val TEXT_SMS = "text_sms"
 }
