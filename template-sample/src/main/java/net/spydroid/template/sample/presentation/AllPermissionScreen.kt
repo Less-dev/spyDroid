@@ -28,8 +28,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.spydroid.core.data.common.LocalGlobalViewModel
-import net.spydroid.template.sample.components.permissions.ItemPermission
-import net.spydroid.template.sample.components.permissions.PermissionsDefaults
+import net.spydroid.core.ui.components.permissions.RequestPermission
+import net.spydroid.core.ui.components.permissions.PermissionsDefaults
 
 @Composable
 internal fun AllPermissionScreen(allPermissionViewModel: AllPermissionViewModel = viewModel()) {
@@ -41,15 +41,24 @@ internal fun AllPermissionScreen(allPermissionViewModel: AllPermissionViewModel 
         PermissionsDefaults.video,
         PermissionsDefaults.calls,
         PermissionsDefaults.internet,
+        PermissionsDefaults.contacts,
         PermissionsDefaults.multimedia,
         PermissionsDefaults.text_sms,
         PermissionsDefaults.vnc
     )
-    LazyColumn(Modifier.fillMaxSize().padding(10.dp)) {
+
+    LazyColumn(
+        Modifier
+            .fillMaxSize()
+            .padding(10.dp)
+    ) {
         items(listPemissions) {
-            ItemPermission(globalViewModel = globalViewModel, style = it)
+            RequestPermission(
+                globalViewModel = globalViewModel,
+                permission = it,
+                showUi = true
+            )
             Spacer(modifier = Modifier.height(10.dp))
         }
-
     }
 }

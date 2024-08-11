@@ -201,7 +201,7 @@ class GlobalViewModel @Inject constructor(
                 CAMERA_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
-                key = KEYS.CAMERA,
+                key = KEYS.VIDEO,
                 value = changeTo
             )
             _stateVideo.value = changeTo
