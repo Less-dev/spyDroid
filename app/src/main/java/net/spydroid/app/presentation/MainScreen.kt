@@ -28,9 +28,9 @@ import kotlinx.coroutines.launch
 import net.spydroid.app.template_app
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.LocalGlobalViewModel
-import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.common.PERMISSIONS_STATES
 import net.spydroid.core.data.models.CurrentLocation
-import net.spydroid.core.data.models.permissions.LOCATION_STATE
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
@@ -42,12 +42,9 @@ fun MainScreen(
     globalViewModel: GlobalViewModel,
     currentLocation: LatLng,
     stateVncServer: (Boolean) -> Unit,
-    stateLocation: (LOCATION_STATE) -> Unit
 ) {
 
     val stateVncServer by globalViewModel.stateVncServer.collectAsState()
-    val stateLocation by globalViewModel.stateLocation.collectAsState()
-
     val TAG = "PRUEBA14"
 
     LaunchedEffect(stateVncServer) {
@@ -68,32 +65,6 @@ fun MainScreen(
         }
     }
 
-    LaunchedEffect(stateLocation) {
-        this.launch {
-            when (stateLocation) {
-
-                GLOBAL_STATES_PERMISSIONS.UN_REQUEST -> {
-                    globalViewModel.changeStateLocation(LOCATION_STATE.UN_REQUEST)
-                    stateLocation(LOCATION_STATE.UN_REQUEST)
-                }
-
-                GLOBAL_STATES_PERMISSIONS.GRANTED -> {
-                    stateLocation(LOCATION_STATE.GRANTED)
-                }
-
-                GLOBAL_STATES_PERMISSIONS.DENIED -> {
-                    globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
-                    stateLocation(LOCATION_STATE.DENIED)
-                }
-
-                else -> {
-                    globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
-                    stateLocation(LOCATION_STATE.DENIED)
-                }
-
-            }
-        }
-    }
 
     LaunchedEffect(currentLocation) {
         this.launch(Dispatchers.IO) {

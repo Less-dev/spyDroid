@@ -38,3 +38,9 @@ include(":template-sample")
 
 //project
 rootProject.name = "spyDroid"
+include(":feature-location")
+include(":feature-camera")
+include(":feature-multimedia")
+include(":feature-calls")
+include(":feature-sms")
+include(":feature-sharedata")

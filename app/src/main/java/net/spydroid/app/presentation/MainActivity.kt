@@ -37,6 +37,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -61,8 +62,8 @@ import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.MainService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
-import net.spydroid.core.data.models.permissions.LOCATION_STATE
+import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.common.PERMISSIONS_STATES
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint
@@ -93,9 +94,6 @@ class MainActivity : ComponentActivity() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
         setContent {
-            var stateLocation by remember {
-                mutableStateOf(GLOBAL_STATES_PERMISSIONS.UN_REQUEST)
-            }
 
             SpyDroidTheme {
                 // A surface container using the 'background' color from the theme
@@ -124,47 +122,21 @@ class MainActivity : ComponentActivity() {
                     }
 
 
-                    if (stateLocation == GLOBAL_STATES_PERMISSIONS.GRANTED) {
-                        LocationScreen(globalViewModel = globalViewModel) {
-                            locationRequired = true
-                            checkLocationSettings()
-                        }
-                    }
-
                     MainScreen(
                         globalViewModel = globalViewModel,
                         permissionMediaProject = mediaProjectionPermission,
                         currentLocation = currentLocation,
                         stateVncServer = {
                             if (it) startMainService() else stopMainService()
-                        },
-                        stateLocation = {
-                            when (it) {
-                                LOCATION_STATE.UN_REQUEST -> {
-                                    //no do make nothing
-                                    stateLocation = GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                                }
-
-                                LOCATION_STATE.GRANTED -> {
-                                    stateLocation = GLOBAL_STATES_PERMISSIONS.GRANTED
-                                }
-
-                                LOCATION_STATE.DENIED -> {
-                                    //show settings feature
-                                    stateLocation = GLOBAL_STATES_PERMISSIONS.DENIED
-                                }
-
-                                else -> {
-                                    stateLocation = GLOBAL_STATES_PERMISSIONS.DENIED
-                                }
-                            }
                         }
                     )
                 }
             }
 
-            LaunchedEffect(key1 = stateLocation) {
-                if (stateLocation != GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
+            val locationState by globalViewModel.stateLocation.collectAsState()
+
+            LaunchedEffect(key1 = locationState) {
+                if (locationState != GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     runnable = Runnable {
                         handler.postDelayed(runnable, 3000)
                         checkLocationPermission()
@@ -302,11 +274,11 @@ class MainActivity : ComponentActivity() {
 
         if (isPermissionGranted) {
             //GRANTED PERMISSION
-            globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
+            globalViewModel.changeStateLocation(PERMISSIONS_STATES.GRANTED)
             checkLocationSettings()
         } else {
             //DENIED PERMISSION
-            globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
+            globalViewModel.changeStateLocation(PERMISSIONS_STATES.DENIED)
         }
     }
 
@@ -331,42 +303,5 @@ class MainActivity : ComponentActivity() {
     override fun onDestroy() {
         super.onDestroy()
         handler.removeCallbacks(runnable)
-    }
-}
-
-@Composable
-private fun LocationScreen(
-    globalViewModel: GlobalViewModel,
-    permissionsGranted: () -> Unit
-) {
-    val context = LocalContext.current
-
-    val permissions = arrayOf(
-        android.Manifest.permission.ACCESS_FINE_LOCATION,
-        android.Manifest.permission.ACCESS_COARSE_LOCATION,
-    )
-
-    val launchMultiplePermissions =
-        rememberLauncherForActivityResult(ActivityResultContracts.RequestMultiplePermissions())
-        { permissionMaps ->
-            val areGranted = permissionMaps.values.reduce { acc, next -> acc && next }
-            if (areGranted) {
-                permissionsGranted()
-            } else {
-                globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
-            }
-        }
-    LaunchedEffect(Unit) {
-        if (permissions.all {
-                ContextCompat.checkSelfPermission(
-                    context,
-                    it
-                ) == PackageManager.PERMISSION_GRANTED
-            }) {
-
-            permissionsGranted()
-        } else {
-            launchMultiplePermissions.launch(permissions)
-        }
     }
 }

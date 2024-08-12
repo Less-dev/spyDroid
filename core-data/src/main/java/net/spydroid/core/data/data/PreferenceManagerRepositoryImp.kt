@@ -20,6 +20,7 @@ package net.spydroid.core.data.data
 import android.content.Context
 import android.content.SharedPreferences
 import dagger.hilt.android.qualifiers.ApplicationContext
+import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.domain.PreferenceManagerRepository
 import javax.inject.Inject
 
