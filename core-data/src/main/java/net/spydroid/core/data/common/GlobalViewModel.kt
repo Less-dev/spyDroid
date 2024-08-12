@@ -25,16 +25,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.domain.PreferenceManagerRepository
 import net.spydroid.core.data.models.CurrentLocation
-import net.spydroid.core.data.models.permissions.LOCATION_STATE
-import net.spydroid.core.data.models.permissions.CALLS_STATE
-import net.spydroid.core.data.models.permissions.CAMERA_STATE
-import net.spydroid.core.data.models.permissions.CONTACTS_STATE
-import net.spydroid.core.data.models.permissions.INTERNET_STATE
-import net.spydroid.core.data.models.permissions.MULTIMEDIA_STATE
-import net.spydroid.core.data.models.permissions.TEXT_SMS_STATE
 import java.net.InetAddress
 import java.net.NetworkInterface
 import javax.inject.Inject
@@ -148,13 +141,13 @@ class GlobalViewModel @Inject constructor(
     }
 
     //permissions
-    fun changeStateLocation(state: LOCATION_STATE) =
+    fun changeStateLocation(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
 
             val changeTo = when (state) {
-                LOCATION_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                LOCATION_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                LOCATION_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
                 else -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
@@ -164,12 +157,12 @@ class GlobalViewModel @Inject constructor(
             _stateLocation.value = changeTo
         }
 
-    fun changeStateInternet(state: INTERNET_STATE) =
+    fun changeStateInternet(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                INTERNET_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                INTERNET_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                INTERNET_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.INTERNET,
@@ -178,12 +171,12 @@ class GlobalViewModel @Inject constructor(
             _stateInternet.value = changeTo
         }
 
-    fun changeStateCamera(state: CAMERA_STATE) =
+    fun changeStateCamera(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                CAMERA_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                CAMERA_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                CAMERA_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.CAMERA,
@@ -193,12 +186,12 @@ class GlobalViewModel @Inject constructor(
         }
 
 
-    fun changeStateVideo(state: CAMERA_STATE) =
+    fun changeStateVideo(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                CAMERA_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                CAMERA_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                CAMERA_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.VIDEO,
@@ -207,12 +200,12 @@ class GlobalViewModel @Inject constructor(
             _stateVideo.value = changeTo
         }
 
-    fun changeStateMultimedia(state: MULTIMEDIA_STATE) =
+    fun changeStateMultimedia(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                MULTIMEDIA_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                MULTIMEDIA_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                MULTIMEDIA_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.MULTIMEDIA,
@@ -221,12 +214,12 @@ class GlobalViewModel @Inject constructor(
             _stateMultimedia.value = changeTo
         }
 
-    fun changeStateContacts(state: CONTACTS_STATE) =
+    fun changeStateContacts(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                CONTACTS_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                CONTACTS_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                CONTACTS_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.CONTACTS,
@@ -236,12 +229,12 @@ class GlobalViewModel @Inject constructor(
         }
 
 
-    fun changeStateTextSms(state: TEXT_SMS_STATE) =
+    fun changeStateTextSms(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                TEXT_SMS_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                TEXT_SMS_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                TEXT_SMS_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.TEXT_SMS,
@@ -251,12 +244,12 @@ class GlobalViewModel @Inject constructor(
         }
 
 
-    fun changeStateCalls(state: CALLS_STATE) =
+    fun changeStateCalls(state: PERMISSIONS_STATES) =
         viewModelScope.launch(Dispatchers.IO) {
             val changeTo = when (state) {
-                CALLS_STATE.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                CALLS_STATE.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
-                CALLS_STATE.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
+                PERMISSIONS_STATES.UN_REQUEST -> GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                PERMISSIONS_STATES.GRANTED -> GLOBAL_STATES_PERMISSIONS.GRANTED
+                PERMISSIONS_STATES.DENIED -> GLOBAL_STATES_PERMISSIONS.DENIED
             }
             preferenceManagerRepository.saveStatePermission(
                 key = KEYS.CALLS,

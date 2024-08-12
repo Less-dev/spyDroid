@@ -57,15 +57,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
-import net.spydroid.core.data.data.PERMISSIONS
-import net.spydroid.core.data.models.permissions.CALLS_STATE
-import net.spydroid.core.data.models.permissions.CAMERA_STATE
-import net.spydroid.core.data.models.permissions.CONTACTS_STATE
-import net.spydroid.core.data.models.permissions.INTERNET_STATE
-import net.spydroid.core.data.models.permissions.LOCATION_STATE
-import net.spydroid.core.data.models.permissions.MULTIMEDIA_STATE
-import net.spydroid.core.data.models.permissions.TEXT_SMS_STATE
+import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.common.PERMISSIONS_STATES
+import net.spydroid.core.data.common.PERMISSIONS
 import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
 
@@ -171,9 +165,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateLocation == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
+                        globalViewModel.changeStateLocation(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
+                        globalViewModel.changeStateLocation(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateLocation == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -181,9 +175,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
+                globalViewModel.changeStateLocation(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
+                globalViewModel.changeStateLocation(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -205,9 +199,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateCamera == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateCamera(CAMERA_STATE.GRANTED)
+                        globalViewModel.changeStateCamera(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateCamera(CAMERA_STATE.DENIED)
+                        globalViewModel.changeStateCamera(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateCamera == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -215,9 +209,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateCamera(CAMERA_STATE.GRANTED)
+                globalViewModel.changeStateCamera(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateCamera(CAMERA_STATE.DENIED)
+                globalViewModel.changeStateCamera(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -239,9 +233,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateVideo == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateVideo(CAMERA_STATE.GRANTED)
+                        globalViewModel.changeStateVideo(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateVideo(CAMERA_STATE.DENIED)
+                        globalViewModel.changeStateVideo(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateVideo == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -249,9 +243,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateVideo(CAMERA_STATE.GRANTED)
+                globalViewModel.changeStateVideo(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateVideo(CAMERA_STATE.DENIED)
+                globalViewModel.changeStateVideo(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -273,9 +267,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateCalls == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateCalls(CALLS_STATE.GRANTED)
+                        globalViewModel.changeStateCalls(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateCalls(CALLS_STATE.DENIED)
+                        globalViewModel.changeStateCalls(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -283,9 +277,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateCalls(CALLS_STATE.GRANTED)
+                globalViewModel.changeStateCalls(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateCalls(CALLS_STATE.DENIED)
+                globalViewModel.changeStateCalls(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -307,9 +301,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateMultimedia(MULTIMEDIA_STATE.GRANTED)
+                        globalViewModel.changeStateMultimedia(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateMultimedia(MULTIMEDIA_STATE.DENIED)
+                        globalViewModel.changeStateMultimedia(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -317,9 +311,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateMultimedia(MULTIMEDIA_STATE.GRANTED)
+                globalViewModel.changeStateMultimedia(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateMultimedia(MULTIMEDIA_STATE.DENIED)
+                globalViewModel.changeStateMultimedia(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -341,9 +335,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateTextSms == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateTextSms(TEXT_SMS_STATE.GRANTED)
+                        globalViewModel.changeStateTextSms(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateTextSms(TEXT_SMS_STATE.DENIED)
+                        globalViewModel.changeStateTextSms(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateTextSms == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -351,9 +345,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateTextSms(TEXT_SMS_STATE.GRANTED)
+                globalViewModel.changeStateTextSms(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateTextSms(TEXT_SMS_STATE.DENIED)
+                globalViewModel.changeStateTextSms(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -375,9 +369,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateContacts == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateContacts(CONTACTS_STATE.GRANTED)
+                        globalViewModel.changeStateContacts(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateContacts(CONTACTS_STATE.DENIED)
+                        globalViewModel.changeStateContacts(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateContacts == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -385,9 +379,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateContacts(CONTACTS_STATE.GRANTED)
+                globalViewModel.changeStateContacts(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateContacts(CONTACTS_STATE.DENIED)
+                globalViewModel.changeStateContacts(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -408,9 +402,9 @@ fun RequestPermission(
             permissionsRequest = {
                 if (stateInternet == GLOBAL_STATES_PERMISSIONS.UN_REQUEST) {
                     if (it) {
-                        globalViewModel.changeStateInternet(INTERNET_STATE.GRANTED)
+                        globalViewModel.changeStateInternet(PERMISSIONS_STATES.GRANTED)
                     } else {
-                        globalViewModel.changeStateInternet(INTERNET_STATE.DENIED)
+                        globalViewModel.changeStateInternet(PERMISSIONS_STATES.DENIED)
                     }
                 } else if (stateInternet == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -418,9 +412,9 @@ fun RequestPermission(
                 showRequestPermission = false
             }) {
             if (it) {
-                globalViewModel.changeStateInternet(INTERNET_STATE.GRANTED)
+                globalViewModel.changeStateInternet(PERMISSIONS_STATES.GRANTED)
             } else {
-                globalViewModel.changeStateInternet(INTERNET_STATE.DENIED)
+                globalViewModel.changeStateInternet(PERMISSIONS_STATES.DENIED)
             }
         }
 
@@ -466,6 +460,8 @@ fun RequestPermission(
                     .padding(10.dp)
             )
         }
+    } else {
+        showRequestPermission = true
     }
 }
 

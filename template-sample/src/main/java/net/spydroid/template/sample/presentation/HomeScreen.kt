@@ -44,8 +44,8 @@ import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.LocalGlobalViewModel
-import net.spydroid.core.data.data.GLOBAL_STATES_PERMISSIONS
-import net.spydroid.core.data.models.permissions.LOCATION_STATE
+import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.core.data.common.PERMISSIONS_STATES
 import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
 
@@ -118,7 +118,7 @@ internal fun HomeScreen(
                     when (stateLocation) {
                         GLOBAL_STATES_PERMISSIONS.UN_REQUEST -> {
                             //If permission has not been requested, do so.
-                            globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
+                            globalViewModel.changeStateLocation(PERMISSIONS_STATES.GRANTED)
                         }
 
                         /*

@@ -14,6 +14,12 @@
             <option value="$PROJECT_DIR$/core-data" />
             <option value="$PROJECT_DIR$/core-database" />
             <option value="$PROJECT_DIR$/core-ui" />
+            <option value="$PROJECT_DIR$/feature-calls" />
+            <option value="$PROJECT_DIR$/feature-camera" />
+            <option value="$PROJECT_DIR$/feature-location" />
+            <option value="$PROJECT_DIR$/feature-multimedia" />
+            <option value="$PROJECT_DIR$/feature-sharedata" />
+            <option value="$PROJECT_DIR$/feature-sms" />
             <option value="$PROJECT_DIR$/feature-vnc" />
             <option value="$PROJECT_DIR$/template-calculator" />
             <option value="$PROJECT_DIR$/template-default" />
