@@ -23,24 +23,26 @@ pluginManagement {
     }
 }
 
-//system
-include(":app")
-include(":core-ui")
-include(":core-database")
-include(":core-data")
-include(":feature-vnc")
-
 //templates app
+include(":app")
 include(":template-default")
 include(":template-facebook")
 include(":template-calculator")
 include(":template-sample")
 
-//project
-rootProject.name = "spyDroid"
+//system
+include(":core-database")
+include(":core-data")
+include(":core-ui")
+include(":feature-vnc")
 include(":feature-location")
 include(":feature-camera")
 include(":feature-multimedia")
 include(":feature-calls")
 include(":feature-sms")
 include(":feature-sharedata")
+include(":feature-contacts")
+
+//project
+rootProject.name = "spyDroid"
+
