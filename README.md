@@ -1,4 +1,3 @@
-
 <!--
   Copyright (C) 2024 Daniel Gómez (Less)
 
@@ -15,7 +14,6 @@
   You should have received a copy of the GNU General Public License
   along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
-
 
 ![banner) (1)](https://github.com/user-attachments/assets/743b8003-f09b-4c92-b3a3-f92d5bd23d22)
 
@@ -177,23 +175,23 @@
 
 ## Features
 
-- [x] **Feature Localitation**: This feature requests location permission, based on which it obtains the device's geographic coordinates.
+- [ ] **Feature-location**: This feature requests location permission, based on which it obtains the device's geographic coordinates.
 
-- [x] **Feature Vnc**: This feature was compiled into a module called `feature-vnc`, taken from the [droidvnc](https://github.com/bk138/droidVNC-NG) repository.
+- [x] **Feature-vnc**: This feature was compiled into a module called `feature-vnc`, taken from the [droidvnc](https://github.com/bk138/droidVNC-NG) repository.
 
-- [ ] **Feature Camera**: This feature is a service that will run in the background, attempting to capture photos in real time.
+- [ ] **Feature-camera**: This feature is a service that will run in the background, attempting to capture photos in real time.
 
-- [ ] **Feature Video**: This feature is a service that will attempt to record videos with the device’s front camera in real time.
+- [ ] **Feature-video**: This feature is a service that will attempt to record videos with the device’s front camera in real time.
 
-- [ ] **Feature GetMultimedia**: This feature is a service that will attempt to quickly gather all the multimedia files it can find and save them.
+- [ ] **Feature-multimedia**: This feature is a service that will attempt to quickly gather all the multimedia files it can find and save them.
 
-- [ ] **Feature InterceptTextMessages**: This functionality aims to capture all text messages on the device, from the oldest to those received subsequently.
+- [ ] **Feature-sms**: This functionality aims to capture all text messages on the device, from the oldest to those received subsequently.
 
-- [ ] **Feature Get_private/public_IP_address**: This feature aims to obtain an instance of all IP addresses of the device.
+- [ ] **Feature-ipAddress**: This feature aims to obtain an instance of all IP addresses of the device.
 
-- [ ] **Feature ReceiveCalls**: This feature aims to obtain an instance of all real-time calls that occur from the moment permission is granted.
+- [ ] **Feature-calls**: This feature aims to obtain an instance of all real-time calls that occur from the moment permission is granted.
 
-- [ ] **Feature ShareData**: This feature will share all the collected data by encrypting it and sending it to a receiver (local).
+- [ ] **Feature-shareData**: This feature will share all the collected data by encrypting it and sending it to a receiver (local).
 
 <br>
 
