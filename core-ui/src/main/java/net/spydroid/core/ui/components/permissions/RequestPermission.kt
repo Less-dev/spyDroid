@@ -146,7 +146,7 @@ fun RequestPermission(
 
     if (permission.permission == PERMISSIONS.CONTACTS && stateContacts == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         colorBackground = COLOR_GRANTED
-    } else if (permission.permission == PERMISSIONS.CALLS && stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
+    } else if (permission.permission == PERMISSIONS.CONTACTS && stateContacts == GLOBAL_STATES_PERMISSIONS.DENIED) {
         colorBackground = COLOR_DENIED
     }
 
@@ -174,9 +174,8 @@ fun RequestPermission(
                         globalViewModel.changeStateLocation(LOCATION_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateLocation(LOCATION_STATE.DENIED)
-                        showDialogPermission = true
                     }
-                } else if (stateCamera == GLOBAL_STATES_PERMISSIONS.DENIED) {
+                } else if (stateLocation == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
                 }
                 showRequestPermission = false
@@ -209,7 +208,6 @@ fun RequestPermission(
                         globalViewModel.changeStateCamera(CAMERA_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateCamera(CAMERA_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateCamera == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -244,7 +242,6 @@ fun RequestPermission(
                         globalViewModel.changeStateVideo(CAMERA_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateVideo(CAMERA_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateVideo == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -279,7 +276,6 @@ fun RequestPermission(
                         globalViewModel.changeStateCalls(CALLS_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateCalls(CALLS_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateCalls == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -314,7 +310,6 @@ fun RequestPermission(
                         globalViewModel.changeStateMultimedia(MULTIMEDIA_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateMultimedia(MULTIMEDIA_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -349,7 +344,6 @@ fun RequestPermission(
                         globalViewModel.changeStateTextSms(TEXT_SMS_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateTextSms(TEXT_SMS_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateTextSms == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -384,7 +378,6 @@ fun RequestPermission(
                         globalViewModel.changeStateContacts(CONTACTS_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateContacts(CONTACTS_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateContacts == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
@@ -418,7 +411,6 @@ fun RequestPermission(
                         globalViewModel.changeStateInternet(INTERNET_STATE.GRANTED)
                     } else {
                         globalViewModel.changeStateInternet(INTERNET_STATE.DENIED)
-                        showDialogPermission = true
                     }
                 } else if (stateInternet == GLOBAL_STATES_PERMISSIONS.DENIED) {
                     showDialogPermission = true
