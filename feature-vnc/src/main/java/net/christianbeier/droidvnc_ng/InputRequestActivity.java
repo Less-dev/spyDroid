@@ -21,11 +21,8 @@
 
 package net.christianbeier.droidvnc_ng;
 
-import android.app.AlertDialog;
-import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -42,7 +39,7 @@ public class InputRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // if VIEW_ONLY is set, bail out early without bothering the user
-        if(getIntent().getBooleanExtra(MainService.EXTRA_VIEW_ONLY, new Defaults(this).getViewOnly())) {
+        if(getIntent().getBooleanExtra(VncService.EXTRA_VIEW_ONLY, new Defaults(this).getViewOnly())) {
             postResultAndFinish(false);
             return;
         }
@@ -71,10 +68,10 @@ public class InputRequestActivity extends AppCompatActivity {
         else
             Log.i(TAG, "a11y disabled");
 
-        Intent intent = new Intent(this, MainService.class);
-        intent.setAction(MainService.ACTION_HANDLE_INPUT_RESULT);
-        intent.putExtra(MainService.EXTRA_INPUT_RESULT, isA11yEnabled);
-        intent.putExtra(MainService.EXTRA_ACCESS_KEY, PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, new Defaults(this).getAccessKey()));
+        Intent intent = new Intent(this, VncService.class);
+        intent.setAction(VncService.ACTION_HANDLE_INPUT_RESULT);
+        intent.putExtra(VncService.EXTRA_INPUT_RESULT, isA11yEnabled);
+        intent.putExtra(VncService.EXTRA_ACCESS_KEY, PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, new Defaults(this).getAccessKey()));
         startService(intent);
         finish();
     }

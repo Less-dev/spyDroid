@@ -65,4 +65,7 @@ dependencies {
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    //WM
+    implementation(libs.androidx.work.runtime.ktx)
 }

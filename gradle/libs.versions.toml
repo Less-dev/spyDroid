@@ -57,6 +57,7 @@ googleMaterial = "1.10.0"
 fundationLayout = "1.5.4"
 kotlinStdlib = "1.9.0"
 kotlinSerialitation = "1.9.0"
+workRuntimeKtx = "2.9.1"
 
 [libraries]
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
@@ -82,6 +83,7 @@ androidx-media3-session = { module = "androidx.media3:media3-session", version.r
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
 androidx-preference = { module = "androidx.preference:preference", version.ref = "preference" }
 androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat"}
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
 exp4j = { module = "net.objecthunter:exp4j", version.ref = "exp4j" }
 google-android-material = { module = "com.google.android.material:material", version.ref = "googleMaterial"}
 compose-fundation-layout = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "fundationLayout"}

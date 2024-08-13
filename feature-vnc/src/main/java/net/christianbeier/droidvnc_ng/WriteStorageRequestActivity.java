@@ -45,7 +45,7 @@ public class WriteStorageRequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         // if file transfer not wanted, bail out early without bothering the user
-        if(!getIntent().getBooleanExtra(MainService.EXTRA_FILE_TRANSFER, new Defaults(this).getFileTransfer())) {
+        if(!getIntent().getBooleanExtra(VncService.EXTRA_FILE_TRANSFER, new Defaults(this).getFileTransfer())) {
             postResultAndFinish(false);
             return;
         }
@@ -96,10 +96,10 @@ public class WriteStorageRequestActivity extends AppCompatActivity {
         else
             Log.i(TAG, "permission denied");
 
-        Intent intent = new Intent(this, MainService.class);
-        intent.setAction(MainService.ACTION_HANDLE_WRITE_STORAGE_RESULT);
-        intent.putExtra(MainService.EXTRA_ACCESS_KEY, PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, new Defaults(this).getAccessKey()));
-        intent.putExtra(MainService.EXTRA_WRITE_STORAGE_RESULT, isPermissionGiven);
+        Intent intent = new Intent(this, VncService.class);
+        intent.setAction(VncService.ACTION_HANDLE_WRITE_STORAGE_RESULT);
+        intent.putExtra(VncService.EXTRA_ACCESS_KEY, PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, new Defaults(this).getAccessKey()));
+        intent.putExtra(VncService.EXTRA_WRITE_STORAGE_RESULT, isPermissionGiven);
         startService(intent);
         finish();
     }

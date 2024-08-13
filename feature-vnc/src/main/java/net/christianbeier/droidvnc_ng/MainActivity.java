@@ -29,9 +29,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -39,30 +37,16 @@ import androidx.core.content.ContextCompat;
 import androidx.preference.PreferenceManager;
 
 import android.provider.Settings;
-import android.text.Editable;
-import android.text.InputType;
-import android.text.TextWatcher;
-import android.text.method.PasswordTransformationMethod;
-import android.text.method.SingleLineTransformationMethod;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.slider.Slider;
-import com.google.android.material.switchmaterial.SwitchMaterial;
-
 import java.util.ArrayList;
-import java.util.UUID;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -102,19 +86,19 @@ public class MainActivity extends AppCompatActivity {
         mButtonToggle = findViewById(R.id.toggle);
         mButtonToggle.setOnClickListener(view -> {
 
-            Intent intent = new Intent(MainActivity.this, MainService.class);
-            intent.putExtra(MainService.EXTRA_PORT, prefs.getInt(Constants.PREFS_KEY_SETTINGS_PORT, mDefaults.getPort()));
-            intent.putExtra(MainService.EXTRA_PASSWORD, prefs.getString(Constants.PREFS_KEY_SETTINGS_PASSWORD, mDefaults.getPassword()));
-            intent.putExtra(MainService.EXTRA_FILE_TRANSFER, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_FILE_TRANSFER, mDefaults.getFileTransfer()));
-            intent.putExtra(MainService.EXTRA_VIEW_ONLY, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_VIEW_ONLY, mDefaults.getViewOnly()));
-            intent.putExtra(MainService.EXTRA_SHOW_POINTERS, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_SHOW_POINTERS, mDefaults.getShowPointers()));
-            intent.putExtra(MainService.EXTRA_SCALING, prefs.getFloat(Constants.PREFS_KEY_SETTINGS_SCALING, mDefaults.getScaling()));
-            intent.putExtra(MainService.EXTRA_ACCESS_KEY, prefs.getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, mDefaults.getAccessKey()));
+            Intent intent = new Intent(MainActivity.this, VncService.class);
+            intent.putExtra(VncService.EXTRA_PORT, prefs.getInt(Constants.PREFS_KEY_SETTINGS_PORT, mDefaults.getPort()));
+            intent.putExtra(VncService.EXTRA_PASSWORD, prefs.getString(Constants.PREFS_KEY_SETTINGS_PASSWORD, mDefaults.getPassword()));
+            intent.putExtra(VncService.EXTRA_FILE_TRANSFER, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_FILE_TRANSFER, mDefaults.getFileTransfer()));
+            intent.putExtra(VncService.EXTRA_VIEW_ONLY, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_VIEW_ONLY, mDefaults.getViewOnly()));
+            intent.putExtra(VncService.EXTRA_SHOW_POINTERS, prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_SHOW_POINTERS, mDefaults.getShowPointers()));
+            intent.putExtra(VncService.EXTRA_SCALING, prefs.getFloat(Constants.PREFS_KEY_SETTINGS_SCALING, mDefaults.getScaling()));
+            intent.putExtra(VncService.EXTRA_ACCESS_KEY, prefs.getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, mDefaults.getAccessKey()));
             if(mIsMainServiceRunning) {
-                intent.setAction(MainService.ACTION_STOP);
+                intent.setAction(VncService.ACTION_STOP);
             }
             else {
-                intent.setAction(MainService.ACTION_START);
+                intent.setAction(VncService.ACTION_START);
             }
             mButtonToggle.setEnabled(false);
 
@@ -165,8 +149,8 @@ public class MainActivity extends AppCompatActivity {
         mMainServiceBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                if (MainService.ACTION_START.equals(intent.getAction())) {
-                    if(intent.getBooleanExtra(MainService.EXTRA_REQUEST_SUCCESS, false)) {
+                if (VncService.ACTION_START.equals(intent.getAction())) {
+                    if(intent.getBooleanExtra(VncService.EXTRA_REQUEST_SUCCESS, false)) {
                         // was a successful START requested by anyone (but sent by MainService, as the receiver is not exported!)
                         Log.d(TAG, "got MainService started success event");
                         onServerStarted();
@@ -180,19 +164,19 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (MainService.ACTION_STOP.equals(intent.getAction())
-                        && (intent.getBooleanExtra(MainService.EXTRA_REQUEST_SUCCESS, true))) {
+                if (VncService.ACTION_STOP.equals(intent.getAction())
+                        && (intent.getBooleanExtra(VncService.EXTRA_REQUEST_SUCCESS, true))) {
                     // was a successful STOP requested by anyone (but sent by MainService, as the receiver is not exported!)
                     // or a STOP without any extras
                     Log.d(TAG, "got MainService stopped event");
                     onServerStopped();
                 }
 
-                if (MainService.ACTION_CONNECT_REVERSE.equals(intent.getAction())
+                if (VncService.ACTION_CONNECT_REVERSE.equals(intent.getAction())
                         && mLastMainServiceRequestId != null
-                        && mLastMainServiceRequestId.equals(intent.getStringExtra(MainService.EXTRA_REQUEST_ID))) {
+                        && mLastMainServiceRequestId.equals(intent.getStringExtra(VncService.EXTRA_REQUEST_ID))) {
                     // was a CONNECT_REVERSE requested by us
-                    if (intent.getBooleanExtra(MainService.EXTRA_REQUEST_SUCCESS, false)) {
+                    if (intent.getBooleanExtra(VncService.EXTRA_REQUEST_SUCCESS, false)) {
                         Toast.makeText(MainActivity.this,
                                         getString(R.string.main_activity_reverse_vnc_success,
                                                 mLastReverseHost,
@@ -219,11 +203,11 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
 
-                if (MainService.ACTION_CONNECT_REPEATER.equals(intent.getAction())
+                if (VncService.ACTION_CONNECT_REPEATER.equals(intent.getAction())
                         && mLastMainServiceRequestId != null
-                        && mLastMainServiceRequestId.equals(intent.getStringExtra(MainService.EXTRA_REQUEST_ID))) {
+                        && mLastMainServiceRequestId.equals(intent.getStringExtra(VncService.EXTRA_REQUEST_ID))) {
                     // was a CONNECT_REPEATER requested by us
-                    if (intent.getBooleanExtra(MainService.EXTRA_REQUEST_SUCCESS, false)) {
+                    if (intent.getBooleanExtra(VncService.EXTRA_REQUEST_SUCCESS, false)) {
                         Toast.makeText(MainActivity.this,
                                         getString(R.string.main_activity_repeater_vnc_success,
                                                 mLastRepeaterHost,
@@ -258,14 +242,14 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         IntentFilter filter = new IntentFilter();
-        filter.addAction(MainService.ACTION_START);
-        filter.addAction(MainService.ACTION_STOP);
-        filter.addAction(MainService.ACTION_CONNECT_REVERSE);
-        filter.addAction(MainService.ACTION_CONNECT_REPEATER);
+        filter.addAction(VncService.ACTION_START);
+        filter.addAction(VncService.ACTION_STOP);
+        filter.addAction(VncService.ACTION_CONNECT_REVERSE);
+        filter.addAction(VncService.ACTION_CONNECT_REPEATER);
         ContextCompat.registerReceiver(this, mMainServiceBroadcastReceiver, filter, ContextCompat.RECEIVER_NOT_EXPORTED);
 
         // setup UI initial state
-        if (MainService.isServerActive()) {
+        if (VncService.isServerActive()) {
             Log.d(TAG, "Found server to be started");
             onServerStarted();
         } else {
@@ -327,15 +311,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         TextView screenCapturingStatus = findViewById(R.id.permission_status_screen_capturing);
-        if(MainService.isMediaProjectionEnabled() == 1) {
+        if(VncService.isMediaProjectionEnabled() == 1) {
             screenCapturingStatus.setText(R.string.main_activity_granted);
             screenCapturingStatus.setTextColor(getColor(R.color.granted));
         }
-        if(MainService.isMediaProjectionEnabled() == 0) {
+        if(VncService.isMediaProjectionEnabled() == 0) {
             screenCapturingStatus.setText(R.string.main_activity_denied);
             screenCapturingStatus.setTextColor(getColor(R.color.denied));
         }
-        if(MainService.isMediaProjectionEnabled() == -1) {
+        if(VncService.isMediaProjectionEnabled() == -1) {
             screenCapturingStatus.setText(R.string.main_activity_unknown);
             screenCapturingStatus.setTextColor(getColor(android.R.color.darker_gray));
         }
@@ -357,12 +341,12 @@ public class MainActivity extends AppCompatActivity {
             mButtonToggle.requestFocus();
         });
 
-        if(MainService.getPort() >= 0) {
+        if(VncService.getPort() >= 0) {
             // uhh there must be a nice functional way for this
-            ArrayList<String> hosts = MainService.getIPv4s();
+            ArrayList<String> hosts = VncService.getIPv4s();
             StringBuilder sb = new StringBuilder();
             for (int i = 0; i < hosts.size(); ++i) {
-                sb.append(hosts.get(i) + ":" + MainService.getPort());
+                sb.append(hosts.get(i) + ":" + VncService.getPort());
                 if (i != hosts.size() - 1)
                     sb.append(" ").append(getString(R.string.or)).append(" ");
             }

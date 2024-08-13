@@ -28,14 +28,11 @@ import android.os.Handler
 import android.os.Looper
 import android.preference.PreferenceManager
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.compose.setContent
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -44,7 +41,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.FusedLocationProviderClient
@@ -59,7 +55,7 @@ import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
-import net.christianbeier.droidvnc_ng.MainService
+import net.christianbeier.droidvnc_ng.VncService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.core.data.common.GlobalViewModel
 import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
@@ -164,7 +160,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        when (MainService.isMediaProjectionEnabled()) {
+        when (VncService.isMediaProjectionEnabled()) {
             0 -> {
                 //granted permission
                 mediaProjectionPermission = 0
@@ -219,39 +215,39 @@ class MainActivity : ComponentActivity() {
 
 
     private fun startMainService() {
-        val intent = Intent(this, MainService::class.java)
+        val intent = Intent(this, VncService::class.java)
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val mDefaults = Defaults(this)
 
         intent.putExtra(
-            MainService.EXTRA_PORT,
+            VncService.EXTRA_PORT,
             prefs.getInt(Constants.PREFS_KEY_SETTINGS_PORT, mDefaults.port)
         )
         intent.putExtra(
-            MainService.EXTRA_PASSWORD,
+            VncService.EXTRA_PASSWORD,
             prefs.getString(Constants.PREFS_KEY_SETTINGS_PASSWORD, mDefaults.password)
         )
         intent.putExtra(
-            MainService.EXTRA_FILE_TRANSFER,
+            VncService.EXTRA_FILE_TRANSFER,
             prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_FILE_TRANSFER, mDefaults.fileTransfer)
         )
         intent.putExtra(
-            MainService.EXTRA_VIEW_ONLY,
+            VncService.EXTRA_VIEW_ONLY,
             prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_VIEW_ONLY, mDefaults.viewOnly)
         )
         intent.putExtra(
-            MainService.EXTRA_SHOW_POINTERS,
+            VncService.EXTRA_SHOW_POINTERS,
             prefs.getBoolean(Constants.PREFS_KEY_SETTINGS_SHOW_POINTERS, mDefaults.showPointers)
         )
         intent.putExtra(
-            MainService.EXTRA_SCALING,
+            VncService.EXTRA_SCALING,
             prefs.getFloat(Constants.PREFS_KEY_SETTINGS_SCALING, mDefaults.scaling)
         )
         intent.putExtra(
-            MainService.EXTRA_ACCESS_KEY,
+            VncService.EXTRA_ACCESS_KEY,
             prefs.getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, mDefaults.accessKey)
         )
-        intent.setAction(MainService.ACTION_START)
+        intent.setAction(VncService.ACTION_START)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             startForegroundService(intent)
         } else {
@@ -261,8 +257,8 @@ class MainActivity : ComponentActivity() {
 
 
     private fun stopMainService() {
-        val intent = Intent(this, MainService::class.java)
-        intent.setAction(MainService.ACTION_STOP)
+        val intent = Intent(this, VncService::class.java)
+        intent.setAction(VncService.ACTION_STOP)
         stopService(intent)
     }
 

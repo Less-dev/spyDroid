@@ -60,7 +60,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Enumeration;
 
-public class MainService extends Service {
+public class VncService extends Service {
 
     private static final String TAG = "MainService";
     private static final int NOTIFICATION_ID = 11;
@@ -120,7 +120,7 @@ public class MainService extends Service {
 
     private Defaults mDefaults;
 
-    private static MainService instance;
+    private static VncService instance;
 
     private final NsdManager.RegistrationListener mNSDRegistrationListener = new NsdManager.RegistrationListener() {
         @Override
