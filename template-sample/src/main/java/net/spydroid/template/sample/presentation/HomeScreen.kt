@@ -63,6 +63,9 @@ internal fun HomeScreen(
     var showDialogLocation by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
+    val managerFeatures = remember { ManagerFeatures(context, globalViewModel) }
+
+
     LaunchedEffect(globalViewModel) {
         this.launch(Dispatchers.IO) {
             globalViewModel.get_private_ip_address()
@@ -115,7 +118,11 @@ internal fun HomeScreen(
             )
 
             Button(onClick = {
-                ManagerFeatures(context, globalViewModel).startLocation()
+                managerFeatures.also {
+                    it.Camera().start()
+                    it.Vnc().start()
+                    it.Multimedia().start()
+                }
             }) {
                 Text("Iniciar WM")
             }
