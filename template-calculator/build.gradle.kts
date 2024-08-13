@@ -66,6 +66,7 @@ dependencies {
     //core-system
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
+    implementation(project(":core-mf"))
 
     //math
     implementation(libs.exp4j)

@@ -59,6 +59,7 @@ dependencies {
     implementation(project(":feature-sharedata"))
     implementation(project(":feature-calls"))
     implementation(project(":feature-sms"))
+    implementation(project(":feature-contacts"))
     implementation(project(":feature-camera"))
 
     implementation(libs.androidx.core.ktx)
@@ -67,4 +68,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //WM
+    implementation(libs.androidx.work.runtime.ktx)
 }
