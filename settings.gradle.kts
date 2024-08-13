@@ -46,3 +46,4 @@ include(":feature-contacts")
 //project
 rootProject.name = "spyDroid"
 
+include(":core-mf")

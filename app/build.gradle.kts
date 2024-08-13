@@ -94,13 +94,7 @@ dependencies {
     // System
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
-    implementation(project(":feature-location"))
     implementation(project(":feature-vnc"))
-    implementation(project(":feature-multimedia"))
-    implementation(project(":feature-sharedata"))
-    implementation(project(":feature-calls"))
-    implementation(project(":feature-sms"))
-    implementation(project(":feature-camera"))
 
     // Templates
     implementation(project(":template-default"))
