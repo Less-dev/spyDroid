@@ -67,7 +67,7 @@ dependencies {
     //core-system
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
-    implementation(project(":feature-location"))
+    implementation(project(":core-mf"))
 
     // Arch Components
     implementation(libs.androidx.lifecycle.runtime.compose)

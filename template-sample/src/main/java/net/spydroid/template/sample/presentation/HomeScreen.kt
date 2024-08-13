@@ -46,9 +46,9 @@ import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.common.PERMISSIONS_STATES
+import net.spydroid.core.manager.features.ManagerFeatures
 import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
-import net.spydroid.feature.location.initWM
 
 @Composable
 internal fun HomeScreen(
@@ -115,7 +115,7 @@ internal fun HomeScreen(
             )
 
             Button(onClick = {
-                initWM(context)
+                ManagerFeatures(context, globalViewModel).startLocation()
             }) {
                 Text("Iniciar WM")
             }

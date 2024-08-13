@@ -19,7 +19,7 @@ fun initWM (ctx: Context) {
     WorkManager.getInstance(ctx).enqueue(myWorkRequest)
 }
 
-internal class LocationWork(appContext: Context, workerParams: WorkerParameters) :
+class LocationWork(appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
 
     override fun doWork(): Result {
