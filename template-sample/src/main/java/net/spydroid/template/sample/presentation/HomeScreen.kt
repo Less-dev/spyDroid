@@ -48,6 +48,7 @@ import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.common.PERMISSIONS_STATES
 import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
+import net.spydroid.feature.location.initWM
 
 @Composable
 internal fun HomeScreen(
@@ -112,6 +113,12 @@ internal fun HomeScreen(
                     else -> Color.Gray
                 }
             )
+
+            Button(onClick = {
+                initWM(context)
+            }) {
+                Text("Iniciar WM")
+            }
 
             Button(
                 onClick = {

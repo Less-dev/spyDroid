@@ -92,8 +92,9 @@
             </intent-filter>
         </receiver>
 
+        <!--VNC SERVICES -->
         <service
-            android:name="net.christianbeier.droidvnc_ng.MainService"
+            android:name="net.christianbeier.droidvnc_ng.VncService"
             android:enabled="true"
             android:exported="true"
             android:foregroundServiceType="mediaProjection"
