@@ -31,6 +31,7 @@ import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.common.PERMISSIONS_STATES
 import net.spydroid.core.data.models.CurrentLocation
+import net.spydroid.sample.template.app.SampleNavigation2
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
@@ -94,7 +95,8 @@ fun MainScreen(
             }
 
             APP_TEMPLATES.SAMPLE -> {
-                SampleNavigation()
+                //SampleNavigation()
+                SampleNavigation2()
             }
 
             //APP_TEMPLATES.YOUR_TEMPLATE -> {
