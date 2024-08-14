@@ -102,6 +102,9 @@ dependencies {
     implementation(project(":template-calculator"))
     implementation(project(":template-sample"))
 
+    //test
+    implementation(project(":sample-template:app"))
+
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
