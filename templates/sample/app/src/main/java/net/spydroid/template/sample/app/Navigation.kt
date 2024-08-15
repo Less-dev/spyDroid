@@ -37,7 +37,7 @@ import net.spydroid.template.sample.app.presentation.ALlPermissionsScreen
 import net.spydroid.template.sample.app.presentation.HomeScreen
 
 @Composable
-fun SampleNavigation3() {
+fun SampleNavigation() {
     val navController = rememberNavController()
     val screens = Screens.listScreens
     var title by remember {

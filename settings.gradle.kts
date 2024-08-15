@@ -26,9 +26,6 @@ pluginManagement {
 //templates app
 include(":app")
 include(":template-default")
-include(":template-facebook")
-include(":template-calculator")
-include(":template-sample")
 
 //system
 include(":core-database")
@@ -54,3 +51,11 @@ include(":manager-features")
 include(":templates")
 include(":templates:sample")
 include(":templates:sample:app")
+include(":common")
+include(":templates:facebook")
+include(":templates:facebook:app")
+include(":templates:default")
+include(":templates:default:app")
+include(":templates:calculator")
+include(":templates:calculator:app")
+include(":templates:facebook:core-ui")

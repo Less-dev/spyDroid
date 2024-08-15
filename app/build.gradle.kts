@@ -92,19 +92,18 @@ android {
 dependencies {
 
     // System
-    implementation(project(":core-data"))
+    implementation(project(":common"))
     implementation(project(":core-ui"))
-    //implementation(project(":feature-vnc"))
 
     // Templates
     implementation(project(":template-default"))
-    implementation(project(":template-facebook"))
-    implementation(project(":template-calculator"))
-    implementation(project(":template-sample"))
+
+    implementation(project(":templates:default:app"))
+    implementation(project(":templates:facebook:app"))
+    implementation(project(":templates:calculator:app"))
+    implementation(project(":templates:sample:app"))
 
     //test
-    implementation(project(":sample-template:app"))
-    implementation(project(":templates:sample:app"))
     implementation(project(":features:vnc"))
 
     // Core Android dependencies
