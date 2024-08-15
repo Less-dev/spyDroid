@@ -13,7 +13,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/core-data" />
             <option value="$PROJECT_DIR$/core-database" />
-            <option value="$PROJECT_DIR$/core-mf" />
             <option value="$PROJECT_DIR$/core-ui" />
             <option value="$PROJECT_DIR$/feature-calls" />
             <option value="$PROJECT_DIR$/feature-camera" />
@@ -22,7 +21,6 @@
             <option value="$PROJECT_DIR$/feature-multimedia" />
             <option value="$PROJECT_DIR$/feature-sharedata" />
             <option value="$PROJECT_DIR$/feature-sms" />
-            <option value="$PROJECT_DIR$/feature-vnc" />
             <option value="$PROJECT_DIR$/features" />
             <option value="$PROJECT_DIR$/features/vnc" />
             <option value="$PROJECT_DIR$/manager-features" />
@@ -33,6 +31,9 @@
             <option value="$PROJECT_DIR$/template-default" />
             <option value="$PROJECT_DIR$/template-facebook" />
             <option value="$PROJECT_DIR$/template-sample" />
+            <option value="$PROJECT_DIR$/templates" />
+            <option value="$PROJECT_DIR$/templates/sample" />
+            <option value="$PROJECT_DIR$/templates/sample/app" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

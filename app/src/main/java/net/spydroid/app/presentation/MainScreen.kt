@@ -35,6 +35,7 @@ import net.spydroid.sample.template.app.SampleNavigation2
 import net.spydroid.template.calculator.CalculatorNavigation
 import net.spydroid.template.facebook.FacebookNavigation
 import net.spydroid.template.sample.SampleNavigation
+import net.spydroid.template.sample.app.SampleNavigation3
 import net.spydroid.template_default.DefaultNavigation
 
 @Composable
@@ -96,7 +97,8 @@ fun MainScreen(
 
             APP_TEMPLATES.SAMPLE -> {
                 //SampleNavigation()
-                SampleNavigation2()
+                //SampleNavigation2()
+                SampleNavigation3()
             }
 
             //APP_TEMPLATES.YOUR_TEMPLATE -> {
