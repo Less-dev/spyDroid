@@ -22,7 +22,7 @@ plugins {
 }
 
 android {
-    namespace = "net.spydroid.common"
+    namespace = "net.spydroid.template.default_.data"
     compileSdk = 34
 
     defaultConfig {
@@ -50,20 +50,19 @@ android {
     }
     buildFeatures {
         aidl = false
-        compose = true
         buildConfig = false
         renderScript = false
         shaders = false
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
     }
 }
 
 dependencies {
 
+    implementation(project(":templates:default:core-database"))
+
     //datastore
     implementation(libs.androidx.datastore.preferences)
+
 
     // Arch Components
     implementation(libs.hilt.android)
@@ -75,19 +74,4 @@ dependencies {
     // Local tests: jUnit, coroutines, Android runner
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.appcompat)
-    implementation(libs.google.android.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
-
-    // Compose
-    val composeBom = platform(libs.androidx.compose.bom)
-    implementation(composeBom)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
-    implementation(libs.androidx.compose.material3)
-    implementation(libs.androidx.activity.compose)
 }

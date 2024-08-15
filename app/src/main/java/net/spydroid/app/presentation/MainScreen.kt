@@ -30,9 +30,9 @@ import net.spydroid.common.CurrentLocation
 import net.spydroid.common.GlobalViewModel
 import net.spydroid.common.LocalGlobalViewModel
 import net.spydroid.template.calculator.app.CalculatorNavigation
+import net.spydroid.template.default_.app.DefaultNavigation
 import net.spydroid.template.facebook.app.FacebookNavigation
 import net.spydroid.template.sample.app.SampleNavigation
-import net.spydroid.template_default.DefaultNavigation
 
 @Composable
 fun MainScreen(
