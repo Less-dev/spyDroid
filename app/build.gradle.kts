@@ -94,7 +94,7 @@ dependencies {
     // System
     implementation(project(":core-data"))
     implementation(project(":core-ui"))
-    implementation(project(":feature-vnc"))
+    //implementation(project(":feature-vnc"))
 
     // Templates
     implementation(project(":template-default"))
@@ -104,6 +104,8 @@ dependencies {
 
     //test
     implementation(project(":sample-template:app"))
+    implementation(project(":templates:sample:app"))
+    implementation(project(":features:vnc"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
