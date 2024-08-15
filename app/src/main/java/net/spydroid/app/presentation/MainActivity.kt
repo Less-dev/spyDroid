@@ -57,9 +57,9 @@ import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.VncService
 import net.spydroid.app.ui.theme.SpyDroidTheme
-import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
-import net.spydroid.core.data.common.PERMISSIONS_STATES
+import net.spydroid.common.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.common.GlobalViewModel
+import net.spydroid.common.PERMISSIONS_STATES
 
 @Suppress("DEPRECATION", "KotlinConstantConditions")
 @AndroidEntryPoint

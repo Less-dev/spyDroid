@@ -26,16 +26,12 @@ import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.app.template_app
-import net.spydroid.core.data.common.GlobalViewModel
-import net.spydroid.core.data.common.LocalGlobalViewModel
-import net.spydroid.core.data.common.GLOBAL_STATES_PERMISSIONS
-import net.spydroid.core.data.common.PERMISSIONS_STATES
-import net.spydroid.core.data.models.CurrentLocation
-import net.spydroid.sample.template.app.SampleNavigation2
-import net.spydroid.template.calculator.CalculatorNavigation
-import net.spydroid.template.facebook.FacebookNavigation
-import net.spydroid.template.sample.SampleNavigation
-import net.spydroid.template.sample.app.SampleNavigation3
+import net.spydroid.common.CurrentLocation
+import net.spydroid.common.GlobalViewModel
+import net.spydroid.common.LocalGlobalViewModel
+import net.spydroid.template.calculator.app.CalculatorNavigation
+import net.spydroid.template.facebook.app.FacebookNavigation
+import net.spydroid.template.sample.app.SampleNavigation
 import net.spydroid.template_default.DefaultNavigation
 
 @Composable
@@ -96,9 +92,7 @@ fun MainScreen(
             }
 
             APP_TEMPLATES.SAMPLE -> {
-                //SampleNavigation()
-                //SampleNavigation2()
-                SampleNavigation3()
+                SampleNavigation()
             }
 
             //APP_TEMPLATES.YOUR_TEMPLATE -> {

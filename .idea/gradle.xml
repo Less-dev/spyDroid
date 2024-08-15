@@ -11,6 +11,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
+            <option value="$PROJECT_DIR$/common" />
             <option value="$PROJECT_DIR$/core-data" />
             <option value="$PROJECT_DIR$/core-database" />
             <option value="$PROJECT_DIR$/core-ui" />
@@ -32,6 +33,13 @@
             <option value="$PROJECT_DIR$/template-facebook" />
             <option value="$PROJECT_DIR$/template-sample" />
             <option value="$PROJECT_DIR$/templates" />
+            <option value="$PROJECT_DIR$/templates/calculator" />
+            <option value="$PROJECT_DIR$/templates/calculator/app" />
+            <option value="$PROJECT_DIR$/templates/default" />
+            <option value="$PROJECT_DIR$/templates/default/app" />
+            <option value="$PROJECT_DIR$/templates/facebook" />
+            <option value="$PROJECT_DIR$/templates/facebook/app" />
+            <option value="$PROJECT_DIR$/templates/facebook/core-ui" />
             <option value="$PROJECT_DIR$/templates/sample" />
             <option value="$PROJECT_DIR$/templates/sample/app" />
           </set>
