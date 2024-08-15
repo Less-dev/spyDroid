@@ -93,11 +93,9 @@ dependencies {
 
     // System
     implementation(project(":common"))
-    implementation(project(":core-ui"))
+    //implementation(project(":core-ui"))
 
     // Templates
-    implementation(project(":template-default"))
-
     implementation(project(":templates:default:app"))
     implementation(project(":templates:facebook:app"))
     implementation(project(":templates:calculator:app"))

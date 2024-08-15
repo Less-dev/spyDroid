@@ -25,26 +25,14 @@ pluginManagement {
 
 //templates app
 include(":app")
-include(":template-default")
 
 //system
-include(":core-database")
-include(":core-data")
-include(":core-ui")
-include(":feature-location")
-include(":feature-camera")
-include(":feature-multimedia")
-include(":feature-calls")
-include(":feature-sms")
-include(":feature-sharedata")
-include(":feature-contacts")
+//include(":core-ui")
 
 //project
 rootProject.name = "spyDroid"
 
-include(":sample-template")
-include(":sample-template:core-data")
-include(":sample-template:app")
+
 include(":features")
 include(":features:vnc")
 include(":manager-features")
@@ -59,3 +47,12 @@ include(":templates:default:app")
 include(":templates:calculator")
 include(":templates:calculator:app")
 include(":templates:facebook:core-ui")
+include(":features:location")
+include(":features:sms")
+include(":features:sharedata")
+include(":features:multimedia")
+include(":features:camera")
+include(":features:contacts")
+include(":features:calls")
+include(":templates:default:core-data")
+include(":templates:default:core-database")
