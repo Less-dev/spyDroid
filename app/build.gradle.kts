@@ -102,7 +102,7 @@ dependencies {
     implementation(project(":templates:sample:app"))
 
     //test
-    implementation(project(":features:vnc"))
+    //implementation(project(":features:vnc"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)

@@ -53,9 +53,6 @@ import com.google.android.gms.location.Priority
 import com.google.android.gms.location.SettingsClient
 import com.google.android.gms.maps.model.LatLng
 import dagger.hilt.android.AndroidEntryPoint
-import net.christianbeier.droidvnc_ng.Constants
-import net.christianbeier.droidvnc_ng.Defaults
-import net.christianbeier.droidvnc_ng.VncService
 import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.common.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.GlobalViewModel
@@ -116,15 +113,10 @@ class MainActivity : ComponentActivity() {
                             }
                         }
                     }
-
-
                     MainScreen(
                         globalViewModel = globalViewModel,
                         permissionMediaProject = mediaProjectionPermission,
                         currentLocation = currentLocation,
-                        stateVncServer = {
-                            if (it) startMainService() else stopMainService()
-                        }
                     )
                 }
             }
@@ -160,7 +152,8 @@ class MainActivity : ComponentActivity() {
 
     override fun onResume() {
         super.onResume()
-        when (VncService.isMediaProjectionEnabled()) {
+        /*
+                when (VncService.isMediaProjectionEnabled()) {
             0 -> {
                 //granted permission
                 mediaProjectionPermission = 0
@@ -176,6 +169,7 @@ class MainActivity : ComponentActivity() {
                 //unknown permission
             }
         }
+         */
 
         if (locationRequired) {
             /*
@@ -214,7 +208,8 @@ class MainActivity : ComponentActivity() {
     }
 
 
-    private fun startMainService() {
+    /*
+        private fun startMainService() {
         val intent = Intent(this, VncService::class.java)
         val prefs = PreferenceManager.getDefaultSharedPreferences(this)
         val mDefaults = Defaults(this)
@@ -261,6 +256,7 @@ class MainActivity : ComponentActivity() {
         intent.setAction(VncService.ACTION_STOP)
         stopService(intent)
     }
+     */
 
     private fun checkLocationPermission() {
         val isPermissionGranted = ContextCompat.checkSelfPermission(
