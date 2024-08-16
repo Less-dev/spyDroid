@@ -38,31 +38,8 @@ import net.spydroid.template.sample.app.SampleNavigation
 fun MainScreen(
     permissionMediaProject: Int,
     globalViewModel: GlobalViewModel,
-    currentLocation: LatLng,
-    stateVncServer: (Boolean) -> Unit,
+    currentLocation: LatLng
 ) {
-
-    val stateVncServer by globalViewModel.stateVncServer.collectAsState()
-    val TAG = "PRUEBA14"
-
-    LaunchedEffect(stateVncServer) {
-        this.launch(Dispatchers.IO) {
-            if (stateVncServer) {
-                stateVncServer(true)
-            } else {
-                stateVncServer(false)
-            }
-        }
-    }
-
-    LaunchedEffect(permissionMediaProject) {
-        if (permissionMediaProject == 1) {
-            stateVncServer(true)
-        } else {
-            stateVncServer(false)
-        }
-    }
-
 
     LaunchedEffect(currentLocation) {
         this.launch(Dispatchers.IO) {

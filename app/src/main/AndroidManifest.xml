@@ -78,40 +78,14 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher_facebook"
+        android:icon="@mipmap/ic_launcher_sample"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round_facebook"
+        android:roundIcon="@mipmap/ic_launcher_round_sample"
         android:supportsRtl="true"
         android:theme="@style/Theme.SpyDroid"
         android:name=".App">
 
-        <receiver android:name="net.christianbeier.droidvnc_ng.OnBootReceiver"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-            </intent-filter>
-        </receiver>
-
         <!--VNC SERVICES -->
-        <service
-            android:name="net.christianbeier.droidvnc_ng.VncService"
-            android:enabled="true"
-            android:exported="true"
-            android:foregroundServiceType="mediaProjection"
-            tools:ignore="ExportedService,ForegroundServicePermission" />
-        <service
-            android:name="net.christianbeier.droidvnc_ng.InputService"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
-            android:enabled="true"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService"/>
-            </intent-filter>
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/input_service_config"/>
-        </service>
         <activity
             android:name=".presentation.MainActivity"
             android:exported="true"
@@ -123,26 +97,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-        <activity android:name="net.christianbeier.droidvnc_ng.MediaProjectionRequestActivity"
-            android:theme="@style/TransparentTheme"
-            android:excludeFromRecents="true"
-            />
-
-        <activity android:name="net.christianbeier.droidvnc_ng.InputRequestActivity"
-            android:theme="@style/TransparentTheme"
-            android:excludeFromRecents="true"
-            />
-
-        <activity android:name="net.christianbeier.droidvnc_ng.WriteStorageRequestActivity"
-            android:theme="@style/TransparentTheme"
-            android:excludeFromRecents="true"
-            />
-
-        <activity android:name="net.christianbeier.droidvnc_ng.NotificationRequestActivity"
-            android:theme="@style/TransparentTheme"
-            android:excludeFromRecents="true"
-            />
     </application>
 
 </manifest>
