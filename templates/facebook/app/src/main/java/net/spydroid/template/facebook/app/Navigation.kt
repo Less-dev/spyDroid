@@ -57,7 +57,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import net.spydroid.common.LocalGlobalViewModel
 import net.spydroid.template.facebook.app.presentation.FriendsScreen
 import net.spydroid.template.facebook.app.presentation.HomeScreen
 import net.spydroid.template.facebook.app.presentation.MarketplaceScreen
@@ -68,7 +67,6 @@ import net.spydroid.template.facebook.app.presentation.ShortScreen
 @Composable
 fun FacebookNavigation() {
 
-    val globalViewModel = LocalGlobalViewModel.current
     val navController = rememberNavController()
     val screens = Screens.listScreens
 
@@ -108,9 +106,7 @@ fun FacebookNavigation() {
 
                     screens.forEach { screen ->
                         composable(route = screen.route) {
-                            CompositionLocalProvider(LocalGlobalViewModel provides globalViewModel) {
-                                screen.screen()
-                            }
+                            screen.screen()
                         }
                     }
 

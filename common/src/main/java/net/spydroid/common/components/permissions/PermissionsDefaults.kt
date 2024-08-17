@@ -20,7 +20,7 @@ package net.spydroid.common.components.permissions
 import android.Manifest
 import android.os.Build
 import androidx.annotation.RequiresApi
-import net.spydroid.common.PERMISSIONS
+import net.spydroid.common.data.PERMISSIONS
 import net.spydroid.common.R
 
 object PermissionsDefaults {

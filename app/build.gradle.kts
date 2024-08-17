@@ -93,16 +93,12 @@ dependencies {
 
     // System
     implementation(project(":common"))
-    //implementation(project(":core-ui"))
 
     // Templates
     implementation(project(":templates:default:app"))
     implementation(project(":templates:facebook:app"))
     implementation(project(":templates:calculator:app"))
     implementation(project(":templates:sample:app"))
-
-    //test
-    //implementation(project(":features:vnc"))
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)

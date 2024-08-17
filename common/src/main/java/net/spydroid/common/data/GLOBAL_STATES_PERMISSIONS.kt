@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common
+package net.spydroid.common.data
 
 object GLOBAL_STATES_PERMISSIONS {
     const val UN_REQUEST = "unRequest"

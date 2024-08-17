@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common
+package net.spydroid.common.models
 
 enum class PERMISSIONS_STATES {
     UN_REQUEST,

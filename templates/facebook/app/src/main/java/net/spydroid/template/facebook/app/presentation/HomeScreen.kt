@@ -27,9 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
-import net.spydroid.common.LocalGlobalViewModel
 import net.spydroid.template.facebook.core.ui.components.post.component.Post
 import net.spydroid.template.facebook.core.ui.components.post.data.PostImp
 import net.spydroid.template.facebook.core.ui.components.post.models.POST
@@ -38,7 +36,6 @@ import net.spydroid.template.facebook.core.ui.components.whatYouThink.WhatDoYouT
 @Composable
 internal fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
 
-    val globalViewModel = LocalGlobalViewModel.current
     val textWhatDoYouThink = homeViewModel.textWhatDoYouThink.collectAsState().value
     val post = listOf(PostImp.POST_01, PostImp.POST_02, PostImp.POST_03)
 

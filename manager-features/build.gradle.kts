@@ -34,8 +34,12 @@ android {
 
 dependencies {
 
+    //system
+    implementation(project(":common"))
+
     //FEATURES
     implementation(project(":features:vnc"))
+    implementation(project(":features:location"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
@@ -43,4 +47,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.espresso.core)
+
+    //WM
+    implementation(libs.androidx.work.runtime.ktx)
 }

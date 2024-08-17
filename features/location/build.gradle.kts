@@ -52,6 +52,9 @@ android {
 
 dependencies {
 
+    //system
+    implementation(project(":common"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.android.material)
@@ -62,6 +65,12 @@ dependencies {
     // Hilt Dependency Injection
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
+
+    //google maps
+    implementation (libs.play.services.maps)
+
+    // Google Play Services - Location
+    implementation (libs.play.services.location)
 
     //WM
     implementation(libs.androidx.work.runtime.ktx)
