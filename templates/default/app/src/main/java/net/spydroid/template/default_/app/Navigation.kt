@@ -50,9 +50,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.unit.dp
-import net.spydroid.common.LocalGlobalViewModel
 import net.spydroid.template.default_.app.presentation.AchievementScreen
 import net.spydroid.template.default_.app.presentation.HomeScreen
 import net.spydroid.template.default_.app.presentation.ObjetiveScreen
@@ -60,7 +58,6 @@ import net.spydroid.template.default_.app.presentation.ObjetiveScreen
 @Composable
 fun DefaultNavigation() {
 
-    val globalViewModel = LocalGlobalViewModel.current
     val navController = rememberNavController()
     val screens = Screens.listScreens
     var title by remember { mutableStateOf("") }
@@ -78,9 +75,7 @@ fun DefaultNavigation() {
                 screens.forEach { screen ->
                     composable(screen.route) {
                         title = screen.title
-                        CompositionLocalProvider(LocalGlobalViewModel provides globalViewModel) {
-                            screen.content()
-                        }
+                        screen.content()
                     }
                 }
             }

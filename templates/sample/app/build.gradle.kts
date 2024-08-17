@@ -46,6 +46,9 @@ android {
 
 dependencies {
 
+    //system
+    implementation(project(":common"))
+
     //MF
     implementation(project(":manager-features"))
 

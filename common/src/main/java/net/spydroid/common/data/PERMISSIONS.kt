@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common
+package net.spydroid.common.data
 
 object PERMISSIONS {
     const val DEFAULT = "default"

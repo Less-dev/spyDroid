@@ -17,71 +17,54 @@
 
 package net.spydroid.app.presentation
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import com.google.android.gms.maps.model.LatLng
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import androidx.compose.ui.Modifier
 import net.spydroid.app.template_app
-import net.spydroid.common.CurrentLocation
-import net.spydroid.common.GlobalViewModel
-import net.spydroid.common.LocalGlobalViewModel
+import net.spydroid.app.ui.theme.SpyDroidTheme
 import net.spydroid.template.calculator.app.CalculatorNavigation
 import net.spydroid.template.default_.app.DefaultNavigation
 import net.spydroid.template.facebook.app.FacebookNavigation
 import net.spydroid.template.sample.app.SampleNavigation
 
 @Composable
-fun MainScreen(
-    permissionMediaProject: Int,
-    globalViewModel: GlobalViewModel,
-    currentLocation: LatLng
-) {
+fun MainScreen() {
+    SpyDroidTheme {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
+            when (template_app) {
+                APP_TEMPLATES.DEFAULT -> {
+                    DefaultNavigation()
+                }
 
-    LaunchedEffect(currentLocation) {
-        this.launch(Dispatchers.IO) {
-            if (currentLocation.latitude != 0.0 && currentLocation.longitude != 0.0) {
-                globalViewModel.changeCoordinatesValue(
-                    coordinates = CurrentLocation(
-                        latitude = currentLocation.latitude.toString(),
-                        longitude = currentLocation.longitude.toString()
-                    )
-                )
-            }
-        }
-    }
+                APP_TEMPLATES.FACEBOOK -> {
+                    FacebookNavigation()
+                }
 
-    CompositionLocalProvider(LocalGlobalViewModel provides globalViewModel) {
-        when (template_app) {
-            APP_TEMPLATES.DEFAULT -> {
-                DefaultNavigation()
-            }
+                APP_TEMPLATES.CALCULATOR -> {
+                    CalculatorNavigation()
+                }
 
-            APP_TEMPLATES.FACEBOOK -> {
-                FacebookNavigation()
-            }
+                APP_TEMPLATES.SAMPLE -> {
+                    SampleNavigation()
+                }
 
-            APP_TEMPLATES.CALCULATOR -> {
-                CalculatorNavigation()
-            }
+                //APP_TEMPLATES.YOUR_TEMPLATE -> {
+                //  YourNavigation()
+                //}
 
-            APP_TEMPLATES.SAMPLE -> {
-                SampleNavigation()
-            }
-
-            //APP_TEMPLATES.YOUR_TEMPLATE -> {
-            //  YourNavigation()
-            //}
-
-            else -> {
-                DefaultNavigation()
+                else -> {
+                    DefaultNavigation()
+                }
             }
         }
     }
 }
+
 
 object APP_TEMPLATES {
     const val DEFAULT = "default"
