@@ -199,7 +199,7 @@
 
 ## Arquitectura de módulos
 
-![archithecture_modules](https://github.com/user-attachments/assets/f55ace08-7394-4e2f-a5f0-d51d18fe571a)
+![archithecture_modules](https://github.com/user-attachments/assets/ffaa5b9c-433b-4c56-8e4e-a491f2b762a0)
 
 <br>
 
