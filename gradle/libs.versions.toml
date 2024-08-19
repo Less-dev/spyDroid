@@ -36,7 +36,7 @@ emoji2Emojipicker = "1.4.0"
 coroutines = "1.7.3"
 
 # DataStore
-datastorePreferences = "1.0.0"
+datastorePreferences = "1.1.1"
 
 # Exp4j
 exp4j = "0.4.8"
@@ -51,13 +51,13 @@ junit = "4.13.2"
 preference = "1.2.1"
 
 # AppCompat
-appCompat = "1.6.1"
+appCompat = "1.7.0"
 
 # Material
-googleMaterial = "1.10.0"
+googleMaterial = "1.12.0"
 
 # Fundation
-fundationLayout = "1.5.4"
+fundationLayout = "1.6.8"
 
 # Work Manager
 workRuntimeKtx = "2.9.1"
@@ -66,18 +66,18 @@ workRuntimeKtx = "2.9.1"
 jetbrainsKotlinJvm = "1.9.0"
 
 # Androidx
-androidxActivity = "1.9.0"
+androidxActivity = "1.9.1"
 androidxComposeBom = "2024.04.01"
-androidxComposeCompiler = "1.5.8"
-androidxCore = "1.13.0"
+androidxComposeCompiler = "1.5.15"
+androidxCore = "1.13.1"
 androidxHilt = "1.2.0"
-androidxLifecycle = "2.7.0"
+androidxLifecycle = "2.8.4"
 androidxNavigation = "2.7.7"
 androidxRoom = "2.6.1"
-androidxTestCore = "1.5.0"
-androidxTestExt = "1.1.5"
-androidxTestRunner = "1.5.2"
-androidxEspressoCore = "3.5.1"
+androidxTestCore = "1.6.1"
+androidxTestExt = "1.2.1"
+androidxTestRunner = "1.6.2"
+androidxEspressoCore = "3.6.1"
 
 # Kotlin
 kotlin = "1.9.0"
@@ -89,16 +89,16 @@ kotlinStdlib = "1.9.0"
 kotlinSerialitation = "1.9.0"
 
 # Material
-material = "1.10.0"
+material = "1.12.0"
 
 # Media3
-media3Exoplayer = "1.3.1"
-media3Ui = "1.3.1"
-media3Session = "1.3.1"
+media3Exoplayer = "1.4.0"
+media3Ui = "1.4.0"
+media3Session = "1.4.0"
 
 # Play Services
-playServicesLocation = "21.1.0"
-playServicesMaps = "18.2.0"
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.0.0"
 
 
 [libraries]
