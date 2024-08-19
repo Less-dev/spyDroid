@@ -23,36 +23,67 @@ pluginManagement {
     }
 }
 
-//templates app
+// App
 include(":app")
 
-//system
-//include(":core-ui")
+// Templates
+include(":templates")
 
-//project
+// Sample
+include(":templates:sample")
+include(":templates:sample:app")
+
+// Default
+include(":templates:default")
+include(":templates:default:core-data")
+include(":templates:default:core-database")
+include(":templates:default:app")
+
+// Calculator
+include(":templates:calculator")
+include(":templates:calculator:app")
+
+// Facebook
+include(":templates:facebook")
+include(":templates:facebook:core-ui")
+include(":templates:facebook:app")
+
+// Common
+include(":common")
+
+// Manager Features
+include(":manager-features")
+
+// Features
+include(":features")
+
+// Location
+include(":features:location")
+// Sms
+include(":features:sms")
+// Share Data
+include(":features:sharedata")
+
+// Multimedia
+include(":features:multimedia")
+
+// Camera
+include(":features:camera")
+
+// Contacts
+include(":features:contacts")
+
+// Calls
+include(":features:calls")
+
+// Vnc
+include(":features:vnc")
+
+// Project
 rootProject.name = "spyDroid"
 
 
-include(":features")
-include(":features:vnc")
-include(":manager-features")
-include(":templates")
-include(":templates:sample")
-include(":templates:sample:app")
-include(":common")
-include(":templates:facebook")
-include(":templates:facebook:app")
-include(":templates:default")
-include(":templates:default:app")
-include(":templates:calculator")
-include(":templates:calculator:app")
-include(":templates:facebook:core-ui")
-include(":features:location")
-include(":features:sms")
-include(":features:sharedata")
-include(":features:multimedia")
-include(":features:camera")
-include(":features:contacts")
-include(":features:calls")
-include(":templates:default:core-data")
-include(":templates:default:core-database")
+
+
+
+
