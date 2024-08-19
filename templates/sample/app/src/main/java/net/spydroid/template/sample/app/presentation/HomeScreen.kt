@@ -40,7 +40,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import net.spydroid.common.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.components.permissions.PermissionsDefaults
 import net.spydroid.common.components.permissions.RequestPermission

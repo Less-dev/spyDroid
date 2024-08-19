@@ -15,10 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.data
+package net.spydroid.common.remote
 
-object GLOBAL_STATES_PERMISSIONS {
-    const val UN_REQUEST = "unRequest"
-    const val GRANTED = "granted"
-    const val DENIED = "denied"
+class RemoteDataProvider {
 }
