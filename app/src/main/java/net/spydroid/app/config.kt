@@ -27,4 +27,4 @@ package net.spydroid.app
 *
  */
 
-internal val template_app = "sample"
+internal val template_app = "default"
