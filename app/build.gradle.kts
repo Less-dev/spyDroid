@@ -91,9 +91,6 @@ android {
 
 dependencies {
 
-    // System
-    implementation(project(":common"))
-
     // Templates
     implementation(project(":templates:default:app"))
     implementation(project(":templates:facebook:app"))
@@ -109,29 +106,8 @@ dependencies {
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
 
-    // Arch Components
-    implementation(libs.androidx.lifecycle.runtime.compose)
-    implementation(libs.androidx.lifecycle.viewmodel.compose)
-    implementation(libs.androidx.navigation.compose)
-    implementation(libs.androidx.hilt.navigation.compose)
-
-    //google maps
-    implementation (libs.play.services.maps)
-
-    // Google Play Services - Location
-    implementation (libs.play.services.location)
-
     // Compose
     val composeBom = platform(libs.androidx.compose.bom)
     implementation(composeBom)
-    implementation(libs.androidx.compose.ui)
-    implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
-    //permission handling in compose
-    implementation (libs.accompanist.permissions)
-
-    // Tooling
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.test.ext.junit)
 }
