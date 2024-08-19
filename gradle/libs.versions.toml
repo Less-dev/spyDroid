@@ -16,111 +16,206 @@
 #
 
 [versions]
+
+# Accompanist
 accompanistPermissions = "0.24.11-rc"
+
+# Android Gradle Plugin
 androidGradlePlugin = "8.2.2"
-androidxActivity = "1.9.0"
+
+# Coil
+coilCompose = "2.1.0"
+
+# Compose Video
+composeVideo = "1.2.0"
+
+# Emoji
+emoji2Emojipicker = "1.4.0"
+
+# Coroutines
+coroutines = "1.7.3"
+
+# DataStore
+datastorePreferences = "1.1.1"
+
+# Exp4j
+exp4j = "0.4.8"
+
+# Hilt
+hilt = "2.51.1"
+
+# Junit
+junit = "4.13.2"
+
+# Preference
+preference = "1.2.1"
+
+# AppCompat
+appCompat = "1.7.0"
+
+# Material
+googleMaterial = "1.12.0"
+
+# Fundation
+fundationLayout = "1.6.8"
+
+# Work Manager
+workRuntimeKtx = "2.9.1"
+
+# Jetbrains
+jetbrainsKotlinJvm = "1.9.0"
+
+# Androidx
+androidxActivity = "1.9.1"
 androidxComposeBom = "2024.04.01"
-androidxComposeCompiler = "1.5.8"
-androidxCore = "1.13.0"
+androidxComposeCompiler = "1.5.15"
+androidxCore = "1.13.1"
 androidxHilt = "1.2.0"
-androidxLifecycle = "2.7.0"
+androidxLifecycle = "2.8.4"
 androidxNavigation = "2.7.7"
 androidxRoom = "2.6.1"
-androidxTestCore = "1.5.0"
-androidxTestExt = "1.1.5"
-androidxTestRunner = "1.5.2"
-coilCompose = "2.1.0"
-composeVideo = "1.2.0"
-coroutines = "1.7.3"
-datastorePreferences = "1.0.0"
-emoji2Emojipicker = "1.4.0"
-exp4j = "0.4.8"
-gradle = "8.2.2"
-hilt = "2.51.1"
-junit = "4.13.2"
+androidxTestCore = "1.6.1"
+androidxTestExt = "1.2.1"
+androidxTestRunner = "1.6.2"
+androidxEspressoCore = "3.6.1"
+
+# Kotlin
 kotlin = "1.9.0"
 kotlinGradlePluginVersion = "1.9.0"
 kotlinxSerializationJson = "1.5.1"
 ksp = "1.9.22-1.0.17"
 kotlinGradlePlugin = "1.9.22"
-espressoCore = "3.5.1"
-appcompat = "1.6.1"
-material = "1.10.0"
-media3Exoplayer = "1.3.1"
-media3Ui = "1.3.1"
-media3Session = "1.3.1"
-playServicesLocation = "21.1.0"
-playServicesMaps = "18.2.0"
-preference = "1.2.1"
-appCompat = "1.6.1"
-googleMaterial = "1.10.0"
-fundationLayout = "1.5.4"
 kotlinStdlib = "1.9.0"
 kotlinSerialitation = "1.9.0"
-workRuntimeKtx = "2.9.1"
-jetbrainsKotlinJvm = "1.9.0"
+
+# Material
+material = "1.12.0"
+
+# Media3
+media3Exoplayer = "1.4.0"
+media3Ui = "1.4.0"
+media3Session = "1.4.0"
+
+# Play Services
+playServicesLocation = "21.3.0"
+playServicesMaps = "19.0.0"
+
 
 [libraries]
+
+# Accompanist
 accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
+
+# Emoji
+androidx-emoji2-emojipicker = { module = "androidx.emoji2:emoji2-emojipicker", version.ref = "emoji2Emojipicker" }
+
+# Coroutines
+kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+
+# DataStore
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
+
+# Exp4j
+exp4j = { module = "net.objecthunter:exp4j", version.ref = "exp4j" }
+
+# Gradle
+gradle = { module = "com.android.tools.build:gradle", version.ref = "androidGradlePlugin" }
+
+# Hilt
+hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
+hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
+hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
+hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
+
+# Junit
+junit = { module = "junit:junit", version.ref = "junit" }
+
+# Preference
+androidx-preference = { module = "androidx.preference:preference", version.ref = "preference" }
+
+# AppCompat
+androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat"}
+
+# Material
+google-android-material = { module = "com.google.android.material:material", version.ref = "googleMaterial"}
+
+# Fundation
+compose-fundation-layout = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "fundationLayout"}
+
+# Work Manager
+androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
+
+# Androidx
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidxActivity" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "androidxComposeBom" }
 androidx-compose-compiler = { module = "androidx.compose.compiler:compiler", version.ref = "androidxComposeCompiler" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3"}
-androidx-compose-ui = { group = "androidx.compose.ui", name = "ui"}
-androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4"}
-androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest"}
-androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling"}
-androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview"}
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
-androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
-androidx-emoji2-emojipicker = { module = "androidx.emoji2:emoji2-emojipicker", version.ref = "emoji2Emojipicker" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "androidxHilt" }
 androidx-lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "androidxLifecycle" }
 androidx-lifecycle-runtime-ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "androidxLifecycle" }
 androidx-lifecycle-viewmodel-compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "androidxLifecycle" }
-androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Exoplayer" }
-androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Ui" }
-androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3Session" }
 androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "androidxNavigation" }
-androidx-preference = { module = "androidx.preference:preference", version.ref = "preference" }
-androidx-appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appCompat"}
-androidx-work-runtime-ktx = { module = "androidx.work:work-runtime-ktx", version.ref = "workRuntimeKtx" }
-exp4j = { module = "net.objecthunter:exp4j", version.ref = "exp4j" }
-google-android-material = { module = "com.google.android.material:material", version.ref = "googleMaterial"}
-compose-fundation-layout = { module = "androidx.compose.foundation:foundation-layout-android", version.ref = "fundationLayout"}
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "androidxRoom" }
 androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "androidxRoom" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "androidxRoom" }
 androidx-test-core  = { module = "androidx.test:core", version.ref = "androidxTestCore" }
 androidx-test-ext-junit = { module = "androidx.test.ext:junit", version.ref = "androidxTestExt" }
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidxEspressoCore" }
+
+# Compose
+androidx-compose-ui = { group = "androidx.compose.ui", name = "ui"}
+androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4"}
+androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest"}
+androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling"}
+androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview"}
+
+# Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+
+# Compose Video
 compose-video = { module = "io.sanghun:compose-video", version.ref = "composeVideo" }
-gradle = { module = "com.android.tools.build:gradle", version.ref = "gradle" }
-hilt-android = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
-hilt-android-compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt" }
-hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt" }
-hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
-hilt-gradle-plugin = { module = "com.google.dagger:hilt-android-gradle-plugin", version.ref = "hilt" }
-junit = { module = "junit:junit", version.ref = "junit" }
+
+# Material
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3"}
+material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# Media3
+androidx-media3-exoplayer = { module = "androidx.media3:media3-exoplayer", version.ref = "media3Exoplayer" }
+androidx-media3-ui = { module = "androidx.media3:media3-ui", version.ref = "media3Ui" }
+androidx-media3-session = { module = "androidx.media3:media3-session", version.ref = "media3Session" }
+
+# Kotlin
 kotlin-gradle-plugin-v190 = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlinGradlePluginVersion" }
-kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
-kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlinGradlePlugin" }
 kotlin-jetbrains-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlinStdlib"}
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
-material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+
+# Play Services
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 
 [plugins]
+
+# Android Gradle Plugin
 android-application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
 android-library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
+
+# Hilt
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+
+# Kotlin
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+
+# Kotlin ksp
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+
+# Kotlin Serialitation
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialitation"}
+
+# Jetbrains
 jetbrainsKotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
