@@ -15,10 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.models
+package net.spydroid.common.local.models
 
-enum class PERMISSIONS_STATES {
-    UN_REQUEST,
-    GRANTED,
-    DENIED
-}
+data class CurrentLocation(
+    val latitude: String? = null,
+    val longitude: String? = null
+)

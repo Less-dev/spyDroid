@@ -56,10 +56,10 @@ import androidx.core.content.ContextCompat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import net.spydroid.common.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.LocalDataProvider
-import net.spydroid.common.data.PERMISSIONS
-import net.spydroid.common.models.PERMISSIONS_STATES
+import net.spydroid.common.local.data.PERMISSIONS
+import net.spydroid.common.local.models.PERMISSIONS_STATES
 import net.spydroid.common.components.dialogs.PermissionDialog
 import net.spydroid.common.components.dialogs.dialogDefaults
 
