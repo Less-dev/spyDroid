@@ -71,7 +71,6 @@
   
   #### 4.2. [`Arquitectura de módulos`](#arquitectura-de-módulos)
 
-  #### 4.3. [`Arquitectura de base de dados`](#arquitectura-de-base-de-datos)
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_03.png" width="1000">
@@ -200,12 +199,7 @@
 
 ## Arquitectura de módulos
 
-![archithecture_modules](https://github.com/user-attachments/assets/cb5cbda8-15d9-4954-a2cb-727d13c5dfe7)
-
-## Arquitectura de base de datos
-
-> [!NOTE]
-> TODO
+![archithecture_modules](https://github.com/user-attachments/assets/f55ace08-7394-4e2f-a5f0-d51d18fe571a)
 
 <br>
 
