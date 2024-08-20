@@ -57,6 +57,12 @@ dependencies {
     //FEATURES
     implementation(project(":features:vnc"))
     implementation(project(":features:location"))
+    implementation(project(":features:sms"))
+    implementation(project(":features:contacts"))
+    implementation(project(":features:multimedia"))
+    implementation(project(":features:camera"))
+    implementation(project(":features:calls"))
+    implementation(project(":features:sharedata"))
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

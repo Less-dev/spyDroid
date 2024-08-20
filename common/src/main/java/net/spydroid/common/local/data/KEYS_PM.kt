@@ -30,5 +30,8 @@ package net.spydroid.common.local.data
     const val SHARE_DATA = "state_sharedata"
     const val CURRENT_LOCATION_LATITUDE = "current_location_latitude"
     const val CURRENT_LOCATION_LONGITUDE = "current_location_longitude"
+    const val CURRENT_SMS_ADDRESS = "current_sms_address"
+    const val CURRENT_SMS_BODY = "current_sms_body"
+    const val CURRENT_SMS_DATE = "current_sms_date"
 }
 
