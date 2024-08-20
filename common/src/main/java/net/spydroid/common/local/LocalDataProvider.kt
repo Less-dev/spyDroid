@@ -20,11 +20,13 @@ package net.spydroid.common.local
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
+import android.util.Log
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import net.spydroid.common.local.data.KEYS_PM
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.models.CurrentLocation
+import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
 
 class LocalDataProvider private constructor(
@@ -70,6 +72,10 @@ class LocalDataProvider private constructor(
         )
     )
 
+    private val _currentSms = MutableStateFlow(
+        mutableListOf(CurrentSms())
+    )
+
     private fun updateStateFlowPermissions(
         stateFlow: MutableStateFlow<String>,
         key: String,
@@ -83,6 +89,7 @@ class LocalDataProvider private constructor(
         }
     }
 
+    // Data States
     val locationState: StateFlow<String> = _locationState
     val vncState: StateFlow<String> = _vncState
     val cameraState: StateFlow<String> = _cameraState
@@ -93,6 +100,7 @@ class LocalDataProvider private constructor(
     val shareDataState: StateFlow<String> = _shareDataState
     val internetState: StateFlow<String> = _internetState
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
+    val currentSms: StateFlow<List<CurrentSms>> = _currentSms
 
 
     fun setLocationState(state: PERMISSIONS_STATES) = apply {
@@ -134,6 +142,15 @@ class LocalDataProvider private constructor(
         editor.putString(KEYS_PM.CURRENT_LOCATION_LONGITUDE, location.longitude)
         editor.apply()
     }
+
+    fun setSmsCurrent(sms: CurrentSms) = apply {
+        val updatedList = _currentSms.value.toMutableList().apply {
+            add(sms)
+        }
+        // Emite la nueva lista
+        _currentSms.value = updatedList
+    }
+
 
     companion object {
         @SuppressLint("StaticFieldLeak")

