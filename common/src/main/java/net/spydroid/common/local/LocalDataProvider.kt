@@ -156,8 +156,6 @@ class LocalDataProvider private constructor(
         _currentSms.value = updatedList
     }
 
-    //multimedia
-
     fun setMultimediaCurrent(image: Uri? = null, video: Uri? = null, audio: Uri? = null) = apply {
 
         if (image != null) {
