@@ -8,6 +8,7 @@ import androidx.room.PrimaryKey
 data class SmsEntitie(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
+    val uid: String,
     val address: String,
     val body: String,
     val date: String

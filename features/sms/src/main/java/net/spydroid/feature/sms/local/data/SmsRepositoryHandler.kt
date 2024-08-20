@@ -15,6 +15,7 @@ class SmsRepositoryHandler @Inject constructor(
         get() = smsDao.getSms().map { _sms ->
             _sms.map {
                 SmsHandler(
+                    uid = it.uid,
                     address = it.address,
                     body = it.body,
                     date = it.date
@@ -25,6 +26,7 @@ class SmsRepositoryHandler @Inject constructor(
     override fun insert(sms: SmsHandler) =
         smsDao.insertSms(
             SmsEntitie(
+                uid = sms.uid,
                 address = sms.address,
                 body = sms.body,
                 date = sms.date

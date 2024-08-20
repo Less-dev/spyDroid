@@ -86,20 +86,57 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
 
 
             GlobalScope.launch(Dispatchers.Default) {
-                smsState.collect{ state ->
-                    when(state){
+                smsState.collect { state ->
+                    when (state) {
                         is SmsState.Loading -> {
                             //todo
                         }
+
                         is SmsState.Error -> {
                             //todo
                         }
+
                         is SmsState.Success -> {
                             val data = state.data
-                            if (data.isNotEmpty()){
+
+                            val existingUids = data.map { it.date }.toList()
+
+                            val uri: Uri = Telephony.Sms.CONTENT_URI
+                            val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+
+                            cursor?.use {
+                                val indexId = it.getColumnIndex(Telephony.Sms._ID)
+                                val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
+                                val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
+                                val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
+
+                                while (it.moveToNext()) {
+                                    val uid = it.getLong(indexId).toString()
+                                    val body = it.getString(indexBody)
+                                    val address = it.getString(indexAddress)
+                                    val date = it.getLong(indexDate)
+                                    val dateSent = Date(date)
+                                    val format =
+                                        SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                                    val dateSentFormatted = format.format(dateSent)
+
+                                    if (dateSentFormatted !in existingUids) {
+                                        smsRepository.insert(
+                                            SmsHandler(
+                                                uid = uid,
+                                                address = address,
+                                                body = body,
+                                                date = dateSentFormatted
+                                            )
+                                        )
+                                    }
+                                }
+                            }
+                            if (data.isNotEmpty()) {
                                 data.forEach {
                                     localDataProvider.setSmsCurrent(
                                         CurrentSms(
+                                            uid = it.uid,
                                             address = it.address,
                                             body = it.body,
                                             date = it.date
@@ -110,40 +147,6 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
                         }
                     }
                 }
-            }
-
-
-
-
-            val uri: Uri = Telephony.Sms.CONTENT_URI
-            val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
-
-            cursor?.use {
-                val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
-                val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
-                val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
-
-                while (it.moveToNext()) {
-                    val body = it.getString(indexBody)
-                    val address = it.getString(indexAddress)
-                    val date = it.getLong(indexDate)
-
-                    val dateSent = Date(date)
-                    val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-                    val dateSentFormatted = format.format(dateSent)
-
-                    /*
-                   smsRepository.insert(
-                        SmsHandler(
-                            address = address,
-                            body = body,
-                            date = dateSentFormatted
-                        )
-                    )
-                     */
-                }
-            } ?: run {
-                return Result.failure()
             }
             return Result.success()
         } catch (e: Exception) {

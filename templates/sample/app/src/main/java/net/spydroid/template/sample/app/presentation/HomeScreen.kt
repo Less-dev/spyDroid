@@ -121,7 +121,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                                             .border(width = 2.dp, color = Color.Yellow)
                                     ) {
                                         Text(
-                                            text = index.toString(),
+                                            text = it.uid ?: "unknown uid",
                                             color = Color.White,
                                             fontSize = 18.sp
                                         )

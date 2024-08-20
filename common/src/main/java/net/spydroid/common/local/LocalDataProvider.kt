@@ -145,7 +145,9 @@ class LocalDataProvider private constructor(
 
     fun setSmsCurrent(sms: CurrentSms) = apply {
         val updatedList = _currentSms.value.toMutableList().apply {
-            add(sms)
+            if (sms !in this) {
+                add(sms)
+            }
         }
         // Emite la nueva lista
         _currentSms.value = updatedList
