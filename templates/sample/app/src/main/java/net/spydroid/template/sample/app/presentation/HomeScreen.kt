@@ -18,6 +18,7 @@
 package net.spydroid.template.sample.app.presentation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -28,14 +29,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -48,6 +54,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.LocalDataProvider
@@ -76,8 +83,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         PermissionsDefaults.text_sms,
     )
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
 
+    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LazyColumn(
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.padding(20.dp)
@@ -89,28 +96,54 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(20.dp))
             }
 
-            items(currentSms) {
-                Box(modifier = Modifier
-                    .clip(RoundedCornerShape(15.dp))
-                    .fillMaxWidth(0.9F)
-                    .height(150.dp)
-                    .background(color = Color.Black)
-                    .padding(10.dp)
-                ) {
-                    Column(Modifier.fillMaxWidth()) {
-                        Text(text = "#${it.address}", color = Color.Gray.copy(alpha = 0.65F))
+            if (currentSms.isNotEmpty()) {
+                itemsIndexed(currentSms) { index, it ->
+                    if (!(it.date.isNullOrEmpty() && it.body.isNullOrEmpty() && it.address.isNullOrEmpty())){
+                        Box(
+                            modifier = Modifier
+                                .clip(RoundedCornerShape(15.dp))
+                                .fillMaxWidth(0.9F)
+                                .height(150.dp)
+                                .background(color = Color.Black)
+                                .padding(10.dp)
+                        ) {
+                            Column(Modifier.fillMaxWidth()) {
+                                Row(modifier = Modifier.padding(6.dp)) {
+                                    Text(
+                                        text = it.address ?: "unknown address",
+                                        color = Color.Gray.copy(alpha = 0.65F)
+                                    )
+                                    Spacer(modifier = Modifier.weight(1F))
+                                    Box(
+                                        modifier = Modifier
+                                            .height(25.dp)
+                                            .width(40.dp)
+                                            .border(width = 2.dp, color = Color.Yellow)
+                                    ) {
+                                        Text(
+                                            text = index.toString(),
+                                            color = Color.White,
+                                            fontSize = 18.sp
+                                        )
+                                    }
+                                }
+                                Spacer(modifier = Modifier.height(10.dp))
+                                Text(text = it.date?: "unknown date", color = Color.White)
+                                Spacer(modifier = Modifier.height(10.dp))
+                                HorizontalDivider()
+                                Text(
+                                    text = it.body ?: "unknown body",
+                                    style = TextStyle(
+                                        color = Color.Red,
+                                        fontWeight = FontWeight.Bold
+                                    ),
+                                    modifier = Modifier.verticalScroll(rememberScrollState())
+                                )
+                            }
+                        }
                         Spacer(modifier = Modifier.height(10.dp))
-                        Text(text = "Date: ${it.date}", color = Color.White)
-                        Spacer(modifier = Modifier.height(10.dp))
-                        HorizontalDivider()
-                        Text(
-                            text = "Mensaje ${it.body}",
-                            style = TextStyle(color = Color.Red, fontWeight = FontWeight.Bold),
-                            modifier = Modifier.verticalScroll(rememberScrollState())
-                        )
                     }
                 }
-                Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
