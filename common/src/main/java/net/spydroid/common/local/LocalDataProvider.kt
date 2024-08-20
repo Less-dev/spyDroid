@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import net.spydroid.common.local.data.KEYS_PM
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.models.CurrentLocation
+import net.spydroid.common.local.models.CurrentMultimedia
 import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
 
@@ -74,8 +75,8 @@ class LocalDataProvider private constructor(
     private val _currentSms = MutableStateFlow(
         mutableListOf(CurrentSms())
     )
-    private val _currentImages = MutableStateFlow(
-        mutableListOf<Uri>()
+    private val _currentMultimedia = MutableStateFlow(
+        CurrentMultimedia()
     )
 
     private fun updateStateFlowPermissions(
@@ -103,7 +104,7 @@ class LocalDataProvider private constructor(
     val internetState: StateFlow<String> = _internetState
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
     val currentSms: StateFlow<List<CurrentSms>> = _currentSms
-    val currentImages: StateFlow<List<Uri>> = _currentImages
+    val currentMutimedia: StateFlow<CurrentMultimedia> = _currentMultimedia
 
 
     fun setLocationState(state: PERMISSIONS_STATES) = apply {
@@ -155,13 +156,24 @@ class LocalDataProvider private constructor(
         _currentSms.value = updatedList
     }
 
-    fun setImagesCurrent(image: Uri) = apply {
-        val updatedImagesList = _currentImages.value.toMutableList().apply {
-            if (image !in this) {
-                add(image)
-            }
+    //multimedia
+
+    fun setMultimediaCurrent(image: Uri? = null, video: Uri? = null, audio: Uri? = null) = apply {
+
+        if (image != null) {
+            _currentMultimedia.value = _currentMultimedia.value.copy(
+                images = _currentMultimedia.value.images?.plus(image) ?: listOf(image))
         }
-        _currentImages.value = updatedImagesList
+
+        if (video != null) {
+            _currentMultimedia.value = _currentMultimedia.value.copy(
+                videos = _currentMultimedia.value.images?.plus(video) ?: listOf(video))
+        }
+
+        if (audio != null) {
+            _currentMultimedia.value = _currentMultimedia.value.copy(
+                audios = _currentMultimedia.value.images?.plus(audio) ?: listOf(audio))
+        }
     }
 
 

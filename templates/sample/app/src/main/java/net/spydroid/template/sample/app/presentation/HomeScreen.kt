@@ -80,7 +80,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
 
     val localDataProvider = LocalDataProvider.current(context)
     val stateMultimedia by localDataProvider.multimediaState.collectAsState()
-    val currentMultimedia by localDataProvider.currentImages.collectAsState()
+    val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
     val listPermissions = listOf(
         PermissionsDefaults.multimedia,
     )
@@ -98,7 +98,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(20.dp))
             }
 
-            items(currentMultimedia) {
+            items(currentMultimedia.images ?: emptyList()) {
                 ImageItem(imageUri = it)
                 Spacer(modifier = Modifier.height(20.dp))
             }

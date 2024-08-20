@@ -19,7 +19,6 @@ package net.spydroid.feature.multimedia
 
 import android.content.ContentUris
 import android.content.Context
-import android.net.Uri
 import android.provider.MediaStore
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -48,8 +47,8 @@ class MultimediaWork(
                 val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
                 while (it.moveToNext()) {
                     val id = it.getLong(idColumn)
-                    val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
-                    localDataProvider.setImagesCurrent(uri) // add image to list in LocalDataProvider
+                    val imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                    localDataProvider.setMultimediaCurrent(image = imageUri) // add image to list in LocalDataProvider
                 }
             }
 
