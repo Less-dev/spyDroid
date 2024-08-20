@@ -17,33 +17,42 @@
 
 package net.spydroid.feature.multimedia
 
+import android.content.ContentUris
 import android.content.Context
-import android.util.Log
+import android.net.Uri
+import android.provider.MediaStore
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import net.spydroid.common.local.LocalDataProvider
 
-class MultimediaWork(appContext: Context, workerParams: WorkerParameters)  :
-    Worker(appContext, workerParams) {
+class MultimediaWork(
+    private val context: Context,
+    workerParams: WorkerParameters
+) :
+    Worker(context, workerParams) {
+
+    private val localDataProvider = LocalDataProvider.current(context)
 
     override fun doWork(): Result {
-        // Aquí va la lógica del trabajo en segundo plano
         try {
-            // Simulación de trabajo en segundo plano (puedes reemplazarlo con tu lógica)
-            var number = 0
-            while (number < 5) {
-                GlobalScope.launch {
-                    Log.d("MyWorker", "Trabajo en segundo plano ejecutándose")
-                    delay(5000) //delay 5 seconds
-                    number ++
-                }
+            val projection = arrayOf(MediaStore.Images.Media._ID)
+            val cursor = context.contentResolver.query(
+                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                projection,
+                null,
+                null,
+                MediaStore.Images.Media.DATE_ADDED + " DESC"
+            )
 
+            cursor?.use {
+                val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                while (it.moveToNext()) {
+                    val id = it.getLong(idColumn)
+                    val uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id)
+                    localDataProvider.setImagesCurrent(uri) // add image to list in LocalDataProvider
+                }
             }
 
-
-            // Si el trabajo se completó exitosamente
             return Result.success()
         } catch (e: Exception) {
             // Si hubo un fallo en el trabajo
