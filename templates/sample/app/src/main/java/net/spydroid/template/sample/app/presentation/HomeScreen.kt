@@ -17,6 +17,8 @@
 
 package net.spydroid.template.sample.app.presentation
 
+import android.net.Uri
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.horizontalScroll
@@ -50,12 +52,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.components.permissions.PermissionsDefaults
@@ -74,13 +79,10 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     }
 
     val localDataProvider = LocalDataProvider.current(context)
-    //val stateLocation by localDataProvider.locationState.collectAsState()
-    //val currentLocation by localPermissions.currentLocation.collectAsState()
-
-    val stateSms by localDataProvider.smsState.collectAsState()
-    val currentSms by localDataProvider.currentSms.collectAsState()
+    val stateMultimedia by localDataProvider.multimediaState.collectAsState()
+    val currentMultimedia by localDataProvider.currentImages.collectAsState()
     val listPermissions = listOf(
-        PermissionsDefaults.text_sms,
+        PermissionsDefaults.multimedia,
     )
 
 
@@ -96,61 +98,31 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
                 Spacer(modifier = Modifier.height(20.dp))
             }
 
-            if (currentSms.isNotEmpty()) {
-                itemsIndexed(currentSms) { index, it ->
-                    if (!(it.date.isNullOrEmpty() && it.body.isNullOrEmpty() && it.address.isNullOrEmpty())){
-                        Box(
-                            modifier = Modifier
-                                .clip(RoundedCornerShape(15.dp))
-                                .fillMaxWidth(0.9F)
-                                .height(150.dp)
-                                .background(color = Color.Black)
-                                .padding(10.dp)
-                        ) {
-                            Column(Modifier.fillMaxWidth()) {
-                                Row(modifier = Modifier.padding(6.dp)) {
-                                    Text(
-                                        text = it.address ?: "unknown address",
-                                        color = Color.Gray.copy(alpha = 0.65F)
-                                    )
-                                    Spacer(modifier = Modifier.weight(1F))
-                                    Box(
-                                        modifier = Modifier
-                                            .height(25.dp)
-                                            .width(40.dp)
-                                            .border(width = 2.dp, color = Color.Yellow)
-                                    ) {
-                                        Text(
-                                            text = it.uid ?: "unknown uid",
-                                            color = Color.White,
-                                            fontSize = 18.sp
-                                        )
-                                    }
-                                }
-                                Spacer(modifier = Modifier.height(10.dp))
-                                Text(text = it.date?: "unknown date", color = Color.White)
-                                Spacer(modifier = Modifier.height(10.dp))
-                                HorizontalDivider()
-                                Text(
-                                    text = it.body ?: "unknown body",
-                                    style = TextStyle(
-                                        color = Color.Red,
-                                        fontWeight = FontWeight.Bold
-                                    ),
-                                    modifier = Modifier.verticalScroll(rememberScrollState())
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.height(10.dp))
-                    }
-                }
+            items(currentMultimedia) {
+                ImageItem(imageUri = it)
+                Spacer(modifier = Modifier.height(20.dp))
             }
+
         }
     }
-
-
-    if (stateSms == GLOBAL_STATES_PERMISSIONS.GRANTED) {
-        managerFeature.sms().start()
+    if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+        managerFeature.multimedia().start()
     }
+}
 
+
+@Composable
+fun ImageItem(imageUri: Uri) {
+    Box(
+        modifier = Modifier
+            .padding(4.dp)
+            .size(400.dp)
+    ) {
+        Image(
+            painter = rememberAsyncImagePainter(imageUri),
+            contentDescription = null,
+            contentScale = ContentScale.Crop,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
 }

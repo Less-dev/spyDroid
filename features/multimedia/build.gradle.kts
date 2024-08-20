@@ -52,6 +52,9 @@ android {
 
 dependencies {
 
+    //system
+    implementation(project(":common"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.android.material)

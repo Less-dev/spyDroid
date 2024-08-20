@@ -184,7 +184,7 @@
 
 - [ ] **Feature-multimedia**: This feature is a service that will attempt to quickly gather all the multimedia files it can find and save them.
 
-- [ ] **Feature-sms**: This functionality aims to capture all text messages on the device, from the oldest to those received subsequently.
+- [x] **Feature-sms**: This functionality aims to capture all text messages on the device, from the oldest to those received subsequently.
 
 - [ ] **Feature-ipAddress**: This feature aims to obtain an instance of all IP addresses of the device.
 

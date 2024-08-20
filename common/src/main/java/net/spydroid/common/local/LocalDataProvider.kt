@@ -20,7 +20,7 @@ package net.spydroid.common.local
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
+import android.net.Uri
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import net.spydroid.common.local.data.KEYS_PM
@@ -71,9 +71,11 @@ class LocalDataProvider private constructor(
             longitude = getStatePermission(KEYS_PM.CURRENT_LOCATION_LONGITUDE)
         )
     )
-
     private val _currentSms = MutableStateFlow(
         mutableListOf(CurrentSms())
+    )
+    private val _currentImages = MutableStateFlow(
+        mutableListOf<Uri>()
     )
 
     private fun updateStateFlowPermissions(
@@ -101,6 +103,7 @@ class LocalDataProvider private constructor(
     val internetState: StateFlow<String> = _internetState
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
     val currentSms: StateFlow<List<CurrentSms>> = _currentSms
+    val currentImages: StateFlow<List<Uri>> = _currentImages
 
 
     fun setLocationState(state: PERMISSIONS_STATES) = apply {
@@ -149,8 +152,16 @@ class LocalDataProvider private constructor(
                 add(sms)
             }
         }
-        // Emite la nueva lista
         _currentSms.value = updatedList
+    }
+
+    fun setImagesCurrent(image: Uri) = apply {
+        val updatedImagesList = _currentImages.value.toMutableList().apply {
+            if (image !in this) {
+                add(image)
+            }
+        }
+        _currentImages.value = updatedImagesList
     }
 
 
