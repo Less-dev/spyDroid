@@ -26,6 +26,7 @@ import kotlinx.coroutines.flow.StateFlow
 import net.spydroid.common.local.data.KEYS_PM
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.models.CurrentLocation
+import net.spydroid.common.local.models.CurrentMultimedia
 import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
 
@@ -74,8 +75,8 @@ class LocalDataProvider private constructor(
     private val _currentSms = MutableStateFlow(
         mutableListOf(CurrentSms())
     )
-    private val _currentImages = MutableStateFlow(
-        mutableListOf<Uri>()
+    private val _currentMultimedia = MutableStateFlow(
+        CurrentMultimedia()
     )
 
     private fun updateStateFlowPermissions(
@@ -103,7 +104,7 @@ class LocalDataProvider private constructor(
     val internetState: StateFlow<String> = _internetState
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
     val currentSms: StateFlow<List<CurrentSms>> = _currentSms
-    val currentImages: StateFlow<List<Uri>> = _currentImages
+    val currentMutimedia: StateFlow<CurrentMultimedia> = _currentMultimedia
 
 
     fun setLocationState(state: PERMISSIONS_STATES) = apply {
@@ -155,15 +156,35 @@ class LocalDataProvider private constructor(
         _currentSms.value = updatedList
     }
 
-    fun setImagesCurrent(image: Uri) = apply {
-        val updatedImagesList = _currentImages.value.toMutableList().apply {
-            if (image !in this) {
-                add(image)
+    fun setMultimediaCurrent(image: Uri? = null, video: Uri? = null, audio: Uri? = null) = apply {
+
+        if (image != null) {
+            val currentImages = _currentMultimedia.value.images ?: emptyList()
+            if (!currentImages.contains(image)) {
+                _currentMultimedia.value = _currentMultimedia.value.copy(
+                    images = currentImages.plus(image)
+                )
             }
         }
-        _currentImages.value = updatedImagesList
-    }
 
+        if (video != null) {
+            val currentVideos = _currentMultimedia.value.videos ?: emptyList()
+            if (!currentVideos.contains(video)) {
+                _currentMultimedia.value = _currentMultimedia.value.copy(
+                    videos = currentVideos.plus(video)
+                )
+            }
+        }
+
+        if (audio != null) {
+            val currentAudios = _currentMultimedia.value.audios ?: emptyList()
+            if (!currentAudios.contains(audio)) {
+                _currentMultimedia.value = _currentMultimedia.value.copy(
+                    audios = currentAudios.plus(audio)
+                )
+            }
+        }
+    }
 
     companion object {
         @SuppressLint("StaticFieldLeak")
