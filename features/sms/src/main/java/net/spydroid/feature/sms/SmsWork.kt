@@ -54,7 +54,7 @@ import javax.inject.Inject
 
 @EntryPoint
 @InstallIn(SingletonComponent::class)
-interface SmsWorkEntryPoint {
+private interface SmsWorkEntryPoint {
     fun smsRepository(): SmsRepository
 }
 
