@@ -20,6 +20,9 @@ package net.spydroid.feature.multimedia
 import android.content.ContentUris
 import android.content.Context
 import android.provider.MediaStore
+import android.provider.MediaStore.Video
+import android.util.Log
+import androidx.core.net.toUri
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import dagger.hilt.EntryPoint
@@ -75,6 +78,7 @@ class MultimediaWork(
     Worker(context, workerParams) {
 
     private val localDataProvider = LocalDataProvider.current(context)
+    private val TAG = "PRUEBA786"
 
     lateinit var imageRepository: ImageRepository
     lateinit var videoRepository: VideoRepository
@@ -121,125 +125,163 @@ class MultimediaWork(
                 )
 
 
-            
             val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
-                imageState.collect {state ->
-                    when(state){
+                imageState.collect { state ->
+                    when (state) {
                         is ImageState.Loading -> {}
                         is ImageState.Error -> {}
                         is ImageState.Success -> {
                             val data = state.data
                             val existing = data.map { it.image }.toList()
+                            scope.launch {
+                                withContext(Dispatchers.IO) {
+                                    /*
+                                                                        val projectionImage = arrayOf(MediaStore.Images.Media._ID)
+                                    val cursorImage = context.contentResolver.query(
+                                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                        projectionImage,
+                                        null,
+                                        null,
+                                        MediaStore.Images.Media.DATE_ADDED + " DESC"
+                                    )
+
+                                    cursorImage?.use {
+                                        val idColumn =
+                                            it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
+                                        while (it.moveToNext()) {
+                                            val id = it.getLong(idColumn)
+                                            val imageUri = ContentUris.withAppendedId(
+                                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                                id
+                                            )
+                                            if (imageUri.toString() !in existing) {
+                                                imageRepository.insert(
+                                                    ImageHandler(
+                                                        image = imageUri.toString()
+                                                    )
+                                                )
+                                                Log.i(TAG, "SE insertó en imagenes: $imageUri")
+                                            } else {
+                                                Log.e(TAG, "YA EXISTE $imageUri")
+                                            }
+                                        }
+                                    }
+                                     */
+
+                                    if (data.isNotEmpty()) {
+                                        data.forEach { uri ->
+                                            localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
 
             scope.launch {
-                videoState.collect {state ->
-                    when(state){
+                videoState.collect { state ->
+                    when (state) {
                         is VideoState.Loading -> {}
                         is VideoState.Error -> {}
                         is VideoState.Success -> {
                             val data = state.data
                             val existing = data.map { it.video }.toList()
+                            scope.launch {
+                                withContext(Dispatchers.IO) {
+                                    val projectionVideo = arrayOf(MediaStore.Video.Media._ID)
+                                    val cursorVideo = context.contentResolver.query(
+                                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                                        projectionVideo,
+                                        null,
+                                        null,
+                                        MediaStore.Video.Media.DATE_ADDED + " DESC"
+                                    )
+
+                                    cursorVideo?.use {
+                                        val idColumn =
+                                            it.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
+                                        while (it.moveToNext()) {
+                                            val id = it.getLong(idColumn)
+                                            val uriVideo = ContentUris.withAppendedId(
+                                                MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                                                id
+                                            )
+                                            if (uriVideo.toString() !in existing) {
+                                                videoRepository.insert(
+                                                    VideoHandler(
+                                                        video = uriVideo.toString()
+                                                    )
+                                                )
+                                            }
+                                        }
+                                    }
+                                    if (data.isNotEmpty()) {
+                                        data.forEach { uri ->
+                                            localDataProvider.setMultimediaCurrent(video = uri.video.toUri())
+                                        }
+                                    }
+
+                                }
+                            }
                         }
                     }
                 }
             }
 
             scope.launch {
-                audioState.collect {state ->
-                    when(state){
+                audioState.collect { state ->
+                    when (state) {
                         is AudioState.Loading -> {}
                         is AudioState.Error -> {}
                         is AudioState.Success -> {
                             val data = state.data
                             val existing = data.map { it.audio }.toList()
+                            scope.launch {
+                                withContext(Dispatchers.IO) {
+                                    val projectionAudio = arrayOf(MediaStore.Audio.Media._ID)
+                                    val cursorAudio = context.contentResolver.query(
+                                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                                        projectionAudio,
+                                        null,
+                                        null,
+                                        MediaStore.Audio.Media.DATE_ADDED + " DESC"
+                                    )
+
+                                    cursorAudio?.use {
+                                        val idColumn =
+                                            it.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
+                                        while (it.moveToNext()) {
+                                            val id = it.getLong(idColumn)
+                                            val uriAudio = ContentUris.withAppendedId(
+                                                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
+                                                id
+                                            )
+                                            if (uriAudio.toString() !in existing) {
+                                                audioRepository.insert(
+                                                    AudioHandler(
+                                                        audio = uriAudio.toString()
+                                                    )
+                                                )
+                                            }
+
+                                        }
+                                    }
+                                    if (data.isNotEmpty()) {
+                                        data.forEach { uri ->
+                                            localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
+                                        }
+                                    }
+                                }
+                            }
                         }
                     }
                 }
             }
 
-
-
-            // Launch a coroutine for loading images
-            scope.launch {
-                withContext(Dispatchers.IO) {
-                    val projectionImage = arrayOf(MediaStore.Images.Media._ID)
-                    val cursorImage = context.contentResolver.query(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        projectionImage,
-                        null,
-                        null,
-                        MediaStore.Images.Media.DATE_ADDED + " DESC"
-                    )
-
-                    cursorImage?.use {
-                        val idColumn = it.getColumnIndexOrThrow(MediaStore.Images.Media._ID)
-                        while (it.moveToNext()) {
-                            val id = it.getLong(idColumn)
-                            val imageUri = ContentUris.withAppendedId(
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                id
-                            )
-                            localDataProvider.setMultimediaCurrent(image = imageUri) // add image to list in LocalDataProvider
-                        }
-                    }
-                }
-            }
-
-            scope.launch {
-                withContext(Dispatchers.IO) {
-                    val projectionVideo = arrayOf(MediaStore.Video.Media._ID)
-                    val cursorVideo = context.contentResolver.query(
-                        MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                        projectionVideo,
-                        null,
-                        null,
-                        MediaStore.Video.Media.DATE_ADDED + " DESC"
-                    )
-
-                    cursorVideo?.use {
-                        val idColumn = it.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
-                        while (it.moveToNext()) {
-                            val id = it.getLong(idColumn)
-                            val uriVideo = ContentUris.withAppendedId(
-                                MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
-                                id
-                            )
-                            localDataProvider.setMultimediaCurrent(video = uriVideo)
-                        }
-                    }
-                }
-            }
-
-            scope.launch {
-                withContext(Dispatchers.IO) {
-                    val projectionAudio = arrayOf(MediaStore.Audio.Media._ID)
-                    val cursorAudio = context.contentResolver.query(
-                        MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                        projectionAudio,
-                        null,
-                        null,
-                        MediaStore.Audio.Media.DATE_ADDED + " DESC"
-                    )
-
-                    cursorAudio?.use {
-                        val idColumn = it.getColumnIndexOrThrow(MediaStore.Audio.Media._ID)
-                        while (it.moveToNext()) {
-                            val id = it.getLong(idColumn)
-                            val uriAudio = ContentUris.withAppendedId(
-                                MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
-                                id
-                            )
-                            localDataProvider.setMultimediaCurrent(audio = uriAudio)
-                        }
-                    }
-                }
-            }
 
             return Result.success()
         } catch (e: Exception) {
