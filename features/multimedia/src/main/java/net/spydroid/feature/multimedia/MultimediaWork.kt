@@ -123,7 +123,7 @@ class MultimediaWork(
                         is ImageState.Error -> {}
                         is ImageState.Success -> {
                             val data = state.data
-                            val existing = data.map { it.image }.toList()
+                            val existing = data.map { it.image }.toSet()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     val projectionImage = arrayOf(MediaStore.Images.Media._ID)
@@ -176,7 +176,7 @@ class MultimediaWork(
                         is VideoState.Error -> {}
                         is VideoState.Success -> {
                             val data = state.data
-                            val existing = data.map { it.video }.toList()
+                            val existing = data.map { it.video }.toSet()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     val projectionVideo = arrayOf(MediaStore.Video.Media._ID)
@@ -227,7 +227,7 @@ class MultimediaWork(
                         is AudioState.Error -> {}
                         is AudioState.Success -> {
                             val data = state.data
-                            val existing = data.map { it.audio }.toList()
+                            val existing = data.map { it.audio }.toSet()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     val projectionAudio = arrayOf(MediaStore.Audio.Media._ID)
