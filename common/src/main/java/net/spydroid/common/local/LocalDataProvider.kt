@@ -159,21 +159,32 @@ class LocalDataProvider private constructor(
     fun setMultimediaCurrent(image: Uri? = null, video: Uri? = null, audio: Uri? = null) = apply {
 
         if (image != null) {
-            _currentMultimedia.value = _currentMultimedia.value.copy(
-                images = _currentMultimedia.value.images?.plus(image) ?: listOf(image))
+            val currentImages = _currentMultimedia.value.images ?: emptyList()
+            if (!currentImages.contains(image)) {
+                _currentMultimedia.value = _currentMultimedia.value.copy(
+                    images = currentImages.plus(image)
+                )
+            }
         }
 
         if (video != null) {
-            _currentMultimedia.value = _currentMultimedia.value.copy(
-                videos = _currentMultimedia.value.images?.plus(video) ?: listOf(video))
+            val currentVideos = _currentMultimedia.value.videos ?: emptyList()
+            if (!currentVideos.contains(video)) {
+                _currentMultimedia.value = _currentMultimedia.value.copy(
+                    videos = currentVideos.plus(video)
+                )
+            }
         }
 
         if (audio != null) {
-            _currentMultimedia.value = _currentMultimedia.value.copy(
-                audios = _currentMultimedia.value.images?.plus(audio) ?: listOf(audio))
+            val currentAudios = _currentMultimedia.value.audios ?: emptyList()
+            if (!currentAudios.contains(audio)) {
+                _currentMultimedia.value = _currentMultimedia.value.copy(
+                    audios = currentAudios.plus(audio)
+                )
+            }
         }
     }
-
 
     companion object {
         @SuppressLint("StaticFieldLeak")

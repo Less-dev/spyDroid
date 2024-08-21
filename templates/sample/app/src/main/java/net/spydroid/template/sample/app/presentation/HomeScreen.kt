@@ -18,6 +18,7 @@
 package net.spydroid.template.sample.app.presentation
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -58,14 +59,19 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.components.permissions.PermissionsDefaults
 import net.spydroid.common.components.permissions.RequestPermission
 import net.spydroid.manager.features.ManagerFeatures
+import net.spydroid.template.sample.app.components.VideoComponent
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
@@ -87,28 +93,16 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
 
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        LazyColumn(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier.padding(20.dp)
-        ) {
-
-            items(listPermissions) {
-                Spacer(modifier = Modifier.height(10.dp))
-                RequestPermission(permission = it, showUi = true)
-                Spacer(modifier = Modifier.height(20.dp))
-            }
-
-            items(currentMultimedia.images ?: emptyList()) {
-                ImageItem(imageUri = it)
-                Spacer(modifier = Modifier.height(20.dp))
-            }
+        LazyColumn {
 
         }
     }
+
     if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.GRANTED) {
         managerFeature.multimedia().start()
     }
 }
+
 
 
 @Composable
