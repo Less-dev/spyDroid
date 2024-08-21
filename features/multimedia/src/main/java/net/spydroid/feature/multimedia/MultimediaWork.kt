@@ -78,25 +78,17 @@ class MultimediaWork(
     Worker(context, workerParams) {
 
     private val localDataProvider = LocalDataProvider.current(context)
-    private val TAG = "PRUEBA786"
+    private val scope = CoroutineScope(Dispatchers.IO)
 
-    lateinit var imageRepository: ImageRepository
-    lateinit var videoRepository: VideoRepository
-    lateinit var audioRepository: AudioRepository
-
-    init {
-        //init repositories
-        imageRepository =
-            EntryPointAccessors.fromApplication(context, ImagesWorkEntryPoint::class.java)
-                .imageRepository()
-        videoRepository =
-            EntryPointAccessors.fromApplication(context, VideoWorkEntryPoint::class.java)
-                .videoRepository()
-        audioRepository =
-            EntryPointAccessors.fromApplication(context, AudioWorkEntryPoint::class.java)
-                .audioRepository()
-    }
-
+    private val imageRepository =
+        EntryPointAccessors.fromApplication(context, ImagesWorkEntryPoint::class.java)
+            .imageRepository()
+    private val videoRepository =
+        EntryPointAccessors.fromApplication(context, VideoWorkEntryPoint::class.java)
+            .videoRepository()
+    private val audioRepository =
+        EntryPointAccessors.fromApplication(context, AudioWorkEntryPoint::class.java)
+            .audioRepository()
 
     override fun doWork(): Result {
         try {
@@ -104,7 +96,7 @@ class MultimediaWork(
                 .image.map<List<ImageHandler>, ImageState> { ImageState.Success(data = it) }
                 .catch { emit(ImageState.Error(it)) }
                 .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
+                    scope, SharingStarted.WhileSubscribed(5000),
                     ImageState.Loading
                 )
 
@@ -112,7 +104,7 @@ class MultimediaWork(
                 .video.map<List<VideoHandler>, VideoState> { VideoState.Success(data = it) }
                 .catch { emit(VideoState.Error(it)) }
                 .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
+                    scope, SharingStarted.WhileSubscribed(5000),
                     VideoState.Loading
                 )
 
@@ -120,12 +112,9 @@ class MultimediaWork(
                 .audio.map<List<AudioHandler>, AudioState> { AudioState.Success(data = it) }
                 .catch { emit(AudioState.Error(it)) }
                 .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
+                    scope, SharingStarted.WhileSubscribed(5000),
                     AudioState.Loading
                 )
-
-
-            val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
                 imageState.collect { state ->
@@ -283,8 +272,6 @@ class MultimediaWork(
                     }
                 }
             }
-
-
             return Result.success()
         } catch (e: Exception) {
             return Result.failure()
