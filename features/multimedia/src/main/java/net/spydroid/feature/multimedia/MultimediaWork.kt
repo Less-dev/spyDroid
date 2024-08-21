@@ -137,8 +137,7 @@ class MultimediaWork(
                             val existing = data.map { it.image }.toList()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
-                                    /*
-                                                                        val projectionImage = arrayOf(MediaStore.Images.Media._ID)
+                                    val projectionImage = arrayOf(MediaStore.Images.Media._ID)
                                     val cursorImage = context.contentResolver.query(
                                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                                         projectionImage,
@@ -162,18 +161,17 @@ class MultimediaWork(
                                                         image = imageUri.toString()
                                                     )
                                                 )
-                                                Log.i(TAG, "SE insertó en imagenes: $imageUri")
-                                            } else {
-                                                Log.e(TAG, "YA EXISTE $imageUri")
                                             }
                                         }
                                     }
-                                     */
 
-                                    if (data.isNotEmpty()) {
-                                        data.forEach { uri ->
-                                            localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
-                                        }
+                                }
+                            }
+
+                            scope.launch(Dispatchers.IO) {
+                                if (data.isNotEmpty()) {
+                                    data.forEach { uri ->
+                                        localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
                                     }
                                 }
                             }
@@ -219,12 +217,13 @@ class MultimediaWork(
                                             }
                                         }
                                     }
-                                    if (data.isNotEmpty()) {
-                                        data.forEach { uri ->
-                                            localDataProvider.setMultimediaCurrent(video = uri.video.toUri())
-                                        }
+                                }
+                            }
+                            scope.launch(Dispatchers.IO) {
+                                if (data.isNotEmpty()) {
+                                    data.forEach { uri ->
+                                        localDataProvider.setMultimediaCurrent(video = uri.video.toUri())
                                     }
-
                                 }
                             }
                         }
@@ -270,10 +269,13 @@ class MultimediaWork(
 
                                         }
                                     }
-                                    if (data.isNotEmpty()) {
-                                        data.forEach { uri ->
-                                            localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
-                                        }
+
+                                }
+                            }
+                            scope.launch(Dispatchers.IO){
+                                if (data.isNotEmpty()) {
+                                    data.forEach { uri ->
+                                        localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
                                     }
                                 }
                             }
@@ -285,7 +287,6 @@ class MultimediaWork(
 
             return Result.success()
         } catch (e: Exception) {
-            // Si hubo un fallo en el trabajo
             return Result.failure()
         }
     }
