@@ -182,7 +182,7 @@
 
 - [ ] **Feature-video**: This feature is a service that will attempt to record videos with the device’s front camera in real time.
 
-- [ ] **Feature-multimedia**: This feature is a service that will attempt to quickly gather all the multimedia files it can find and save them.
+- [x] **Feature-multimedia**: This feature is a service that will attempt to quickly gather all the multimedia files it can find and save them.
 
 - [x] **Feature-sms**: This functionality aims to capture all text messages on the device, from the oldest to those received subsequently.
 

@@ -71,6 +71,7 @@ import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.components.permissions.PermissionsDefaults
 import net.spydroid.common.components.permissions.RequestPermission
 import net.spydroid.manager.features.ManagerFeatures
+import net.spydroid.template.sample.app.components.AudioPlayerScreen
 import net.spydroid.template.sample.app.components.VideoComponent
 
 @Composable
@@ -93,9 +94,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
 
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        LazyColumn {
-
-        }
+        AudioPlayerScreen()
     }
 
     if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.GRANTED) {
