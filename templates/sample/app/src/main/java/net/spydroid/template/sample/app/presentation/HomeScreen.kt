@@ -92,7 +92,7 @@ fun ImageItem(imageUri: Uri) {
         Image(
             painter = rememberAsyncImagePainter(imageUri),
             contentDescription = null,
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.FillBounds,
             modifier = Modifier.fillMaxSize()
         )
     }

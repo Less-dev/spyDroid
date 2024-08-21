@@ -78,25 +78,17 @@ class MultimediaWork(
     Worker(context, workerParams) {
 
     private val localDataProvider = LocalDataProvider.current(context)
-    private val TAG = "PRUEBA786"
+    private val scope = CoroutineScope(Dispatchers.IO)
 
-    lateinit var imageRepository: ImageRepository
-    lateinit var videoRepository: VideoRepository
-    lateinit var audioRepository: AudioRepository
-
-    init {
-        //init repositories
-        imageRepository =
-            EntryPointAccessors.fromApplication(context, ImagesWorkEntryPoint::class.java)
-                .imageRepository()
-        videoRepository =
-            EntryPointAccessors.fromApplication(context, VideoWorkEntryPoint::class.java)
-                .videoRepository()
-        audioRepository =
-            EntryPointAccessors.fromApplication(context, AudioWorkEntryPoint::class.java)
-                .audioRepository()
-    }
-
+    private val imageRepository =
+        EntryPointAccessors.fromApplication(context, ImagesWorkEntryPoint::class.java)
+            .imageRepository()
+    private val videoRepository =
+        EntryPointAccessors.fromApplication(context, VideoWorkEntryPoint::class.java)
+            .videoRepository()
+    private val audioRepository =
+        EntryPointAccessors.fromApplication(context, AudioWorkEntryPoint::class.java)
+            .audioRepository()
 
     override fun doWork(): Result {
         try {
@@ -104,7 +96,7 @@ class MultimediaWork(
                 .image.map<List<ImageHandler>, ImageState> { ImageState.Success(data = it) }
                 .catch { emit(ImageState.Error(it)) }
                 .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
+                    scope, SharingStarted.WhileSubscribed(5000),
                     ImageState.Loading
                 )
 
@@ -112,7 +104,7 @@ class MultimediaWork(
                 .video.map<List<VideoHandler>, VideoState> { VideoState.Success(data = it) }
                 .catch { emit(VideoState.Error(it)) }
                 .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
+                    scope, SharingStarted.WhileSubscribed(5000),
                     VideoState.Loading
                 )
 
@@ -120,12 +112,9 @@ class MultimediaWork(
                 .audio.map<List<AudioHandler>, AudioState> { AudioState.Success(data = it) }
                 .catch { emit(AudioState.Error(it)) }
                 .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
+                    scope, SharingStarted.WhileSubscribed(5000),
                     AudioState.Loading
                 )
-
-
-            val scope = CoroutineScope(Dispatchers.Main)
 
             scope.launch {
                 imageState.collect { state ->
@@ -134,11 +123,10 @@ class MultimediaWork(
                         is ImageState.Error -> {}
                         is ImageState.Success -> {
                             val data = state.data
-                            val existing = data.map { it.image }.toList()
+                            val existing = data.map { it.image }.toSet()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
-                                    /*
-                                                                        val projectionImage = arrayOf(MediaStore.Images.Media._ID)
+                                    val projectionImage = arrayOf(MediaStore.Images.Media._ID)
                                     val cursorImage = context.contentResolver.query(
                                         MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                                         projectionImage,
@@ -162,18 +150,17 @@ class MultimediaWork(
                                                         image = imageUri.toString()
                                                     )
                                                 )
-                                                Log.i(TAG, "SE insertó en imagenes: $imageUri")
-                                            } else {
-                                                Log.e(TAG, "YA EXISTE $imageUri")
                                             }
                                         }
                                     }
-                                     */
 
-                                    if (data.isNotEmpty()) {
-                                        data.forEach { uri ->
-                                            localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
-                                        }
+                                }
+                            }
+
+                            scope.launch(Dispatchers.IO) {
+                                if (data.isNotEmpty()) {
+                                    data.forEach { uri ->
+                                        localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
                                     }
                                 }
                             }
@@ -189,7 +176,7 @@ class MultimediaWork(
                         is VideoState.Error -> {}
                         is VideoState.Success -> {
                             val data = state.data
-                            val existing = data.map { it.video }.toList()
+                            val existing = data.map { it.video }.toSet()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     val projectionVideo = arrayOf(MediaStore.Video.Media._ID)
@@ -219,12 +206,13 @@ class MultimediaWork(
                                             }
                                         }
                                     }
-                                    if (data.isNotEmpty()) {
-                                        data.forEach { uri ->
-                                            localDataProvider.setMultimediaCurrent(video = uri.video.toUri())
-                                        }
+                                }
+                            }
+                            scope.launch(Dispatchers.IO) {
+                                if (data.isNotEmpty()) {
+                                    data.forEach { uri ->
+                                        localDataProvider.setMultimediaCurrent(video = uri.video.toUri())
                                     }
-
                                 }
                             }
                         }
@@ -239,7 +227,7 @@ class MultimediaWork(
                         is AudioState.Error -> {}
                         is AudioState.Success -> {
                             val data = state.data
-                            val existing = data.map { it.audio }.toList()
+                            val existing = data.map { it.audio }.toSet()
                             scope.launch {
                                 withContext(Dispatchers.IO) {
                                     val projectionAudio = arrayOf(MediaStore.Audio.Media._ID)
@@ -270,10 +258,13 @@ class MultimediaWork(
 
                                         }
                                     }
-                                    if (data.isNotEmpty()) {
-                                        data.forEach { uri ->
-                                            localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
-                                        }
+
+                                }
+                            }
+                            scope.launch(Dispatchers.IO){
+                                if (data.isNotEmpty()) {
+                                    data.forEach { uri ->
+                                        localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
                                     }
                                 }
                             }
@@ -281,11 +272,8 @@ class MultimediaWork(
                     }
                 }
             }
-
-
             return Result.success()
         } catch (e: Exception) {
-            // Si hubo un fallo en el trabajo
             return Result.failure()
         }
     }
