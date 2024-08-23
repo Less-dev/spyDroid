@@ -17,23 +17,19 @@
 
 package net.spydroid.server
 
-import io.ktor.serialization.kotlinx.json.json
 import io.ktor.server.application.*
 import io.ktor.server.netty.EngineMain
-import io.ktor.server.plugins.contentnegotiation.ContentNegotiation
+import net.spydroid.server.data.PostgresTaskRepositoryHandler
+import net.spydroid.server.plugins.configureDatabases
 import net.spydroid.server.plugins.configureRouting
+import net.spydroid.server.plugins.configureSerialization
 
 fun main(args: Array<String>) {
     EngineMain.main(args)
 }
 
 fun Application.module() {
-    configureRouting()
-    configureSerialization()
+    configureDatabases()
 }
 
-fun Application.configureSerialization() {
-    install(ContentNegotiation) {
-        json()
-    }
-}
+

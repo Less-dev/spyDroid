@@ -17,24 +17,58 @@
 
 package net.spydroid.server.plugins
 
+import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
 import io.ktor.server.http.content.staticResources
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import net.spydroid.server.domain.TaskRepository0
 import net.spydroid.server.models.Priority
-import net.spydroid.server.models.Task
 
 fun Application.configureRouting() {
     routing {
-        get("/tasks") {
-            call.respond(
-                listOf(
-                    Task("cleaning", "Clean the house", Priority.Low),
-                    Task("gardening", "Mow the lawn", Priority.Medium),
-                    Task("shopping", "Buy the groceries", Priority.High),
-                    Task("painting", "Paint the fence", Priority.Medium)
-                )
-            )
+        staticResources("static", "static")
+
+        //updated implementation
+        route("/tasks") {
+            get {
+                val tasks = TaskRepository0.allTasks()
+                call.respond(tasks)
+            }
+
+            get("/byName/{taskName}") {
+                val name = call.parameters["taskName"]
+                if (name == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@get
+                }
+
+                val task = TaskRepository0.taskByName(name)
+                if (task == null) {
+                    call.respond(HttpStatusCode.NotFound)
+                    return@get
+                }
+                call.respond(task)
+            }
+            get("/byPriority/{priority}") {
+                val priorityAsText = call.parameters["priority"]
+                if (priorityAsText == null) {
+                    call.respond(HttpStatusCode.BadRequest)
+                    return@get
+                }
+                try {
+                    val priority = Priority.valueOf(priorityAsText)
+                    val tasks = TaskRepository0.tasksByPriority(priority)
+
+                    if (tasks.isEmpty()) {
+                        call.respond(HttpStatusCode.NotFound)
+                        return@get
+                    }
+                    call.respond(tasks)
+                } catch (ex: IllegalArgumentException) {
+                    call.respond(HttpStatusCode.BadRequest)
+                }
+            }
         }
     }
 }

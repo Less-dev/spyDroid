@@ -46,4 +46,12 @@ dependencies {
     implementation(libs.ktor.negotiation)
     implementation(libs.ktor.serialitation)
     implementation(libs.kotlin.serialitation.json)
+
+    implementation("org.jetbrains.exposed:exposed-core:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-dao:0.41.1")
+    implementation("org.jetbrains.exposed:exposed-jdbc:0.41.1")
+
+    //DATABASE
+    implementation("org.postgresql:postgresql:42.6.0")
+    implementation("mysql:mysql-connector-java:8.0.33")
 }
