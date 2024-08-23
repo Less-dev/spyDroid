@@ -19,9 +19,8 @@ package net.spydroid.server.models
 
 import kotlinx.serialization.Serializable
 
-@Serializable
 enum class Priority {
-    Low, Medium, High, Vital
+    Low, Medium, High
 }
 
 @Serializable
