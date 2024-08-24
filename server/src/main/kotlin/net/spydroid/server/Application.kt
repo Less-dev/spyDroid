@@ -38,7 +38,12 @@ fun Application.module() {
     val multimediaRepository = MultimediaRepositoryHandler()
     val smsRepository = SmsRepositoryHandler()
 
-    configureDatabases(devicesRepository = devicesRepository)
+    configureDatabases(
+        devicesRepository = devicesRepository,
+        infoRepository = infoRepository,
+        multimediaRepository = multimediaRepository,
+        smsRepository = smsRepository
+    )
     configureSerialization()
     configureRouting(devicesRepository = devicesRepository)
 }

@@ -59,8 +59,8 @@ class InfoRepositoryHandler : InfoRepository {
         try {
             transaction {
                 Info.insert {
-                    it[Info.ip_address_public] = info.ip_address_public
                     it[Info.alias] = info.alias
+                    it[Info.ip_address_public] = info.ip_address_public
                     it[Info.ip_address_private] = info.ip_address_private
                     it[Info.location] = info.location
                 }
