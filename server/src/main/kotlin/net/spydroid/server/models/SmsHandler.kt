@@ -19,5 +19,6 @@ package net.spydroid.server.models
 
 data class SmsHandler(
     val id: Int = 0,
+    val alias: String,
     val sms: String
 )

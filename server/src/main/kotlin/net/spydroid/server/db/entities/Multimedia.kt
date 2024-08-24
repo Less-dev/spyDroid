@@ -21,6 +21,7 @@ import org.jetbrains.exposed.sql.Table
 
 object Multimedia: Table() {
     val id = integer("id_multimedia").autoIncrement()
+    val alias = varchar("alias", 50)
     val routeFile = varchar("route_file", 55)
     val typeFile = varchar("type", 10)
 

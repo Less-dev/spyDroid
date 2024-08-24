@@ -31,6 +31,7 @@ class SmsRepositoryHandler : SmsRepository {
             Sms.selectAll().map {
                 SmsHandler(
                     id = it[Sms.id],
+                    alias = it[Sms.alias],
                     sms = it[Sms.sms]
                 )
             }
@@ -41,6 +42,7 @@ class SmsRepositoryHandler : SmsRepository {
             Sms.select { Sms.id eq (sms.id ?: 1) }.map {
                 SmsHandler(
                     id = it[Sms.id],
+                    alias = it[Sms.alias],
                     sms = it[Sms.sms]
                 )
             }
@@ -52,6 +54,7 @@ class SmsRepositoryHandler : SmsRepository {
             transaction {
                 Sms.insert {
                     it[Sms.sms] = sms.sms
+                    it[Sms.alias] = sms.alias
                 }
             }
         }catch (e: Exception) {

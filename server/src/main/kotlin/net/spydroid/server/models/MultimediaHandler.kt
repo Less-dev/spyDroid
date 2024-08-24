@@ -19,6 +19,7 @@ package net.spydroid.server.models
 
 data class MultimediaHandler(
     val id: Int? = 0,
+    val alias: String,
     val routeFile: String,
     val type: String
 )

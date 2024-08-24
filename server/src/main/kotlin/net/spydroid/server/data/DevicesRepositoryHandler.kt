@@ -32,7 +32,7 @@ class DevicesRepositoryHandler : DevicesRepository {
                 DeviceHandler(
                     id = it[Devices.id],
                     name = it[Devices.name],
-                    id_info = it[Devices.id_info]
+                    alias = it[Devices.alias],
                 )
             }
         }
@@ -44,7 +44,7 @@ class DevicesRepositoryHandler : DevicesRepository {
                     DeviceHandler(
                         id = it[Devices.id],
                         name = it[Devices.name],
-                        id_info = it[Devices.id_info]
+                        alias = it[Devices.alias],
                     )
                 }
                 .singleOrNull()
@@ -56,7 +56,7 @@ class DevicesRepositoryHandler : DevicesRepository {
             transaction {
                 Devices.insert {
                     it[Devices.name] = device.name
-                    it[Devices.id_info] = device.id_info
+                    it[Devices.alias] = device.alias
                 }
             }
 

@@ -34,7 +34,7 @@ fun Application.configureDatabases(devicesRepository: DevicesRepository) {
 
         runBlocking {
             newSuspendedTransaction {
-                createMissingTablesAndColumns(Info)
+                createMissingTablesAndColumns(Devices)
                 createMissingTablesAndColumns(Info)
                 createMissingTablesAndColumns(Multimedia)
                 createMissingTablesAndColumns(Sms)
@@ -43,12 +43,11 @@ fun Application.configureDatabases(devicesRepository: DevicesRepository) {
 
         println("🚀 Base de datos configurada correctamente.")
 
-        //insertUsuario("ME ELECTROCUTASTE PEDRITO")
         runBlocking {
             devicesRepository.insertDevice(
                 DeviceHandler(
-                    name = "Juan Carlos camilo sanches",
-                    id_info = 1
+                    alias = "Perfil_444",
+                    name = "Juan Carlos camilo sanches"
                 )
             )
         }

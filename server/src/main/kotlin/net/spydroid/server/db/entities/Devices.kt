@@ -21,8 +21,8 @@ import org.jetbrains.exposed.sql.Table
 
 object Devices: Table() {
     val id = integer("id_device").autoIncrement()
+    val alias = varchar("alias", 50)
     val name = varchar("name", 50)
-    val id_info = integer("id_info")
     override val primaryKey: PrimaryKey
         get() = PrimaryKey(id)
 }

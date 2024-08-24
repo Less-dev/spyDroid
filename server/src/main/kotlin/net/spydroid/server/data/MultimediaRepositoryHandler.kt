@@ -31,6 +31,7 @@ class MultimediaRepositoryHandler: MultimediaRepository {
             Multimedia.selectAll().map {
                 MultimediaHandler(
                     id = it[Multimedia.id],
+                    alias = it[Multimedia.alias],
                     routeFile = it[Multimedia.routeFile],
                     type = it[Multimedia.typeFile]
                 )
@@ -41,6 +42,7 @@ class MultimediaRepositoryHandler: MultimediaRepository {
             Multimedia.select { Multimedia.id eq (multimedia.id ?: 1) }.map {
                 MultimediaHandler(
                     id = it[Multimedia.id],
+                    alias = it[Multimedia.alias],
                     routeFile = it[Multimedia.routeFile],
                     type = it[Multimedia.typeFile]
                 )
@@ -54,6 +56,7 @@ class MultimediaRepositoryHandler: MultimediaRepository {
             transaction {
                 Multimedia.insert {
                     it[Multimedia.routeFile] = multimedia.routeFile
+                    it[Multimedia.alias] = multimedia.alias
                     it[Multimedia.typeFile] = multimedia.type
                 }
             }
