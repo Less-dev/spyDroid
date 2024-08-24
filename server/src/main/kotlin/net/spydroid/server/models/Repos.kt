@@ -15,32 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.plugins
+package net.spydroid.server.models
 
-import io.ktor.server.application.Application
-import net.spydroid.server.db.DbManager
 import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository
 import net.spydroid.server.domain.SmsRepository
-import net.spydroid.server.models.Repos
 
-fun Application.configureDatabases(
-    repos: Repos
-) {
-
-    try {
-        val dbManager = DbManager()
-
-        dbManager.connectToDb()
-        dbManager.createTables()
-        dbManager.insertDevice(repos.devicesRepository)
-        dbManager.insertInfo(repos.infoRepository)
-        dbManager.insertMultimedia(repos.multimediaRepository)
-        dbManager.insertSms(repos.smsRepository)
-
-    } catch (e: Exception) {
-        println("Error connecting to the database${e.message}")
-        throw e
-    }
-}
+data class Repos(
+    val devicesRepository: DevicesRepository,
+    val infoRepository: InfoRepository,
+    val multimediaRepository: MultimediaRepository,
+    val smsRepository: SmsRepository
+)

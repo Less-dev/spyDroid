@@ -23,6 +23,7 @@ import net.spydroid.server.data.DevicesRepositoryHandler
 import net.spydroid.server.data.InfoRepositoryHandler
 import net.spydroid.server.data.MultimediaRepositoryHandler
 import net.spydroid.server.data.SmsRepositoryHandler
+import net.spydroid.server.models.Repos
 import net.spydroid.server.plugins.configureDatabases
 import net.spydroid.server.plugins.configureRouting
 import net.spydroid.server.plugins.configureSerialization
@@ -33,19 +34,16 @@ fun main(args: Array<String>) {
 
 fun Application.module() {
 
-    val devicesRepository = DevicesRepositoryHandler()
-    val infoRepository = InfoRepositoryHandler()
-    val multimediaRepository = MultimediaRepositoryHandler()
-    val smsRepository = SmsRepositoryHandler()
-
-    configureDatabases(
-        devicesRepository = devicesRepository,
-        infoRepository = infoRepository,
-        multimediaRepository = multimediaRepository,
-        smsRepository = smsRepository
+    val repos = Repos(
+        devicesRepository = DevicesRepositoryHandler(),
+        infoRepository = InfoRepositoryHandler(),
+        multimediaRepository = MultimediaRepositoryHandler(),
+        smsRepository = SmsRepositoryHandler()
     )
+
+    configureDatabases(repos = repos)
     configureSerialization()
-    configureRouting(devicesRepository = devicesRepository)
+    configureRouting(repos = repos)
 }
 
 
