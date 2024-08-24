@@ -15,22 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server
+package net.spydroid.server.db.entities
 
-import io.ktor.server.application.*
-import io.ktor.server.netty.EngineMain
-import net.spydroid.server.plugins.configureDatabases
-import net.spydroid.server.plugins.configureRouting
-import net.spydroid.server.plugins.configureSerialization
+import org.jetbrains.exposed.sql.Table
 
-fun main(args: Array<String>) {
-    EngineMain.main(args)
+object Devices: Table() {
+    val id = integer("id_device").autoIncrement()
+    val name = varchar("name", 50)
+    val id_info = integer("id_info")
+    override val primaryKey: PrimaryKey
+        get() = PrimaryKey(id)
 }
-
-fun Application.module() {
-    configureDatabases()
-    configureSerialization()
-    configureRouting()
-}
-
-

@@ -15,22 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server
+package net.spydroid.server.data
 
-import io.ktor.server.application.*
-import io.ktor.server.netty.EngineMain
-import net.spydroid.server.plugins.configureDatabases
-import net.spydroid.server.plugins.configureRouting
-import net.spydroid.server.plugins.configureSerialization
+import net.spydroid.server.db.entities.Info
+import net.spydroid.server.domain.InfoRepository
 
-fun main(args: Array<String>) {
-    EngineMain.main(args)
+class InfoRepositoryHandler: InfoRepository {
+    override suspend fun getInfo(): List<Info> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getSpecificInfo(device: Info): Info {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertInfo(device: Info) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateInfo(device: Info) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteInfo(device: Info) {
+        TODO("Not yet implemented")
+    }
 }
-
-fun Application.module() {
-    configureDatabases()
-    configureSerialization()
-    configureRouting()
-}
-
-

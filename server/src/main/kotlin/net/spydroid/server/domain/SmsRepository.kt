@@ -17,13 +17,12 @@
 
 package net.spydroid.server.domain
 
-import net.spydroid.server.models.Priority
-import net.spydroid.server.models.Task
+import net.spydroid.server.db.entities.Sms
 
-interface TaskRepository {
-    suspend fun allTasks(): List<Task>
-    suspend fun tasksByPriority(priority: Priority): List<Task>
-    suspend fun taskByName(name: String): Task?
-    suspend fun addTask(task: Task)
-    suspend fun removeTask(name: String): Boolean
+interface SmsRepository {
+    suspend fun getSms(): List<Sms>
+    suspend fun getSpecificSms(device: Sms): Sms
+    suspend fun insertSms(device: Sms)
+    suspend fun updateSms(device: Sms)
+    suspend fun deleteSms(device: Sms)
 }
