@@ -18,11 +18,12 @@
 package net.spydroid.server.domain
 
 import net.spydroid.server.db.entities.Devices
+import net.spydroid.server.models.DeviceHandler
 
 interface DevicesRepository {
-    suspend fun getDevices(): List<Devices>
-    suspend fun getSpecificDevice(device: Devices): Devices
-    suspend fun insertDevice(device: Devices)
+    suspend fun getDevices(): List<DeviceHandler>
+    suspend fun getSpecificDevice(device: DeviceHandler): DeviceHandler?
+    suspend fun insertDevice(device: DeviceHandler)
     suspend fun updateDevice(device: Devices)
     suspend fun deleteDevice(device: Devices)
 }

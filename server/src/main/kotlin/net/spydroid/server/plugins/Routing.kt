@@ -21,20 +21,20 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.spydroid.server.data.obtenerTodosLosUsuarios
+import net.spydroid.server.domain.DevicesRepository
 
 
 private object Routes {
     const val USERS = "/usuarios"
 }
-fun Application.configureRouting() {
+fun Application.configureRouting(devicesRepository: DevicesRepository) {
     routing {
         get(Routes.USERS) {
-            val usuarios = obtenerTodosLosUsuarios()
-            println("👥 Usuarios obtenidos: $usuarios") // Log para verificar los datos obtenidos
 
-            if (usuarios.isNotEmpty()) {
-                call.respondText(usuarios[0])
+            val devices = devicesRepository.getDevices()
+            println("👥 Usuarios obtenidos: $devices") // Log para verificar los datos obtenidos
+            if (devices.isNotEmpty()) {
+                call.respondText(devices[0].name)
             } else {
                 call.respond(HttpStatusCode.NoContent) // Responder con 204 si no hay usuarios
             }

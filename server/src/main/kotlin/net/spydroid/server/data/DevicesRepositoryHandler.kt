@@ -19,18 +19,50 @@ package net.spydroid.server.data
 
 import net.spydroid.server.db.entities.Devices
 import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.models.DeviceHandler
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 
-class DevicesRepositoryHandler: DevicesRepository {
-    override suspend fun getDevices(): List<Devices> {
-        TODO("Not yet implemented")
-    }
+class DevicesRepositoryHandler : DevicesRepository {
+    override suspend fun getDevices(): List<DeviceHandler> =
+        Devices.selectAll().map {
+            DeviceHandler(
+                id = it[Devices.id],
+                name = it[Devices.name],
+                id_info = it[Devices.id_info]
+            )
+        }
 
-    override suspend fun getSpecificDevice(device: Devices): Devices {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getSpecificDevice(device: DeviceHandler): DeviceHandler? =
+        transaction {
+            Devices.select { Devices.id eq (device.id ?: 1) }
+                .map {
+                    DeviceHandler(
+                        id = it[Devices.id],
+                        name = it[Devices.name],
+                        id_info = it[Devices.id_info]
+                    )
+                }
+                .singleOrNull()
+        }
 
-    override suspend fun insertDevice(device: Devices) {
-        TODO("Not yet implemented")
+
+    override suspend fun insertDevice(device: DeviceHandler) {
+        try {
+            transaction {
+                Devices.insert {
+                    it[Devices.name] = device.name
+                    it[Devices.id_info] = device.id_info
+                }
+            }
+
+            println("👤 Usuario ${device.name} insertado en la base de datos.")
+        } catch (e: Exception) {
+            println("❌ Error al insertar el dispositivo: ${e.message}")
+            throw e
+        }
     }
 
     override suspend fun updateDevice(device: Devices) {
