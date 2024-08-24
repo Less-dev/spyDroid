@@ -19,25 +19,52 @@ package net.spydroid.server.data
 
 import net.spydroid.server.db.entities.Sms
 import net.spydroid.server.domain.SmsRepository
+import net.spydroid.server.models.SmsHandler
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 
-class SmsRepositoryHandler: SmsRepository {
-    override suspend fun getSms(): List<Sms> {
+class SmsRepositoryHandler : SmsRepository {
+    override suspend fun getSms(): List<SmsHandler> =
+        transaction {
+            Sms.selectAll().map {
+                SmsHandler(
+                    id = it[Sms.id],
+                    sms = it[Sms.sms]
+                )
+            }
+        }
+
+    override suspend fun getSpecificSms(sms: SmsHandler): SmsHandler? =
+        transaction {
+            Sms.select { Sms.id eq (sms.id ?: 1) }.map {
+                SmsHandler(
+                    id = it[Sms.id],
+                    sms = it[Sms.sms]
+                )
+            }
+                .singleOrNull()
+        }
+
+    override suspend fun insertSms(sms: SmsHandler) {
+        try {
+            transaction {
+                Sms.insert {
+                    it[Sms.sms] = sms.sms
+                }
+            }
+        }catch (e: Exception) {
+            println("❌ Error al insertar el dispositivo: ${e.message}")
+            throw e
+        }
+    }
+
+    override suspend fun updateSms(sms: SmsHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getSpecificSms(device: Sms): Sms {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun insertSms(device: Sms) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateSms(device: Sms) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteSms(device: Sms) {
+    override suspend fun deleteSms(sms: SmsHandler) {
         TODO("Not yet implemented")
     }
 }

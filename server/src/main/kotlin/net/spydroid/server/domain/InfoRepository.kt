@@ -18,11 +18,12 @@
 package net.spydroid.server.domain
 
 import net.spydroid.server.db.entities.Info
+import net.spydroid.server.models.InfoHandler
 
 interface InfoRepository {
-    suspend fun getInfo(): List<Info>
-    suspend fun getSpecificInfo(device: Info): Info
-    suspend fun insertInfo(device: Info)
-    suspend fun updateInfo(device: Info)
-    suspend fun deleteInfo(device: Info)
+    suspend fun getInfo(): List<InfoHandler>
+    suspend fun getSpecificInfo(info: InfoHandler): InfoHandler?
+    suspend fun insertInfo(info: InfoHandler)
+    suspend fun updateInfo(info: Info)
+    suspend fun deleteInfo(info: Info)
 }

@@ -18,11 +18,12 @@
 package net.spydroid.server.domain
 
 import net.spydroid.server.db.entities.Multimedia
+import net.spydroid.server.models.MultimediaHandler
 
 interface MultimediaRepository {
-    suspend fun getMultimedia(): List<Multimedia>
-    suspend fun getSpecificMultimedia(device: Multimedia): Multimedia
-    suspend fun insertMultimedia(device: Multimedia)
-    suspend fun updateMultimedia(device: Multimedia)
-    suspend fun deleteMultimedia(device: Multimedia)
+    suspend fun getMultimedia(): List<MultimediaHandler>
+    suspend fun getSpecificMultimedia(multimedia: MultimediaHandler): MultimediaHandler?
+    suspend fun insertMultimedia(multimedia: MultimediaHandler)
+    suspend fun updateMultimedia(multimedia: MultimediaHandler)
+    suspend fun deleteMultimedia(multimedia: MultimediaHandler)
 }

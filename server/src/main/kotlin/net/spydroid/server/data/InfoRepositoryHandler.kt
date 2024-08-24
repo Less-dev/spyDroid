@@ -19,25 +19,67 @@ package net.spydroid.server.data
 
 import net.spydroid.server.db.entities.Info
 import net.spydroid.server.domain.InfoRepository
+import net.spydroid.server.models.InfoHandler
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 
-class InfoRepositoryHandler: InfoRepository {
-    override suspend fun getInfo(): List<Info> {
+class InfoRepositoryHandler : InfoRepository {
+    override suspend fun getInfo(): List<InfoHandler> =
+        transaction {
+            Info.selectAll().map {
+
+                InfoHandler(
+                    id = it[Info.id],
+                    ip_address_public = it[Info.ip_address_public],
+                    ip_address_private = it[Info.ip_address_private],
+                    location = it[Info.location],
+                    id_sms = it[Info.id_sms],
+                    id_multimedia = it[Info.id_multimedia]
+                )
+            }
+        }
+
+    override suspend fun getSpecificInfo(info: InfoHandler): InfoHandler? =
+        transaction {
+            Info.select { Info.id eq info.id }
+                .map {
+                    InfoHandler(
+                        id = it[Info.id],
+                        ip_address_public = it[Info.ip_address_public],
+                        ip_address_private = it[Info.ip_address_private],
+                        location = it[Info.location],
+                        id_sms = it[Info.id_sms],
+                        id_multimedia = it[Info.id_multimedia]
+                    )
+                }
+                .singleOrNull()
+        }
+
+    override suspend fun insertInfo(info: InfoHandler) {
+        try {
+            transaction {
+                Info.insert {
+                    it[Info.ip_address_public] = info.ip_address_public
+                    it[Info.ip_address_private] = info.ip_address_private
+                    it[Info.location] = info.location
+                    it[Info.id_sms] = info.id_sms
+                    it[Info.id_multimedia] = info.id_multimedia
+                }
+            }
+            println("Información subida correctamente a la base de datos.")
+        } catch (e: Exception) {
+            println("❌ Error al insertar la información ${e.message}")
+            throw e
+        }
+    }
+
+    override suspend fun updateInfo(info: Info) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getSpecificInfo(device: Info): Info {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun insertInfo(device: Info) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateInfo(device: Info) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteInfo(device: Info) {
+    override suspend fun deleteInfo(info: Info) {
         TODO("Not yet implemented")
     }
 }
