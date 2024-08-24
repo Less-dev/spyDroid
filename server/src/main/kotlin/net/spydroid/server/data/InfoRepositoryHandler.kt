@@ -32,11 +32,10 @@ class InfoRepositoryHandler : InfoRepository {
 
                 InfoHandler(
                     id = it[Info.id],
+                    alias = it[Info.alias],
                     ip_address_public = it[Info.ip_address_public],
                     ip_address_private = it[Info.ip_address_private],
                     location = it[Info.location],
-                    id_sms = it[Info.id_sms],
-                    id_multimedia = it[Info.id_multimedia]
                 )
             }
         }
@@ -47,11 +46,10 @@ class InfoRepositoryHandler : InfoRepository {
                 .map {
                     InfoHandler(
                         id = it[Info.id],
+                        alias = it[Info.alias],
                         ip_address_public = it[Info.ip_address_public],
                         ip_address_private = it[Info.ip_address_private],
                         location = it[Info.location],
-                        id_sms = it[Info.id_sms],
-                        id_multimedia = it[Info.id_multimedia]
                     )
                 }
                 .singleOrNull()
@@ -61,11 +59,10 @@ class InfoRepositoryHandler : InfoRepository {
         try {
             transaction {
                 Info.insert {
+                    it[Info.alias] = info.alias
                     it[Info.ip_address_public] = info.ip_address_public
                     it[Info.ip_address_private] = info.ip_address_private
                     it[Info.location] = info.location
-                    it[Info.id_sms] = info.id_sms
-                    it[Info.id_multimedia] = info.id_multimedia
                 }
             }
             println("Información subida correctamente a la base de datos.")

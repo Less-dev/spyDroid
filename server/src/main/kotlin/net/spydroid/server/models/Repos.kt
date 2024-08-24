@@ -15,14 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.db.entities
+package net.spydroid.server.models
 
-import org.jetbrains.exposed.sql.Table
+import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.domain.InfoRepository
+import net.spydroid.server.domain.MultimediaRepository
+import net.spydroid.server.domain.SmsRepository
 
-object Sms: Table() {
-    val id = integer("id_sms").autoIncrement()
-    val alias = varchar("alias", 50)
-    val sms = text("sms")
-    override val primaryKey: PrimaryKey
-        get() = PrimaryKey(id)
-}
+data class Repos(
+    val devicesRepository: DevicesRepository,
+    val infoRepository: InfoRepository,
+    val multimediaRepository: MultimediaRepository,
+    val smsRepository: SmsRepository
+)

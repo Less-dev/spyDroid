@@ -19,6 +19,6 @@ package net.spydroid.server.models
 
 data class DeviceHandler(
     val id: Int? = 0,
+    val alias: String,
     val name: String,
-    val id_info: Int
 )

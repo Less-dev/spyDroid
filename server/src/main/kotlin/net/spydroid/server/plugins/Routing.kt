@@ -22,16 +22,17 @@ import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.models.Repos
 
 
 private object Routes {
     const val USERS = "/usuarios"
 }
-fun Application.configureRouting(devicesRepository: DevicesRepository) {
+fun Application.configureRouting(repos: Repos) {
     routing {
         get(Routes.USERS) {
 
-            val devices = devicesRepository.getDevices()
+            val devices = repos.devicesRepository.getDevices()
             println("👥 Usuarios obtenidos: $devices") // Log para verificar los datos obtenidos
             if (devices.isNotEmpty()) {
                 call.respondText(devices[0].name)
