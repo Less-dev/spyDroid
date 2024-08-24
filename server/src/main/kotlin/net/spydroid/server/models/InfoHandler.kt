@@ -19,7 +19,6 @@ package net.spydroid.server.models
 
 data class InfoHandler(
     val id: Int = 0,
-    val name: String,
     val ip_address_public: String,
     val ip_address_private: String,
     val location: String,

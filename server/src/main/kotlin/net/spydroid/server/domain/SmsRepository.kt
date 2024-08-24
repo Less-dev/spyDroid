@@ -17,12 +17,12 @@
 
 package net.spydroid.server.domain
 
-import net.spydroid.server.db.entities.Sms
+import net.spydroid.server.models.SmsHandler
 
 interface SmsRepository {
-    suspend fun getSms(): List<Sms>
-    suspend fun getSpecificSms(device: Sms): Sms
-    suspend fun insertSms(device: Sms)
-    suspend fun updateSms(device: Sms)
-    suspend fun deleteSms(device: Sms)
+    suspend fun getSms(): List<SmsHandler>
+    suspend fun getSpecificSms(sms: SmsHandler): SmsHandler?
+    suspend fun insertSms(sms: SmsHandler)
+    suspend fun updateSms(sms: SmsHandler)
+    suspend fun deleteSms(sms: SmsHandler)
 }

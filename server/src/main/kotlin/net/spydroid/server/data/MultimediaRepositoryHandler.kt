@@ -19,25 +19,55 @@ package net.spydroid.server.data
 
 import net.spydroid.server.db.entities.Multimedia
 import net.spydroid.server.domain.MultimediaRepository
+import net.spydroid.server.models.MultimediaHandler
+import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.select
+import org.jetbrains.exposed.sql.selectAll
+import org.jetbrains.exposed.sql.transactions.transaction
 
 class MultimediaRepositoryHandler: MultimediaRepository {
-    override suspend fun getMultimedia(): List<Multimedia> {
+    override suspend fun getMultimedia(): List<MultimediaHandler> =
+        transaction {
+            Multimedia.selectAll().map {
+                MultimediaHandler(
+                    id = it[Multimedia.id],
+                    routeFile = it[Multimedia.routeFile],
+                    type = it[Multimedia.typeFile]
+                )
+            }
+        }
+    override suspend fun getSpecificMultimedia(multimedia: MultimediaHandler): MultimediaHandler? =
+        transaction {
+            Multimedia.select { Multimedia.id eq (multimedia.id ?: 1) }.map {
+                MultimediaHandler(
+                    id = it[Multimedia.id],
+                    routeFile = it[Multimedia.routeFile],
+                    type = it[Multimedia.typeFile]
+                )
+            }
+                .singleOrNull()
+        }
+
+
+    override suspend fun insertMultimedia(multimedia: MultimediaHandler) {
+        try {
+            transaction {
+                Multimedia.insert {
+                    it[Multimedia.routeFile] = multimedia.routeFile
+                    it[Multimedia.typeFile] = multimedia.type
+                }
+            }
+        }catch (e: Exception){
+            println("❌ Error al insertar el archivo: ${e.message}")
+            throw e
+        }
+    }
+
+    override suspend fun updateMultimedia(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getSpecificMultimedia(device: Multimedia): Multimedia {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun insertMultimedia(device: Multimedia) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateMultimedia(device: Multimedia) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteMultimedia(device: Multimedia) {
+    override suspend fun deleteMultimedia(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")
     }
 }
