@@ -1,11 +1,11 @@
 package net.spydroid.server.plugins
 
 import io.ktor.server.application.Application
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import net.spydroid.server.db.entities.Info
+import net.spydroid.server.db.entities.Multimedia
+import net.spydroid.server.db.entities.Sms
 import org.jetbrains.exposed.sql.Database
-import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.SchemaUtils.createMissingTablesAndColumns
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.insert
@@ -19,29 +19,33 @@ object Usuarios : Table() {
     override val primaryKey = PrimaryKey(id)
 }
 
-
 fun Application.configureDatabases() {
+
+    val dbUrl = System.getenv("DB_URL") ?: "jdbc:mysql://localhost:3306/mi_base_de_datos"
+    val dbUser = System.getenv("DB_USER") ?: "karlos"
+    val dbPassword = System.getenv("DB_PASSWORD") ?: "juankarlos1234"
 
     try {
         // Conectar a la base de datos
         Database.connect(
-            url = "jdbc:mysql://localhost:3306/mi_base_de_datos",
+            url = dbUrl,
             driver = "com.mysql.cj.jdbc.Driver",
-            user = "karlos",
-            password = "juankarlos1234"
+            user = dbUser,
+            password = dbPassword
         )
-
 
         runBlocking {
             newSuspendedTransaction {
-                // Crear la tabla si no existe
                 createMissingTablesAndColumns(Usuarios)
+                createMissingTablesAndColumns(Info)
+                createMissingTablesAndColumns(Info)
+                createMissingTablesAndColumns(Multimedia)
+                createMissingTablesAndColumns(Sms)
             }
         }
 
-
         println("🚀 Base de datos configurada correctamente.")
-        insertUsuario("HOLA MUNDO XD")
+        //insertUsuario("ME ELECTROCUTASTE PEDRITO")
 
     } catch (e: Exception) {
         println("❌ Error al configurar la base de datos: ${e.message}")
@@ -49,14 +53,17 @@ fun Application.configureDatabases() {
     }
 }
 
-
-
 // Función para insertar un usuario en la tabla Usuarios
 fun insertUsuario(nombre: String) {
-    transaction {
-        Usuarios.insert {
-            it[Usuarios.nombre] = nombre
+    try {
+        transaction {
+            Usuarios.insert {
+                it[Usuarios.nombre] = nombre
+            }
         }
+        println("👤 Usuario $nombre insertado en la base de datos.")
+    } catch (e: Exception) {
+        println("❌ Error al insertar el usuario: ${e.message}")
+        throw e
     }
-    println("👤 Usuario $nombre insertado en la base de datos.")
 }

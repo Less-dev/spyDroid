@@ -15,19 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.models
+package net.spydroid.server.domain
 
-import kotlinx.serialization.Serializable
+import net.spydroid.server.db.entities.Devices
 
-enum class Priority {
-    Low, Medium, High
+interface DevicesRepository {
+    suspend fun getDevices(): List<Devices>
+    suspend fun getSpecificDevice(device: Devices): Devices
+    suspend fun insertDevice(device: Devices)
+    suspend fun updateDevice(device: Devices)
+    suspend fun deleteDevice(device: Devices)
 }
-
-@Serializable
-data class Task(
-    val name: String,
-    val description: String,
-    val priority: Priority
-)
-
-

@@ -15,22 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server
+package net.spydroid.server.domain
 
-import io.ktor.server.application.*
-import io.ktor.server.netty.EngineMain
-import net.spydroid.server.plugins.configureDatabases
-import net.spydroid.server.plugins.configureRouting
-import net.spydroid.server.plugins.configureSerialization
+import net.spydroid.server.db.entities.Multimedia
 
-fun main(args: Array<String>) {
-    EngineMain.main(args)
+interface MultimediaRepository {
+    suspend fun getMultimedia(): List<Multimedia>
+    suspend fun getSpecificMultimedia(device: Multimedia): Multimedia
+    suspend fun insertMultimedia(device: Multimedia)
+    suspend fun updateMultimedia(device: Multimedia)
+    suspend fun deleteMultimedia(device: Multimedia)
 }
-
-fun Application.module() {
-    configureDatabases()
-    configureSerialization()
-    configureRouting()
-}
-
-

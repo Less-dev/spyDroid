@@ -15,22 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server
+package net.spydroid.server.data
 
-import io.ktor.server.application.*
-import io.ktor.server.netty.EngineMain
-import net.spydroid.server.plugins.configureDatabases
-import net.spydroid.server.plugins.configureRouting
-import net.spydroid.server.plugins.configureSerialization
+import net.spydroid.server.db.entities.Sms
+import net.spydroid.server.domain.SmsRepository
 
-fun main(args: Array<String>) {
-    EngineMain.main(args)
+class SmsRepositoryHandler: SmsRepository {
+    override suspend fun getSms(): List<Sms> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getSpecificSms(device: Sms): Sms {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun insertSms(device: Sms) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateSms(device: Sms) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteSms(device: Sms) {
+        TODO("Not yet implemented")
+    }
 }
-
-fun Application.module() {
-    configureDatabases()
-    configureSerialization()
-    configureRouting()
-}
-
-
