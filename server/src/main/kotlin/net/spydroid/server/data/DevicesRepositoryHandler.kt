@@ -27,12 +27,14 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 class DevicesRepositoryHandler : DevicesRepository {
     override suspend fun getDevices(): List<DeviceHandler> =
-        Devices.selectAll().map {
-            DeviceHandler(
-                id = it[Devices.id],
-                name = it[Devices.name],
-                id_info = it[Devices.id_info]
-            )
+        transaction {
+            Devices.selectAll().map {
+                DeviceHandler(
+                    id = it[Devices.id],
+                    name = it[Devices.name],
+                    id_info = it[Devices.id_info]
+                )
+            }
         }
 
     override suspend fun getSpecificDevice(device: DeviceHandler): DeviceHandler? =
