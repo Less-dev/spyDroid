@@ -65,5 +65,5 @@ dependencies {
     // Ktor Auth
     implementation("io.ktor:ktor-server-auth-jwt:2.3.9")
     implementation("io.ktor:ktor-server-auth:2.3.9")
-
+    implementation("com.auth0:java-jwt:4.3.0")
 }

@@ -28,7 +28,10 @@ import org.koin.ktor.ext.inject
 
 
 private object Routes {
-    const val USERS = "/usuarios"
+    const val DEVICES = "/devices"
+    const val INFO = "/info"
+    const val MULTIMEDIA = "/multimedia"
+    const val SMS = "/sms"
 }
 
 fun Application.configureRouting() {
@@ -38,14 +41,40 @@ fun Application.configureRouting() {
     val multimediaRepository: MultimediaRepository by inject()
     val smsRepository: SmsRepository by inject()
 
+    val ALIAS = "JUAN_KARLOS"
+    val validTokens = setOf("iygad7618wg8y1f7fgvas71f671", "otroTokenValido")
+
     routing {
-        get(Routes.USERS) {
-            val ALIAS = "JUAN_KARLOS"
+        get(Routes.DEVICES) {
+            val accessToken = call.request.queryParameters["access_token"]
             val devices = devicesRepository.filerWithAlias(ALIAS)
+            if (accessToken in validTokens) {
+                call.respond(devices)
+            }
+        }
+
+        get(Routes.INFO){
+            val accessToken = call.request.queryParameters["access_token"]
             val info = infoRepository.filerWithAlias(ALIAS)
-            val multimedia = multimediaRepository.filerWithAlias(ALIAS)
+            if (accessToken in validTokens) {
+                call.respond(info)
+            }
+        }
+
+        get(Routes.SMS) {
+            val accessToken = call.request.queryParameters["access_token"]
             val sms = smsRepository.filerWithAlias(ALIAS)
-            call.respond(multimedia)
+            if (accessToken in validTokens) {
+                call.respond(sms)
+            }
+        }
+
+        get(Routes.MULTIMEDIA) {
+            val accessToken = call.request.queryParameters["access_token"]
+            val multimedia = multimediaRepository.filerWithAlias(ALIAS)
+            if (accessToken in validTokens) {
+                call.respond(multimedia)
+            }
         }
     }
 }
