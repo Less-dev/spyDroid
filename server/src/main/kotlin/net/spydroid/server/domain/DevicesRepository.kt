@@ -22,8 +22,8 @@ import net.spydroid.server.models.DeviceHandler
 
 interface DevicesRepository {
     suspend fun getALlDevices(): List<DeviceHandler>
-    suspend fun filerDevicesWithAlias(alias: String): List<DeviceHandler>
-    suspend fun insertDevice(device: DeviceHandler)
-    suspend fun updateDevice(device: Devices)
-    suspend fun deleteDevice(device: Devices)
+    suspend fun filerWithAlias(alias: String): List<DeviceHandler>
+    suspend fun insert(device: DeviceHandler)
+    suspend fun update(device: Devices)
+    suspend fun delete(device: Devices)
 }

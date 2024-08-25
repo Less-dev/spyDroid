@@ -37,7 +37,7 @@ class DevicesRepositoryHandler : DevicesRepository {
             }
         }
 
-    override suspend fun filerDevicesWithAlias(alias: String): List<DeviceHandler> =
+    override suspend fun filerWithAlias(alias: String): List<DeviceHandler> =
         transaction {
             Devices.select { Devices.alias eq alias }
                 .map {
@@ -50,7 +50,7 @@ class DevicesRepositoryHandler : DevicesRepository {
         }
 
 
-    override suspend fun insertDevice(device: DeviceHandler) {
+    override suspend fun insert(device: DeviceHandler) {
         try {
             transaction {
                 Devices.insert {
@@ -66,11 +66,11 @@ class DevicesRepositoryHandler : DevicesRepository {
         }
     }
 
-    override suspend fun updateDevice(device: Devices) {
+    override suspend fun update(device: Devices) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteDevice(device: Devices) {
+    override suspend fun delete(device: Devices) {
         TODO("Not yet implemented")
     }
 }

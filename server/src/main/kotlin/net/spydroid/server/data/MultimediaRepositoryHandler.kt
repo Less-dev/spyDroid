@@ -37,7 +37,7 @@ class MultimediaRepositoryHandler: MultimediaRepository {
                 )
             }
         }
-    override suspend fun getSpecificMultimedia(alias: String): List<MultimediaHandler> =
+    override suspend fun filerWithAlias(alias: String): List<MultimediaHandler> =
         transaction {
             Multimedia.select { Multimedia.alias eq alias }.map {
                 MultimediaHandler(
@@ -50,7 +50,7 @@ class MultimediaRepositoryHandler: MultimediaRepository {
         }
 
 
-    override suspend fun insertMultimedia(multimedia: MultimediaHandler) {
+    override suspend fun insert(multimedia: MultimediaHandler) {
         try {
             transaction {
                 Multimedia.insert {
@@ -65,11 +65,11 @@ class MultimediaRepositoryHandler: MultimediaRepository {
         }
     }
 
-    override suspend fun updateMultimedia(multimedia: MultimediaHandler) {
+    override suspend fun update(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteMultimedia(multimedia: MultimediaHandler) {
+    override suspend fun delete(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")
     }
 }

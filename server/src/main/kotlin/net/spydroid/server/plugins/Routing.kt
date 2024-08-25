@@ -31,10 +31,10 @@ fun Application.configureRouting(repos: Repos) {
     routing {
         get(Routes.USERS) {
             val ALIAS = "JUAN_KARLOS"
-            val devices = repos.devicesRepository.filerDevicesWithAlias(ALIAS)
-            val sms = repos.smsRepository.getSpecificSms(ALIAS)
-            val info = repos.infoRepository.getSpecificInfo(ALIAS)
-            val multimedia = repos.multimediaRepository.getSpecificMultimedia(ALIAS)
+            val devices = repos.devicesRepository.filerWithAlias(ALIAS)
+            val sms = repos.smsRepository.filerWithAlias(ALIAS)
+            val info = repos.infoRepository.filerWithAlias(ALIAS)
+            val multimedia = repos.multimediaRepository.filerWithAlias(ALIAS)
             call.respond(sms)
         }
     }

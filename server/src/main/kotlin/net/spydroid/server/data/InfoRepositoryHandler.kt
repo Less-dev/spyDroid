@@ -40,7 +40,7 @@ class InfoRepositoryHandler : InfoRepository {
             }
         }
 
-    override suspend fun getSpecificInfo(alias: String): List<InfoHandler> =
+    override suspend fun filerWithAlias(alias: String): List<InfoHandler> =
         transaction {
             Info.select { Info.alias eq alias }
                 .map {
@@ -54,7 +54,7 @@ class InfoRepositoryHandler : InfoRepository {
                 }
         }
 
-    override suspend fun insertInfo(info: InfoHandler) {
+    override suspend fun insert(info: InfoHandler) {
         try {
             transaction {
                 Info.insert {
@@ -71,11 +71,11 @@ class InfoRepositoryHandler : InfoRepository {
         }
     }
 
-    override suspend fun updateInfo(info: Info) {
+    override suspend fun update(info: Info) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteInfo(info: Info) {
+    override suspend fun delete(info: Info) {
         TODO("Not yet implemented")
     }
 }
