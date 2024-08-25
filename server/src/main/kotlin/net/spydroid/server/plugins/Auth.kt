@@ -15,26 +15,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server
+package net.spydroid.server.plugins
 
-import io.ktor.server.application.*
-import io.ktor.server.netty.EngineMain
-import net.spydroid.server.plugins.configureAuthentication
-import net.spydroid.server.plugins.configurationKoin
-import net.spydroid.server.plugins.configureDatabases
-import net.spydroid.server.plugins.configureRouting
-import net.spydroid.server.plugins.configureSerialization
+import io.ktor.server.application.Application
+import io.ktor.server.application.install
+import io.ktor.server.auth.Authentication
+import io.ktor.server.auth.basic
+import io.ktor.server.auth.form
 
-fun main(args: Array<String>) {
-    EngineMain.main(args)
+fun Application.configureAuthentication () {
+    install(Authentication) {
+        basic("auth-basic") {
+            // Configure basic authentication
+        }
+        form("auth-form") {
+            // Configure form authentication
+        }
+    }
 }
-
-fun Application.module() {
-    configurationKoin()
-    configureDatabases()
-    configureSerialization()
-    configureAuthentication()
-    configureRouting()
-}
-
-

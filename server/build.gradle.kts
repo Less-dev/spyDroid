@@ -61,4 +61,9 @@ dependencies {
     // Koin
     implementation(libs.koin.ktor)
     implementation(libs.koin.core)
+
+    // Ktor Auth
+    implementation("io.ktor:ktor-server-auth-jwt:2.3.9")
+    implementation("io.ktor:ktor-server-auth:2.3.9")
+    implementation("com.auth0:java-jwt:4.3.0")
 }
