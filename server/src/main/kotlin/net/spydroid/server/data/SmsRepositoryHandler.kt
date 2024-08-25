@@ -37,16 +37,15 @@ class SmsRepositoryHandler : SmsRepository {
             }
         }
 
-    override suspend fun getSpecificSms(sms: SmsHandler): SmsHandler? =
+    override suspend fun getSpecificSms(alias: String): List<SmsHandler> =
         transaction {
-            Sms.select { Sms.id eq (sms.id ?: 1) }.map {
+            Sms.select { Sms.alias eq alias }.map {
                 SmsHandler(
                     id = it[Sms.id],
                     alias = it[Sms.alias],
                     sms = it[Sms.sms]
                 )
             }
-                .singleOrNull()
         }
 
     override suspend fun insertSms(sms: SmsHandler) {

@@ -37,9 +37,9 @@ class MultimediaRepositoryHandler: MultimediaRepository {
                 )
             }
         }
-    override suspend fun getSpecificMultimedia(multimedia: MultimediaHandler): MultimediaHandler? =
+    override suspend fun getSpecificMultimedia(alias: String): List<MultimediaHandler> =
         transaction {
-            Multimedia.select { Multimedia.id eq (multimedia.id ?: 1) }.map {
+            Multimedia.select { Multimedia.alias eq alias }.map {
                 MultimediaHandler(
                     id = it[Multimedia.id],
                     alias = it[Multimedia.alias],
@@ -47,7 +47,6 @@ class MultimediaRepositoryHandler: MultimediaRepository {
                     type = it[Multimedia.typeFile]
                 )
             }
-                .singleOrNull()
         }
 
 

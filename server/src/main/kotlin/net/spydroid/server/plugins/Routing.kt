@@ -30,8 +30,12 @@ private object Routes {
 fun Application.configureRouting(repos: Repos) {
     routing {
         get(Routes.USERS) {
-            val devices = repos.devicesRepository.filerDevicesWithAlias("KARLOS")
-            call.respond(devices)
+            val ALIAS = "JUAN_KARLOS"
+            val devices = repos.devicesRepository.filerDevicesWithAlias(ALIAS)
+            val sms = repos.smsRepository.getSpecificSms(ALIAS)
+            val info = repos.infoRepository.getSpecificInfo(ALIAS)
+            val multimedia = repos.multimediaRepository.getSpecificMultimedia(ALIAS)
+            call.respond(sms)
         }
     }
 }

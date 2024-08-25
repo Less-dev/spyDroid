@@ -40,9 +40,9 @@ class InfoRepositoryHandler : InfoRepository {
             }
         }
 
-    override suspend fun getSpecificInfo(info: InfoHandler): InfoHandler? =
+    override suspend fun getSpecificInfo(alias: String): List<InfoHandler> =
         transaction {
-            Info.select { Info.id eq info.id }
+            Info.select { Info.alias eq alias }
                 .map {
                     InfoHandler(
                         id = it[Info.id],
@@ -52,7 +52,6 @@ class InfoRepositoryHandler : InfoRepository {
                         location = it[Info.location],
                     )
                 }
-                .singleOrNull()
         }
 
     override suspend fun insertInfo(info: InfoHandler) {

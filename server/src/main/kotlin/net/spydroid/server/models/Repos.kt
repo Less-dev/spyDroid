@@ -17,11 +17,13 @@
 
 package net.spydroid.server.models
 
+import kotlinx.serialization.Serializable
 import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository
 import net.spydroid.server.domain.SmsRepository
 
+@Serializable
 data class Repos(
     val devicesRepository: DevicesRepository,
     val infoRepository: InfoRepository,

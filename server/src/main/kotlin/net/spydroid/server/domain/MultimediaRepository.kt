@@ -22,7 +22,7 @@ import net.spydroid.server.models.MultimediaHandler
 
 interface MultimediaRepository {
     suspend fun getMultimedia(): List<MultimediaHandler>
-    suspend fun getSpecificMultimedia(multimedia: MultimediaHandler): MultimediaHandler?
+    suspend fun getSpecificMultimedia(alias: String): List<MultimediaHandler>
     suspend fun insertMultimedia(multimedia: MultimediaHandler)
     suspend fun updateMultimedia(multimedia: MultimediaHandler)
     suspend fun deleteMultimedia(multimedia: MultimediaHandler)

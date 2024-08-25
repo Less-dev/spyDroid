@@ -22,7 +22,7 @@ import net.spydroid.server.models.InfoHandler
 
 interface InfoRepository {
     suspend fun getInfo(): List<InfoHandler>
-    suspend fun getSpecificInfo(info: InfoHandler): InfoHandler?
+    suspend fun getSpecificInfo(alias: String): List<InfoHandler>
     suspend fun insertInfo(info: InfoHandler)
     suspend fun updateInfo(info: Info)
     suspend fun deleteInfo(info: Info)

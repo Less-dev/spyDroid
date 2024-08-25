@@ -21,7 +21,7 @@ import net.spydroid.server.models.SmsHandler
 
 interface SmsRepository {
     suspend fun getSms(): List<SmsHandler>
-    suspend fun getSpecificSms(sms: SmsHandler): SmsHandler?
+    suspend fun getSpecificSms(alias: String): List<SmsHandler>
     suspend fun insertSms(sms: SmsHandler)
     suspend fun updateSms(sms: SmsHandler)
     suspend fun deleteSms(sms: SmsHandler)
