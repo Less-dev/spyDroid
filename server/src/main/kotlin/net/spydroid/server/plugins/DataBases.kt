@@ -19,10 +19,6 @@ package net.spydroid.server.plugins
 
 import io.ktor.server.application.Application
 import net.spydroid.server.db.DbManager
-import net.spydroid.server.db.domain.DevicesDao
-import net.spydroid.server.db.domain.InfoDao
-import net.spydroid.server.db.domain.MultimediaDao
-import net.spydroid.server.db.domain.SmsDao
 import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository

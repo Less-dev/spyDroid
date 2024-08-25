@@ -33,7 +33,6 @@ private object Routes {
 
 fun Application.configureRouting() {
 
-
     val devicesRepository: DevicesRepository by inject()
     val infoRepository: InfoRepository by inject()
     val multimediaRepository: MultimediaRepository by inject()
@@ -46,7 +45,7 @@ fun Application.configureRouting() {
             val info = infoRepository.filerWithAlias(ALIAS)
             val multimedia = multimediaRepository.filerWithAlias(ALIAS)
             val sms = smsRepository.filerWithAlias(ALIAS)
-            call.respond(sms)
+            call.respond(multimedia)
         }
     }
 }
