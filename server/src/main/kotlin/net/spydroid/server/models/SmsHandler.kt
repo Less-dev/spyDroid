@@ -17,6 +17,10 @@
 
 package net.spydroid.server.models
 
+import kotlinx.serialization.Serializable
+
+
+@Serializable
 data class SmsHandler(
     val id: Int = 0,
     val alias: String,

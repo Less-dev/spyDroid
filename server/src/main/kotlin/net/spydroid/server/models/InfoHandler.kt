@@ -17,6 +17,9 @@
 
 package net.spydroid.server.models
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class InfoHandler(
     val id: Int = 0,
     val alias: String,

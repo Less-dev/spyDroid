@@ -62,7 +62,7 @@ class DbManager {
 
     fun insertDevice(devicesRepository: DevicesRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
-            devicesRepository.insertDevice(
+            devicesRepository.insert(
                 DeviceHandler(
                     alias = ALIAS,
                     name = "Juan Carlos camilo sanches"
@@ -73,7 +73,7 @@ class DbManager {
 
     fun insertInfo(infoRepository: InfoRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
-            infoRepository.insertInfo(
+            infoRepository.insert(
                 InfoHandler(
                     alias = ALIAS,
                     ip_address_private = "192.168.100.123",
@@ -86,7 +86,7 @@ class DbManager {
 
     fun insertMultimedia(multimediaRepository: MultimediaRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
-            multimediaRepository.insertMultimedia(
+            multimediaRepository.insert(
                 MultimediaHandler(
                     alias = ALIAS,
                     routeFile = "/devuce/ahsha/ahsia",
@@ -98,7 +98,7 @@ class DbManager {
 
     fun insertSms(smsRepository: SmsRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
-            smsRepository.insertSms(
+            smsRepository.insert(
                 SmsHandler(
                     alias = ALIAS,
                     sms = "Test sms for the apple pay"

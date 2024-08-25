@@ -26,7 +26,7 @@ import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
 class DevicesRepositoryHandler : DevicesRepository {
-    override suspend fun getDevices(): List<DeviceHandler> =
+    override suspend fun getALlDevices(): List<DeviceHandler> =
         transaction {
             Devices.selectAll().map {
                 DeviceHandler(
@@ -37,9 +37,9 @@ class DevicesRepositoryHandler : DevicesRepository {
             }
         }
 
-    override suspend fun getSpecificDevice(device: DeviceHandler): DeviceHandler? =
+    override suspend fun filerWithAlias(alias: String): List<DeviceHandler> =
         transaction {
-            Devices.select { Devices.id eq (device.id ?: 1) }
+            Devices.select { Devices.alias eq alias }
                 .map {
                     DeviceHandler(
                         id = it[Devices.id],
@@ -47,11 +47,10 @@ class DevicesRepositoryHandler : DevicesRepository {
                         alias = it[Devices.alias],
                     )
                 }
-                .singleOrNull()
         }
 
 
-    override suspend fun insertDevice(device: DeviceHandler) {
+    override suspend fun insert(device: DeviceHandler) {
         try {
             transaction {
                 Devices.insert {
@@ -67,11 +66,11 @@ class DevicesRepositoryHandler : DevicesRepository {
         }
     }
 
-    override suspend fun updateDevice(device: Devices) {
+    override suspend fun update(device: Devices) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteDevice(device: Devices) {
+    override suspend fun delete(device: Devices) {
         TODO("Not yet implemented")
     }
 }

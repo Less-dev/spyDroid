@@ -37,19 +37,18 @@ class SmsRepositoryHandler : SmsRepository {
             }
         }
 
-    override suspend fun getSpecificSms(sms: SmsHandler): SmsHandler? =
+    override suspend fun filerWithAlias(alias: String): List<SmsHandler> =
         transaction {
-            Sms.select { Sms.id eq (sms.id ?: 1) }.map {
+            Sms.select { Sms.alias eq alias }.map {
                 SmsHandler(
                     id = it[Sms.id],
                     alias = it[Sms.alias],
                     sms = it[Sms.sms]
                 )
             }
-                .singleOrNull()
         }
 
-    override suspend fun insertSms(sms: SmsHandler) {
+    override suspend fun insert(sms: SmsHandler) {
         try {
             transaction {
                 Sms.insert {
@@ -63,11 +62,11 @@ class SmsRepositoryHandler : SmsRepository {
         }
     }
 
-    override suspend fun updateSms(sms: SmsHandler) {
+    override suspend fun update(sms: SmsHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteSms(sms: SmsHandler) {
+    override suspend fun delete(sms: SmsHandler) {
         TODO("Not yet implemented")
     }
 }

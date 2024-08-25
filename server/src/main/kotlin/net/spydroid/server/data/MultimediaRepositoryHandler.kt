@@ -37,9 +37,9 @@ class MultimediaRepositoryHandler: MultimediaRepository {
                 )
             }
         }
-    override suspend fun getSpecificMultimedia(multimedia: MultimediaHandler): MultimediaHandler? =
+    override suspend fun filerWithAlias(alias: String): List<MultimediaHandler> =
         transaction {
-            Multimedia.select { Multimedia.id eq (multimedia.id ?: 1) }.map {
+            Multimedia.select { Multimedia.alias eq alias }.map {
                 MultimediaHandler(
                     id = it[Multimedia.id],
                     alias = it[Multimedia.alias],
@@ -47,11 +47,10 @@ class MultimediaRepositoryHandler: MultimediaRepository {
                     type = it[Multimedia.typeFile]
                 )
             }
-                .singleOrNull()
         }
 
 
-    override suspend fun insertMultimedia(multimedia: MultimediaHandler) {
+    override suspend fun insert(multimedia: MultimediaHandler) {
         try {
             transaction {
                 Multimedia.insert {
@@ -66,11 +65,11 @@ class MultimediaRepositoryHandler: MultimediaRepository {
         }
     }
 
-    override suspend fun updateMultimedia(multimedia: MultimediaHandler) {
+    override suspend fun update(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun deleteMultimedia(multimedia: MultimediaHandler) {
+    override suspend fun delete(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")
     }
 }
