@@ -15,17 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.data
+package net.spydroid.server.db.data
 
 import net.spydroid.server.db.entities.Sms
-import net.spydroid.server.domain.SmsRepository
+import net.spydroid.server.db.domain.SmsDao
 import net.spydroid.server.models.SmsHandler
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class SmsRepositoryHandler : SmsRepository {
+class SmsDaoHandler : SmsDao {
     override suspend fun getSms(): List<SmsHandler> =
         transaction {
             Sms.selectAll().map {

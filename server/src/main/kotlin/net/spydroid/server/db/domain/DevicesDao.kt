@@ -15,14 +15,15 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.domain
+package net.spydroid.server.db.domain
 
-import net.spydroid.server.models.SmsHandler
+import net.spydroid.server.db.entities.Devices
+import net.spydroid.server.models.DeviceHandler
 
-interface SmsRepository {
-    suspend fun getSms(): List<SmsHandler>
-    suspend fun filerWithAlias(alias: String): List<SmsHandler>
-    suspend fun insert(sms: SmsHandler)
-    suspend fun update(sms: SmsHandler)
-    suspend fun delete(sms: SmsHandler)
+interface DevicesDao {
+    suspend fun getALlDevices(): List<DeviceHandler>
+    suspend fun filerWithAlias(alias: String): List<DeviceHandler>
+    suspend fun insert(device: DeviceHandler)
+    suspend fun update(device: Devices)
+    suspend fun delete(device: Devices)
 }

@@ -15,15 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.domain
+package net.spydroid.server.db.domain
 
-import net.spydroid.server.db.entities.Devices
-import net.spydroid.server.models.DeviceHandler
+import net.spydroid.server.models.MultimediaHandler
 
-interface DevicesRepository {
-    suspend fun getALlDevices(): List<DeviceHandler>
-    suspend fun filerWithAlias(alias: String): List<DeviceHandler>
-    suspend fun insert(device: DeviceHandler)
-    suspend fun update(device: Devices)
-    suspend fun delete(device: Devices)
+interface MultimediaDao {
+    suspend fun getMultimedia(): List<MultimediaHandler>
+    suspend fun filerWithAlias(alias: String): List<MultimediaHandler>
+    suspend fun insert(multimedia: MultimediaHandler)
+    suspend fun update(multimedia: MultimediaHandler)
+    suspend fun delete(multimedia: MultimediaHandler)
 }

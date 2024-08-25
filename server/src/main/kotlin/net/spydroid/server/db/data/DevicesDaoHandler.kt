@@ -15,17 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.data
+package net.spydroid.server.db.data
 
 import net.spydroid.server.db.entities.Devices
-import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.db.domain.DevicesDao
 import net.spydroid.server.models.DeviceHandler
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class DevicesRepositoryHandler : DevicesRepository {
+class DevicesDaoHandler : DevicesDao {
     override suspend fun getALlDevices(): List<DeviceHandler> =
         transaction {
             Devices.selectAll().map {

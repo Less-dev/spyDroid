@@ -19,25 +19,27 @@ package net.spydroid.server.plugins
 
 import io.ktor.server.application.Application
 import net.spydroid.server.db.DbManager
-import net.spydroid.server.domain.DevicesRepository
-import net.spydroid.server.domain.InfoRepository
-import net.spydroid.server.domain.MultimediaRepository
-import net.spydroid.server.domain.SmsRepository
-import net.spydroid.server.models.Repos
+import net.spydroid.server.db.domain.DevicesDao
+import net.spydroid.server.db.domain.InfoDao
+import net.spydroid.server.db.domain.MultimediaDao
+import net.spydroid.server.db.domain.SmsDao
+import org.koin.ktor.ext.inject
 
-fun Application.configureDatabases(
-    repos: Repos
-) {
+fun Application.configureDatabases() {
 
     try {
         val dbManager = DbManager()
+        val devicesDao: DevicesDao by inject()
+        val infoDao: InfoDao by inject()
+        val multimediaDao: MultimediaDao by inject()
+        val smsDao: SmsDao by inject()
 
         dbManager.connectToDb()
         dbManager.createTables()
-        dbManager.insertDevice(repos.devicesRepository)
-        dbManager.insertInfo(repos.infoRepository)
-        dbManager.insertMultimedia(repos.multimediaRepository)
-        dbManager.insertSms(repos.smsRepository)
+        dbManager.insertDevice(devicesDao)
+        dbManager.insertInfo(infoDao)
+        dbManager.insertMultimedia(multimediaDao)
+        dbManager.insertSms(smsDao)
 
     } catch (e: Exception) {
         println("Error connecting to the database${e.message}")

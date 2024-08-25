@@ -57,4 +57,8 @@ dependencies {
 
     // Mysql - MANAGER DATABASE
     implementation(libs.mysql.connector)
+
+    // Koin
+    implementation("io.insert-koin:koin-ktor:3.4.0")
+    implementation("io.insert-koin:koin-core:3.4.0")
 }

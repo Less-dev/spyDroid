@@ -15,17 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.data
+package net.spydroid.server.db.data
 
 import net.spydroid.server.db.entities.Multimedia
-import net.spydroid.server.domain.MultimediaRepository
+import net.spydroid.server.db.domain.MultimediaDao
 import net.spydroid.server.models.MultimediaHandler
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class MultimediaRepositoryHandler: MultimediaRepository {
+class MultimediaDaoHandler: MultimediaDao {
     override suspend fun getMultimedia(): List<MultimediaHandler> =
         transaction {
             Multimedia.selectAll().map {

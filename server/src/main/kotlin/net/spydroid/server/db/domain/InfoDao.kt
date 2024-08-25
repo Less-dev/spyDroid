@@ -15,12 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.domain
+package net.spydroid.server.db.domain
 
 import net.spydroid.server.db.entities.Info
 import net.spydroid.server.models.InfoHandler
 
-interface InfoRepository {
+interface InfoDao {
     suspend fun getInfo(): List<InfoHandler>
     suspend fun filerWithAlias(alias: String): List<InfoHandler>
     suspend fun insert(info: InfoHandler)

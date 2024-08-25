@@ -15,18 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.models
+package net.spydroid.server.db.domain
 
-import kotlinx.serialization.Serializable
-import net.spydroid.server.domain.DevicesRepository
-import net.spydroid.server.domain.InfoRepository
-import net.spydroid.server.domain.MultimediaRepository
-import net.spydroid.server.domain.SmsRepository
+import net.spydroid.server.models.SmsHandler
 
-@Serializable
-data class Repos(
-    val devicesRepository: DevicesRepository,
-    val infoRepository: InfoRepository,
-    val multimediaRepository: MultimediaRepository,
-    val smsRepository: SmsRepository
-)
+interface SmsDao {
+    suspend fun getSms(): List<SmsHandler>
+    suspend fun filerWithAlias(alias: String): List<SmsHandler>
+    suspend fun insert(sms: SmsHandler)
+    suspend fun update(sms: SmsHandler)
+    suspend fun delete(sms: SmsHandler)
+}

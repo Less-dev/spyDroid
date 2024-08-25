@@ -15,17 +15,17 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.data
+package net.spydroid.server.db.data
 
 import net.spydroid.server.db.entities.Info
-import net.spydroid.server.domain.InfoRepository
+import net.spydroid.server.db.domain.InfoDao
 import net.spydroid.server.models.InfoHandler
 import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
 
-class InfoRepositoryHandler : InfoRepository {
+class InfoDaoHandler : InfoDao {
     override suspend fun getInfo(): List<InfoHandler> =
         transaction {
             Info.selectAll().map {
