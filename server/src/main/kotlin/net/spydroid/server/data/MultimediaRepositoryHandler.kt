@@ -17,59 +17,28 @@
 
 package net.spydroid.server.data
 
-import net.spydroid.server.db.entities.Multimedia
+import net.spydroid.server.db.domain.MultimediaDao
 import net.spydroid.server.domain.MultimediaRepository
 import net.spydroid.server.models.MultimediaHandler
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MultimediaRepositoryHandler: MultimediaRepository {
+class MultimediaRepositoryHandler : MultimediaRepository, KoinComponent {
+
+    val multimediaDao: MultimediaDao by inject()
+
     override suspend fun getMultimedia(): List<MultimediaHandler> =
-        transaction {
-            Multimedia.selectAll().map {
-                MultimediaHandler(
-                    id = it[Multimedia.id],
-                    alias = it[Multimedia.alias],
-                    routeFile = it[Multimedia.routeFile],
-                    type = it[Multimedia.typeFile]
-                )
-            }
-        }
+        multimediaDao.getMultimedia()
+
     override suspend fun filerWithAlias(alias: String): List<MultimediaHandler> =
-        transaction {
-            Multimedia.select { Multimedia.alias eq alias }.map {
-                MultimediaHandler(
-                    id = it[Multimedia.id],
-                    alias = it[Multimedia.alias],
-                    routeFile = it[Multimedia.routeFile],
-                    type = it[Multimedia.typeFile]
-                )
-            }
-        }
+        multimediaDao.filerWithAlias(alias)
 
+    override suspend fun insert(multimedia: MultimediaHandler) =
+        multimediaDao.insert(multimedia)
 
-    override suspend fun insert(multimedia: MultimediaHandler) {
-        try {
-            transaction {
-                Multimedia.insert {
-                    it[Multimedia.routeFile] = multimedia.routeFile
-                    it[Multimedia.alias] = multimedia.alias
-                    it[Multimedia.typeFile] = multimedia.type
-                }
-            }
-        }catch (e: Exception){
-            println("❌ Error al insertar el archivo: ${e.message}")
-            throw e
-        }
-    }
+    override suspend fun update(multimedia: MultimediaHandler) =
+        multimediaDao.update(multimedia)
 
-    override suspend fun update(multimedia: MultimediaHandler) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun delete(multimedia: MultimediaHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun delete(multimedia: MultimediaHandler) =
+        multimediaDao.delete(multimedia)
 }

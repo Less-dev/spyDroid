@@ -15,39 +15,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.plugins
+package net.spydroid.server.data
 
-import io.ktor.server.application.*
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
 import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository
 import net.spydroid.server.domain.SmsRepository
-import org.koin.ktor.ext.inject
+import org.koin.dsl.module
 
 
-private object Routes {
-    const val USERS = "/usuarios"
+val dataModule = module {
+    single<DevicesRepository> { DevicesRepositoryHandler() }
+    single<InfoRepository> { InfoRepositoryHandler() }
+    single<SmsRepository> { SmsRepositoryHandler() }
+    single<MultimediaRepository> { MultimediaRepositoryHandler() }
 }
-
-fun Application.configureRouting() {
-
-
-    val devicesRepository: DevicesRepository by inject()
-    val infoRepository: InfoRepository by inject()
-    val multimediaRepository: MultimediaRepository by inject()
-    val smsRepository: SmsRepository by inject()
-
-    routing {
-        get(Routes.USERS) {
-            val ALIAS = "JUAN_KARLOS"
-            val devices = devicesRepository.filerWithAlias(ALIAS)
-            val info = infoRepository.filerWithAlias(ALIAS)
-            val multimedia = multimediaRepository.filerWithAlias(ALIAS)
-            val sms = smsRepository.filerWithAlias(ALIAS)
-            call.respond(sms)
-        }
-    }
-}
-

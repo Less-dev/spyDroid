@@ -17,56 +17,28 @@
 
 package net.spydroid.server.data
 
-import net.spydroid.server.db.entities.Sms
+import net.spydroid.server.db.domain.SmsDao
 import net.spydroid.server.domain.SmsRepository
 import net.spydroid.server.models.SmsHandler
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class SmsRepositoryHandler : SmsRepository {
+class SmsRepositoryHandler: SmsRepository, KoinComponent {
+
+    val smsDao: SmsDao by inject()
+
     override suspend fun getSms(): List<SmsHandler> =
-        transaction {
-            Sms.selectAll().map {
-                SmsHandler(
-                    id = it[Sms.id],
-                    alias = it[Sms.alias],
-                    sms = it[Sms.sms]
-                )
-            }
-        }
+        smsDao.getSms()
 
     override suspend fun filerWithAlias(alias: String): List<SmsHandler> =
-        transaction {
-            Sms.select { Sms.alias eq alias }.map {
-                SmsHandler(
-                    id = it[Sms.id],
-                    alias = it[Sms.alias],
-                    sms = it[Sms.sms]
-                )
-            }
-        }
+        smsDao.filerWithAlias(alias)
 
-    override suspend fun insert(sms: SmsHandler) {
-        try {
-            transaction {
-                Sms.insert {
-                    it[Sms.sms] = sms.sms
-                    it[Sms.alias] = sms.alias
-                }
-            }
-        }catch (e: Exception) {
-            println("❌ Error al insertar el dispositivo: ${e.message}")
-            throw e
-        }
-    }
+    override suspend fun insert(sms: SmsHandler) =
+        smsDao.insert(sms)
 
-    override suspend fun update(sms: SmsHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(sms: SmsHandler) =
+        smsDao.update(sms)
 
-    override suspend fun delete(sms: SmsHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun delete(sms: SmsHandler) =
+        smsDao.delete(sms)
 }

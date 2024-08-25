@@ -15,12 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.domain
+package net.spydroid.server.db.domain
 
 import net.spydroid.server.models.MultimediaHandler
 
-interface MultimediaRepository {
-
+interface MultimediaDao {
     suspend fun getMultimedia(): List<MultimediaHandler>
     suspend fun filerWithAlias(alias: String): List<MultimediaHandler>
     suspend fun insert(multimedia: MultimediaHandler)

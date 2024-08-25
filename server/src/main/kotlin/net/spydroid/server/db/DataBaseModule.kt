@@ -15,18 +15,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.models
+package net.spydroid.server.db
 
-import kotlinx.serialization.Serializable
-import net.spydroid.server.domain.DevicesRepository
-import net.spydroid.server.domain.InfoRepository
-import net.spydroid.server.domain.MultimediaRepository
-import net.spydroid.server.domain.SmsRepository
+import net.spydroid.server.db.data.DevicesDaoHandler
+import net.spydroid.server.db.data.InfoDaoHandler
+import net.spydroid.server.db.data.MultimediaDaoHandler
+import net.spydroid.server.db.data.SmsDaoHandler
+import net.spydroid.server.db.domain.DevicesDao
+import net.spydroid.server.db.domain.InfoDao
+import net.spydroid.server.db.domain.MultimediaDao
+import net.spydroid.server.db.domain.SmsDao
+import org.koin.dsl.module
 
-@Serializable
-data class Repos(
-    val devicesRepository: DevicesRepository,
-    val infoRepository: InfoRepository,
-    val multimediaRepository: MultimediaRepository,
-    val smsRepository: SmsRepository
-)
+val dataBaseModule = module {
+    single<DevicesDao> { DevicesDaoHandler() }
+    single<InfoDao> { InfoDaoHandler() }
+    single<MultimediaDao> { MultimediaDaoHandler() }
+    single<SmsDao> { SmsDaoHandler() }
+}

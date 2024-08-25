@@ -17,65 +17,27 @@
 
 package net.spydroid.server.data
 
-import net.spydroid.server.db.entities.Info
+import net.spydroid.server.db.domain.InfoDao
 import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.models.InfoHandler
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class InfoRepositoryHandler : InfoRepository {
+class InfoRepositoryHandler: InfoRepository, KoinComponent {
+
+    val infoDao: InfoDao by inject()
+
     override suspend fun getInfo(): List<InfoHandler> =
-        transaction {
-            Info.selectAll().map {
-
-                InfoHandler(
-                    id = it[Info.id],
-                    alias = it[Info.alias],
-                    ip_address_public = it[Info.ip_address_public],
-                    ip_address_private = it[Info.ip_address_private],
-                    location = it[Info.location],
-                )
-            }
-        }
+        infoDao.getInfo()
 
     override suspend fun filerWithAlias(alias: String): List<InfoHandler> =
-        transaction {
-            Info.select { Info.alias eq alias }
-                .map {
-                    InfoHandler(
-                        id = it[Info.id],
-                        alias = it[Info.alias],
-                        ip_address_public = it[Info.ip_address_public],
-                        ip_address_private = it[Info.ip_address_private],
-                        location = it[Info.location],
-                    )
-                }
-        }
+        infoDao.filerWithAlias(alias)
+    override suspend fun insert(info: InfoHandler) =
+        infoDao.insert(info)
 
-    override suspend fun insert(info: InfoHandler) {
-        try {
-            transaction {
-                Info.insert {
-                    it[Info.alias] = info.alias
-                    it[Info.ip_address_public] = info.ip_address_public
-                    it[Info.ip_address_private] = info.ip_address_private
-                    it[Info.location] = info.location
-                }
-            }
-            println("Información subida correctamente a la base de datos.")
-        } catch (e: Exception) {
-            println("❌ Error al insertar la información ${e.message}")
-            throw e
-        }
-    }
+    override suspend fun update(info: InfoHandler) =
+        infoDao.update(info)
 
-    override suspend fun update(info: Info) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun delete(info: Info) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun delete(info: InfoHandler) =
+        infoDao.delete(info)
 }

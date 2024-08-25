@@ -17,60 +17,28 @@
 
 package net.spydroid.server.data
 
-import net.spydroid.server.db.entities.Devices
+import net.spydroid.server.db.domain.DevicesDao
 import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.models.DeviceHandler
-import org.jetbrains.exposed.sql.insert
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.selectAll
-import org.jetbrains.exposed.sql.transactions.transaction
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class DevicesRepositoryHandler : DevicesRepository {
+class DevicesRepositoryHandler: DevicesRepository, KoinComponent {
+
+    private val devicesDao: DevicesDao by inject()
+
     override suspend fun getALlDevices(): List<DeviceHandler> =
-        transaction {
-            Devices.selectAll().map {
-                DeviceHandler(
-                    id = it[Devices.id],
-                    name = it[Devices.name],
-                    alias = it[Devices.alias],
-                )
-            }
-        }
+        devicesDao.getALlDevices()
 
     override suspend fun filerWithAlias(alias: String): List<DeviceHandler> =
-        transaction {
-            Devices.select { Devices.alias eq alias }
-                .map {
-                    DeviceHandler(
-                        id = it[Devices.id],
-                        name = it[Devices.name],
-                        alias = it[Devices.alias],
-                    )
-                }
-        }
+        devicesDao.filerWithAlias(alias)
 
+    override suspend fun insert(device: DeviceHandler) =
+        devicesDao.insert(device)
 
-    override suspend fun insert(device: DeviceHandler) {
-        try {
-            transaction {
-                Devices.insert {
-                    it[Devices.name] = device.name
-                    it[Devices.alias] = device.alias
-                }
-            }
+    override suspend fun update(device: DeviceHandler) =
+        devicesDao.update(device)
 
-            println("👤 Usuario ${device.name} insertado en la base de datos.")
-        } catch (e: Exception) {
-            println("❌ Error al insertar el dispositivo: ${e.message}")
-            throw e
-        }
-    }
-
-    override suspend fun update(device: Devices) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun delete(device: Devices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun delete(device: DeviceHandler) =
+        devicesDao.delete(device)
 }

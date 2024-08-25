@@ -18,6 +18,9 @@ exposed = "0.41.1"
 # Mysql - MANAGER DATABASE
 mysql = "8.0.33"
 
+# Koin
+koin = "3.4.0"
+
 
 [libraries]
 
@@ -41,6 +44,10 @@ exposed-jdbc = { module = "org.jetbrains.exposed:exposed-jdbc", version.ref = "e
 
 # Mysql
 mysql-connector = { module = "mysql:mysql-connector-java", version.ref = "mysql"}
+
+# Koin
+koin-ktor = { module = "io.insert-koin:koin-ktor", version.ref = "koin"}
+koin-core = { module = "io.insert-koin:koin-core", version.ref = "koin"}
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
