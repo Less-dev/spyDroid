@@ -17,13 +17,12 @@
 
 package net.spydroid.server.db.domain
 
-import net.spydroid.server.db.entities.Info
 import net.spydroid.server.models.InfoHandler
 
 interface InfoDao {
     suspend fun getInfo(): List<InfoHandler>
     suspend fun filerWithAlias(alias: String): List<InfoHandler>
     suspend fun insert(info: InfoHandler)
-    suspend fun update(info: Info)
-    suspend fun delete(info: Info)
+    suspend fun update(info: InfoHandler)
+    suspend fun delete(info: InfoHandler)
 }

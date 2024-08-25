@@ -71,11 +71,11 @@ class InfoDaoHandler : InfoDao {
         }
     }
 
-    override suspend fun update(info: Info) {
+    override suspend fun update(info: InfoHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun delete(info: Info) {
+    override suspend fun delete(info: InfoHandler) {
         TODO("Not yet implemented")
     }
 }

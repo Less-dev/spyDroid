@@ -24,10 +24,10 @@ import net.spydroid.server.db.entities.Devices
 import net.spydroid.server.db.entities.Info
 import net.spydroid.server.db.entities.Multimedia
 import net.spydroid.server.db.entities.Sms
-import net.spydroid.server.db.domain.DevicesDao
-import net.spydroid.server.db.domain.InfoDao
-import net.spydroid.server.db.domain.MultimediaDao
-import net.spydroid.server.db.domain.SmsDao
+import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.domain.InfoRepository
+import net.spydroid.server.domain.MultimediaRepository
+import net.spydroid.server.domain.SmsRepository
 import net.spydroid.server.models.DeviceHandler
 import net.spydroid.server.models.InfoHandler
 import net.spydroid.server.models.MultimediaHandler
@@ -60,7 +60,7 @@ class DbManager {
         }
     }
 
-    fun insertDevice(devicesRepository: DevicesDao) = runBlocking {
+    fun insertDevice(devicesRepository: DevicesRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
             devicesRepository.insert(
                 DeviceHandler(
@@ -71,7 +71,7 @@ class DbManager {
         }
     }
 
-    fun insertInfo(infoRepository: InfoDao) = runBlocking {
+    fun insertInfo(infoRepository: InfoRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
             infoRepository.insert(
                 InfoHandler(
@@ -84,7 +84,7 @@ class DbManager {
         }
     }
 
-    fun insertMultimedia(multimediaRepository: MultimediaDao) = runBlocking {
+    fun insertMultimedia(multimediaRepository: MultimediaRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
             multimediaRepository.insert(
                 MultimediaHandler(
@@ -96,7 +96,7 @@ class DbManager {
         }
     }
 
-    fun insertSms(smsRepository: SmsDao) = runBlocking {
+    fun insertSms(smsRepository: SmsRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
             smsRepository.insert(
                 SmsHandler(

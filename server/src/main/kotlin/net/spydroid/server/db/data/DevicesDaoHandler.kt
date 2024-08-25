@@ -66,11 +66,11 @@ class DevicesDaoHandler : DevicesDao {
         }
     }
 
-    override suspend fun update(device: Devices) {
+    override suspend fun update(device: DeviceHandler) {
         TODO("Not yet implemented")
     }
 
-    override suspend fun delete(device: Devices) {
+    override suspend fun delete(device: DeviceHandler) {
         TODO("Not yet implemented")
     }
 }
