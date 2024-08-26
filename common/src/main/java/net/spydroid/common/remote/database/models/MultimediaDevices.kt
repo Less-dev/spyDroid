@@ -1,4 +1,4 @@
-package net.spydroid.common.remote.data.models
+package net.spydroid.common.remote.database.models
 
 data class MultimediaDevices(
     val id: Int,
