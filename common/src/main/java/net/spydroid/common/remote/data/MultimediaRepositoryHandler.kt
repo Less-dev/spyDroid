@@ -17,7 +17,7 @@
 
 package net.spydroid.common.remote.data
 
-import net.spydroid.common.remote.database.models.MultimediaDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
 import net.spydroid.common.remote.domain.MultimediaRepository
 
 class MultimediaRepositoryHandler: MultimediaRepository {

@@ -17,7 +17,7 @@
 
 package net.spydroid.common.remote.data
 
-import net.spydroid.common.remote.database.models.InfoDevices
+import net.spydroid.common.remote.network.models.InfoDevices
 import net.spydroid.common.remote.domain.InfoRepository
 
 class SmsRepositoryHandler: InfoRepository {

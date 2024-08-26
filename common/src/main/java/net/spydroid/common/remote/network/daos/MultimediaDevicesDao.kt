@@ -15,25 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.data
+package net.spydroid.common.remote.network.daos
 
-import net.spydroid.common.remote.database.daos.SmsDevicesDao
-import net.spydroid.common.remote.database.models.SmsDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
 
-class SmsDevicesDaoHandler: SmsDevicesDao {
-    override suspend fun getAllSms(): List<SmsDevices> {
-        TODO("Not yet implemented")
-    }
+interface MultimediaDevicesDao {
 
-    override suspend fun insertSms(sms: SmsDevices) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteSms(sms: SmsDevices) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateSms(smsDevices: SmsDevices) {
-        TODO("Not yet implemented")
-    }
+    suspend fun getAllMultimedia(): List<MultimediaDevices>
+    suspend fun insertMultimedia(multimedia: MultimediaDevices)
+    suspend fun deleteMultimedia(multimedia: MultimediaDevices)
+    suspend fun updateMultimedia(multimedia: MultimediaDevices)
 }

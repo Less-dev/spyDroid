@@ -1,8 +1,8 @@
 package net.spydroid.common.remote.data
 
 import android.util.Log
-import net.spydroid.common.remote.database.api.ApiService
-import net.spydroid.common.remote.database.models.Devices
+import net.spydroid.common.remote.network.api.ApiService
+import net.spydroid.common.remote.network.models.Devices
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.Call

@@ -17,7 +17,7 @@
 
 package net.spydroid.common.remote.domain
 
-import net.spydroid.common.remote.database.models.SmsDevices
+import net.spydroid.common.remote.network.models.SmsDevices
 
 interface SmsRepository {
     suspend fun getAllSms(): List<SmsDevices>

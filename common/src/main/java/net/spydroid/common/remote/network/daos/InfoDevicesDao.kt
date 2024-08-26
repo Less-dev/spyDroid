@@ -15,13 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.daos
+package net.spydroid.common.remote.network.daos
 
-import net.spydroid.common.remote.database.models.Devices
+import net.spydroid.common.remote.network.models.InfoDevices
 
-interface DevicesDao {
-    suspend fun getAllDevices() : List<Devices>
-    suspend fun insertDevice(device: Devices)
-    suspend fun deleteDevice(device: Devices)
-    suspend fun updateDevice(device: Devices)
+interface InfoDevicesDao {
+    suspend fun getAllInfo(): List<InfoDevices>
+    suspend fun insertInfo(info: InfoDevices)
+    suspend fun deleteInfo(info: InfoDevices)
+    suspend fun updateInfo(info: InfoDevices)
+
 }

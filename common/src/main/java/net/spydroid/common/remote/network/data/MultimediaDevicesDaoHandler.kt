@@ -15,10 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.data
+package net.spydroid.common.remote.network.data
 
-import net.spydroid.common.remote.database.daos.MultimediaDevicesDao
-import net.spydroid.common.remote.database.models.MultimediaDevices
+import net.spydroid.common.remote.network.daos.MultimediaDevicesDao
+import net.spydroid.common.remote.network.models.MultimediaDevices
 
 class MultimediaDevicesDaoHandler: MultimediaDevicesDao {
     override suspend fun getAllMultimedia(): List<MultimediaDevices> {

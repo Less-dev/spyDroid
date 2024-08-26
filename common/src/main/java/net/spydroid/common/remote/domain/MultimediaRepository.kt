@@ -17,7 +17,7 @@
 
 package net.spydroid.common.remote.domain
 
-import net.spydroid.common.remote.database.models.MultimediaDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
 
 interface MultimediaRepository {
     suspend fun getAllMultimedia(): List<MultimediaDevices>

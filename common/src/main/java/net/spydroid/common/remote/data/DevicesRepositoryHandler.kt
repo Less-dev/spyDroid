@@ -17,7 +17,7 @@
 
 package net.spydroid.common.remote.data
 
-import net.spydroid.common.remote.database.models.Devices
+import net.spydroid.common.remote.network.models.Devices
 import net.spydroid.common.remote.domain.DevicesRepository
 
 class DevicesRepositoryHandler: DevicesRepository {
