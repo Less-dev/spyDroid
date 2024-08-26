@@ -15,14 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.daos
+package net.spydroid.common.remote.network.models
 
-import net.spydroid.common.remote.database.models.MultimediaDevices
-
-interface MultimediaDevicesDao {
-
-    suspend fun getAllMultimedia(): List<MultimediaDevices>
-    suspend fun insertMultimedia(multimedia: MultimediaDevices)
-    suspend fun deleteMultimedia(multimedia: MultimediaDevices)
-    suspend fun updateMultimedia(multimedia: MultimediaDevices)
-}
+data class MultimediaDevices(
+    val id: Int,
+    val alias: String,
+    val routeFile: String,
+    val type: String
+)

@@ -17,23 +17,24 @@
 
 package net.spydroid.common.remote.data
 
-import net.spydroid.common.remote.database.models.MultimediaDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
 import net.spydroid.common.remote.domain.MultimediaRepository
+import net.spydroid.common.remote.network.daos.MultimediaDevicesDao
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class MultimediaRepositoryHandler: MultimediaRepository {
-    override suspend fun getAllMultimedia(): List<MultimediaDevices> {
-        TODO("Not yet implemented")
-    }
+class MultimediaRepositoryHandler: MultimediaRepository, KoinComponent {
 
-    override suspend fun insertMultimedia(multimedia: MultimediaDevices) {
-        TODO("Not yet implemented")
-    }
+    private val multimediaDevicesDao: MultimediaDevicesDao by inject()
+    override suspend fun getAllMultimedia(): List<MultimediaDevices> =
+        multimediaDevicesDao.getAllMultimedia()
 
-    override suspend fun deleteMultimedia(multimedia: MultimediaDevices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun insertMultimedia(multimedia: MultimediaDevices) =
+        multimediaDevicesDao.insertMultimedia(multimedia)
 
-    override suspend fun updateMultimedia(multimedia: MultimediaDevices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteMultimedia(multimedia: MultimediaDevices) =
+        multimediaDevicesDao.deleteMultimedia(multimedia)
+
+    override suspend fun updateMultimedia(multimedia: MultimediaDevices) =
+        multimediaDevicesDao.updateMultimedia(multimedia)
 }

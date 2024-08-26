@@ -15,13 +15,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.daos
+package net.spydroid.common.remote.network.api
 
-import net.spydroid.common.remote.database.models.SmsDevices
+import net.spydroid.common.remote.network.models.Devices
+import retrofit2.http.GET
+import retrofit2.http.Query
+import retrofit2.Call
 
-interface SmsDevicesDao {
-    suspend fun getAllSms(): List<SmsDevices>
-    suspend fun insertSms(sms: SmsDevices)
-    suspend fun deleteSms(sms: SmsDevices)
-    suspend fun updateSms(smsDevices: SmsDevices)
+interface ApiService {
+    @GET("/devices")
+    fun getDevices(@Query("access_token") accessToken: String): Call<List<Devices>>
+
+    @GET("/info")
+    fun getInfo(@Query("access_token") accessToken: String): Call<List<Devices>>
+    @GET("/multimedia")
+    fun getMultimedia(@Query("access_token") accessToken: String): Call<List<Devices>>
+    @GET("/sms")
+    fun getSms(@Query("access_token") accessToken: String): Call<List<Devices>>
 }

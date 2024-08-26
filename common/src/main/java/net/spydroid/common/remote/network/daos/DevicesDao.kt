@@ -15,25 +15,13 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.data
+package net.spydroid.common.remote.network.daos
 
-import net.spydroid.common.remote.database.daos.InfoDevicesDao
-import net.spydroid.common.remote.database.models.InfoDevices
+import net.spydroid.common.remote.network.models.Devices
 
-class InfoDevicesDaoHandler: InfoDevicesDao {
-    override suspend fun getAllInfo(): List<InfoDevices> {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun insertInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun deleteInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
-
-    override suspend fun updateInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+interface DevicesDao {
+    suspend fun getAllDevices() : List<Devices>
+    suspend fun insertDevice(device: Devices)
+    suspend fun deleteDevice(device: Devices)
+    suspend fun updateDevice(device: Devices)
 }

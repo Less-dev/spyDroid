@@ -17,23 +17,25 @@
 
 package net.spydroid.common.remote.data
 
-import net.spydroid.common.remote.database.models.Devices
+import net.spydroid.common.remote.network.models.Devices
 import net.spydroid.common.remote.domain.DevicesRepository
+import net.spydroid.common.remote.network.daos.DevicesDao
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class DevicesRepositoryHandler: DevicesRepository {
-    override suspend fun getAllDevices(): List<Devices> {
-        TODO("Not yet implemented")
-    }
+class DevicesRepositoryHandler: DevicesRepository, KoinComponent {
 
-    override suspend fun insertDevice(device: Devices) {
-        TODO("Not yet implemented")
-    }
+    private val devicesDao: DevicesDao by inject()
 
-    override suspend fun deleteDevice(device: Devices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAllDevices(): List<Devices> =
+        devicesDao.getAllDevices()
 
-    override suspend fun updateDevice(device: Devices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun insertDevice(device: Devices) =
+        devicesDao.insertDevice(device)
+
+    override suspend fun deleteDevice(device: Devices) =
+        devicesDao.deleteDevice(device)
+
+    override suspend fun updateDevice(device: Devices) =
+        devicesDao.updateDevice(device)
 }

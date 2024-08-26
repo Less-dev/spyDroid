@@ -17,7 +17,7 @@
 
 package net.spydroid.common.remote.domain
 
-import net.spydroid.common.remote.database.models.InfoDevices
+import net.spydroid.common.remote.network.models.InfoDevices
 
 interface InfoRepository {
     suspend fun getAllInfo(): List<InfoDevices>

@@ -15,13 +15,10 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.domain
+package net.spydroid.common.remote.network.models
 
-import net.spydroid.common.remote.network.models.Devices
-
-interface DevicesRepository {
-    suspend fun getAllDevices() : List<Devices>
-    suspend fun insertDevice(device: Devices)
-    suspend fun deleteDevice(device: Devices)
-    suspend fun updateDevice(device: Devices)
-}
+data class Devices(
+    val id: Int,
+    val alias: String,
+    val name: String
+)

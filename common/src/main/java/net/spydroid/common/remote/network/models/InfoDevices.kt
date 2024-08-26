@@ -15,21 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.common.remote.database.api
+package net.spydroid.common.remote.network.models
 
-import net.spydroid.common.remote.database.models.Devices
-import retrofit2.http.GET
-import retrofit2.http.Query
-import retrofit2.Call
-
-interface ApiService {
-    @GET("/devices")
-    fun getDevices(@Query("access_token") accessToken: String): Call<List<Devices>>
-
-    @GET("/info")
-    fun getInfo(@Query("access_token") accessToken: String): Call<List<Devices>>
-    @GET("/multimedia")
-    fun getMultimedia(@Query("access_token") accessToken: String): Call<List<Devices>>
-    @GET("/sms")
-    fun getSms(@Query("access_token") accessToken: String): Call<List<Devices>>
-}
+data class InfoDevices(
+    val id: Int,
+    val alias: String,
+    val ip_address_public: String,
+    val ip_address_private: String,
+    val location: String
+)
