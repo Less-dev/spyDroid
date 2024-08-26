@@ -35,8 +35,6 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDataProvider private constructor(
     private val context: Context
@@ -46,11 +44,6 @@ class RemoteDataProvider private constructor(
     private val infoRepository: InfoRepository by inject()
     private val multimediaRepository: MultimediaRepository by inject()
     private val smsRepository: SmsRepository by inject()
-
-    private val retrofit = Retrofit.Builder()
-        .baseUrl("http://192.168.100.70:8080/")
-        .addConverterFactory(GsonConverterFactory.create())
-        .build()
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -71,7 +64,7 @@ class RemoteDataProvider private constructor(
 
 
     // GET
-    fun searchAllDevices() =
+    fun getAllDevices() =
         scope.launch {
             devicesRepository.getAllDevices().map {
                 val updateList = _devices.value.toMutableList().apply {
@@ -80,6 +73,12 @@ class RemoteDataProvider private constructor(
                 _devices.value = updateList
             }
         }
+
+    fun getDevice(alias: String) =
+        scope.launch {
+            //devicesRepository.getDevice(alias)
+        }
+
 
 
     companion object {

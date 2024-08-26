@@ -47,7 +47,7 @@ class LocalDataProvider private constructor(
         scope.launch(Dispatchers.IO) {
             try {
                 //searchDevices()
-                remoteDataProvider.searchAllDevices()
+                remoteDataProvider.getAllDevices()
                 remoteDataProvider.devices.collect {
                     it.map {
                         Log.i(TAG, "ID: <${it.id}> \n Nombre: ${it.name} | Alias: ${it.alias}")
