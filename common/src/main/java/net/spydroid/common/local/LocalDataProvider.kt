@@ -46,7 +46,6 @@ class LocalDataProvider private constructor(
     init {
         scope.launch(Dispatchers.IO) {
             try {
-                //searchDevices()
                 remoteDataProvider.getAllDevices()
                 remoteDataProvider.devices.collect {
                     it.map {
@@ -54,7 +53,9 @@ class LocalDataProvider private constructor(
                     }
                 }
             } catch (e: Exception){
+
                 Log.e(TAG, "Error: ${e.message}")
+
             }
         }
     }

@@ -57,7 +57,8 @@ class RemoteDataProvider private constructor(
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
 
-    fun setDevice(device: Devices) =
+
+    private fun setDevice(device: Devices) =
         scope.launch {
             devicesRepository.insertDevice(device)
         }
