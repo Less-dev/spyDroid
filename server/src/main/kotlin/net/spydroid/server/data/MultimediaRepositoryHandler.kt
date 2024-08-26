@@ -27,7 +27,7 @@ class MultimediaRepositoryHandler : MultimediaRepository, KoinComponent {
 
     val multimediaDao: MultimediaDao by inject()
 
-    override suspend fun getMultimedia(): List<MultimediaHandler> =
+    override suspend fun getAllMultimedia(): List<MultimediaHandler> =
         multimediaDao.getMultimedia()
 
     override suspend fun filerWithAlias(alias: String): List<MultimediaHandler> =

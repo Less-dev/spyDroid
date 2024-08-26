@@ -21,7 +21,7 @@ import net.spydroid.server.models.InfoHandler
 
 interface InfoRepository {
 
-    suspend fun getInfo(): List<InfoHandler>
+    suspend fun getAllInfo(): List<InfoHandler>
     suspend fun filerWithAlias(alias: String): List<InfoHandler>
     suspend fun insert(info: InfoHandler)
     suspend fun update(info: InfoHandler)
