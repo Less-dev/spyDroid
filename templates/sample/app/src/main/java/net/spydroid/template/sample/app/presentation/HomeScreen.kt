@@ -60,7 +60,8 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val localDataProvider = LocalDataProvider.current(context)
     val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    /*
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LazyColumn {
             item {
                 RequestPermission(permission = PermissionsDefaults.multimedia, showUi = true)
@@ -76,6 +77,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
             managerFeature.multimedia().start()
         }
     }
+     */
 }
 
 

