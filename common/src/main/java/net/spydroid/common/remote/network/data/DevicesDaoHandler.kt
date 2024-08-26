@@ -17,12 +17,29 @@
 
 package net.spydroid.common.remote.network.data
 
+import android.util.Log
 import net.spydroid.common.remote.network.daos.DevicesDao
 import net.spydroid.common.remote.network.models.Devices
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class DevicesDaoHandler: DevicesDao {
-    override suspend fun getAllDevices(): List<Devices> {
-        TODO("Not yet implemented")
+    //private val TAG = "PRUEBA_KTOR"
+    override suspend fun getAllDevices(): List<Devices> =
+        try {
+            val response = apiService.getDevices("iygad7618wg8y1f7fgvas71f671").execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+        // Fail
+        //Log.e(TAG, "Failure: ${e.message}")
+        emptyList()
     }
 
     override suspend fun insertDevice(device: Devices) {

@@ -19,21 +19,22 @@ package net.spydroid.common.remote.data
 
 import net.spydroid.common.remote.network.models.InfoDevices
 import net.spydroid.common.remote.domain.InfoRepository
+import net.spydroid.common.remote.network.daos.InfoDevicesDao
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class InfoRepositoryHandler: InfoRepository {
-    override suspend fun getAllInfo(): List<InfoDevices> {
-        TODO("Not yet implemented")
-    }
+class InfoRepositoryHandler: InfoRepository, KoinComponent {
 
-    override suspend fun insertInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+    private val infoDevicesDao: InfoDevicesDao by inject()
+    override suspend fun getAllInfo(): List<InfoDevices> =
+        infoDevicesDao.getAllInfo()
 
-    override suspend fun deleteInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun insertInfo(info: InfoDevices) =
+        infoDevicesDao.insertInfo(info)
 
-    override suspend fun updateInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun deleteInfo(info: InfoDevices) =
+        infoDevicesDao.deleteInfo(info)
+
+    override suspend fun updateInfo(info: InfoDevices) =
+        infoDevicesDao.updateInfo(info)
 }

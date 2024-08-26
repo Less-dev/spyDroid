@@ -17,23 +17,25 @@
 
 package net.spydroid.common.remote.data
 
-import net.spydroid.common.remote.network.models.InfoDevices
-import net.spydroid.common.remote.domain.InfoRepository
+import net.spydroid.common.remote.domain.SmsRepository
+import net.spydroid.common.remote.network.daos.SmsDevicesDao
+import net.spydroid.common.remote.network.models.SmsDevices
+import org.koin.core.component.KoinComponent
+import org.koin.core.component.inject
 
-class SmsRepositoryHandler: InfoRepository {
-    override suspend fun getAllInfo(): List<InfoDevices> {
-        TODO("Not yet implemented")
-    }
+class SmsRepositoryHandler: SmsRepository, KoinComponent {
 
-    override suspend fun insertInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+    private val smsDevicesDao: SmsDevicesDao by inject()
 
-    override suspend fun deleteInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun getAllSms(): List<SmsDevices>  =
+        smsDevicesDao.getAllSms()
 
-    override suspend fun updateInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun insertSms(sms: SmsDevices) =
+        smsDevicesDao.insertSms(sms)
+
+    override suspend fun deleteSms(sms: SmsDevices) =
+        smsDevicesDao.deleteSms(sms)
+
+    override suspend fun updateSms(sms: SmsDevices) =
+        smsDevicesDao.updateSms(sms)
 }
