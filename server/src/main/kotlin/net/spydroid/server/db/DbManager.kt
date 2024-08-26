@@ -60,17 +60,6 @@ class DbManager {
         }
     }
 
-    fun insertDevice(devicesRepository: DevicesRepository) = runBlocking {
-        this.launch(Dispatchers.IO) {
-            devicesRepository.insert(
-                DeviceHandler(
-                    alias = ALIAS,
-                    name = "Juan Carlos camilo sanches"
-                )
-            )
-        }
-    }
-
     fun insertInfo(infoRepository: InfoRepository) = runBlocking {
         this.launch(Dispatchers.IO) {
             infoRepository.insert(

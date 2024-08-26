@@ -27,7 +27,7 @@ class SmsRepositoryHandler: SmsRepository, KoinComponent {
 
     val smsDao: SmsDao by inject()
 
-    override suspend fun getSms(): List<SmsHandler> =
+    override suspend fun getALlSms(): List<SmsHandler> =
         smsDao.getSms()
 
     override suspend fun filerWithAlias(alias: String): List<SmsHandler> =

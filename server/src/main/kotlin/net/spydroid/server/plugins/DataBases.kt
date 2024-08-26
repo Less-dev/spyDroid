@@ -37,7 +37,6 @@ fun Application.configureDatabases() {
 
         dbManager.connectToDb()
         dbManager.createTables()
-        dbManager.insertDevice(devicesRepository)
         dbManager.insertInfo(infoRepository)
         dbManager.insertMultimedia(multimediaRepository)
         dbManager.insertSms(smsRepository)
