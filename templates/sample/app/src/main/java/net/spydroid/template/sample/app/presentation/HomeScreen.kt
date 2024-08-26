@@ -28,6 +28,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -38,6 +39,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.launch
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.components.permissions.PermissionsDefaults
@@ -56,30 +58,27 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     }
 
     val localDataProvider = LocalDataProvider.current(context)
-    val stateMultimedia by localDataProvider.multimediaState.collectAsState()
     val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
-    val listPermissions = listOf(
-        PermissionsDefaults.multimedia,
-    )
 
-
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    /*
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         LazyColumn {
             item {
                 RequestPermission(permission = PermissionsDefaults.multimedia, showUi = true)
             }
-            items(currentMultimedia.images?: emptyList()){
+            items(currentMultimedia.images ?: emptyList()) {
                 ImageItem(imageUri = it)
                 Spacer(modifier = Modifier.height(10.dp))
             }
         }
     }
-
-    if (stateMultimedia == GLOBAL_STATES_PERMISSIONS.GRANTED) {
-        managerFeature.multimedia().start()
+    LaunchedEffect(Unit) {
+        this.launch {
+            managerFeature.multimedia().start()
+        }
     }
+     */
 }
-
 
 
 @Composable
