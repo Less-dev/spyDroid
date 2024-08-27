@@ -76,10 +76,22 @@ private fun Route.devices(validTokens: Set<String>) {
     val devicesRepository: DevicesRepository by inject()
 
     get(Routes.DEVICES) {
+        val DEVICES_PARAMS = object {
+            val SEARCH = "search"
+            val ALL = "ALL"
+        }
+
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
-        val devices = devicesRepository.getALlDevices()
+        val searchParam = call.parameters[DEVICES_PARAMS.SEARCH] ?: DEVICES_PARAMS.ALL
+
         if (accessToken in validTokens) {
-            call.respond(devices)
+            if (searchParam != DEVICES_PARAMS.ALL) {
+                val devices = devicesRepository.filerWithAlias(searchParam)
+                call.respond(devices)
+            } else {
+                val devices = devicesRepository.getALlDevices()
+                call.respond(devices)
+            }
         } else {
             call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
         }
