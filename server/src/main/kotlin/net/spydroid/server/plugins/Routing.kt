@@ -47,13 +47,17 @@ private object Routes {
 private object PARAMS {
     const val ACCESS_TOKEN = "access_token"
     const val ALIAS = "alias"
+    val SEARCH = "search"
+    val ALL = "ALL"
 }
 
 private object BAD_REQUESTS_RESPONSES {
     // If access token does not exist
     const val ACCESS_TOKEN = "Missing access token"
+
     // If alias does not exist
     const val ALIAS = "Missing alias"
+
     // If access token is not in list from valid tokens
     const val INVALID_ACCESS_TOKEN = "Invalid access token"
 }
@@ -76,16 +80,12 @@ private fun Route.devices(validTokens: Set<String>) {
     val devicesRepository: DevicesRepository by inject()
 
     get(Routes.DEVICES) {
-        val DEVICES_PARAMS = object {
-            val SEARCH = "search"
-            val ALL = "ALL"
-        }
 
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
-        val searchParam = call.parameters[DEVICES_PARAMS.SEARCH] ?: DEVICES_PARAMS.ALL
+        val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
 
         if (accessToken in validTokens) {
-            if (searchParam != DEVICES_PARAMS.ALL) {
+            if (searchParam != PARAMS.ALL) {
                 val devices = devicesRepository.filerWithAlias(searchParam)
                 call.respond(devices)
             } else {
@@ -140,15 +140,22 @@ private fun Route.devices(validTokens: Set<String>) {
 }
 
 
-private fun Route.info(validTokens: Set<String>){
+private fun Route.info(validTokens: Set<String>) {
 
     val infoRepository: InfoRepository by inject()
 
     get(Routes.INFO) {
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
-        val info = infoRepository.getAllInfo()
+        val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
+
         if (accessToken in validTokens) {
-            call.respond(info)
+            if (searchParam != PARAMS.ALL) {
+                val info = infoRepository.filerWithAlias(searchParam)
+                call.respond(info)
+            } else {
+                val info = infoRepository.getAllInfo()
+                call.respond(info)
+            }
         }
     }
 
@@ -211,15 +218,21 @@ private fun Route.info(validTokens: Set<String>){
     }
 }
 
-private fun Route.sms(validTokens: Set<String>){
+private fun Route.sms(validTokens: Set<String>) {
 
     val smsRepository: SmsRepository by inject()
 
     get(Routes.SMS) {
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
-        val sms = smsRepository.getALlSms()
+        val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
         if (accessToken in validTokens) {
-            call.respond(sms)
+            if (searchParam != PARAMS.ALL) {
+                val sms = smsRepository.filerWithAlias(searchParam)
+                call.respond(sms)
+            } else {
+                val sms = smsRepository.getALlSms()
+                call.respond(sms)
+            }
         }
     }
 
@@ -266,15 +279,21 @@ private fun Route.sms(validTokens: Set<String>){
     }
 }
 
-private fun Route.multimedia(validTokens: Set<String>){
+private fun Route.multimedia(validTokens: Set<String>) {
 
     val multimediaRepository: MultimediaRepository by inject()
 
     get(Routes.MULTIMEDIA) {
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
-        val multimedia = multimediaRepository.getAllMultimedia()
+        val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
         if (accessToken in validTokens) {
-            call.respond(multimedia)
+            if (searchParam != PARAMS.ALL) {
+                val multimedia = multimediaRepository.filerWithAlias(searchParam)
+                call.respond(multimedia)
+            } else {
+                val multimedia = multimediaRepository.getAllMultimedia()
+                call.respond(multimedia)
+            }
         }
     }
 
@@ -286,7 +305,7 @@ private fun Route.multimedia(validTokens: Set<String>){
             val TYPE = "type"
         }
 
-        val MULTI_MESSAGES = object  {
+        val MULTI_MESSAGES = object {
             val ROUTE_FILE = "Missing route file"
             val TYPE = "Missing type file"
         }
