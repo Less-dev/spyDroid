@@ -18,7 +18,7 @@
 package net.spydroid.common.remote.network.models
 
 data class Devices(
-    val id: Int,
+    val id: Int = 0,
     val alias: String,
     val name: String
 )

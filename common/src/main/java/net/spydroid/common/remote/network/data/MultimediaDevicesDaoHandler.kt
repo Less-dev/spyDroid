@@ -17,16 +17,44 @@
 
 package net.spydroid.common.remote.network.data
 
+import android.util.Log
 import net.spydroid.common.remote.network.daos.MultimediaDevicesDao
 import net.spydroid.common.remote.network.models.MultimediaDevices
 
 class MultimediaDevicesDaoHandler: MultimediaDevicesDao {
-    override suspend fun getAllMultimedia(): List<MultimediaDevices> {
-        TODO("Not yet implemented")
-    }
+
+    private val TAG = "PRUBA_INSERT"
+
+    override suspend fun getAllMultimedia(): List<MultimediaDevices> =
+        try {
+            val response = apiService.getMultimedia("iygad7618wg8y1f7fgvas71f671").execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
 
     override suspend fun insertMultimedia(multimedia: MultimediaDevices) {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.createMultimedia(
+                accessToken = "iygad7618wg8y1f7fgvas71f671",
+                alias = multimedia.alias,
+                routeFile = multimedia.routeFile,
+                type = multimedia.type
+            ).execute()
+            if (response.isSuccessful){
+                Log.i(TAG, "MULTIMEDIA INSERTADO EN LA BASE DE DATOS!")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ERROR INSERTANDO MULTIMEDIA: ${e.message} ")
+        }
     }
 
     override suspend fun deleteMultimedia(multimedia: MultimediaDevices) {

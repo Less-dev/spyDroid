@@ -92,11 +92,11 @@ dependencies {
     implementation(libs.androidx.activity.compose)
 
     // Retrofit
-    implementation("com.squareup.retrofit2:retrofit:2.9.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
 
     // Koin
-    implementation("io.insert-koin:koin-core:3.4.0")
-    implementation("io.insert-koin:koin-android:3.4.0")
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 
 }
