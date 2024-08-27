@@ -21,6 +21,9 @@ import net.spydroid.common.remote.network.models.Devices
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.Call
+import retrofit2.http.Field
+import retrofit2.http.FormUrlEncoded
+import retrofit2.http.POST
 
 interface ApiService {
     @GET("/devices")
@@ -32,4 +35,12 @@ interface ApiService {
     fun getMultimedia(@Query("access_token") accessToken: String): Call<List<Devices>>
     @GET("/sms")
     fun getSms(@Query("access_token") accessToken: String): Call<List<Devices>>
+
+    @FormUrlEncoded
+    @POST("devices")
+    fun createDevice(
+        @Field("access_token") accessToken: String,
+        @Field("alias") alias: String,
+        @Field("name") name: String
+    ): Call<Void>
 }

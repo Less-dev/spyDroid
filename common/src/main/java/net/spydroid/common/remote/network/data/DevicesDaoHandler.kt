@@ -24,8 +24,8 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class DevicesDaoHandler: DevicesDao {
-    //private val TAG = "PRUEBA_KTOR"
+class DevicesDaoHandler : DevicesDao {
+    private val TAG = "PRUBA_INSERT"
     override suspend fun getAllDevices(): List<Devices> =
         try {
             val response = apiService.getDevices("iygad7618wg8y1f7fgvas71f671").execute()
@@ -37,13 +37,24 @@ class DevicesDaoHandler: DevicesDao {
                 emptyList()
             }
         } catch (e: Exception) {
-        // Fail
-        //Log.e(TAG, "Failure: ${e.message}")
-        emptyList()
-    }
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
 
     override suspend fun insertDevice(device: Devices) {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.createDevice(
+                accessToken = "iygad7618wg8y1f7fgvas71f671",
+                alias = device.alias,
+                name = device.name
+            ).execute()
+            if (response.isSuccessful){
+                Log.i(TAG, "DISPOSITIVO INSERTADO EN LA BASE DE DATOS!")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ERROR INSERTANDO DISPOSITIVO: ${e.message} ")
+        }
     }
 
     override suspend fun deleteDevice(device: Devices) {

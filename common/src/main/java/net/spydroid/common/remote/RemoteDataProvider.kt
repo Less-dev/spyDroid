@@ -80,6 +80,11 @@ class RemoteDataProvider private constructor(
             //devicesRepository.getDevice(alias)
         }
 
+    fun insertDevice(device: Devices) =
+        scope.launch {
+            devicesRepository.insertDevice(device)
+        }
+
 
 
     companion object {
