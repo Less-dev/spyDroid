@@ -18,7 +18,7 @@
 package net.spydroid.common.remote.network.models
 
 data class InfoDevices(
-    val id: Int,
+    val id: Int = 0,
     val alias: String,
     val ip_address_public: String,
     val ip_address_private: String,

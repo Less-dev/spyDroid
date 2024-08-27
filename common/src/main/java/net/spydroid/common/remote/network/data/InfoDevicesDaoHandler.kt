@@ -17,16 +17,45 @@
 
 package net.spydroid.common.remote.network.data
 
+import android.util.Log
 import net.spydroid.common.remote.network.daos.InfoDevicesDao
 import net.spydroid.common.remote.network.models.InfoDevices
 
-class InfoDevicesDaoHandler: InfoDevicesDao {
-    override suspend fun getAllInfo(): List<InfoDevices> {
-        TODO("Not yet implemented")
-    }
+class InfoDevicesDaoHandler : InfoDevicesDao {
+
+    private val TAG = "PRUBA_INSERT"
+
+    override suspend fun getAllInfo(): List<InfoDevices> =
+        try {
+            val response = apiService.getInfo("iygad7618wg8y1f7fgvas71f671").execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
 
     override suspend fun insertInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.createInfo(
+                accessToken = "iygad7618wg8y1f7fgvas71f671",
+                alias = info.alias,
+                ipPublic = info.ip_address_public,
+                ipPrivate = info.ip_address_private,
+                location = info.location
+            ).execute()
+            if (response.isSuccessful) {
+                Log.i(TAG, "INFORMACIÓN INSERTADO EN LA BASE DE DATOS!")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ERROR INSERTANDO INFORMACIÓN: ${e.message} ")
+        }
     }
 
     override suspend fun deleteInfo(info: InfoDevices) {

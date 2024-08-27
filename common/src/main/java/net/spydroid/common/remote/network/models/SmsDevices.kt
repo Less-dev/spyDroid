@@ -18,7 +18,7 @@
 package net.spydroid.common.remote.network.models
 
 data class SmsDevices(
-    val id: Int,
+    val id: Int = 0,
     val alias: String,
     val sms: String
 )

