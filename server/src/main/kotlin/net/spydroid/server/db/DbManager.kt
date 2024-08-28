@@ -28,9 +28,9 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 
 class DbManager {
 
-    private val dbUrl = System.getenv("DB_URL") ?: "jdbc:mysql://localhost:3306/mi_base_de_datos"
-    private val dbUser = System.getenv("DB_USER") ?: "karlos"
-    private val dbPassword = System.getenv("DB_PASSWORD") ?: "juankarlos1234"
+    private val dbUrl = System.getenv("DB_URL") ?: "jdbc:mysql://localhost:3306/spydroid_db"
+    private val dbUser = System.getenv("DB_USER") ?: "spy_user"
+    private val dbPassword = System.getenv("DB_PASSWORD") ?: "spy_password"
 
     fun connectToDb() =
         Database.connect(
@@ -39,6 +39,8 @@ class DbManager {
             user = dbUser,
             password = dbPassword
         )
+
+    // If the tables do not exist, a new one is created
 
     fun createTables() = runBlocking {
         newSuspendedTransaction {

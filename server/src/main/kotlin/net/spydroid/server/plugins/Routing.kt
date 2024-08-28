@@ -19,6 +19,7 @@ package net.spydroid.server.plugins
 
 import io.ktor.http.HttpStatusCode
 import io.ktor.server.application.*
+import io.ktor.server.request.receive
 import io.ktor.server.request.receiveParameters
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -79,6 +80,14 @@ private fun Route.devices(validTokens: Set<String>) {
 
     val devicesRepository: DevicesRepository by inject()
 
+    val DEVICES_PARAMS = object {
+        val NAME = "name"
+    }
+
+    val DEVICES_MESSAGES = object {
+        val NAME = "Missing Name"
+    }
+
     get(Routes.DEVICES) {
 
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
@@ -99,14 +108,6 @@ private fun Route.devices(validTokens: Set<String>) {
 
     post(Routes.DEVICES) {
         val params = call.receiveParameters()
-
-        val DEVICES_PARAMS = object {
-            val NAME = "name"
-        }
-
-        val DEVICES_MESSAGES = object {
-            val NAME = "Missing Name"
-        }
 
         val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@post call.respond(
             HttpStatusCode.BadRequest,
@@ -137,6 +138,51 @@ private fun Route.devices(validTokens: Set<String>) {
             call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
         }
     }
+
+
+    put("${Routes.DEVICES}/{${PARAMS.ALIAS}}") {
+        val params = call.receiveParameters()
+
+        // Obtener el alias desde los parámetros de la ruta
+        val alias = call.parameters[PARAMS.ALIAS] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ALIAS
+        )
+
+        // Obtener el nuevo nombre desde los parámetros del cuerpo
+        val newName = params[DEVICES_PARAMS.NAME] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            DEVICES_MESSAGES.NAME
+        )
+
+        // Verificar el token de acceso
+        val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ACCESS_TOKEN
+        )
+
+        if (accessToken in validTokens) {
+            try {
+                devicesRepository.update(
+                    DeviceHandler(
+                        alias = alias,
+                        name = newName
+                    )
+                )
+                call.respond(HttpStatusCode.OK, "Device name updated successfully")
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.NotFound, "No device found with alias $alias")
+                call.respond(
+                    HttpStatusCode.InternalServerError,
+                    "Failed to update device: ${e.message}"
+                )
+            }
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
+        }
+    }
+
+
 }
 
 
