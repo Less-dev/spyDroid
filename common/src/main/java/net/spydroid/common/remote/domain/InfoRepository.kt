@@ -21,6 +21,7 @@ import net.spydroid.common.remote.network.models.InfoDevices
 
 interface InfoRepository {
     suspend fun getAllInfo(): List<InfoDevices>
+    suspend fun getInfo(alias: String): List<InfoDevices>
     suspend fun insertInfo(info: InfoDevices)
     suspend fun deleteInfo(info: InfoDevices)
     suspend fun updateInfo(info: InfoDevices)

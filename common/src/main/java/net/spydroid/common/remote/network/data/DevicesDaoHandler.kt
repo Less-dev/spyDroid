@@ -42,6 +42,22 @@ class DevicesDaoHandler : DevicesDao {
             emptyList()
         }
 
+    override suspend fun getSpecificDevice(alias: String): List<Devices> =
+        try {
+            val response = apiService.getSpecificDevices("iygad7618wg8y1f7fgvas71f671", alias).execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
+
     override suspend fun insertDevice(device: Devices) {
         try {
             val response = apiService.createDevice(

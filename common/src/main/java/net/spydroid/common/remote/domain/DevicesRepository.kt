@@ -21,6 +21,7 @@ import net.spydroid.common.remote.network.models.Devices
 
 interface DevicesRepository {
     suspend fun getAllDevices() : List<Devices>
+    suspend fun getDevice(alias: String): List<Devices>
     suspend fun insertDevice(device: Devices)
     suspend fun deleteDevice(device: Devices)
     suspend fun updateDevice(device: Devices)

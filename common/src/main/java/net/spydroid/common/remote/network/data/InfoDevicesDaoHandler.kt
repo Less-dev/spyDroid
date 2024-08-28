@@ -41,6 +41,22 @@ class InfoDevicesDaoHandler : InfoDevicesDao {
             emptyList()
         }
 
+    override suspend fun getSpecificInfo(alias: String): List<InfoDevices> =
+        try {
+            val response = apiService.getSpecificInfo("iygad7618wg8y1f7fgvas71f671", alias).execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
+
     override suspend fun insertInfo(info: InfoDevices) {
         try {
             val response = apiService.createInfo(

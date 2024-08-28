@@ -30,6 +30,9 @@ class SmsRepositoryHandler: SmsRepository, KoinComponent {
     override suspend fun getAllSms(): List<SmsDevices>  =
         smsDevicesDao.getAllSms()
 
+    override suspend fun getSms(alias: String): List<SmsDevices> =
+        smsDevicesDao.getSpecificSms(alias)
+
     override suspend fun insertSms(sms: SmsDevices) =
         smsDevicesDao.insertSms(sms)
 

@@ -21,6 +21,7 @@ import net.spydroid.common.remote.network.models.MultimediaDevices
 
 interface MultimediaRepository {
     suspend fun getAllMultimedia(): List<MultimediaDevices>
+    suspend fun getMultimedia(alias: String): List<MultimediaDevices>
     suspend fun insertMultimedia(multimedia: MultimediaDevices)
     suspend fun deleteMultimedia(multimedia: MultimediaDevices)
     suspend fun updateMultimedia(multimedia: MultimediaDevices)

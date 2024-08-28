@@ -47,45 +47,116 @@ class LocalDataProvider private constructor(
     val scope = CoroutineScope(Dispatchers.IO)
     private val TAG = "PRUEBA_KTOR"
 
+    private val data_info_Test = listOf(
+        InfoDevices(
+            alias = "ALIAS_1",
+            ip_address_public = "190.80.7.192",
+            ip_address_private = "192.168.100.212",
+            location = "7621.212, -276.2616"
+        ),
+        InfoDevices(
+            alias = "ALIAS_1",
+            ip_address_private = "10.10.10.123",
+            ip_address_public = "188.182.12.123",
+            location = "416.1261, -127.1245.12"
+        ),
+        InfoDevices(
+            alias = "ALIAS_2",
+            ip_address_public = "90.12.124.90",
+            ip_address_private = "127.0.0.1",
+            location = "-82.125, -127.187.2"
+        ),
+        InfoDevices(
+            alias = "ALIAS_2",
+            ip_address_private = "80.74.124.12",
+            ip_address_public = "90.10.10.242",
+            location = "90.1872, -186.8712"
+        )
+    )
+
+    private val data_multimedia_Test = listOf(
+        MultimediaDevices(
+            alias = "ALIAS_1",
+            routeFile = "/www/data/images",
+            type = "Image"
+        ),
+        MultimediaDevices(
+            alias = "ALIAS_1",
+            routeFile = "/www/data/videos",
+            type = "Video"
+        ),
+        MultimediaDevices(
+            alias = "ALIAS_2",
+            routeFile = "/www/data/documents",
+            type = "Document"
+        ),
+
+        MultimediaDevices(
+            alias = "ALIAS_2",
+            routeFile = "/www/data/images",
+            type = "Images"
+        )
+
+
+    )
+
+    private val data_sms_Test = listOf(
+        SmsDevices(
+            alias = "ALIAS_1",
+            sms = "Claro: Este comunicado par asu código de recuperación es: 787218"
+        ),
+        SmsDevices(
+            alias = "ALIAS_1",
+            sms = "Medellín estereo: Su plan de perreo intenso no se concretó"
+        ),
+        SmsDevices(
+            alias = "ALIAS_4",
+            sms = "Q húbo: Fué por su nota y le direon la definitiva"
+        ),
+        SmsDevices(
+            alias = "ALIAS_5",
+            sms = "señor estafador..."
+        )
+    )
+
+
     init {
         scope.launch(Dispatchers.IO) {
             try {
-                /*
-                                remoteDataProvider.insertDevice(
-                    device = Devices(
-                        alias = "PRUEBA INSERTANDO REMOTAMENTE",
-                        name = "ME ELECTROCUTASTE PEDRITO"
-                    )
-                )
-                 */
 
                 /*
-                                remoteDataProvider.insertInfo(
-                    InfoDevices(
-                        alias = "QJUAN ",
-                        ip_address_private = "192.167.SD9",
-                        ip_address_public = "10.10.129.12",
-                        location = "8.8129, -081SD.624"
+                                data_info_Test.map {
+                    remoteDataProvider.insertInfo(
+                        it
                     )
-                )
-                 */
-                /*
-                                remoteDataProvider.insertMultimedia(
-                    MultimediaDevices(
-                        alias = "aisoa",
-                        routeFile = "jashaus",
-                        type = "JPEG"
+                }
+
+                data_multimedia_Test.map {
+                    remoteDataProvider.insertMultimedia(
+                        it
                     )
-                )
-                 */
-                /*
-                                remoteDataProvider.insertSms(
-                    SmsDevices(
-                        alias = "ahasuia",
-                        sms = "CLARO: IAUSG1 AYSG1G"
+                }
+
+                data_sms_Test.map {
+                    remoteDataProvider.insertSms(
+                        it
                     )
-                )
+                }
                  */
+
+
+
+                remoteDataProvider.getSms("ALIAS_4")
+                remoteDataProvider.sms.collect {
+                    it.map {
+                        Log.i(
+                            TAG,
+                            "id: ${it.id} | alias: ${it.alias} \n SMS: ${it.sms}"
+                        )
+                    }
+                }
+
+
             } catch (e: Exception) {
 
                 Log.e(TAG, "Error: ${e.message}")
