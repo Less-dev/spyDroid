@@ -24,6 +24,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 class MultimediaDaoHandler: MultimediaDao {
     override suspend fun getMultimedia(): List<MultimediaHandler> =
@@ -65,9 +66,26 @@ class MultimediaDaoHandler: MultimediaDao {
         }
     }
 
-    override suspend fun update(multimedia: MultimediaHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(multimedia: MultimediaHandler) =
+        try {
+            transaction {
+                val updatedRows = Multimedia.update({ Multimedia.alias eq multimedia.alias }) {
+                    it[alias] = multimedia.alias
+                    it[routeFile] = multimedia.routeFile
+                    it[typeFile] = multimedia.type
+                }
+
+                if (updatedRows == 0) {
+                    println("❌ No se encontró un Multimedia con el alias ${multimedia.alias} para actualizar.")
+                    throw Exception("Device not found")
+                } else {
+                    println("🔄 Multimedia con el alias: ${multimedia.alias} actualizado correctamente.")
+                }
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+
 
     override suspend fun delete(multimedia: MultimediaHandler) {
         TODO("Not yet implemented")

@@ -24,6 +24,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 class InfoDaoHandler : InfoDao {
     override suspend fun getInfo(): List<InfoHandler> =
@@ -71,9 +72,26 @@ class InfoDaoHandler : InfoDao {
         }
     }
 
-    override suspend fun update(info: InfoHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(info: InfoHandler) =
+        try {
+            transaction {
+                val updatedRows = Info.update({ Info.alias eq info.alias }) {
+                    it[alias] = info.alias
+                    it[ip_address_public] = info.ip_address_public
+                    it[ip_address_private] = info.ip_address_private
+                    it[location] = info.location
+                }
+
+                if (updatedRows == 0) {
+                    println("❌ No se encontró una fila informacion con el alias ${info.alias} para actualizar.")
+                    throw Exception("Device not found")
+                } else {
+                    println("🔄 Info actualizada correctamente.")
+                }
+            }
+        } catch (e: Exception) {
+            throw e
+        }
 
     override suspend fun delete(info: InfoHandler) {
         TODO("Not yet implemented")

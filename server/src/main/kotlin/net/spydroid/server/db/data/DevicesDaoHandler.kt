@@ -24,6 +24,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 class DevicesDaoHandler : DevicesDao {
     override suspend fun getALlDevices(): List<DeviceHandler> =
@@ -66,9 +67,25 @@ class DevicesDaoHandler : DevicesDao {
         }
     }
 
-    override suspend fun update(device: DeviceHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(device: DeviceHandler) =
+        try {
+            transaction {
+                val updatedRows = Devices.update({ Devices.alias eq device.alias }) {
+                    it[name] = device.name
+                    it[alias] = device.alias
+                }
+
+                if (updatedRows == 0) {
+                    println("❌ No se encontró un dispositivo con ID ${device.id} para actualizar.")
+                    throw Exception("Device not found")
+                } else {
+                    println("🔄 Dispositivo ${device.name} actualizado correctamente.")
+                }
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+
 
     override suspend fun delete(device: DeviceHandler) {
         TODO("Not yet implemented")
