@@ -64,7 +64,7 @@ interface ApiService {
     fun getSpecificInfo(
         @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
         @Query(PARAMS.SEARCH) alias: String
-    ): Call<List<Devices>>
+    ): Call<List<InfoDevices>>
 
     @GET(Routes.MULTIMEDIA)
     fun getMultimedia(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<MultimediaDevices>>
@@ -73,7 +73,7 @@ interface ApiService {
     fun getSpecificMultimedia(
         @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
         @Query(PARAMS.SEARCH) alias: String
-    ): Call<List<Devices>>
+    ): Call<List<MultimediaDevices>>
 
     @GET(Routes.SMS)
     fun getSms(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<SmsDevices>>
@@ -82,7 +82,7 @@ interface ApiService {
     fun getSpecificSms(
         @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
         @Query(PARAMS.SEARCH) alias: String
-    ): Call<List<Devices>>
+    ): Call<List<SmsDevices>>
 
     // POSTS
     @FormUrlEncoded

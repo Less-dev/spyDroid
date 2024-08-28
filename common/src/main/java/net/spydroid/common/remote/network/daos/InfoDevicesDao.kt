@@ -21,6 +21,7 @@ import net.spydroid.common.remote.network.models.InfoDevices
 
 interface InfoDevicesDao {
     suspend fun getAllInfo(): List<InfoDevices>
+    suspend fun getSpecificInfo(alias: String): List<InfoDevices>
     suspend fun insertInfo(info: InfoDevices)
     suspend fun deleteInfo(info: InfoDevices)
     suspend fun updateInfo(info: InfoDevices)

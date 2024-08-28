@@ -29,6 +29,9 @@ class InfoRepositoryHandler: InfoRepository, KoinComponent {
     override suspend fun getAllInfo(): List<InfoDevices> =
         infoDevicesDao.getAllInfo()
 
+    override suspend fun getInfo(alias: String): List<InfoDevices> =
+        infoDevicesDao.getSpecificInfo(alias)
+
     override suspend fun insertInfo(info: InfoDevices) =
         infoDevicesDao.insertInfo(info)
 

@@ -29,6 +29,9 @@ class MultimediaRepositoryHandler: MultimediaRepository, KoinComponent {
     override suspend fun getAllMultimedia(): List<MultimediaDevices> =
         multimediaDevicesDao.getAllMultimedia()
 
+    override suspend fun getMultimedia(alias: String): List<MultimediaDevices> =
+        multimediaDevicesDao.getSpecificMultimedia(alias)
+
     override suspend fun insertMultimedia(multimedia: MultimediaDevices) =
         multimediaDevicesDao.insertMultimedia(multimedia)
 

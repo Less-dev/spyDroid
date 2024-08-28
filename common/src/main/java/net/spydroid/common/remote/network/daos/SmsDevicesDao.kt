@@ -21,6 +21,7 @@ import net.spydroid.common.remote.network.models.SmsDevices
 
 interface SmsDevicesDao {
     suspend fun getAllSms(): List<SmsDevices>
+    suspend fun getSpecificSms(alias: String): List<SmsDevices>
     suspend fun insertSms(sms: SmsDevices)
     suspend fun deleteSms(sms: SmsDevices)
     suspend fun updateSms(smsDevices: SmsDevices)

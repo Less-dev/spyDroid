@@ -41,6 +41,22 @@ class MultimediaDevicesDaoHandler: MultimediaDevicesDao {
             emptyList()
         }
 
+    override suspend fun getSpecificMultimedia(alias: String): List<MultimediaDevices> =
+        try {
+            val response = apiService.getSpecificMultimedia("iygad7618wg8y1f7fgvas71f671", alias).execute()
+            if (response.isSuccessful) {
+                response.body() ?: emptyList()
+            } else {
+                //Error
+                //Log.i(TAG, "Error: ${response.code()}")
+                emptyList()
+            }
+        } catch (e: Exception) {
+            // Fail
+            //Log.e(TAG, "Failure: ${e.message}")
+            emptyList()
+        }
+
     override suspend fun insertMultimedia(multimedia: MultimediaDevices) {
         try {
             val response = apiService.createMultimedia(

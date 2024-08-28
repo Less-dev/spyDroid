@@ -60,6 +60,14 @@ class RemoteDataProvider private constructor(
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
 
+    private val _info = MutableStateFlow(mutableListOf<InfoDevices>())
+    val info: StateFlow<List<InfoDevices>> = _info
+
+    private val _multimedia = MutableStateFlow(mutableListOf<MultimediaDevices>())
+    val multimedia: StateFlow<List<MultimediaDevices>> = _multimedia
+
+    private val _sms = MutableStateFlow(mutableListOf<SmsDevices>())
+    val sms: StateFlow<List<SmsDevices>> = _sms
 
     private fun setDevice(device: Devices) =
         scope.launch {
@@ -88,6 +96,63 @@ class RemoteDataProvider private constructor(
             }
         }
 
+    fun getAllInfo() =
+        scope.launch {
+            infoRepository.getAllInfo().map {
+                val updateLIst = _info.value.toMutableList().apply { add(it) }
+                _info.value = updateLIst
+            }
+        }
+
+    fun getInfo(alias: String) =
+        scope.launch {
+            infoRepository.getInfo(alias).map {
+                val updateLIst = _info.value.toMutableList().apply { add(it) }
+                _info.value = updateLIst
+            }
+        }
+
+    fun getAllMultimedia() =
+        scope.launch {
+            multimediaRepository.getAllMultimedia().map {
+                val updateList = _multimedia.value.toMutableList().apply {
+                    add(it)
+                }
+                _multimedia.value = updateList
+            }
+        }
+
+    fun getMultimedia(alias: String) =
+        scope.launch {
+            multimediaRepository.getMultimedia(alias).map {
+                val updateList = _multimedia.value.toMutableList().apply {
+                    add(it)
+                }
+                _multimedia.value = updateList
+            }
+        }
+
+    fun getAllSms() =
+        scope.launch {
+            smsRepository.getAllSms().map {
+                val updateList = _sms.value.toMutableList().apply {
+                    add(it)
+                }
+                _sms.value = updateList
+            }
+        }
+
+    fun getSms(alias: String) =
+        scope.launch {
+            smsRepository.getSms(alias).map {
+                val updateList = _sms.value.toMutableList().apply {
+                    add(it)
+                }
+                _sms.value = updateList
+            }
+        }
+
+
     fun insertDevice(device: Devices) =
         scope.launch {
             devicesRepository.insertDevice(device)
@@ -107,7 +172,6 @@ class RemoteDataProvider private constructor(
         scope.launch {
             smsRepository.insertSms(sms)
         }
-
 
 
     companion object {
