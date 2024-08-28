@@ -325,6 +325,14 @@ private fun Route.sms(validTokens: Set<String>) {
 
     val smsRepository: SmsRepository by inject()
 
+    val SMS_PARAMS = object {
+        val SMS = "sms"
+    }
+
+    val SMS_MESSAGES = object {
+        val SMS = "Missing Sms"
+    }
+
     get(Routes.SMS) {
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
         val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
@@ -341,14 +349,6 @@ private fun Route.sms(validTokens: Set<String>) {
 
     post(Routes.SMS) {
         val params = call.receiveParameters()
-
-        val SMS_PARAMS = object {
-            val SMS = "sms"
-        }
-
-        val SMS_MESSAGES = object {
-            val SMS = "Missing Sms"
-        }
 
         val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@post call.respond(
             HttpStatusCode.BadRequest,
@@ -371,6 +371,46 @@ private fun Route.sms(validTokens: Set<String>) {
                         sms = sms
                     )
                 )
+            }
+            call.respond(
+                HttpStatusCode.OK,
+                SUCCESSFULL_POST
+            )
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
+        }
+    }
+
+    put("${Routes.SMS}/{${PARAMS.ALIAS}}") {
+        val params = call.receiveParameters()
+
+        val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ACCESS_TOKEN
+        )
+
+        val alias = call.parameters[PARAMS.ALIAS] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ALIAS
+        )
+
+        val sms = params[SMS_PARAMS.SMS] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            SMS_MESSAGES.SMS
+        )
+
+        if (accessToken in validTokens) {
+            try {
+                smsRepository.update(
+                    SmsHandler(
+                        alias = alias,
+                        sms = sms
+                    )
+                )
+                call.respond(HttpStatusCode.OK, "Sms update Successfull")
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.NotFound, "Sms with alias $alias is not found")
+                call.respond(HttpStatusCode.InternalServerError, "Failed to update sms: ${e.message}")
             }
             call.respond(
                 HttpStatusCode.OK,

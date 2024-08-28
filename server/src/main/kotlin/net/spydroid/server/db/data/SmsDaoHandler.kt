@@ -53,8 +53,8 @@ class SmsDaoHandler : SmsDao {
         try {
             transaction {
                 Sms.insert {
-                    it[Sms.sms] = sms.sms
                     it[Sms.alias] = sms.alias
+                    it[Sms.sms] = sms.sms
                 }
             }
         }catch (e: Exception) {
