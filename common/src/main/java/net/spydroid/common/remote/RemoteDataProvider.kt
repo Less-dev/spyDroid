@@ -80,7 +80,12 @@ class RemoteDataProvider private constructor(
 
     fun getDevice(alias: String) =
         scope.launch {
-            //devicesRepository.getDevice(alias)
+            devicesRepository.getDevice(alias).map {
+                val updateList = _devices.value.toMutableList().apply {
+                    add(it)
+                }
+                _devices.value = updateList
+            }
         }
 
     fun insertDevice(device: Devices) =

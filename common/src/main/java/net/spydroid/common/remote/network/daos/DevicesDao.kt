@@ -21,6 +21,7 @@ import net.spydroid.common.remote.network.models.Devices
 
 interface DevicesDao {
     suspend fun getAllDevices() : List<Devices>
+    suspend fun getSpecificDevice(alias: String): List<Devices>
     suspend fun insertDevice(device: Devices)
     suspend fun deleteDevice(device: Devices)
     suspend fun updateDevice(device: Devices)

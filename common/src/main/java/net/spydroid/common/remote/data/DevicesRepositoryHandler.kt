@@ -30,6 +30,9 @@ class DevicesRepositoryHandler: DevicesRepository, KoinComponent {
     override suspend fun getAllDevices(): List<Devices> =
         devicesDao.getAllDevices()
 
+    override suspend fun getDevice(alias: String): List<Devices>  =
+        devicesDao.getSpecificDevice(alias)
+
     override suspend fun insertDevice(device: Devices) =
         devicesDao.insertDevice(device)
 

@@ -47,17 +47,39 @@ class LocalDataProvider private constructor(
     val scope = CoroutineScope(Dispatchers.IO)
     private val TAG = "PRUEBA_KTOR"
 
+    private val dataTest = listOf (
+        Devices(
+            alias = "ALIAS_1",
+            name = "PEDRO CAMILO SANCHES CARDOBAL"
+        ),
+
+        Devices(
+            alias = "ALIAS_3",
+            name = "JUANA MARIA"
+        ),
+
+        Devices(
+            alias = "ALIAS_3",
+            name = "GOMEZ"
+        ),
+
+        Devices(
+            alias = "ALIAS_4",
+            name = "EGNACIO"
+        )
+    )
+
     init {
         scope.launch(Dispatchers.IO) {
             try {
                 /*
-                                remoteDataProvider.insertDevice(
-                    device = Devices(
-                        alias = "PRUEBA INSERTANDO REMOTAMENTE",
-                        name = "ME ELECTROCUTASTE PEDRITO"
+                                dataTest.map {
+                    remoteDataProvider.insertDevice(
+                        it
                     )
-                )
+                }
                  */
+
 
                 /*
                                 remoteDataProvider.insertInfo(
@@ -86,6 +108,14 @@ class LocalDataProvider private constructor(
                     )
                 )
                  */
+
+                remoteDataProvider.getDevice("ALIAS_1")
+                remoteDataProvider.devices.collect{
+                    it.map {
+                        Log.i(TAG, "id: ${it.id} | alias: ${it.alias} \n name: ${it.name} |")
+                    }
+                }
+
             } catch (e: Exception) {
 
                 Log.e(TAG, "Error: ${e.message}")

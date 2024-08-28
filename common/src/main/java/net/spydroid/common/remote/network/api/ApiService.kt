@@ -39,6 +39,7 @@ private object Routes {
 private object PARAMS {
     const val ACCESS_TOKEN = "access_token"
     const val ALIAS = "alias"
+    const val SEARCH = "search"
 }
 
 
@@ -48,13 +49,40 @@ interface ApiService {
     @GET(Routes.DEVICES)
     fun getDevices(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<Devices>>
 
+
+    @GET(Routes.DEVICES)
+    fun getSpecificDevices(
+        @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Query(PARAMS.SEARCH) alias: String
+    ): Call<List<Devices>>
+
     @GET(Routes.INFO)
     fun getInfo(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<InfoDevices>>
+
+
+    @GET(Routes.INFO)
+    fun getSpecificInfo(
+        @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Query(PARAMS.SEARCH) alias: String
+    ): Call<List<Devices>>
+
     @GET(Routes.MULTIMEDIA)
     fun getMultimedia(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<MultimediaDevices>>
+
+    @GET(Routes.MULTIMEDIA)
+    fun getSpecificMultimedia(
+        @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Query(PARAMS.SEARCH) alias: String
+    ): Call<List<Devices>>
+
     @GET(Routes.SMS)
     fun getSms(@Query(PARAMS.ACCESS_TOKEN) accessToken: String): Call<List<SmsDevices>>
 
+    @GET(Routes.SMS)
+    fun getSpecificSms(
+        @Query(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Query(PARAMS.SEARCH) alias: String
+    ): Call<List<Devices>>
 
     // POSTS
     @FormUrlEncoded
