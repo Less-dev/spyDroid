@@ -24,6 +24,7 @@ import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.select
 import org.jetbrains.exposed.sql.selectAll
 import org.jetbrains.exposed.sql.transactions.transaction
+import org.jetbrains.exposed.sql.update
 
 class SmsDaoHandler : SmsDao {
     override suspend fun getSms(): List<SmsHandler> =
@@ -62,9 +63,24 @@ class SmsDaoHandler : SmsDao {
         }
     }
 
-    override suspend fun update(sms: SmsHandler) {
-        TODO("Not yet implemented")
-    }
+    override suspend fun update(sms: SmsHandler) =
+        try {
+            transaction {
+                val updatedRows = Sms.update({ Sms.alias eq sms.alias }) {
+                    it[Sms.alias] = sms.alias
+                    it[Sms.sms] = sms.sms
+                }
+
+                if (updatedRows == 0) {
+                    println("❌ No se encontró un mensaje con el alias ${sms.alias} para actualizar.")
+                    throw Exception("Device not found")
+                } else {
+                    println("🔄 Mensaje con el alias: ${sms.alias} actualizado correctamente.")
+                }
+            }
+        } catch (e: Exception) {
+            throw e
+        }
 
     override suspend fun delete(sms: SmsHandler) {
         TODO("Not yet implemented")

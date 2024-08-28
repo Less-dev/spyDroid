@@ -67,7 +67,7 @@ class DevicesDaoHandler : DevicesDao {
         }
     }
 
-    override suspend fun update(device: DeviceHandler) {
+    override suspend fun update(device: DeviceHandler) =
         try {
             transaction {
                 val updatedRows = Devices.update({ Devices.alias eq device.alias }) {
@@ -85,7 +85,7 @@ class DevicesDaoHandler : DevicesDao {
         } catch (e: Exception) {
             throw e
         }
-    }
+
 
     override suspend fun delete(device: DeviceHandler) {
         TODO("Not yet implemented")

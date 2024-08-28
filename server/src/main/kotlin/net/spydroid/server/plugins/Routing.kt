@@ -190,6 +190,18 @@ private fun Route.info(validTokens: Set<String>) {
 
     val infoRepository: InfoRepository by inject()
 
+    val INFO_PARAMAS = object {
+        val IP_PUBLIC = "ip_public"
+        val IP_PRIVATE = "ip_private"
+        val LOCATION = "location"
+    }
+
+    val INFO_MESSAGES = object {
+        val IP_PUBLIC = "Missing Public Ip Address "
+        val IP_PRIVATE = "Missing Private Ip Address"
+        val LOCATION = "Missing Location"
+    }
+
     get(Routes.INFO) {
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
         val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
@@ -207,18 +219,6 @@ private fun Route.info(validTokens: Set<String>) {
 
     post(Routes.INFO) {
         val params = call.receiveParameters()
-
-        val INFO_PARAMAS = object {
-            val IP_PUBLIC = "ip_public"
-            val IP_PRIVATE = "ip_private"
-            val LOCATION = "location"
-        }
-
-        val INFO_MESSAGES = object {
-            val IP_PUBLIC = "Missing Public Ip Address "
-            val IP_PRIVATE = "Missing Private Ip Address"
-            val LOCATION = "Missing Location"
-        }
 
         val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@post call.respond(
             HttpStatusCode.BadRequest,
@@ -254,6 +254,63 @@ private fun Route.info(validTokens: Set<String>) {
                     )
                 )
             }
+            call.respond(
+                HttpStatusCode.OK,
+                SUCCESSFULL_POST
+            )
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
+        }
+    }
+
+    put("${Routes.INFO}/{${PARAMS.ALIAS}}") {
+        val params = call.receiveParameters()
+
+        val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ACCESS_TOKEN
+        )
+
+        val alias = call.parameters[PARAMS.ALIAS] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ALIAS
+        )
+
+        val ip_address_public = params[INFO_PARAMAS.IP_PUBLIC] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.IP_PUBLIC
+        )
+
+        val ip_address_private = params[INFO_PARAMAS.IP_PRIVATE] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.IP_PRIVATE
+        )
+
+        val location = params[INFO_PARAMAS.LOCATION] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.LOCATION
+        )
+
+        if (accessToken in validTokens) {
+            try {
+                infoRepository.update(
+                    InfoHandler(
+                        alias = alias,
+                        ip_address_public = ip_address_public,
+                        ip_address_private = ip_address_private,
+                        location = location
+                    )
+                )
+                call.respond(HttpStatusCode.OK, "Info updated successfully")
+
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.NotFound, "No info found with alias $alias")
+                call.respond(
+                    HttpStatusCode.InternalServerError,
+                    "Failed to update info: ${e.message}"
+                )
+            }
+
             call.respond(
                 HttpStatusCode.OK,
                 SUCCESSFULL_POST
