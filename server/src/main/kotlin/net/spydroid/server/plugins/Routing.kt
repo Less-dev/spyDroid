@@ -386,6 +386,16 @@ private fun Route.multimedia(validTokens: Set<String>) {
 
     val multimediaRepository: MultimediaRepository by inject()
 
+    val MULTI_PARAMS = object {
+        val ROUTE_FILE = "route_file"
+        val TYPE = "type"
+    }
+
+    val MULTI_MESSAGES = object {
+        val ROUTE_FILE = "Missing route file"
+        val TYPE = "Missing type file"
+    }
+
     get(Routes.MULTIMEDIA) {
         val accessToken = call.request.queryParameters[PARAMS.ACCESS_TOKEN]
         val searchParam = call.parameters[PARAMS.SEARCH] ?: PARAMS.ALL
@@ -402,16 +412,6 @@ private fun Route.multimedia(validTokens: Set<String>) {
 
     post(Routes.MULTIMEDIA) {
         val params = call.receiveParameters()
-
-        val MULTI_PARAMS = object {
-            val ROUTE_FILE = "route_file"
-            val TYPE = "type"
-        }
-
-        val MULTI_MESSAGES = object {
-            val ROUTE_FILE = "Missing route file"
-            val TYPE = "Missing type file"
-        }
 
         val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@post call.respond(
             HttpStatusCode.BadRequest,
@@ -445,6 +445,51 @@ private fun Route.multimedia(validTokens: Set<String>) {
                 HttpStatusCode.OK,
                 SUCCESSFULL_POST
             )
+        } else {
+            call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
+        }
+    }
+
+    put("${Routes.MULTIMEDIA}/{${PARAMS.ALIAS}}") {
+        val params = call.receiveParameters()
+
+        val accessToken = params[PARAMS.ACCESS_TOKEN] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ACCESS_TOKEN
+        )
+
+        val alias = call.parameters[PARAMS.ALIAS] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            BAD_REQUESTS_RESPONSES.ALIAS
+        )
+
+        val routeFile = params[MULTI_PARAMS.ROUTE_FILE] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            MULTI_MESSAGES.ROUTE_FILE
+        )
+
+        val type = params[MULTI_PARAMS.TYPE] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            MULTI_MESSAGES.TYPE
+        )
+
+        if (accessToken in validTokens) {
+            try {
+                multimediaRepository.update(
+                    MultimediaHandler(
+                        alias = alias,
+                        routeFile = routeFile,
+                        type = type
+                    )
+                )
+                call.respond(HttpStatusCode.OK, "Multimedia updated successfully")
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.NotFound, "No Multimedia found with alias $alias")
+                call.respond(
+                    HttpStatusCode.InternalServerError,
+                    "Failed to update Multimeida: ${e.message}"
+                )
+            }
         } else {
             call.respond(HttpStatusCode.Unauthorized, BAD_REQUESTS_RESPONSES.INVALID_ACCESS_TOKEN)
         }
