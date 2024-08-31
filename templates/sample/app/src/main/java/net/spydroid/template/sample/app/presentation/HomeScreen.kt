@@ -19,7 +19,9 @@ package net.spydroid.template.sample.app.presentation
 
 import android.net.Uri
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
@@ -27,6 +29,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -57,8 +61,18 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         )
     }
 
-    val localDataProvider = LocalDataProvider.current(context)
-    val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
+    //val localDataProvider = LocalDataProvider.current(context)
+    //val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
+
+    Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+        Button(onClick = { managerFeature.vnc().start() }) {
+            Text(text = "Start server")
+        }
+
+        Button(onClick = { managerFeature.vnc().stop()}) {
+            Text(text = "Stop vnc")
+        }
+    }
 
     /*
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
