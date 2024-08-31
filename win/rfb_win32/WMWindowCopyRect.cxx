@@ -1,0 +1,71 @@
+/* Copyright (C) 2002-2005 RealVNC Ltd.  All Rights Reserved.
+ * 
+ * This is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This software is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this software; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307,
+ * USA.
+ */
+
+// -=- WMCopyRect.cxx
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <rfb_win32/WMWindowCopyRect.h>
+#include <rfb/LogWriter.h>
+#include <windows.h>
+
+using namespace rfb;
+using namespace rfb::win32;
+
+static LogWriter vlog("WMCopyRect");
+
+// -=- WMHooks class
+
+rfb::win32::WMCopyRect::WMCopyRect() : ut(nullptr), fg_window(nullptr) {
+}
+
+bool
+rfb::win32::WMCopyRect::processEvent() {
+  // See if the foreground window has moved
+  HWND window = GetForegroundWindow();
+  if (window) {
+    RECT wrect;
+    if (IsWindow(window) && IsWindowVisible(window) && GetWindowRect(window, &wrect)) {
+      Rect winrect(wrect.left, wrect.top, wrect.right, wrect.bottom);
+      if (fg_window == window) {
+        if (fg_window_rect.tl != winrect.tl && ut) {
+          // Window has moved - mark both the previous and new position as changed
+          // (we can't use add_copied() here because we aren't that properly synced
+          // with the actual state of the framebuffer)
+          ut->add_changed(Region(winrect));
+          ut->add_changed(Region(fg_window_rect));
+        }
+      }
+      fg_window = window;
+      fg_window_rect = winrect;
+    } else {
+      fg_window = nullptr;
+    }
+  } else {
+    fg_window = nullptr;
+  }
+  return false;
+}
+
+bool
+rfb::win32::WMCopyRect::setUpdateTracker(UpdateTracker* ut_) {
+  ut = ut_;
+  return true;
+}

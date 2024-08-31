@@ -1,0 +1,10 @@
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+  message(FATAL_ERROR "cmake must be invoked with the top level directory")
+endif()
+
+add_subdirectory(tx)
+add_subdirectory(common)
+add_subdirectory(vncconfig)
+add_subdirectory(vncpasswd)
+add_subdirectory(vncserver)
+add_subdirectory(x0vncserver)

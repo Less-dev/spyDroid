@@ -1,0 +1,62 @@
+#!/bin/sh
+
+set -u
+set -e
+trap onexit INT
+trap onexit TERM
+trap onexit EXIT
+
+TMPDIR=
+
+onexit()
+{
+	if [ ! "$TMPDIR" = "" ]; then
+		rm -rf $TMPDIR
+	fi
+}
+
+usage()
+{
+	echo "$0"
+	exit 1
+}
+
+UNIVERSAL=0
+
+PACKAGE_NAME=TigerVNC
+VERSION=@VERSION@
+BUILD=@BUILD@
+SRCDIR=@CMAKE_SOURCE_DIR@
+BINDIR=@CMAKE_BINARY_DIR@
+
+cd $BINDIR
+
+if [ -f $PACKAGE_NAME.dmg ]; then
+	rm -f $PACKAGE_NAME.dmg
+fi
+
+umask 022
+TMPDIR=`mktemp -d /tmp/$PACKAGE_NAME-build.XXXXXX`
+APPROOT="$TMPDIR/dmg/TigerVNC Viewer $VERSION.app"
+mkdir -p "$APPROOT/Contents/MacOS"
+mkdir -p "$APPROOT/Contents/Resources"
+
+install -m 755 vncviewer/vncviewer "$APPROOT/Contents/MacOS/TigerVNC Viewer"
+install -m 644 $SRCDIR/media/icons/tigervnc.icns "$APPROOT/Contents/Resources/"
+install -m 644 release/Info.plist "$APPROOT/Contents/"
+
+for lang in `cat "$SRCDIR/po/LINGUAS"`; do
+	mkdir -p "$APPROOT/Contents/Resources/locale/$lang/LC_MESSAGES"
+	install -m 644 po/$lang.mo \
+		"$APPROOT/Contents/Resources/locale/$lang/LC_MESSAGES/tigervnc.mo"
+done
+
+install -m 644 $SRCDIR/LICENCE.TXT $TMPDIR/dmg/
+install -m 644 $SRCDIR/README.rst $TMPDIR/dmg/
+
+hdiutil create -fs HFS+ -volname $PACKAGE_NAME-$VERSION \
+	-srcfolder "$TMPDIR/dmg" \
+	$TMPDIR/$PACKAGE_NAME-$VERSION.dmg 
+cp $TMPDIR/$PACKAGE_NAME-$VERSION.dmg . 
+
+exit

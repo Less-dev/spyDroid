@@ -1,0 +1,1097 @@
+# Mesajele în limba română pentru pachetul tigervnc.
+# Copyright © 2022, 2024 the TigerVNC Team (msgids)
+# This file is distributed under the same license as the tigervnc package.
+# Copyright © 2022, 2024 TigerVNC Team and many others (see README.rst).
+#
+# Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2022, 2024.
+#
+# Cronologia traducerii fișierului „tigervnc”:
+# Traducerea inițială, făcută de R-GC, pentru versiunea tigervnc 1.11.90.
+# Actualizare a traducerii pentru versiunea 1.12.90, făcută de R-GC, dec-2022.
+# Actualizare a traducerii pentru versiunea 1.13.90, făcută de R-GC, iun-2024.
+# Actualizare a traducerii pentru versiunea Y, făcută de X, Z(anul).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: tigervnc 1.13.90\n"
+"Report-Msgid-Bugs-To: tigervnc-devel@googlegroups.com\n"
+"POT-Creation-Date: 2024-06-20 15:01+0200\n"
+"PO-Revision-Date: 2024-06-21 01:03+0200\n"
+"Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>\n"
+"Language-Team: Romanian <translation-team-ro@lists.sourceforge.net>\n"
+"Language: ro\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);\n"
+"X-Bugs: Report translation errors to the Language-Team address.\n"
+"X-Generator: Poedit 3.4.3\n"
+
+#: vncviewer/CConn.cxx:99
+#, c-format
+msgid "Connected to socket %s"
+msgstr "Conectat la soclul %s"
+
+#: vncviewer/CConn.cxx:106
+#, c-format
+msgid "Connected to host %s port %d"
+msgstr "Conectat la gazda %s portul %d"
+
+#: vncviewer/CConn.cxx:111
+#, c-format
+msgid ""
+"Failed to connect to \"%s\":\n"
+"\n"
+"%s"
+msgstr ""
+"Nu s-a putut conecta la „%s”:\n"
+"\n"
+"%s"
+
+# R-GC, scrie:
+# după revizarea fișierului, DȘ, spune:
+# „→ aici ar trebui lăsat „desktop”, din păcate nu avem termen mai bun,
+# iar traducerea curentă sună puțin hidos.
+# → caută și după celelalte apariții din cadrul fișierului”
+# ===
+# desktop = birou, masă de lucru, banc de lucru, pupitru
+# apare în dicționar eng. → rom.; și de mai
+# bine de 70 - 80 ani în traducerile făcute
+#  unor cărți, reviste și filme de renume; mai
+# nou, în traducerile de software, unde
+# traducătorii au înțeles că «desktop»,
+# poate să-li se pară „cool”, unora, dar, pînă
+# la urmă, rămîne să fie biroul nostru de
+# toate zilele.
+# Reamintesc faptul, binecunoscut,
+# dealtfel, că toate lucrurile din informatică,
+# au avut(au) ca inspirație, lucruri, activități
+# cotidiene din „lumea reală”; de exemplu:
+# fișier, arhivă, dosar, criptare/descriptare
+# comprimare/descomprimare, și multe
+# altele...
+# Deci, nu văd pentru ce trebuie ca
+# într-un software cu mesajele traduse, să
+# apară aberații de tipul: Desktop Virtual
+# din englezescul, Virtual Desktop;
+# Desktop (de) Gnome/KDE/LXDE/LXQt, etc
+# și nici bineînțeles „corespondentul”
+# românesc de, Remote Desktop =
+# Desktop la distanță
+#: vncviewer/CConn.cxx:155
+#, c-format
+msgid "Desktop name: %.80s"
+msgstr "Numele biroului: %.80s"
+
+#: vncviewer/CConn.cxx:160
+#, c-format
+msgid "Host: %.80s port: %d"
+msgstr "Gazdă: %.80s port: %d"
+
+#: vncviewer/CConn.cxx:165
+#, c-format
+msgid "Size: %d x %d"
+msgstr "Dimensiune: %d x %d"
+
+#: vncviewer/CConn.cxx:173
+#, c-format
+msgid "Pixel format: %s"
+msgstr "Format pixel: %s"
+
+#: vncviewer/CConn.cxx:180
+#, c-format
+msgid "(server default %s)"
+msgstr "(server implicit %s)"
+
+#: vncviewer/CConn.cxx:185
+#, c-format
+msgid "Requested encoding: %s"
+msgstr "Codificarea solicitată: %s"
+
+#: vncviewer/CConn.cxx:190
+#, c-format
+msgid "Last used encoding: %s"
+msgstr "Ultima codificare utilizată: %s"
+
+# R-GC, scrie:
+# după revizarea fișierului, DȘ, spune:
+# „→ aici parcă aș ajusta la „Estimarea vitezei
+# liniei”(legăturii/circuitului/firului)”
+# ===
+# Ok, sugestie aplicată
+#: vncviewer/CConn.cxx:195
+#, c-format
+msgid "Line speed estimate: %d kbit/s"
+msgstr "Viteza estimată a conexiunii: %d kbit/s"
+
+#: vncviewer/CConn.cxx:200
+#, c-format
+msgid "Protocol version: %d.%d"
+msgstr "Versiunea protocolului: %d.%d"
+
+#: vncviewer/CConn.cxx:205
+#, c-format
+msgid "Security method: %s"
+msgstr "Metoda de securitate: %s"
+
+#: vncviewer/CConn.cxx:266 vncviewer/CConn.cxx:268
+msgid "The connection was dropped by the server before the session could be established."
+msgstr "Conexiunea a fost întreruptă de server înainte ca sesiunea să poată fi stabilită."
+
+#: vncviewer/CConn.cxx:326
+#, c-format
+msgid "SetDesktopSize failed: %d"
+msgstr "Funcția SetDesktopSize() a eșuat: %d"
+
+#: vncviewer/CConn.cxx:399
+msgid "Invalid SetColourMapEntries from server!"
+msgstr "Valoare SetColourMapEntries nevalidă de la server!"
+
+# R-GC, scrie:
+# am tradus acest mesaj, și următoarele două mesaje, în baza comentariului făcut
+# de autori în codul sursă:
+# „autoSelectFormatAndEncoding() chooses the format and encoding appropriate to the connection speed:
+# //
+# -   First we wait for at least one second of bandwidth measurement.
+# //
+# -   Above 16Mbps (i.e. LAN), we choose the second highest JPEG quality, which should be perceptually lossless.
+# //
+# -   If the bandwidth is below that, we choose a more lossy JPEG quality.
+# //
+# //   If the bandwidth drops below 256 Kbps, we switch to palette mode.
+# //
+# Note: The system here is fairly arbitrary and should be replaced  with something more intelligent at the server end.”
+#: vncviewer/CConn.cxx:507
+#, c-format
+msgid "Throughput %d kbit/s - changing to quality %d"
+msgstr "Lățimea de bandă este de %d kbit/s - se trece la calitatea %d de JPEG"
+
+#: vncviewer/CConn.cxx:529
+#, c-format
+msgid "Throughput %d kbit/s - full color is now enabled"
+msgstr "Lățimea de bandă este de %d kbit/s - nivelul de profunditate al culorii → «deplin», este acum activat acum"
+
+#: vncviewer/CConn.cxx:532
+#, c-format
+msgid "Throughput %d kbit/s - full color is now disabled"
+msgstr "Lățimea de bandă este de %d kbit/s - nivelul de profunditate al culorii → «deplin», este dezactivat acum"
+
+#: vncviewer/CConn.cxx:558
+#, c-format
+msgid "Using pixel format %s"
+msgstr "Se utilizează formatul de pixel %s"
+
+#: vncviewer/DesktopWindow.cxx:146
+msgid "Invalid geometry specified!"
+msgstr "Geometria specificată nu este validă!"
+
+#: vncviewer/DesktopWindow.cxx:167
+msgid "Reducing window size to fit on current monitor"
+msgstr "Se reduce dimensiunea ferestrei pentru a se potrivi pe monitorul actual"
+
+#: vncviewer/DesktopWindow.cxx:648
+msgid "Adjusting window size to avoid accidental full-screen request"
+msgstr "Se ajustează dimensiunea ferestrei pentru a evita solicitarea accidentală a ecranului complet"
+
+#: vncviewer/DesktopWindow.cxx:696
+#, c-format
+msgid "Press %s to open the context menu"
+msgstr "Apăsați %s pentru a deschide meniul contextual"
+
+#: vncviewer/DesktopWindow.cxx:1097 vncviewer/DesktopWindow.cxx:1105
+#: vncviewer/DesktopWindow.cxx:1125
+msgid "Failure grabbing keyboard"
+msgstr "Eroare la preluarea tastaturii"
+
+#: vncviewer/DesktopWindow.cxx:1415
+msgid "Invalid screen layout computed for resize request!"
+msgstr "Aspect nevalid al ecranului calculat pentru cererea de redimensionare!"
+
+#: vncviewer/EmulateMB.cxx:226 vncviewer/EmulateMB.cxx:289
+msgid "Invalid state for 3 button emulation"
+msgstr "Stare nevalidă pentru emularea cu trei butoane"
+
+#: vncviewer/MonitorIndicesParameter.cxx:52
+#: vncviewer/MonitorIndicesParameter.cxx:102
+msgid "Failed to get system monitor configuration"
+msgstr "Nu s-a putut obține configurația monitorului sistemului"
+
+#: vncviewer/MonitorIndicesParameter.cxx:80
+#, c-format
+msgid "Invalid configuration specified for %s"
+msgstr "Configurație nevalidă specificată pentru %s"
+
+#: vncviewer/MonitorIndicesParameter.cxx:88
+#, c-format
+msgid "Monitor index %d does not exist"
+msgstr "Indexul de monitor %d nu există"
+
+#: vncviewer/MonitorIndicesParameter.cxx:166
+#: vncviewer/MonitorIndicesParameter.cxx:186
+#, c-format
+msgid "Invalid monitor index '%s'"
+msgstr "Index de monitor nevalid „%s”"
+
+#: vncviewer/MonitorIndicesParameter.cxx:174
+#, c-format
+msgid "Unexpected character '%c'"
+msgstr "Caracter neașteptat „%c”"
+
+#: vncviewer/OptionsDialog.cxx:64
+msgid "TigerVNC Options"
+msgstr "Opțiuni TigerVNC"
+
+#: vncviewer/OptionsDialog.cxx:97 vncviewer/ServerDialog.cxx:102
+#: vncviewer/vncviewer.cxx:395
+msgid "Cancel"
+msgstr "Anulare"
+
+#: vncviewer/OptionsDialog.cxx:102 vncviewer/vncviewer.cxx:394
+msgid "OK"
+msgstr "Ok"
+
+#: vncviewer/OptionsDialog.cxx:502
+msgid "Compression"
+msgstr "Comprimare"
+
+#: vncviewer/OptionsDialog.cxx:518
+msgid "Auto select"
+msgstr "Selectare automată"
+
+#: vncviewer/OptionsDialog.cxx:529
+msgid "Preferred encoding"
+msgstr "Codificarea preferată"
+
+#: vncviewer/OptionsDialog.cxx:590
+msgid "Color level"
+msgstr "Nivelul de profunditate al culorii"
+
+#: vncviewer/OptionsDialog.cxx:602
+msgid "Full"
+msgstr "Deplin"
+
+#: vncviewer/OptionsDialog.cxx:609
+msgid "Medium"
+msgstr "Mediu"
+
+#: vncviewer/OptionsDialog.cxx:616
+msgid "Low"
+msgstr "Scăzut"
+
+#: vncviewer/OptionsDialog.cxx:623
+msgid "Very low"
+msgstr "Foarte scăzut"
+
+#: vncviewer/OptionsDialog.cxx:645
+msgid "Custom compression level:"
+msgstr "Nivel de comprimare personalizat:"
+
+#: vncviewer/OptionsDialog.cxx:652
+msgid "level (0=fast, 9=best)"
+msgstr "nivel (0 = rapid, 9 = cel mai bun)"
+
+#: vncviewer/OptionsDialog.cxx:659
+msgid "Allow JPEG compression:"
+msgstr "Permite comprimarea JPEG:"
+
+#: vncviewer/OptionsDialog.cxx:666
+msgid "quality (0=poor, 9=best)"
+msgstr "calitate (0 = redusă, 9 = cea mai bună)"
+
+#: vncviewer/OptionsDialog.cxx:677
+msgid "Security"
+msgstr "Securitate"
+
+#: vncviewer/OptionsDialog.cxx:691
+msgid "Encryption"
+msgstr "Criptare"
+
+#: vncviewer/OptionsDialog.cxx:703 vncviewer/OptionsDialog.cxx:770
+#: vncviewer/OptionsDialog.cxx:876
+msgid "None"
+msgstr "Niciuna"
+
+#: vncviewer/OptionsDialog.cxx:710
+msgid "TLS with anonymous certificates"
+msgstr "TLS cu certificate anonime"
+
+#: vncviewer/OptionsDialog.cxx:716
+msgid "TLS with X509 certificates"
+msgstr "TLS cu certificate X509"
+
+#: vncviewer/OptionsDialog.cxx:723
+msgid "Path to X509 CA certificate"
+msgstr "Ruta către certificatul CA X509"
+
+#: vncviewer/OptionsDialog.cxx:730
+msgid "Path to X509 CRL file"
+msgstr "Ruta către fișierul CRL X509"
+
+#: vncviewer/OptionsDialog.cxx:758
+msgid "Authentication"
+msgstr "Autentificare"
+
+#: vncviewer/OptionsDialog.cxx:776
+msgid "Standard VNC (insecure without encryption)"
+msgstr "VNC standard (nesigur fără criptare)"
+
+#: vncviewer/OptionsDialog.cxx:782
+msgid "Username and password (insecure without encryption)"
+msgstr "Nume de utilizator și parolă (nesigure fără criptare)"
+
+#: vncviewer/OptionsDialog.cxx:805
+msgid "Input"
+msgstr "Intrare"
+
+#: vncviewer/OptionsDialog.cxx:818
+msgid "View only (ignore mouse and keyboard)"
+msgstr "Numai vizualizare (se ignoră mouse-ul și tastatura)"
+
+#: vncviewer/OptionsDialog.cxx:825
+msgid "Mouse"
+msgstr "Mouse"
+
+#: vncviewer/OptionsDialog.cxx:837
+msgid "Emulate middle mouse button"
+msgstr "Emulează butonul din mijloc al mouse-ului"
+
+#: vncviewer/OptionsDialog.cxx:843
+msgid "Show dot when no cursor"
+msgstr "Afișează un punct când nu există cursor al mouse-ului"
+
+#: vncviewer/OptionsDialog.cxx:859
+msgid "Keyboard"
+msgstr "Tastatură"
+
+#: vncviewer/OptionsDialog.cxx:871
+msgid "Pass system keys directly to server (full screen)"
+msgstr "Pasează tastele sistemului direct către server (ecran complet)"
+
+#: vncviewer/OptionsDialog.cxx:874
+msgid "Menu key"
+msgstr "Tasta de meniu"
+
+#: vncviewer/OptionsDialog.cxx:895
+msgid "Clipboard"
+msgstr "Clipboard"
+
+#: vncviewer/OptionsDialog.cxx:907
+msgid "Accept clipboard from server"
+msgstr "Acceptă clipboard-ul de pe server"
+
+#: vncviewer/OptionsDialog.cxx:915
+msgid "Also set primary selection"
+msgstr "Stabilește, de asemenea, selecția principală"
+
+#: vncviewer/OptionsDialog.cxx:922
+msgid "Send clipboard to server"
+msgstr "Trimite clipboard-ul la server"
+
+#: vncviewer/OptionsDialog.cxx:930
+msgid "Send primary selection as clipboard"
+msgstr "Trimite selecția principală ca clipboard"
+
+#: vncviewer/OptionsDialog.cxx:951
+msgid "Display"
+msgstr "Afișare"
+
+#: vncviewer/OptionsDialog.cxx:965
+msgid "Display mode"
+msgstr "Modul de afișare"
+
+#: vncviewer/OptionsDialog.cxx:978
+msgid "Windowed"
+msgstr "În fereastră"
+
+#: vncviewer/OptionsDialog.cxx:986
+msgid "Full screen on current monitor"
+msgstr "Ecran complet pe monitorul actual"
+
+#: vncviewer/OptionsDialog.cxx:994
+msgid "Full screen on all monitors"
+msgstr "Ecran complet pe toate monitoare"
+
+#: vncviewer/OptionsDialog.cxx:1002
+msgid "Full screen on selected monitor(s)"
+msgstr "Ecran complet pe monitorul(ele) selectat(e)"
+
+#: vncviewer/OptionsDialog.cxx:1031
+msgid "Miscellaneous"
+msgstr "Diverse"
+
+# R-GC, scrie:
+# după revizarea fișierului, DȘ, spune:
+# „→ lipsește închiderea parantezei”
+# ===
+# corectare făcută
+#: vncviewer/OptionsDialog.cxx:1039
+msgid "Shared (don't disconnect other viewers)"
+msgstr "Partajat (nu deconectează alte vizualizatoare)"
+
+#: vncviewer/OptionsDialog.cxx:1045
+msgid "Ask to reconnect on connection errors"
+msgstr "Solicită reconectarea în cazul erorilor de conectare"
+
+#: vncviewer/ServerDialog.cxx:58
+msgid "VNC Viewer: Connection Details"
+msgstr "Vizualizator VNC: Detalii de conectare"
+
+#: vncviewer/ServerDialog.cxx:68
+msgid "VNC server:"
+msgstr "Serverul VNC:"
+
+#: vncviewer/ServerDialog.cxx:75
+msgid "Options..."
+msgstr "Opțiuni..."
+
+#: vncviewer/ServerDialog.cxx:79
+msgid "Load..."
+msgstr "Încărcare..."
+
+#: vncviewer/ServerDialog.cxx:83
+msgid "Save As..."
+msgstr "Salvează ca..."
+
+#: vncviewer/ServerDialog.cxx:97
+msgid "About..."
+msgstr "Despre..."
+
+#: vncviewer/ServerDialog.cxx:106
+msgid "Connect"
+msgstr "Conectare"
+
+#: vncviewer/ServerDialog.cxx:143
+#, c-format
+msgid ""
+"Unable to load the server history:\n"
+"\n"
+"%s"
+msgstr ""
+"Nu se poate încărca istoricul serverului:\n"
+"\n"
+"%s"
+
+#: vncviewer/ServerDialog.cxx:172 vncviewer/ServerDialog.cxx:212
+msgid "TigerVNC configuration (*.tigervnc)"
+msgstr "Configurația TigerVNC (*.tigervnc)"
+
+#: vncviewer/ServerDialog.cxx:173
+msgid "Select a TigerVNC configuration file"
+msgstr "Selectați un fișier de configurare TigerVNC"
+
+#: vncviewer/ServerDialog.cxx:195 vncviewer/vncviewer.cxx:515
+#, c-format
+msgid ""
+"Unable to load the specified configuration file:\n"
+"\n"
+"%s"
+msgstr ""
+"Nu se poate încărca fișierul de configurare specificat:\n"
+"\n"
+"%s"
+
+#: vncviewer/ServerDialog.cxx:213
+msgid "Save the TigerVNC configuration to file"
+msgstr "Salvați configurația TigerVNC în fișier"
+
+#: vncviewer/ServerDialog.cxx:239
+#, c-format
+msgid "%s already exists. Do you want to overwrite?"
+msgstr "%s există deja. Doriți să-l suprascrieți?"
+
+#: vncviewer/ServerDialog.cxx:240 vncviewer/vncviewer.cxx:392
+msgid "No"
+msgstr "Nu"
+
+#: vncviewer/ServerDialog.cxx:240
+msgid "Overwrite"
+msgstr "Suprascrie"
+
+#: vncviewer/ServerDialog.cxx:256
+#, c-format
+msgid ""
+"Unable to save the specified configuration file:\n"
+"\n"
+"%s"
+msgstr ""
+"Nu se poate salva fișierul de configurare specificat:\n"
+"\n"
+"%s"
+
+#: vncviewer/ServerDialog.cxx:290
+#, c-format
+msgid ""
+"Unable to save the default configuration:\n"
+"\n"
+"%s"
+msgstr ""
+"Nu se poate salva configurația implicită:\n"
+"\n"
+"%s"
+
+#: vncviewer/ServerDialog.cxx:303
+#, c-format
+msgid ""
+"Unable to save the server history:\n"
+"\n"
+"%s"
+msgstr ""
+"Nu se poate salva istoricul serverului:\n"
+"\n"
+"%s"
+
+#: vncviewer/ServerDialog.cxx:320 vncviewer/ServerDialog.cxx:386
+msgid "Could not obtain the state directory path"
+msgstr "Nu s-a putut obține ruta directorului de stare"
+
+#: vncviewer/ServerDialog.cxx:332 vncviewer/ServerDialog.cxx:394
+#: vncviewer/parameters.cxx:644 vncviewer/parameters.cxx:750
+#, c-format
+msgid "Could not open \"%s\": %s"
+msgstr "Nu s-a putut deschide „%s”: %s"
+
+#: vncviewer/ServerDialog.cxx:347 vncviewer/ServerDialog.cxx:355
+#: vncviewer/parameters.cxx:764 vncviewer/parameters.cxx:770
+#: vncviewer/parameters.cxx:801 vncviewer/parameters.cxx:830
+#: vncviewer/parameters.cxx:836
+#, c-format
+msgid "Failed to read line %d in file %s: %s"
+msgstr "Nu s-a putut citi linia %d din fișierul %s: %s"
+
+#: vncviewer/ServerDialog.cxx:356 vncviewer/parameters.cxx:771
+msgid "Line too long"
+msgstr "Linia este prea lungă"
+
+#: vncviewer/UserDialog.cxx:99
+msgid "Opening password file failed"
+msgstr "Deschiderea fișierului cu parole a eșuat"
+
+#: vncviewer/UserDialog.cxx:118
+msgid "VNC authentication"
+msgstr "Autentificare VNC"
+
+#: vncviewer/UserDialog.cxx:125
+msgid "This connection is secure"
+msgstr "Această conexiune este sigură"
+
+#: vncviewer/UserDialog.cxx:129
+msgid "This connection is not secure"
+msgstr "Această conexiune nu este sigură"
+
+#: vncviewer/UserDialog.cxx:151
+msgid "Username:"
+msgstr "Numele utilizatorului:"
+
+#: vncviewer/UserDialog.cxx:164
+msgid "Password:"
+msgstr "Parola:"
+
+#: vncviewer/UserDialog.cxx:207
+msgid "Authentication cancelled"
+msgstr "Autentificarea a fost anulată"
+
+#: vncviewer/Viewport.cxx:390
+#, c-format
+msgid "Failed to update keyboard LED state: %lu"
+msgstr "Nu s-a putut actualiza starea LED-ului tastaturii: %lu"
+
+#: vncviewer/Viewport.cxx:396 vncviewer/Viewport.cxx:402
+#, c-format
+msgid "Failed to update keyboard LED state: %d"
+msgstr "Nu s-a putut actualiza starea LED-ului tastaturii: %d"
+
+#: vncviewer/Viewport.cxx:432
+msgid "Failed to update keyboard LED state"
+msgstr "Nu s-a putut actualiza starea LED-ului tastaturii"
+
+#: vncviewer/Viewport.cxx:459 vncviewer/Viewport.cxx:467
+#: vncviewer/Viewport.cxx:484
+#, c-format
+msgid "Failed to get keyboard LED state: %d"
+msgstr "Nu s-a putut obține starea LED-ului tastaturii: %d"
+
+#: vncviewer/Viewport.cxx:839
+msgid "No key code specified on key press"
+msgstr "Nu a fost specificat niciun cod de tastă la apăsarea tastei"
+
+#: vncviewer/Viewport.cxx:990
+#, c-format
+msgid "No scan code for extended virtual key 0x%02x"
+msgstr "Niciun cod de scanare pentru tasta virtuală extinsă 0x%02x"
+
+#: vncviewer/Viewport.cxx:992
+#, c-format
+msgid "No scan code for virtual key 0x%02x"
+msgstr "Niciun cod de scanare pentru tasta virtuală 0x%02x"
+
+#: vncviewer/Viewport.cxx:998
+#, c-format
+msgid "Invalid scan code 0x%02x"
+msgstr "Cod de scanare nevalid 0x%02x"
+
+#: vncviewer/Viewport.cxx:1028
+#, c-format
+msgid "No symbol for extended virtual key 0x%02x"
+msgstr "Niciun simbol pentru tasta virtuală extinsă 0x%02x"
+
+#: vncviewer/Viewport.cxx:1030
+#, c-format
+msgid "No symbol for virtual key 0x%02x"
+msgstr "Niciun simbol pentru tasta virtuală 0x%02x"
+
+#: vncviewer/Viewport.cxx:1136
+#, c-format
+msgid "No symbol for key code 0x%02x (in the current state)"
+msgstr "Niciun simbol pentru codul tastei 0x%02x (în starea curentă)"
+
+#: vncviewer/Viewport.cxx:1169
+#, c-format
+msgid "No symbol for key code %d (in the current state)"
+msgstr "Niciun simbol pentru codul tastei %d (în starea curentă)"
+
+#: vncviewer/Viewport.cxx:1229
+msgctxt "ContextMenu|"
+msgid "Disconn&ect"
+msgstr "Deco&nectare"
+
+#: vncviewer/Viewport.cxx:1232
+msgctxt "ContextMenu|"
+msgid "&Full screen"
+msgstr "&Ecran complet"
+
+#: vncviewer/Viewport.cxx:1235
+msgctxt "ContextMenu|"
+msgid "Minimi&ze"
+msgstr "Minimi&zare"
+
+#: vncviewer/Viewport.cxx:1237
+msgctxt "ContextMenu|"
+msgid "Resize &window to session"
+msgstr "Redimensionează &fereastra conform sesiunii"
+
+#: vncviewer/Viewport.cxx:1242
+msgctxt "ContextMenu|"
+msgid "&Ctrl"
+msgstr "&Ctrl"
+
+#: vncviewer/Viewport.cxx:1245
+msgctxt "ContextMenu|"
+msgid "&Alt"
+msgstr "&Alt"
+
+#: vncviewer/Viewport.cxx:1251
+#, c-format
+msgctxt "ContextMenu|"
+msgid "Send %s"
+msgstr "Trimite %s"
+
+#: vncviewer/Viewport.cxx:1257
+msgctxt "ContextMenu|"
+msgid "Send Ctrl-Alt-&Del"
+msgstr "Trimite Ctrl-Alt-&Del"
+
+#: vncviewer/Viewport.cxx:1260
+msgctxt "ContextMenu|"
+msgid "&Refresh screen"
+msgstr "&Reîmprospătează ecranul"
+
+#: vncviewer/Viewport.cxx:1263
+msgctxt "ContextMenu|"
+msgid "&Options..."
+msgstr "&Opțiuni..."
+
+#: vncviewer/Viewport.cxx:1265
+msgctxt "ContextMenu|"
+msgid "Connection &info..."
+msgstr "&Informații despre conexiune..."
+
+#: vncviewer/Viewport.cxx:1267
+msgctxt "ContextMenu|"
+msgid "About &TigerVNC viewer..."
+msgstr "Despre vizualizatorul &TigerVNC..."
+
+#: vncviewer/Viewport.cxx:1356
+msgid "VNC connection info"
+msgstr "Informații despre conexiunea VNC"
+
+#: vncviewer/Win32TouchHandler.cxx:47
+msgid "Window is registered for touch instead of gestures"
+msgstr "Fereastra este înregistrată pentru atingere în loc de gesturi"
+
+#: vncviewer/Win32TouchHandler.cxx:82
+#, c-format
+msgid "Failed to set gesture configuration (error 0x%x)"
+msgstr "Nu s-a putut definii configurația gesturilor (eroare 0x%x)"
+
+#: vncviewer/Win32TouchHandler.cxx:94
+#, c-format
+msgid "Failed to get gesture information (error 0x%x)"
+msgstr "Nu s-au putut obține informații despre gesturi (eroare 0x%x)"
+
+#: vncviewer/Win32TouchHandler.cxx:359
+#, c-format
+msgid "Invalid mouse button %d, must be a number between 1 and 7."
+msgstr "Butonul mouse-ului %d nu este valid, trebuie să fie un număr între 1 și 7."
+
+#: vncviewer/Win32TouchHandler.cxx:424
+#, c-format
+msgid "Unhandled key 0x%x - can't generate keyboard event."
+msgstr "Tasta 0x%x necunoscută - nu se poate genera un eveniment de la tastatură."
+
+#: vncviewer/XInputTouchHandler.cxx:102 vncviewer/touch.cxx:108
+#, c-format
+msgid "Unable to get X Input 2 event mask for window 0x%08lx"
+msgstr "Nu se poate obține masca de eveniment X Input 2 pentru fereastra 0x%08lx"
+
+#: vncviewer/XInputTouchHandler.cxx:104
+#, c-format
+msgid "Window 0x%08lx has no X Input 2 event mask"
+msgstr "Fereastra 0x%08lx nu are mască de eveniment X Input 2"
+
+#: vncviewer/XInputTouchHandler.cxx:112 vncviewer/touch.cxx:115
+#, c-format
+msgid "Window 0x%08lx has more than one X Input 2 event mask"
+msgstr "Fereastra 0x%08lx are mai mult de o mască de eveniment X Input 2"
+
+#: vncviewer/XInputTouchHandler.cxx:143
+#, c-format
+msgid "Failure grabbing device %i"
+msgstr "Eroare la preluarea dispozitivului %i"
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:13
+#: vncviewer/vncviewer.cxx:389 vncviewer/vncviewer.desktop.in.in:3
+msgid "TigerVNC Viewer"
+msgstr "Vizualizator TigerVNC"
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:14
+#: vncviewer/vncviewer.desktop.in.in:5
+msgid "Connect to VNC server and display remote desktop"
+msgstr "Se conectează la serverul VNC și afișează biroul de la distanță"
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:17
+msgid "Virtual Network Computing (VNC) is a remote display system that allows you to view and interact with a virtual desktop environment running on another computer on the network. Using VNC, you can run graphical applications on a remote machine and send only the display from these applications to your local device. This package contains a client which will enable you to connect to other desktops running a VNC server. VNC is platform-independent and supports various operating systems and architectures as both servers and clients."
+msgstr "Calculatoare în rețea virtuală ⟶ (Virtual Network Computing) «VNC» este un sistem de afișare la distanță care vă permite să vizualizați și să interacționați cu un mediu de birou virtual care rulează pe un alt computer din rețea. Folosind VNC, puteți rula aplicații grafice pe o mașină de la distanță și puteți trimite numai afișarea din aceste aplicații pe dispozitivul local. Acest pachet conține un client care vă va permite să vă conectați la alte calculatoare care rulează un server VNC. VNC este independent de platformă și acceptă diverse sisteme de operare și arhitecturi atât ca servere, cât și ca clienți."
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:23
+msgid "TigerVNC is a high-speed version of VNC based on the RealVNC 4 and X.org code bases. TigerVNC started as a next-generation development effort for TightVNC on Unix and Linux platforms, but it split from its parent project in early 2009 so that TightVNC could focus on Windows platforms. TigerVNC supports a variant of Tight encoding that is greatly accelerated by the use of the libjpeg-turbo JPEG codec."
+msgstr "TigerVNC este o versiune de mare viteză a VNC bazată pe bazele codurilor RealVNC 4 și X.org. TigerVNC a început ca un efort de dezvoltare de ultimă generație pentru TightVNC pe platformele Unix și Linux, dar s-a despărțit de proiectul său părinte la începutul anului 2009, astfel încât TightVNC să se poată concentra pe platformele Windows. TigerVNC acceptă o variantă de codificare Tight care este mult accelerată prin utilizarea codec-ului JPEG libjpeg-turbo."
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:33
+msgid "TigerVNC Viewer connection to a CentOS machine"
+msgstr "Conexiune a vizualizatorului TigerVNC la o mașină «GNU/Linux»"
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:37
+msgid "TigerVNC Viewer connection to a macOS machine"
+msgstr "Conexiune a vizualizatorului TigerVNC la o mașină «macOS»"
+
+#: vncviewer/org.tigervnc.vncviewer.metainfo.xml.in:41
+msgid "TigerVNC Viewer connection to a Windows machine"
+msgstr "Conexiune a vizualizatorului TigerVNC la o mașină «Windows»"
+
+#: vncviewer/parameters.cxx:307 vncviewer/parameters.cxx:332
+#: vncviewer/parameters.cxx:349 vncviewer/parameters.cxx:389
+#: vncviewer/parameters.cxx:409
+msgid "The name of the parameter is too large"
+msgstr "Numele parametrului este prea lung"
+
+#: vncviewer/parameters.cxx:311 vncviewer/parameters.cxx:316
+#: vncviewer/parameters.cxx:367
+msgid "The parameter is too large"
+msgstr "Parametrul este prea lung"
+
+#: vncviewer/parameters.cxx:374 vncviewer/parameters.cxx:694
+#: vncviewer/parameters.cxx:815
+msgid "Invalid format or too large value"
+msgstr "Format nevalid sau valoare prea mare"
+
+#: vncviewer/parameters.cxx:428 vncviewer/parameters.cxx:459
+msgid "Failed to create registry key"
+msgstr "Nu s-a putut crea cheia de registru"
+
+#: vncviewer/parameters.cxx:447 vncviewer/parameters.cxx:502
+#: vncviewer/parameters.cxx:544 vncviewer/parameters.cxx:611
+msgid "Failed to close registry key"
+msgstr "Nu s-a putut închide cheia de registru"
+
+#: vncviewer/parameters.cxx:465 vncviewer/parameters.cxx:482
+#: vncviewer/parameters.cxx:652 vncviewer/parameters.cxx:662
+#: vncviewer/parameters.cxx:673
+#, c-format
+msgid "Failed to save \"%s\": %s"
+msgstr "Nu s-a putut salva „%s”: %s"
+
+#: vncviewer/parameters.cxx:478 vncviewer/parameters.cxx:566
+#: vncviewer/parameters.cxx:675 vncviewer/parameters.cxx:712
+msgid "Unknown parameter type"
+msgstr "Tip de parametru necunoscut"
+
+#: vncviewer/parameters.cxx:495
+#, c-format
+msgid "Failed to remove \"%s\": %s"
+msgstr "Nu s-a putut elimina „%s”: %s"
+
+#: vncviewer/parameters.cxx:517 vncviewer/parameters.cxx:589
+msgid "Failed to open registry key"
+msgstr "Nu s-a putut deschide cheia de registru"
+
+#: vncviewer/parameters.cxx:534
+#, c-format
+msgid "Failed to read server history entry %d: %s"
+msgstr "Nu s-a putut citi intrarea din istoricul serverului %d: %s"
+
+#: vncviewer/parameters.cxx:570 vncviewer/parameters.cxx:600
+#, c-format
+msgid "Failed to read parameter \"%s\": %s"
+msgstr "Nu s-a putut citi parametrul „%s”: %s"
+
+#: vncviewer/parameters.cxx:634 vncviewer/parameters.cxx:738
+msgid "Could not obtain the config directory path"
+msgstr "Nu s-a putut obține ruta directorului de configurare"
+
+#: vncviewer/parameters.cxx:653 vncviewer/parameters.cxx:664
+msgid "Could not encode parameter"
+msgstr "Nu s-a putut codifica parametrul"
+
+#: vncviewer/parameters.cxx:780
+#, c-format
+msgid "Configuration file %s is in an invalid format"
+msgstr "Fișierul de configurare %s este într-un format nevalid"
+
+#: vncviewer/parameters.cxx:802
+msgid "Invalid format"
+msgstr "Format nevalid"
+
+#: vncviewer/parameters.cxx:837
+msgid "Unknown parameter"
+msgstr "Parametru necunoscut"
+
+#: vncviewer/touch.cxx:76
+#, c-format
+msgid "Got message (0x%x) for an unhandled window"
+msgstr "S-a primit mesajul (0x%x) pentru o fereastră negestionată"
+
+#: vncviewer/touch.cxx:139 vncviewer/touch.cxx:161
+#, c-format
+msgid "Invalid window 0x%08lx specified for pointer grab"
+msgstr "Fereastra 0x%08lx nevalidă a fost specificată pentru preluarea indicatorului mouse-ului"
+
+#: vncviewer/touch.cxx:184 vncviewer/touch.cxx:185
+#, c-format
+msgid "Failed to create touch handler: %s"
+msgstr "Nu s-a putut crea gestionarul de atingere: %s"
+
+#: vncviewer/touch.cxx:189
+#, c-format
+msgid "Couldn't attach event handler to window (error 0x%x)"
+msgstr "Nu s-a putut atașa gestionarul de evenimente la fereastră (eroare 0x%x)"
+
+#: vncviewer/touch.cxx:216
+msgid "Failed to get event data for X Input event"
+msgstr "Nu s-au putut obține datele despre eveniment pentru evenimentul X Input"
+
+#: vncviewer/touch.cxx:229
+msgid "X Input event for unknown window"
+msgstr "Eveniment X Input pentru o fereastră necunoscută"
+
+#: vncviewer/touch.cxx:255
+msgid "X Input extension not available."
+msgstr "Extensia X Input nu este disponibilă."
+
+#: vncviewer/touch.cxx:262
+msgid "X Input 2 (or newer) is not available."
+msgstr "X Input 2 (sau mai nouă) nu este disponibilă."
+
+#: vncviewer/touch.cxx:267
+msgid "X Input 2.2 (or newer) is not available. Touch gestures will not be supported."
+msgstr "X Input 2 (sau mai nouă) nu este disponibilă. Gesturile tactile nu vor fi acceptate."
+
+# R-GC, scrie:
+# după revizarea fișierului, DȘ, spune:
+# «→ aici poți ajusta puțin stilul înlocuind „vedeți” cu „consultați”»
+# ===
+# de acord cu faptul că în general,
+# see → consultați, dar să nu uităm că:
+# see == vedea, a se vedea
+# una este să consulți documentația, deobicei
+# echivalentul unui almanah sau al unei cărți,
+# și alta este să-ți arunci privirea pe-o listă,
+# deobicei mai mică decît o pagină
+#: vncviewer/vncviewer.cxx:104
+#, c-format
+msgid ""
+"TigerVNC Viewer v%s\n"
+"Built on: %s\n"
+"Copyright (C) 1999-%d TigerVNC Team and many others (see README.rst)\n"
+"See https://www.tigervnc.org for information on TigerVNC."
+msgstr ""
+"Vizualizator TigerVNC versiunea %s\n"
+"Construit pe: %s\n"
+"Drepturi de autor © 1999-%d Echipa TigerVNC și mulți alții (vedeți fișierul README.rst)\n"
+"Consultați https://www.tigervnc.org pentru informații despre TigerVNC."
+
+#: vncviewer/vncviewer.cxx:158
+#, c-format
+msgid ""
+"An unexpected error occurred when communicating with the server:\n"
+"\n"
+"%s"
+msgstr ""
+"A apărut o eroare neașteptată la comunicarea cu serverul:\n"
+"\n"
+"%s"
+
+#: vncviewer/vncviewer.cxx:174
+msgid "About TigerVNC Viewer"
+msgstr "Despre vizualizatorul TigerVNC"
+
+#: vncviewer/vncviewer.cxx:195
+msgid "Internal FLTK error. Exiting."
+msgstr "Eroare FLTK internă. Se finalizează."
+
+#: vncviewer/vncviewer.cxx:214
+#, c-format
+msgid ""
+"%s\n"
+"\n"
+"Attempt to reconnect?"
+msgstr ""
+"%s\n"
+"\n"
+"Încercați să vă reconectați?"
+
+#: vncviewer/vncviewer.cxx:245 vncviewer/vncviewer.cxx:257
+#, c-format
+msgid "Error starting new TigerVNC Viewer: %s"
+msgstr "Eroare la pornirea noului vizualizator TigerVNC: %s"
+
+#: vncviewer/vncviewer.cxx:266
+#, c-format
+msgid "Termination signal %d has been received. TigerVNC Viewer will now exit."
+msgstr "Semnalul de terminare %d a fost primit. Vizualizatorul TigerVNC se va închide acum."
+
+#: vncviewer/vncviewer.cxx:393
+msgid "Yes"
+msgstr "Da"
+
+#: vncviewer/vncviewer.cxx:396
+msgid "Close"
+msgstr "Închide"
+
+#: vncviewer/vncviewer.cxx:401
+msgid "About"
+msgstr "Despre"
+
+#: vncviewer/vncviewer.cxx:404
+msgid "Hide"
+msgstr "Ascunde"
+
+#: vncviewer/vncviewer.cxx:407
+msgid "Quit"
+msgstr "Ieșire"
+
+#: vncviewer/vncviewer.cxx:411
+msgid "Services"
+msgstr "Servicii"
+
+#: vncviewer/vncviewer.cxx:412
+msgid "Hide Others"
+msgstr "Ascunde pe celelalte"
+
+#: vncviewer/vncviewer.cxx:413
+msgid "Show All"
+msgstr "Afișează pe toate"
+
+#: vncviewer/vncviewer.cxx:422
+msgctxt "SysMenu|"
+msgid "&File"
+msgstr "&Fişier"
+
+#: vncviewer/vncviewer.cxx:425
+msgctxt "SysMenu|File|"
+msgid "&New Connection"
+msgstr "Conexiune &nouă"
+
+#: vncviewer/vncviewer.cxx:525
+msgid "FullScreenAllMonitors is deprecated, set FullScreenMode to 'all' instead"
+msgstr "FullScreenAllMonitors este învechit, setați în schimb FullScreenMode la „all”"
+
+#: vncviewer/vncviewer.cxx:721
+msgid "~/.vnc is deprecated, please consult 'man vncviewer' for paths to migrate to."
+msgstr "~/.vnc este depreciat, vă rugăm să consultați «man vncviewer» pentru căile de migrare."
+
+#: vncviewer/vncviewer.cxx:725
+#, c-format
+msgid "%%APPDATA%%\\vnc is deprecated, please switch to the %%APPDATA%%\\TigerVNC location."
+msgstr "%%APPDATA%%\\vnc este depreciat, vă rugăm să treceți la locația %%APPDATA%%\\TigerVNC."
+
+#: vncviewer/vncviewer.cxx:730
+#, c-format
+msgid "Could not create VNC config directory: %s"
+msgstr "Nu s-a putut crea directorul de configurare VNC: %s"
+
+#: vncviewer/vncviewer.cxx:735
+#, c-format
+msgid "Could not create VNC data directory: %s"
+msgstr "Nu s-a putut crea directorul de date VNC: %s"
+
+#: vncviewer/vncviewer.cxx:740
+#, c-format
+msgid "Could not create VNC state directory: %s"
+msgstr "Nu s-a putut crea directorul de stare VNC: %s"
+
+#. TRANSLATORS: "Parameters" are command line arguments, or settings
+#. from a file or the Windows registry.
+#: vncviewer/vncviewer.cxx:755 vncviewer/vncviewer.cxx:756
+msgid "Parameters -listen and -via are incompatible"
+msgstr "Parametrii „-listen” și „-via” sunt incompatibili"
+
+#: vncviewer/vncviewer.cxx:770
+msgid "Unable to listen for incoming connections"
+msgstr "Nu se poate asculta pentru conexiunile primite"
+
+#: vncviewer/vncviewer.cxx:772
+#, c-format
+msgid "Listening on port %d"
+msgstr "Se ascultă pe portul %d"
+
+#: vncviewer/vncviewer.cxx:805
+#, c-format
+msgid ""
+"Failure waiting for incoming VNC connection:\n"
+"\n"
+"%s"
+msgstr ""
+"Eroare la așteptarea conexiunii VNC de intrare:\n"
+"\n"
+"%s"
+
+#: vncviewer/vncviewer.desktop.in.in:4
+msgid "Remote Desktop Viewer"
+msgstr "Vizualizator pentru birou la distanță"
+
+#~ msgid "VNC Viewer: Connection Options"
+#~ msgstr "Vizualizator VNC: Opțiuni de conectare"
+
+#~ msgid "Misc."
+#~ msgstr "Diverse"
+
+#~ msgid "Failed to get monitor name because X11 RandR could not be found"
+#~ msgstr "Nu s-a putut obține numele monitorului deoarece X11 RandR nu a putut fi găsit"
+
+#~ msgid "Failed to get information about CRTC %d"
+#~ msgstr "Nu s-au putut obține informații despre CRTC %d"
+
+#~ msgid "Failed to get information about output %d for CRTC %d"
+#~ msgstr "Nu s-au putut obține informații despre ieșirea %d pentru CRTC %d"
+
+#~ msgid "Screen"
+#~ msgstr "Ecran"
+
+#~ msgid "Resize remote session on connect"
+#~ msgstr "Redimensionează sesiunea de la distanță la conectare"
+
+#~ msgid "Resize remote session to the local window"
+#~ msgstr "Redimensionează sesiunea de la distanță la fereastra locală"
+
+#~ msgid "Enable full-screen"
+#~ msgstr "Activează ecranul complet"
