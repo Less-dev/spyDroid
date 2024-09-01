@@ -18,8 +18,8 @@ onexit()
 PACKAGE_NAME=tigervnc
 VERSION=1.14.80
 BUILD=
-SRCDIR=/home/less/Documentos/VNC/spydroid-desktop
-BINDIR=/home/less/Documentos/VNC/spydroid-desktop/build
+SRCDIR=/home/less/SPYDROID/spyDroid_desktop
+BINDIR=/home/less/SPYDROID/spyDroid_desktop/build
 OS=Linux
 CPU=x86_64
 PREFIX=/usr/local

@@ -23,6 +23,10 @@ add_executable(spydroid
   features/vncviewer/MonitorIndicesParameter.cxx
   features/vncviewer/vncviewer.cxx
   app/src/main/net/spydroid/desktop/main.cxx
+  app/src/main/net/spydroid/desktop/presentation/home.cpp
+  app/src/main/net/spydroid/desktop/presentation/profile.cpp
+  app/src/main/net/spydroid/desktop/data/VncConnect.cpp
+  app/src/main/net/spydroid/desktop/models/VncData.h
 )
 
 if(WIN32 AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")

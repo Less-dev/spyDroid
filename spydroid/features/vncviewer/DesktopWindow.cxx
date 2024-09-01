@@ -241,8 +241,6 @@ DesktopWindow::DesktopWindow(int w, int h, const char *name,
   CGEventSourceSetLocalEventsSuppressionInterval(event, 0);
   CFRelease(event);
 #endif
-   maximizeWindow();
-
 }
 
 
@@ -287,7 +285,7 @@ void DesktopWindow::setName(const char *name)
 {
   char windowNameStr[256];
 
-  snprintf(windowNameStr, 256, "%.240s - TigerVNC", name);
+  snprintf(windowNameStr, 256, name);
 
   copy_label(windowNameStr);
 }
