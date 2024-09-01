@@ -5,7 +5,7 @@
 
 struct VncData {
     std::string ip;
-    int puerto;
+    int port;
 };
 
 #endif

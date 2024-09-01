@@ -4,5 +4,5 @@
 
 void VncConnect(Fl_Widget *w, void *data) {
     VncData* vncData = static_cast<VncData*>(data);
-    connectToVNCServer(vncData->ip, vncData->puerto);
+    connectToVNCServer(vncData->ip, vncData->port);
 }
