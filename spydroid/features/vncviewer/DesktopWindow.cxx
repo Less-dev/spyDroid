@@ -93,7 +93,7 @@ DesktopWindow::DesktopWindow(int w, int h, const char *name,
   // Dummy group to prevent FLTK from moving our widgets around
   group = new Fl_Group(0, 0, w, h);
   group->resizable(nullptr);
-  resizable(group);
+  //resizable(group);
 
   viewport = new Viewport(w, h, serverPF, cc);
 
