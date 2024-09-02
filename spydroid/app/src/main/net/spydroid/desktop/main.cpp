@@ -28,10 +28,20 @@ int main(int argc, char **argv) {
 
 
 #include "remote/network/api/ApiService.h"
-
+#include <iostream>
+#include "remote/network/models/Devices.h"
+#include "string"
 
 int main() {
 
-    ApiService();
+    ApiService apiService;
+    
+    std::string alias = "ALL";
+
+    std::vector<Devices> devices = apiService.getDevice(alias);
+
+    for (const auto& device : devices) {
+        std::cout << "ID: " << device.id << ", Alias: " << device.alias << ", Name: " << device.name << std::endl;
+    }
     return 0;
 }

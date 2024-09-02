@@ -22,53 +22,97 @@
 #include <vector>
 #include "../models/Devices.h"
 #include <jsoncpp/json/json.h>
+#include "ApiService.h"
 
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp)
-{
+size_t WriteCallback(void* contents,
+  size_t size,
+  size_t nmemb,
+  void* userp
+) {
     ((std::string*)userp)->append((char*)contents, size * nmemb);
     return size * nmemb;
 }
 
-void ApiService() {
+
+std::vector<Devices> ApiService::getDevices() {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
-
+    std::vector<Devices> devices;
     curl = curl_easy_init();
+
     if(curl) {
         curl_easy_setopt(curl, CURLOPT_URL, "http://localhost:8080/devices?access_token=iygad7618wg8y1f7fgvas71f671");
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
         
-        // Ejecuta la solicitud
+        // Get info
         res = curl_easy_perform(curl);
-        
+    
         if(res != CURLE_OK) {
             fprintf(stderr, "failed getting resource: %s\n", curl_easy_strerror(res));
         } else {
-            // Usando jsoncpp para parsear la respuesta JSON
+
+            // Parser Json
             Json::Reader reader;
             Json::Value jsonData;
             if (reader.parse(readBuffer, jsonData)) {
-                std::vector<Devices> devices;
                 for (const auto& device : jsonData) {
-                    Devices d;
-                    d.id = device["id"].asInt();
-                    d.alias = device["alias"].asString();
-                    d.name = device["name"].asString();
-                    devices.push_back(d);
-                }
-
-                // Imprimir los dispositivos
-                for (const auto& device : devices) {
-                    std::cout << "ID: " << device.id << ", Alias: " << device.alias << ", Name: " << device.name << std::endl;
+                    Devices _device;
+                    _device.id = device["id"].asInt();
+                    _device.alias = device["alias"].asString();
+                    _device.name = device["name"].asString();
+                    devices.push_back(_device);
                 }
             } else {
                 std::cerr << "Error al parsear JSON" << std::endl;
             }
         }
-        
         curl_easy_cleanup(curl);
     }
+    return devices;
+}   
+
+
+
+std::vector<Devices> ApiService::getDevice(const std::string& alias) {
+    CURL* curl;
+    CURLcode res;
+    std::string readBuffer;
+    std::vector<Devices> devices;
+    curl = curl_easy_init();
+
+    if(curl) {
+        std::string url = "http://localhost:8080/devices?access_token=iygad7618wg8y1f7fgvas71f671&search=" + alias;
+        std::cout << url << std::endl;
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        
+        // Get info
+        res = curl_easy_perform(curl);
+    
+        if(res != CURLE_OK) {
+            fprintf(stderr, "failed getting resource: %s\n", curl_easy_strerror(res));
+        } else {
+
+            // Parser Json
+            Json::Reader reader;
+            Json::Value jsonData;
+            if (reader.parse(readBuffer, jsonData)) {
+                for (const auto& device : jsonData) {
+                    Devices _device;
+                    _device.id = device["id"].asInt();
+                    _device.alias = device["alias"].asString();
+                    _device.name = device["name"].asString();
+                    devices.push_back(_device);
+                }
+            } else {
+                std::cerr << "Error al parsear JSON" << std::endl;
+            }
+        }
+        curl_easy_cleanup(curl);
+    }
+    return devices;
 }
