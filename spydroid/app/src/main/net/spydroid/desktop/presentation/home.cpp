@@ -18,6 +18,7 @@
 #include "home.h"
 #include "profile.h"
 #include <FL/Fl.H>
+#include "../data/colors.h"
 
 
 Home::Home() {
@@ -26,6 +27,7 @@ Home::Home() {
     
     window = new Fl_Window(50, 50, screen_width - 100, screen_height - 100, "home");
     
+    window->color(background);
     window->size_range(500, 300);
     window->resizable(window);
     btnToProfile = new Fl_Button(100, 80, 100, 40, "Ir a Profile");

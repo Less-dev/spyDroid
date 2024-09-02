@@ -20,7 +20,9 @@
 #include <FL/Fl.H>
 #include "../models/VncData.h"
 #include "../data/VncConnect.h"
+#include "../data/colors.h"
 #include "iostream"
+
 
 
 static VncData vncData;
@@ -30,7 +32,7 @@ Profile::Profile() {
     int screen_height = Fl::h();
 
     window = new Fl_Window(50, 50, screen_width - 100, screen_height - 100, "profile");
-    
+    window->color(background);
     window->size_range(500, 300);
     window->resizable(window);
 
