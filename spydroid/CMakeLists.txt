@@ -31,7 +31,7 @@ add_executable(spydroid
 )
 
 if(WIN32 AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
-  set_target_properties(spydroid PROPERTIES WIN32_EXECUTABLE TRUE)
+  set___properties(spydroid PROPERTIES WIN32_EXECUTABLE TRUE)
 endif()
 
 if(WIN32)
@@ -60,7 +60,7 @@ target_include_directories(spydroid SYSTEM PUBLIC ${FLTK_INCLUDE_DIR})
 target_include_directories(spydroid SYSTEM PUBLIC ${GETTEXT_INCLUDE_DIR})
 target_include_directories(spydroid PUBLIC ${CMAKE_SOURCE_DIR}/common)
 target_link_libraries(spydroid rfb network rdr os ${FLTK_LIBRARIES} ${GETTEXT_LIBRARIES})
-
+target_link_libraries(spydroid ${CURL_LIBRARIES})
 if(WIN32)
   target_link_libraries(spydroid msimg32)
 elseif(APPLE)

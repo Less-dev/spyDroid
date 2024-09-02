@@ -132,6 +132,7 @@ if(UNIX AND NOT APPLE)
   if(X11_XTest_LIB)
     add_definitions(-DHAVE_XTEST)
   endif()
+  find_package(CURL REQUIRED)
 endif()
 
 # Check for zlib
