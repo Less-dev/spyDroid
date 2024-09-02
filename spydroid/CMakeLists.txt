@@ -28,6 +28,8 @@ add_executable(spydroid
   app/src/main/net/spydroid/desktop/data/VncConnect.cpp
   app/src/main/net/spydroid/desktop/models/VncData.h
   app/src/main/net/spydroid/desktop/data/colors.cpp
+  app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
+  
 )
 
 if(WIN32 AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -61,6 +63,7 @@ target_include_directories(spydroid SYSTEM PUBLIC ${GETTEXT_INCLUDE_DIR})
 target_include_directories(spydroid PUBLIC ${CMAKE_SOURCE_DIR}/common)
 target_link_libraries(spydroid rfb network rdr os ${FLTK_LIBRARIES} ${GETTEXT_LIBRARIES})
 target_link_libraries(spydroid ${CURL_LIBRARIES})
+target_link_libraries(spydroid  jsoncpp_lib)
 if(WIN32)
   target_link_libraries(spydroid msimg32)
 elseif(APPLE)

@@ -135,6 +135,10 @@ if(UNIX AND NOT APPLE)
   find_package(CURL REQUIRED)
 endif()
 
+
+# Check for Json
+find_package(jsoncpp REQUIRED)
+
 # Check for zlib
 find_package(ZLIB REQUIRED)
 

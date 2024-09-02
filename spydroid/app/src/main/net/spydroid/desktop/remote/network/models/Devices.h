@@ -13,25 +13,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
-
-#include <FL/Fl.H>
-#include "presentation/home.h"
-
-
-int main(int argc, char **argv) {
-    Home home;  // Home Instance
-    home.show(); // Show view main
-    
-    return Fl::run(); // Init fltk
-}
  */
 
+#ifndef DEVICES_H
+#define DEVICES_H
 
-#include "remote/network/api/ApiService.h"
+#include <vector>
+#include <string>
 
+struct Devices {
+    int id;
+    std::string alias;
+    std::string name;
+};
 
-int main() {
-
-    ApiService();
-    return 0;
-}
+#endif //DEVICES
