@@ -26,6 +26,7 @@ int main(int argc, char **argv) {
 }
  */
 
+
 #include <iostream>
 #include "remote/network/daos/DevicesDao.h"
 #include "string"

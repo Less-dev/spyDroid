@@ -29,7 +29,7 @@ add_executable(spydroid
   app/src/main/net/spydroid/desktop/models/VncData.h
   app/src/main/net/spydroid/desktop/data/colors.cpp
   app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
-  app/src/main/net/spydroid/desktop/remote/network/daos/DevicesDao.cpp
+  app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp
   
 )
 

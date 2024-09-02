@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "DevicesDao.h"
+#include "../daos/DevicesDao.h"
 
 std::vector<Devices> DevicesDaoImpl::getDevices() const {
     return apiService.getDevices();
