@@ -35,6 +35,8 @@ int main(int argc, char **argv) {
 int main() {
 
     DevicesRepositoryImp devicesRepository;
+
+    // Get all devices
     std::vector<DevicesHandler> devices = devicesRepository.getDevices();
 
 
@@ -49,7 +51,7 @@ int main() {
                std::endl;
     }
 
-    // Obtener un dispositivo específico
+    // Get specific device from api
     std::string alias = "ALIAS_3";
     std::vector<DevicesHandler> device = devicesRepository.getDevice(alias);
     std::cout << std::string(40, '-') << std::endl;
