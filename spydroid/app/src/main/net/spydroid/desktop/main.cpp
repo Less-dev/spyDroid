@@ -26,22 +26,43 @@ int main(int argc, char **argv) {
 }
  */
 
-
-#include "remote/network/api/ApiService.h"
 #include <iostream>
-#include "remote/network/models/Devices.h"
+#include "remote/network/daos/DevicesDao.h"
 #include "string"
 
 int main() {
 
-    ApiService apiService;
-    
-    std::string alias = "ALL";
+    DevicesDaoImpl devicesDao;
 
-    std::vector<Devices> devices = apiService.getDevice(alias);
+    // Obtener todos los dispositivos
+    std::vector<Devices> devices = devicesDao.getDevices();
 
     for (const auto& device : devices) {
-        std::cout << "ID: " << device.id << ", Alias: " << device.alias << ", Name: " << device.name << std::endl;
+        std::cout <<
+         "ID: " <<
+          device.id <<
+           ", Alias: " <<
+            device.alias <<
+             ", Name: " <<
+              device.name <<
+               std::endl;
+    }
+
+    // Obtener un dispositivo específico
+    std::string alias = "ALIAS_3";
+    std::vector<Devices> device = devicesDao.getDevice(alias);
+
+    std::cout << std::string(40, '-') << std::endl;
+
+    for (const auto& device : device) {
+        std::cout << 
+        "ID: " <<
+         device.id <<
+          ", Alias: " <<
+           device.alias <<
+            ", Name: " <<
+             device.name <<
+              std::endl;
     }
     return 0;
 }

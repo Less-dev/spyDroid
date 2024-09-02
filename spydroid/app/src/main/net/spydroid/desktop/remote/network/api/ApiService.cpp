@@ -35,7 +35,7 @@ size_t WriteCallback(void* contents,
 }
 
 
-std::vector<Devices> ApiService::getDevices() {
+std::vector<Devices> ApiService::getDevices() const {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -76,7 +76,7 @@ std::vector<Devices> ApiService::getDevices() {
 
 
 
-std::vector<Devices> ApiService::getDevice(const std::string& alias) {
+std::vector<Devices> ApiService::getDevice(const std::string& alias) const {
     CURL* curl;
     CURLcode res;
     std::string readBuffer;
@@ -85,7 +85,7 @@ std::vector<Devices> ApiService::getDevice(const std::string& alias) {
 
     if(curl) {
         std::string url = "http://localhost:8080/devices?access_token=iygad7618wg8y1f7fgvas71f671&search=" + alias;
-        std::cout << url << std::endl;
+        //std::cout << url << std::endl;
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);

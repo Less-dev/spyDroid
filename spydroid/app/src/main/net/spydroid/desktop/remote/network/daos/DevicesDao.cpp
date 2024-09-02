@@ -15,20 +15,12 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#include "DevicesDao.h"
 
-#include <cstddef>
-#include <string>
-#include "../models/Devices.h"
-#include <vector>
+std::vector<Devices> DevicesDaoImpl::getDevices() const {
+    return apiService.getDevices();
+}
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
-
-class ApiService {
-public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-};
-
-#endif // API_SERVICE_H
+std::vector<Devices> DevicesDaoImpl::getDevice(const std::string& alias) const {
+    return apiService.getDevice(alias);
+}
