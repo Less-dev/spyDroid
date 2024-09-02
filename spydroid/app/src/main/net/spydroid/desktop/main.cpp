@@ -28,15 +28,15 @@ int main(int argc, char **argv) {
 
 
 #include <iostream>
-#include "remote/network/daos/DevicesDao.h"
 #include "string"
+#include "remote/domain/DevicesRepository.h"
+#include "remote/models/DevicesHandler.h"
 
 int main() {
 
-    DevicesDaoImpl devicesDao;
+    DevicesRepositoryImp devicesRepository;
+    std::vector<DevicesHandler> devices = devicesRepository.getDevices();
 
-    // Obtener todos los dispositivos
-    std::vector<Devices> devices = devicesDao.getDevices();
 
     for (const auto& device : devices) {
         std::cout <<
@@ -51,8 +51,7 @@ int main() {
 
     // Obtener un dispositivo específico
     std::string alias = "ALIAS_3";
-    std::vector<Devices> device = devicesDao.getDevice(alias);
-
+    std::vector<DevicesHandler> device = devicesRepository.getDevice(alias);
     std::cout << std::string(40, '-') << std::endl;
 
     for (const auto& device : device) {

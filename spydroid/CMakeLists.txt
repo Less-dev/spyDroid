@@ -30,7 +30,8 @@ add_executable(spydroid
   app/src/main/net/spydroid/desktop/data/colors.cpp
   app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
   app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp
-  
+  app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h
+  app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp
 )
 
 if(WIN32 AND NOT CMAKE_BUILD_TYPE STREQUAL "Debug")
