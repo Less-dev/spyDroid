@@ -1,7 +1,7 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/components/goBack.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp \
  /usr/include/stdc-predef.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QPushButton \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qpushbutton.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \

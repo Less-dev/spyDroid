@@ -4,7 +4,7 @@ find_package(jsoncpp REQUIRED)
 # Check Qt5
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
 
-# Cehck Curl 
+# Check Curl 
 find_package(CURL REQUIRED)
 
 set(HEADERS
@@ -14,7 +14,7 @@ set(HEADERS
 
 include_directories(app/src/main/net/spydroid/desktop/presentation)
 
-# Añadir los archivos para el moc (necesario cuando se usa Q_OBJECT)
+# Add files for the moc
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 add_executable(spydroid

@@ -1,7 +1,7 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/home.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/home.cpp \
  /usr/include/stdc-predef.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/home.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/home.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
@@ -298,4 +298,22 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qmap.h \
  /usr/include/c++/11/variant \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
- /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/DevicesRepository.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/../models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/DevicesDao.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/DevicesHandler.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/DevicesHandler.h \
+ /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
+ /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
+ /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
+ /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
+ /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
+ /usr/include/c++/11/bits/locale_facets.tcc \
+ /usr/include/c++/11/bits/basic_ios.tcc \
+ /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
+ /usr/include/c++/11/bits/istream.tcc

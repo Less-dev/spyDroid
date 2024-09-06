@@ -1,5 +1,5 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o: \
- /home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -116,7 +116,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profi
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/profile.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/profile.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
@@ -300,8 +300,8 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profi
  /usr/include/c++/11/variant \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
- /home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
- /home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
  /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
  /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
  /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \

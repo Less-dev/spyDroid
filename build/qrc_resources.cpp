@@ -7,7 +7,7 @@
 *****************************************************************************/
 
 static const unsigned char qt_resource_data[] = {
-  // /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/res/drawable/goBack_ic.png
+  // /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/res/drawable/goBack_ic.png
   0x0,0x0,0x26,0x4c,
   0x89,
   0x50,0x4e,0x47,0xd,0xa,0x1a,0xa,0x0,0x0,0x0,0xd,0x49,0x48,0x44,0x52,0x0,

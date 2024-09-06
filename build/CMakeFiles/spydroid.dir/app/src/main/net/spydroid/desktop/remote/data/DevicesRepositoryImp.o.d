@@ -1,7 +1,7 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp \
  /usr/include/stdc-predef.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/DevicesRepository.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/DevicesRepository.h \
  /usr/include/c++/11/vector /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -120,7 +120,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRep
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/models/Devices.h \
  /usr/include/c++/11/string /usr/include/c++/11/bits/char_traits.h \
  /usr/include/c++/11/cstdint /usr/include/c++/11/bits/localefwd.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++locale.h \
@@ -153,11 +153,11 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRep
  /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
  /usr/include/c++/11/bits/charconv.h \
  /usr/include/c++/11/bits/basic_string.tcc \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/ApiService.h \
  /usr/include/c++/11/cstddef \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/../models/Devices.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/DevicesDao.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/../../models/DevicesHandler.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/../api/ApiService.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../domain/../models/DevicesHandler.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/data/../models/DevicesHandler.h
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/../models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/DevicesDao.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/../../models/DevicesHandler.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/../api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../models/DevicesHandler.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../models/DevicesHandler.h

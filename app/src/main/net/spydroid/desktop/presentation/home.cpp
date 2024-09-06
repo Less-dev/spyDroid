@@ -16,6 +16,8 @@
  */
 
 #include "home.h"
+#include "../remote/domain/DevicesRepository.h"
+#include "iostream"
 
 Home::Home(QWidget *parent) : QWidget(parent)
 {
@@ -49,6 +51,39 @@ Home::Home(QWidget *parent) : QWidget(parent)
 
     // Establecer el layout para esta vista
     this->setLayout(layout);
+
+    DevicesRepositoryImp devicesRepository;
+
+    // Get all devices
+    std::vector<DevicesHandler> devices = devicesRepository.getDevices();
+
+
+    for (const auto& device : devices) {
+        std::cout <<
+         "ID: " <<
+          device.id <<
+           ", Alias: " <<
+            device.alias <<
+             ", Name: " <<
+              device.name <<
+               std::endl;
+    }
+
+    // Get specific device from api
+    std::string alias = "ALIAS_3";
+    std::vector<DevicesHandler> device = devicesRepository.getDevice(alias);
+    std::cout << std::string(40, '-') << std::endl;
+
+    for (const auto& device : device) {
+        std::cout << 
+        "ID: " <<
+         device.id <<
+          ", Alias: " <<
+           device.alias <<
+            ", Name: " <<
+             device.name <<
+              std::endl;
+    }
 }
 
 

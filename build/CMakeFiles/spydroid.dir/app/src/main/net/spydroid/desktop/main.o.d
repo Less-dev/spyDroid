@@ -1,5 +1,5 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/main.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/main.cpp \
  /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QApplication \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qapplication.h \
@@ -305,21 +305,21 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qtextstream.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontiguouscache.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QPushButton \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qpushbutton.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractbutton.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/home.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/home.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLineEdit \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlineedit.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextcursor.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextformat.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/profile.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/profile.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
  /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
  /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
  /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
@@ -332,7 +332,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /usr/include/c++/11/bits/istream.tcc \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QStackedWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstackedwidget.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/res/vnc_viewer.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/res/vnc_viewer.h \
  /usr/include/c++/11/fstream /usr/include/c++/11/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \

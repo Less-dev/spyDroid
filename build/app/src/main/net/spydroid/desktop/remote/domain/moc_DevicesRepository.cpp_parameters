@@ -1,0 +1,4 @@
+-I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation
+-o
+/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/remote/domain/moc_DevicesRepository.cpp
+/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/domain/DevicesRepository.h

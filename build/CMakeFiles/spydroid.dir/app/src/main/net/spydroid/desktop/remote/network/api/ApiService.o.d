@@ -1,5 +1,5 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp \
  /usr/include/stdc-predef.h /usr/include/x86_64-linux-gnu/curl/curl.h \
  /usr/include/x86_64-linux-gnu/curl/curlver.h \
  /usr/include/x86_64-linux-gnu/curl/system.h \
@@ -185,7 +185,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/Api
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/network/api/../models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/../models/Devices.h \
  /usr/include/jsoncpp/json/json.h /usr/include/jsoncpp/json/config.h \
  /usr/include/c++/11/cstddef /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_tempbuf.h \
@@ -222,4 +222,4 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/Api
  /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
  /usr/include/c++/11/stack /usr/include/c++/11/bits/stl_stack.h \
  /usr/include/jsoncpp/json/writer.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h

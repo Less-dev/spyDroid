@@ -1,5 +1,5 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o: \
- /home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/moc_home.cpp \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_home.cpp \
  /usr/include/stdc-predef.h /usr/include/c++/11/memory \
  /usr/include/c++/11/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
@@ -116,7 +116,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.
  /usr/include/c++/11/backward/auto_ptr.h \
  /usr/include/c++/11/pstl/glue_memory_defs.h \
  /usr/include/c++/11/pstl/execution_defs.h \
- /home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/home.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/home.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \

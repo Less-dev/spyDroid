@@ -1,7 +1,7 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/profile.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/profile.cpp \
  /usr/include/stdc-predef.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/profile.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/profile.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QWidget \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtwidgetsglobal.h \
@@ -299,8 +299,8 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.o
  /usr/include/c++/11/variant \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
  /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
  /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
  /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \

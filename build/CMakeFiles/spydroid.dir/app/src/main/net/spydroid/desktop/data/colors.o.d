@@ -1,7 +1,7 @@
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.o: \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/data/colors.cpp \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/data/colors.cpp \
  /usr/include/stdc-predef.h \
- /home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/data/colors.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/data/colors.h \
  /usr/include/FL/Fl.H /usr/include/FL/Fl_Export.H \
  /usr/include/FL/fl_utf8.h /usr/include/FL/Fl_Export.H \
  /usr/include/FL/fl_types.h /usr/include/stdio.h \

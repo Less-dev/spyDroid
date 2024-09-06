@@ -36,7 +36,7 @@
 int main(int argc, char *argv[])
 {
 
-    std::string filePath = "/tmp/vncviewer";
+    std::string filePath = "/tmp/vnc_viewer";
 
     // Verificar si el archivo ya existe
     if (access(filePath.c_str(), F_OK) == -1) {  // F_OK verifica la existencia del archivo

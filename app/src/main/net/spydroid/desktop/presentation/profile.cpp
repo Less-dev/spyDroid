@@ -57,5 +57,5 @@ Profile::Profile(QWidget *parent) : QWidget(parent)
 
 
 void Profile::onConnectToVnc() {
-    system("/tmp/vncviewer | 2>/dev/null");
+    system("/tmp/vnc_viewer &");
 }
