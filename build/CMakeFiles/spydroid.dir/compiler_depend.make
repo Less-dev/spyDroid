@@ -1190,7 +1190,66 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: .
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qmap.h \
   /usr/include/c++/11/variant \
   /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
-  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h
+  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
+  ../app/src/main/net/spydroid/desktop/remote/domain/DevicesRepository.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/models/Devices.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/models/Devices.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/daos/DevicesDao.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  /usr/include/c++/11/iostream \
+  /usr/include/c++/11/ostream \
+  /usr/include/c++/11/ios \
+  /usr/include/c++/11/bits/basic_ios.h \
+  /usr/include/c++/11/bits/locale_facets.h \
+  /usr/include/c++/11/cwctype \
+  /usr/include/wctype.h \
+  /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
+  /usr/include/c++/11/bits/locale_facets.tcc \
+  /usr/include/c++/11/bits/basic_ios.tcc \
+  /usr/include/c++/11/bits/ostream.tcc \
+  /usr/include/c++/11/istream \
+  /usr/include/c++/11/bits/istream.tcc \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTableWidget \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtablewidget.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtableview.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemview.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractscrollarea.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemdelegate.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyleoption.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qlocale.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractspinbox.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtGui/qvalidator.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qregularexpression.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyle.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabbar.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabwidget.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHeaderView \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qheaderview.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScroller \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscroller.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QPointF \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qpoint.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScrollerProperties \
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollerproperties.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QScopedPointer \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qmetatype.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QVariant \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o: app/src/main/net/spydroid/desktop/presentation/moc_home.cpp \
   /usr/include/stdc-predef.h \
@@ -2924,17 +2983,11 @@ CMakeFiles/spydroid.dir/qrc_resources.o: qrc_resources.cpp \
 
 /usr/include/x86_64-linux-gnu/sys/time.h:
 
-/usr/include/x86_64-linux-gnu/bits/socket_type.h:
-
 /usr/include/x86_64-linux-gnu/bits/socket.h:
 
 /usr/include/x86_64-linux-gnu/curl/system.h:
 
 ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp:
-
-../app/src/main/net/spydroid/desktop/remote/network/models/Devices.h:
-
-../app/src/main/net/spydroid/desktop/remote/domain/DevicesRepository.h:
 
 ../app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp:
 
@@ -2945,6 +2998,40 @@ CMakeFiles/spydroid.dir/qrc_resources.o: qrc_resources.cpp \
 app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp:
 
 app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollerproperties.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScroller:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHeaderView:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabwidget.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyle.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtGui/qvalidator.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyleoption.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractscrollarea.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemview.h:
+
+/usr/include/x86_64-linux-gnu/bits/socket_type.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtablewidget.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTableWidget:
+
+../app/src/main/net/spydroid/desktop/remote/network/models/Devices.h:
+
+../app/src/main/net/spydroid/desktop/remote/domain/DevicesRepository.h:
 
 /usr/include/linux/close_range.h:
 
@@ -3000,6 +3087,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/QResource:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemdelegate.h:
+
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlayoutitem.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h:
@@ -3015,6 +3104,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qinputmethod.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/QScopedPointer:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qguiapplication.h:
 
@@ -3152,6 +3243,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qscopedpointer.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtableview.h:
+
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qobject.h:
 
 /usr/include/jsoncpp/json/allocator.h:
@@ -3232,6 +3325,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
 /usr/include/c++/11/bits/uses_allocator.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtCore/QVariant:
+
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qboxlayout.h:
 
 /usr/include/x86_64-linux-gnu/asm/bitsperlong.h:
@@ -3303,6 +3398,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 /usr/include/x86_64-linux-gnu/bits/endian.h:
 
 /usr/include/c++/11/bits/stl_deque.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qheaderview.h:
 
 /usr/include/x86_64-linux-gnu/gnu/stubs.h:
 
@@ -3416,6 +3513,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_timeval.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScrollerProperties:
+
 /usr/include/x86_64-linux-gnu/asm/errno.h:
 
 /usr/include/x86_64-linux-gnu/sys/cdefs.h:
@@ -3481,6 +3580,8 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 /usr/include/c++/11/limits:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qtguiglobal.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h:
 
 /usr/include/asm-generic/bitsperlong.h:
 
@@ -3564,6 +3665,8 @@ qrc_resources.cpp:
 
 /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscroller.h:
+
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qsysinfo.h:
 
 /usr/include/unistd.h:
@@ -3610,6 +3713,8 @@ qrc_resources.cpp:
 
 /usr/include/pthread.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h:
+
 /usr/include/x86_64-linux-gnu/bits/libc-header-start.h:
 
 /usr/include/c++/11/bits/postypes.h:
@@ -3621,6 +3726,8 @@ qrc_resources.cpp:
 /usr/include/linux/posix_types.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qtgui-config.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabbar.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/wint_t.h:
 
@@ -3646,6 +3753,8 @@ qrc_resources.cpp:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qgenericatomic.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtCore/QPointF:
+
 /usr/include/c++/11/bits/erase_if.h:
 
 /usr/include/endian.h:
@@ -3658,6 +3767,8 @@ qrc_resources.cpp:
 
 /usr/include/c++/11/bits/atomic_lockfree_defines.h:
 
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h:
+
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qnumeric.h:
 
 /usr/include/c++/11/bits/charconv.h:
@@ -3669,6 +3780,8 @@ qrc_resources.cpp:
 /usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h:
 
 /usr/include/x86_64-linux-gnu/bits/types/struct_osockaddr.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtCore/qregularexpression.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qsize.h:
 
@@ -3809,6 +3922,8 @@ qrc_resources.cpp:
 /usr/include/c++/11/ext/string_conversions.h:
 
 /usr/include/c++/11/bits/exception_ptr.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractspinbox.h:
 
 /usr/include/x86_64-linux-gnu/qt5/QtCore/qatomic_cxx11.h:
 

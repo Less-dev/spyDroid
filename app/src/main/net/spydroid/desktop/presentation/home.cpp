@@ -18,9 +18,87 @@
 #include "home.h"
 #include "../remote/domain/DevicesRepository.h"
 #include "iostream"
+#include <QTableWidget>
+#include <QHeaderView>
+#include <QScroller>
 
-Home::Home(QWidget *parent) : QWidget(parent)
-{
+
+void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* layout) {
+    // Crear la tabla con el número de filas igual al número de dispositivos y 2 columnas
+    QTableWidget* table = new QTableWidget(static_cast<int>(devices.size()), 2);
+    table->setHorizontalHeaderLabels(QStringList() << "Alias" << "Dispositivo");
+
+    // Poblar la tabla con los datos de dispositivos
+    int row = 0;
+    for (const auto& device : devices) {
+        // Column alias
+        QTableWidgetItem* aliasItem = new QTableWidgetItem(QString::fromStdString(device.alias));
+        aliasItem->setTextAlignment(Qt::AlignLeft | Qt::AlignTop);  // Alinear a la izquierda y arriba
+        aliasItem->setToolTip(QString::fromStdString(device.alias)); // Tooltip con el alias completo
+        table->setItem(row, 0, aliasItem);
+
+        // Column device
+        QTableWidgetItem* nameItem = new QTableWidgetItem(QString::fromStdString(device.name));
+        table->setItem(row, 1, nameItem);
+        aliasItem->setForeground(QBrush(QColor("#FFFFFF")));  // Color alias
+        nameItem->setForeground(QBrush(QColor("#0000FF")));   // Color device
+
+        ++row;
+    }
+
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    table->resizeRowsToContents();
+
+    // Interactive tables
+    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    table->verticalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+
+    // Permission for edit the content
+    table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
+    QPalette palette = table->palette();
+    palette.setColor(QPalette::Base, QColor("#260006"));  // Background
+    table->setPalette(palette);
+    table->setAutoFillBackground(true);
+    table->setBackgroundRole(QPalette::Base);  
+
+    table->setStyleSheet(
+        "QScrollBar:vertical {"
+        "    background: #390009;"
+        "    width: 15px;"
+        "}"
+        "QScrollBar::handle:vertical {"
+        "    background: #A9A9A9;"
+        "    min-height: 20px;"
+        "}"
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
+        "    background: #2E2E2E;"
+        "    height: 0px;"
+        "}"
+        "QScrollBar:horizontal {"
+        "    background: #390009;"
+        "    height: 15px;"
+        "}"
+        "QScrollBar::handle:horizontal {"
+        "    background: #A9A9A9;"
+        "    min-width: 20px;"
+        "}"
+        "QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {"
+        "    background: #390009;"
+        "    width: 0px;"
+        "}"
+
+        "QTableWidget::item:selected {"
+        "    background-color: #390009;"
+        "}"
+    );
+
+    
+    layout->addWidget(table);
+}
+
+
+Home::Home(QWidget *parent) : QWidget(parent) {
     // Establecer las propiedades de la ventana
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
@@ -28,67 +106,28 @@ Home::Home(QWidget *parent) : QWidget(parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
-
-    // Crear el layout vertical
+    // Crear el layout principal
     layout = new QVBoxLayout(this);
-
-    // Crear y configurar el QLabel
-    label = new QLabel("Home", this);
-    label->setAlignment(Qt::AlignCenter);
-
-    // Crear el QPushButton para navegar a la vista Profile
-    button = new QPushButton("Ir a Profile", this);
-    connect(button, &QPushButton::clicked, this, &Home::goToProfile);  // Conectar el botón a la señal `goToProfile`
-
-    // Crear el QLineEdit
-    textField = new QLineEdit(this);
-    textField->setPlaceholderText("Introduce algo aquí");
-
-    // Añadir los widgets al layout
-    layout->addWidget(label);
-    layout->addWidget(button);
-    layout->addWidget(textField);
-
-    // Establecer el layout para esta vista
-    this->setLayout(layout);
 
     DevicesRepositoryImp devicesRepository;
 
-    // Get all devices
+    // Obtener todos los dispositivos
     std::vector<DevicesHandler> devices = devicesRepository.getDevices();
+    this->setLayout(layout);
 
-
-    for (const auto& device : devices) {
-        std::cout <<
-         "ID: " <<
-          device.id <<
-           ", Alias: " <<
-            device.alias <<
-             ", Name: " <<
-              device.name <<
-               std::endl;
-    }
-
-    // Get specific device from api
-    std::string alias = "ALIAS_3";
-    std::vector<DevicesHandler> device = devicesRepository.getDevice(alias);
-    std::cout << std::string(40, '-') << std::endl;
-
-    for (const auto& device : device) {
-        std::cout << 
-        "ID: " <<
-         device.id <<
-          ", Alias: " <<
-           device.alias <<
-            ", Name: " <<
-             device.name <<
-              std::endl;
-    }
+    showDevicesTable(devices, layout);
 }
 
 
 
+
+
     /*
+   // Crear el QPushButton para navegar a la vista Profile
+    button = new QPushButton("Ir a Profile", this);
+    connect(button, &QPushButton::clicked, this, &Home::goToProfile);  // Conectar el botón a la señal `goToProfile`
+
+
         DevicesRepositoryImp devicesRepository;
 
     // Get all devices

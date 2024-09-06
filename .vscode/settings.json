@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "chrono": "cpp"
+        "chrono": "cpp",
+        "qtablewidget": "cpp",
+        "qheaderview": "cpp",
+        "qscroller": "cpp"
     }
 }
