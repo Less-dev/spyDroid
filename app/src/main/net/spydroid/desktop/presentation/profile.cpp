@@ -17,6 +17,7 @@
 
 #include "profile.h"
 #include "../components/goBack.h"
+#include "QString"
 
 Profile::Profile(QWidget *parent) : QWidget(parent)
 {
@@ -57,5 +58,17 @@ Profile::Profile(QWidget *parent) : QWidget(parent)
 
 
 void Profile::onConnectToVnc() {
-    system("/tmp/vnc_viewer &");
+    QString ip = QString::fromStdString(vncData.ip);
+    QString port = QString::number(vncData.port);
+
+    // Crear el comando concatenando la IP y el puerto
+    QString command = 
+        QString("bash -c '/tmp/vnc_viewer %1:%2 &' 2>/dev/null")
+            .arg(ip)
+            .arg(port);
+
+    std::cout << command.toStdString().c_str() << std::endl;      
+
+    // Ejecutar el comando
+    system(command.toStdString().c_str());
 }

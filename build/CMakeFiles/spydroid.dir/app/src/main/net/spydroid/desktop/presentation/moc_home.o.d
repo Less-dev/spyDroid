@@ -299,4 +299,33 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qmap.h \
  /usr/include/c++/11/variant \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
- /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QTableWidget \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtablewidget.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtableview.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemview.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractscrollarea.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qabstractitemmodel.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qitemselectionmodel.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractitemdelegate.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyleoption.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qlocale.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractspinbox.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtGui/qvalidator.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qregularexpression.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qslider.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractslider.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstyle.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabbar.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qtabwidget.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qrubberband.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/DevicesRepository.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/../models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/DevicesDao.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/DevicesHandler.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/DevicesHandler.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/models/DevicesHandler.h

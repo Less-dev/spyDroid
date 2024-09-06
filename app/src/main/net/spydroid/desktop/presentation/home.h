@@ -23,6 +23,9 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
+#include <QTableWidget>
+#include "../remote/domain/DevicesRepository.h"
+#include "../remote/models/DevicesHandler.h"
 
 class Home : public QWidget
 {
@@ -31,14 +34,20 @@ class Home : public QWidget
 public:
     explicit Home(QWidget *parent = nullptr);
 
+private slots:
+    void searchDevice();  // Slot para manejar la búsqueda
+
 signals:
-    void goToProfile();  // Señal para navegar a la vista Profile
+    void goToProfile();
 
 private:
     QVBoxLayout* layout;
     QLabel* label;
     QPushButton* button;
     QLineEdit* textField;
+    QTableWidget* table;
+    DevicesRepository* devicesRepository;
+    std::vector<DevicesHandler> devices;
 };
 
 #endif // HOME_H
