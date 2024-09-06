@@ -173,9 +173,8 @@ void Home::searchDevice() {
 
         if (result.empty()) {
             // Mostrar mensaje si no se encuentra el dispositivo
-            QMessageBox::information(this, "No encontrado", "No se encontró un dispositivo con ese alias.");
-            // Restaurar la tabla con todos los dispositivos si no hay resultados
-            showDevicesTable(devices, layout, table);
+            QMessageBox::information(this, "No encontrado",
+             "No se encontró un dispositivo con ese alias. Escriba 'ALL' para visualizar todos los dispositivos");
         } else {
             // Actualizar la tabla con el resultado de la búsqueda
             showDevicesTable(result, layout, table);
