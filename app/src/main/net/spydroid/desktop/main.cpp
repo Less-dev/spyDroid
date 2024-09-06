@@ -65,6 +65,7 @@ int main(int argc, char *argv[])
     stackedWidget.setCurrentIndex(0);
     stackedWidget.showMaximized();
     stackedWidget.setWindowTitle("Inicio");
+    //stackedWidget.setWindowFlags(Qt::FramelessWindowHint); 
 
     // Conectar la señal para navegar de Home a Profile
     QObject::connect(home, &Home::goToProfile, [&stackedWidget]() {

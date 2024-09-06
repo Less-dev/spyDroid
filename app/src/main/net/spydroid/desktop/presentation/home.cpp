@@ -115,7 +115,16 @@ Home::Home(QWidget *parent) : QWidget(parent) {
     std::vector<DevicesHandler> devices = devicesRepository.getDevices();
     this->setLayout(layout);
 
-    showDevicesTable(devices, layout);
+    if (!devices.empty())
+    {
+        showDevicesTable(devices, layout);
+    } else {
+        label = new QLabel("No se encontró información", this);
+        label->setAlignment(Qt::AlignCenter);
+        label->setStyleSheet("QLabel { color : #ffdae0; }");
+        this->setLayout(layout);
+        layout->addWidget(label);
+    }
 }
 
 
