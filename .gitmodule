@@ -1,0 +1,3 @@
+[submodule "tigervnc"]
+    path = tigervnc
+    url = https://github.com/TigerVNC/tigervnc.git

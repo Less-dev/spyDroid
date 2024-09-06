@@ -1,0 +1,4 @@
+-I/home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation
+-o
+/home/less/SPYDROID/spy/build/app/src/main/net/spydroid/desktop/presentation/moc_home.cpp
+/home/less/SPYDROID/spy/app/src/main/net/spydroid/desktop/presentation/home.h
