@@ -78,6 +78,7 @@ app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp: ../app/src/main/
 	cd /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation && /usr/lib/qt5/bin/moc @/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp_parameters
 
 qrc_resources.cpp: ../app/src/main/net/spydroid/desktop/res/drawable/goBack_ic.png
+qrc_resources.cpp: ../app/src/main/net/spydroid/desktop/res/drawable/play_ic.png
 qrc_resources.cpp: app/src/main/net/spydroid/desktop/resources.qrc.depends
 qrc_resources.cpp: ../app/src/main/net/spydroid/desktop/resources.qrc
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --blue --bold --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Generating qrc_resources.cpp"

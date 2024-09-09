@@ -1304,7 +1304,12 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: .
   /usr/include/x86_64-linux-gnu/qt5/QtCore/qvariant.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMessageBox \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qmessagebox.h \
-  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h
+  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qdialog.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QObject \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/QDebug \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qdebug.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qtextstream.h \
+  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontiguouscache.h
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o: app/src/main/net/spydroid/desktop/presentation/moc_home.cpp \
   /usr/include/stdc-predef.h \

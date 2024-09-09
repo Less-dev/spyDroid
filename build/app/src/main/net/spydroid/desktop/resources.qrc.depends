@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/drawable">
         <file alias ="goBack.png">res/drawable/goBack_ic.png</file>
+        <file alias ="play.png">res/drawable/play_ic.png</file>
     </qresource>
 </RCC>

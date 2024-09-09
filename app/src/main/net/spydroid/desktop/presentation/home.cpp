@@ -21,6 +21,15 @@
 #include <QHeaderView>
 #include <QScroller>
 #include <QMessageBox>
+#include "QObject"
+#include "QDebug"
+
+
+
+void Home::handleVncButtonClick() {
+    // Aquí manejas el clic del botón VNC
+    qDebug() << "Hola Mundo";  // Imprime "Hola Mundo" cuando se presiona el botón
+}
 
 void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* layout, QTableWidget* &table) {
     // Limpiar la tabla existente si ya existe
@@ -30,14 +39,15 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
     }
 
     // Crear una nueva tabla con el número de filas igual al número de dispositivos y 5 columnas
-    table = new QTableWidget(static_cast<int>(devices.size()), 5);
+    table = new QTableWidget(static_cast<int>(devices.size()), 6);
     table->setHorizontalHeaderLabels(
         QStringList() <<
                 "Dispositivo" <<
                 "Nombre" <<
                  "Dirección IP pública" <<
                   "Dirección IP privada" <<
-                   "Localización"
+                   "Localización" <<
+                   "Servidor Vnc"
     );
 
     // Poblar la tabla con los datos de dispositivos
@@ -65,6 +75,32 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
         QTableWidgetItem* location = new QTableWidgetItem(QString::fromStdString(device.location));
         table->setItem(row, 4, location);
 
+        // Nueva columna - Servidor VNC
+
+        if (device.ip_address_private == "192.168.100.212" ||
+            device.ip_address_private == "80.74.124.12") {
+
+            QPushButton* vncButton = new QPushButton();
+            QIcon vncIcon(":/drawable/play.png");  // Asegúrate de que la ruta al ícono sea correcta
+            vncButton->setIcon(vncIcon);
+            vncButton->setIconSize(QSize(20, 20));  // Ajustar el tamaño del ícono
+            vncButton->setFlat(true);  // Botón sin borde
+            table->setCellWidget(row, 5, vncButton);  // Insertar el botón en la celda
+            QObject::connect(vncButton, &QPushButton::clicked, []() {
+                qDebug() << "Hola Mundo";
+            });
+        } else {
+            std::string message = "Servidor apagado";
+            QTableWidgetItem* vncServer = new QTableWidgetItem(
+                QString::fromStdString(message)
+            );
+            vncServer->setForeground(QBrush(QColor("#CB1D11")));
+            table->setItem(row, 5, vncServer);
+        }
+
+
+
+        
         // Estilo y colores
         aliasItem->setForeground(QBrush(QColor("#FFFFFF")));  // Color del alias
         nameItem->setForeground(QBrush(QColor("#0000FF")));   // Color del nombre del dispositivo
@@ -154,7 +190,7 @@ Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
         // Crear la barra superior con campo de texto de búsqueda y botón
         QHBoxLayout* topLayout = new QHBoxLayout();
         textField = new QLineEdit(this);
-        textField->setPlaceholderText("Buscar dispositivo (por alias)...");
+        textField->setPlaceholderText("Buscar dispositivo (por Dispositivo)...");
         textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #390009; }");
         textField->setFixedWidth(400);
 
@@ -193,7 +229,7 @@ void Home::searchDevice() {
     QString searchText = textField->text().trimmed();
 
     if (searchText.isEmpty()) {
-        QMessageBox::warning(this, "Campo vacío", "Por favor, ingrese un alias para buscar.");
+        QMessageBox::warning(this, "Campo vacío", "Por favor, ingrese un dispositivo para buscar.");
     } else {
         // Obtener dispositivo específico basado en el alias
         std::string alias = searchText.toStdString();
@@ -203,10 +239,12 @@ void Home::searchDevice() {
         if (result.empty()) {
             // Mostrar mensaje si no se encuentra el dispositivo
             QMessageBox::information(this, "No encontrado",
-             "No se encontró un dispositivo con ese alias. Escriba 'ALL' para visualizar todos los dispositivos");
+             "No se encontró un dispositivo llamado así. Escriba 'ALL' para visualizar todos los dispositivos");
         } else {
             // Actualizar la tabla con el resultado de la búsqueda
             showDevicesTable(result, layout, table);
         }
     }
 }
+
+

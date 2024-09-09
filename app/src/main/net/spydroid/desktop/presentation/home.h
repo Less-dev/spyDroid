@@ -39,6 +39,7 @@ public:
 
 private slots:
     void searchDevice();  // Slot para manejar la búsqueda
+    void handleVncButtonClick();
 
 signals:
     void goToProfile();
