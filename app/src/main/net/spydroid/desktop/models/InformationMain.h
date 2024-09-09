@@ -15,19 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICES_HANDLER_H
-#define DEVICES_HANDLER_H
+#ifndef INFORMATION_MAIN_H
+#define INFORMATION_MAIN_H
 
-#include <vector>
-#include <string>
+#include <iostream>
+#include "../remote/models/DevicesHandler.h"
+#include "../remote/models/InfoHandler.h"
 
-struct DevicesHandler {
-    int id;
-    std::string alias;
-    std::string name;
-    std::string ip_address_public;
-    std::string ip_address_private;
-    std::string location;
+struct INFORMATION_MAIN {
+    std::vector<DevicesHandler> devicesHandler;
+    std::vector<InfoHandler> infoHandler;
 };
 
-#endif //DEVICES_HANDLER
+#endif // INFORMATION_MAIN_H

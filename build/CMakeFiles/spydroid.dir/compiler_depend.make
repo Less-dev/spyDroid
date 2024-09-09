@@ -838,10 +838,14 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: ../app/src/mai
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
   ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/domain/InfoRepository.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/models/Info.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/daos/InfoDao.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
-  ../app/src/main/net/spydroid/desktop/presentation/profile.h \
-  ../app/src/main/net/spydroid/desktop/components/goBack.h \
-  ../app/src/main/net/spydroid/desktop/models/VncData.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/models/InformationMain.h \
   /usr/include/c++/11/iostream \
   /usr/include/c++/11/ostream \
   /usr/include/c++/11/ios \
@@ -857,6 +861,11 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: ../app/src/mai
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/bits/istream.tcc \
+  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/presentation/profile.h \
+  ../app/src/main/net/spydroid/desktop/components/goBack.h \
+  ../app/src/main/net/spydroid/desktop/models/VncData.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QStackedWidget \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qstackedwidget.h \
   ../app/src/main/net/spydroid/desktop/res/vnc_viewer.h \
@@ -872,15 +881,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: ../app/src/mai
   /usr/include/x86_64-linux-gnu/bits/getopt_posix.h \
   /usr/include/x86_64-linux-gnu/bits/getopt_core.h \
   /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
-  /usr/include/linux/close_range.h \
-  ../app/src/main/net/spydroid/desktop/remote/domain/SmsRepository.h \
-  ../app/src/main/net/spydroid/desktop/remote/network/models/Sms.h \
-  ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
-  ../app/src/main/net/spydroid/desktop/remote/network/daos/SmsDao.h \
-  ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
-  ../app/src/main/net/spydroid/desktop/remote/models/SmsHandler.h \
-  ../app/src/main/net/spydroid/desktop/remote/models/SmsHandler.h \
-  ../app/src/main/net/spydroid/desktop/remote/models/SmsHandler.h
+  /usr/include/linux/close_range.h
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: ../app/src/main/net/spydroid/desktop/presentation/home.cpp \
   /usr/include/stdc-predef.h \
@@ -1260,7 +1261,14 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: .
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
   ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/domain/InfoRepository.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/models/Info.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/daos/InfoDao.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/models/InformationMain.h \
   /usr/include/c++/11/iostream \
   /usr/include/c++/11/ostream \
   /usr/include/c++/11/ios \
@@ -1276,6 +1284,8 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o: .
   /usr/include/c++/11/bits/ostream.tcc \
   /usr/include/c++/11/istream \
   /usr/include/c++/11/bits/istream.tcc \
+  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHeaderView \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qheaderview.h \
   /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScroller \
@@ -1674,7 +1684,31 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
   ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
   ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
-  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h
+  ../app/src/main/net/spydroid/desktop/remote/domain/InfoRepository.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/models/Info.h \
+  ../app/src/main/net/spydroid/desktop/remote/network/daos/InfoDao.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h \
+  ../app/src/main/net/spydroid/desktop/models/InformationMain.h \
+  /usr/include/c++/11/iostream \
+  /usr/include/c++/11/ostream \
+  /usr/include/c++/11/ios \
+  /usr/include/c++/11/bits/basic_ios.h \
+  /usr/include/c++/11/bits/locale_facets.h \
+  /usr/include/c++/11/cwctype \
+  /usr/include/wctype.h \
+  /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
+  /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
+  /usr/include/c++/11/bits/locale_facets.tcc \
+  /usr/include/c++/11/bits/basic_ios.tcc \
+  /usr/include/c++/11/bits/ostream.tcc \
+  /usr/include/c++/11/istream \
+  /usr/include/c++/11/bits/istream.tcc \
+  ../app/src/main/net/spydroid/desktop/remote/models/DevicesHandler.h \
+  ../app/src/main/net/spydroid/desktop/remote/models/InfoHandler.h
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o: app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp \
   /usr/include/stdc-predef.h \
@@ -4172,13 +4206,11 @@ CMakeFiles/spydroid.dir/qrc_resources.o: qrc_resources.cpp \
 
 ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp:
 
+../app/src/main/net/spydroid/desktop/remote/domain/SmsRepository.h:
+
 ../app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp:
 
 ../app/src/main/net/spydroid/desktop/remote/domain/MultimediaRepository.h:
-
-../app/src/main/net/spydroid/desktop/remote/network/daos/InfoDao.h:
-
-../app/src/main/net/spydroid/desktop/remote/domain/InfoRepository.h:
 
 ../app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp:
 
@@ -4190,6 +4222,10 @@ app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp:
 
 app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
+../app/src/main/net/spydroid/desktop/remote/models/SmsHandler.h:
+
+/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMessageBox:
+
 /usr/include/x86_64-linux-gnu/qt5/QtCore/QMetaType:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollerproperties.h:
@@ -4197,12 +4233,6 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScroller:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QHeaderView:
-
-/usr/include/x86_64-linux-gnu/qt5/QtWidgets/QMessageBox:
-
-../app/src/main/net/spydroid/desktop/remote/models/SmsHandler.h:
-
-../app/src/main/net/spydroid/desktop/remote/domain/SmsRepository.h:
 
 /usr/include/linux/close_range.h:
 
@@ -4224,6 +4254,12 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
 /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QStackedWidget:
 
+../app/src/main/net/spydroid/desktop/models/VncData.h:
+
+/usr/include/jsoncpp/json/reader.h:
+
+../app/src/main/net/spydroid/desktop/presentation/profile.h:
+
 /usr/include/c++/11/bits/istream.tcc:
 
 /usr/include/c++/11/bits/ostream.tcc:
@@ -4234,11 +4270,11 @@ app/src/main/net/spydroid/desktop/presentation/moc_home.cpp:
 
 /usr/include/c++/11/ostream:
 
-../app/src/main/net/spydroid/desktop/models/VncData.h:
+../app/src/main/net/spydroid/desktop/models/InformationMain.h:
 
-/usr/include/jsoncpp/json/reader.h:
+../app/src/main/net/spydroid/desktop/remote/network/daos/InfoDao.h:
 
-../app/src/main/net/spydroid/desktop/presentation/profile.h:
+../app/src/main/net/spydroid/desktop/remote/domain/InfoRepository.h:
 
 /usr/include/c++/11/stack:
 

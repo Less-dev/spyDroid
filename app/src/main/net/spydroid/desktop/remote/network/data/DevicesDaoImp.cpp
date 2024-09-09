@@ -28,6 +28,9 @@ std::vector<DevicesHandler> DevicesDaoImpl::getDevices() const {
         handler.id = device.id;
         handler.alias = device.alias;
         handler.name = device.name;
+        handler.ip_address_public = device.ip_address_public;
+        handler.ip_address_private = device.ip_address_private;
+        handler.location = device.location;
         devicesHandlers.push_back(handler);
     }
 
@@ -43,6 +46,9 @@ std::vector<DevicesHandler> DevicesDaoImpl::getDevice(const std::string& alias) 
         handler.id = _device.id;
         handler.alias = _device.alias;
         handler.name = _device.name;
+        handler.ip_address_public = _device.ip_address_public;
+        handler.ip_address_private = _device.ip_address_private;
+        handler.location = _device.location;
         devicesHandlers.push_back(handler);
     }
 

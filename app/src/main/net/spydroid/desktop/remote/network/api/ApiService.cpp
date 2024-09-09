@@ -106,6 +106,9 @@ std::vector<Devices> ApiService::getDevice(const std::string& alias) const {
                     _device.id = device["id"].asInt();
                     _device.alias = device["alias"].asString();
                     _device.name = device["name"].asString();
+                    _device.ip_address_public = device["ip_address_public"].asString();
+                    _device.ip_address_private = device["ip_address_private"].asString();
+                    _device.location = device["location"].asString();
                     devices.push_back(_device);
                 }
             } else {

@@ -25,7 +25,10 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include "../remote/domain/DevicesRepository.h"
+#include "../remote/domain/InfoRepository.h"
 #include "../remote/models/DevicesHandler.h"
+#include "../remote/models/InfoHandler.h"
+#include "../models/InformationMain.h"
 
 class Home : public QWidget
 {

@@ -25,6 +25,9 @@ struct Devices {
     int id;
     std::string alias;
     std::string name;
+    std::string ip_address_public;
+    std::string ip_address_private;
+    std::string location;
 };
 
 #endif //DEVICES

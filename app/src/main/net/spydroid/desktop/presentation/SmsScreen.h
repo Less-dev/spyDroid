@@ -15,19 +15,30 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICES_HANDLER_H
-#define DEVICES_HANDLER_H
+#ifndef SMS_SCREEN_H
+#define SMS_SCREEN_H
 
-#include <vector>
-#include <string>
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QLineEdit>
+#include "../components/goBack.h"
 
-struct DevicesHandler {
-    int id;
-    std::string alias;
-    std::string name;
-    std::string ip_address_public;
-    std::string ip_address_private;
-    std::string location;
+class Profile : public QWidget
+{
+    Q_OBJECT
+
+public:
+    explicit Profile(QWidget *parent = nullptr);
+
+signals:
+    void goToHome();  // Señal para navegar a la vista Home
+
+private:
+    QPushButton* backPage;
+    QVBoxLayout* layout;
+    QLabel* label;
 };
 
-#endif //DEVICES_HANDLER
+#endif // SMS_SCREEN_H

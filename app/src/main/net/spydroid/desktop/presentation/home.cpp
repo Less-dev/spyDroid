@@ -16,7 +16,6 @@
  */
 
 #include "home.h"
-#include "../remote/domain/DevicesRepository.h"
 #include <iostream>
 #include <QTableWidget>
 #include <QHeaderView>
@@ -32,8 +31,15 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
     }
 
     // Crear una nueva tabla con el número de filas igual al número de dispositivos y 2 columnas
-    table = new QTableWidget(static_cast<int>(devices.size()), 2);
-    table->setHorizontalHeaderLabels(QStringList() << "Alias" << "Dispositivo");
+    table = new QTableWidget(static_cast<int>(devices.size()), 5);
+    table->setHorizontalHeaderLabels(
+        QStringList() <<
+                "Dispositivo" <<
+                "Nombre" <<
+                 "Dirección IP pública" <<
+                  "Dirección IP privdata" <<
+                   "Localización"
+    );
 
     // Poblar la tabla con los datos de dispositivos
     int row = 0;
@@ -48,8 +54,24 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
         QTableWidgetItem* nameItem = new QTableWidgetItem(QString::fromStdString(device.name));
         table->setItem(row, 1, nameItem);
 
+        // Columna ip publica
+        QTableWidgetItem* ipAddressPublic = new QTableWidgetItem(QString::fromStdString(device.ip_address_public));
+        table->setItem(row, 2, ipAddressPublic);
+
+        // Columna ip privada
+        QTableWidgetItem* ipAddressPrivate = new QTableWidgetItem(QString::fromStdString(device.ip_address_private));
+        table->setItem(row, 3, ipAddressPrivate);
+
+        // Columna coordenadas geográficas
+        QTableWidgetItem* location = new QTableWidgetItem(QString::fromStdString(device.location));
+        table->setItem(row, 4, location);
+
         aliasItem->setForeground(QBrush(QColor("#FFFFFF")));  // Color del alias
         nameItem->setForeground(QBrush(QColor("#0000FF")));   // Color del nombre del dispositivo
+
+        ipAddressPublic->setForeground(QBrush(QColor("#FFFFFF")));  // Color del IP pública
+        ipAddressPrivate->setForeground(QBrush(QColor("#0000FF")));   // Color del IP Privada
+        location->setForeground(QBrush(QColor("#FFFFFF")));  // Color del location
 
         ++row;
     }
@@ -107,10 +129,12 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
 }
 
 Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
+    
     devicesRepository = new DevicesRepositoryImp();
 
+    std::string ALL = "ALL";
     // Obtener todos los dispositivos
-    devices = devicesRepository->getDevices();
+    devices = devicesRepository->getDevice(ALL);
 
     // Establecer las propiedades de la ventana
     this->setMinimumSize(600, 500);
