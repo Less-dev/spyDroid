@@ -15,26 +15,33 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#ifndef INFO_REPOSITORY_H
+#define INFO_REPOSITORY_H
 
-#include <cstddef>
-#include <string>
 #include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
+#include <memory>
+#include "../network/models/Info.h"
+#include "../network/api/ApiService.h"
+#include "../network/daos/InfoDao.h"
+#include "../models/InfoHandler.h"
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
-
-class ApiService {
+class InfoRepository {
 public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
+    virtual ~InfoRepository() = default;
+
+    
+    virtual std::vector<InfoHandler> getInfo(const std::string& alias) const = 0;
 };
 
-#endif // API_SERVICE_H
+class InfoRepositoryImp: public InfoRepository {
+public:
+
+    InfoRepositoryImp() = default;
+
+    std::vector<InfoHandler> getInfo(const std::string& alias) const override;
+
+private:
+    InfoDaoImpl infoDao;
+};
+
+#endif // INFO_REPOSITORY_H

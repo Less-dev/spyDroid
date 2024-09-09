@@ -139,10 +139,24 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.s: cmake_f
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/data/colors.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.s
 
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: ../app/src/main/net/spydroid/desktop/components/goBack.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.i
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s
+
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o: CMakeFiles/spydroid.dir/flags.make
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o: ../app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.i: cmake_force
@@ -156,7 +170,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/Api
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o: CMakeFiles/spydroid.dir/flags.make
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o: ../app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.i: cmake_force
@@ -167,10 +181,52 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/De
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.s
 
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o: ../app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o: ../app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o: ../app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s
+
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o: CMakeFiles/spydroid.dir/flags.make
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o: ../app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.i: cmake_force
@@ -181,24 +237,52 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRep
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.s
 
-CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: CMakeFiles/spydroid.dir/flags.make
-CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: ../app/src/main/net/spydroid/desktop/components/goBack.cpp
-CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o: ../app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp
 
-CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.i
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i
 
-CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o: ../app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_16) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o: CMakeFiles/spydroid.dir/flags.make
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o: ../app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o: CMakeFiles/spydroid.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_17) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp > CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i
+
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o: CMakeFiles/spydroid.dir/flags.make
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o: app/src/main/net/spydroid/desktop/presentation/moc_home.cpp
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_18) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_home.cpp
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.i: cmake_force
@@ -212,7 +296,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o: CMakeFiles/spydroid.dir/flags.make
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o: app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_19) "Building CXX object CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o -MF CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o.d -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp
 
 CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.i: cmake_force
@@ -226,7 +310,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profi
 CMakeFiles/spydroid.dir/qrc_resources.o: CMakeFiles/spydroid.dir/flags.make
 CMakeFiles/spydroid.dir/qrc_resources.o: qrc_resources.cpp
 CMakeFiles/spydroid.dir/qrc_resources.o: CMakeFiles/spydroid.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Building CXX object CMakeFiles/spydroid.dir/qrc_resources.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_20) "Building CXX object CMakeFiles/spydroid.dir/qrc_resources.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/spydroid.dir/qrc_resources.o -MF CMakeFiles/spydroid.dir/qrc_resources.o.d -o CMakeFiles/spydroid.dir/qrc_resources.o -c /home/less/SPYDROID/c2-desktop/build/qrc_resources.cpp
 
 CMakeFiles/spydroid.dir/qrc_resources.i: cmake_force
@@ -243,10 +327,16 @@ spydroid_OBJECTS = \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o" \
-"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o" \
+"CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o" \
 "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o" \
 "CMakeFiles/spydroid.dir/qrc_resources.o"
@@ -258,10 +348,16 @@ spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o
-spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o
+spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o
 spydroid: CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o
 spydroid: CMakeFiles/spydroid.dir/qrc_resources.o
@@ -272,7 +368,7 @@ spydroid: /usr/lib/x86_64-linux-gnu/libQt5Widgets.so.5.15.3
 spydroid: /usr/lib/x86_64-linux-gnu/libQt5Gui.so.5.15.3
 spydroid: /usr/lib/x86_64-linux-gnu/libQt5Core.so.5.15.3
 spydroid: CMakeFiles/spydroid.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_15) "Linking CXX executable spydroid"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/less/SPYDROID/c2-desktop/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_21) "Linking CXX executable spydroid"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/spydroid.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

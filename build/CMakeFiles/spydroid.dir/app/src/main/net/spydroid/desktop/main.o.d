@@ -339,6 +339,9 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Devices.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/ApiService.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/../models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/../models/Info.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/../models/Multimedia.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/../models/Sms.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/DevicesDao.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../api/ApiService.h \

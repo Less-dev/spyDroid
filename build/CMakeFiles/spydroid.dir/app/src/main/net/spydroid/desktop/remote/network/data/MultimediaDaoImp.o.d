@@ -1,7 +1,7 @@
-CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o: \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp \
+CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o: \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp \
  /usr/include/stdc-predef.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/DevicesDao.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/MultimediaDao.h \
  /usr/include/c++/11/string \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/os_defines.h \
@@ -134,11 +134,11 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/De
  /usr/include/c++/11/bits/stl_vector.h \
  /usr/include/c++/11/bits/stl_bvector.h \
  /usr/include/c++/11/bits/vector.tcc \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../../models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../api/ApiService.h \
  /usr/include/c++/11/cstddef \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../api/../models/Devices.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../api/../models/Info.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../api/../models/Multimedia.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../api/../models/Sms.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../../models/DevicesHandler.h
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../daos/../../models/MultimediaHandler.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/../../models/MultimediaHandler.h

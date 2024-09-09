@@ -15,26 +15,29 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#ifndef MULTIMEDIA_DAO_H
+#define MULTIMEDIA_DAO_H
 
-#include <cstddef>
 #include <string>
 #include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
+#include "../api/ApiService.h"
+#include "../../models/MultimediaHandler.h"
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
 
-class ApiService {
+class MultimediaDao {
 public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
+    virtual ~MultimediaDao() = default;
+    
+    // Método que retorna un dispositivo basado en un alias
+    virtual std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const = 0;
 };
 
-#endif // API_SERVICE_H
+class MultimediaDaoImpl : public MultimediaDao {
+public:
+    MultimediaDaoImpl() = default;
+    std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const override;
+private:
+    ApiService apiService;  // Instancia de ApiService manejada internamente
+};
+
+#endif // MULTIMEDIA_DAO_H

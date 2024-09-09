@@ -15,26 +15,28 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#ifndef INFO_DAO_H
+#define INFO_DAO_H
 
-#include <cstddef>
 #include <string>
 #include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
+#include "../api/ApiService.h"
+#include "../../models/InfoHandler.h"
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
-
-class ApiService {
+class InfoDao {
 public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
+    virtual ~InfoDao() = default;
+    
+    // Método que retorna un dispositivo basado en un alias
+    virtual std::vector<InfoHandler> getInfo(const std::string& alias) const = 0;
 };
 
-#endif // API_SERVICE_H
+class InfoDaoImpl : public InfoDao {
+public:
+    InfoDaoImpl() = default;
+    std::vector<InfoHandler> getInfo(const std::string& alias) const override;
+private:
+    ApiService apiService;  // Instancia de ApiService manejada internamente
+};
+
+#endif // INFO_DAO_H

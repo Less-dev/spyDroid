@@ -15,26 +15,9 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#include "../domain/InfoRepository.h"
+#include "../models/InfoHandler.h"
 
-#include <cstddef>
-#include <string>
-#include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
-
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
-
-class ApiService {
-public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
-};
-
-#endif // API_SERVICE_H
+std::vector<InfoHandler> InfoRepositoryImp::getInfo(const std::string& alias) const {
+    return infoDao.getInfo(alias);
+}

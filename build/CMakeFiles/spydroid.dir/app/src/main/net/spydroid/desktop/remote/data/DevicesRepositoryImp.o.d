@@ -156,6 +156,9 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRep
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/ApiService.h \
  /usr/include/c++/11/cstddef \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/../models/Devices.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/../models/Info.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/../models/Multimedia.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/api/../models/Sms.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/DevicesDao.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/../../models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/../domain/../network/daos/../api/ApiService.h \

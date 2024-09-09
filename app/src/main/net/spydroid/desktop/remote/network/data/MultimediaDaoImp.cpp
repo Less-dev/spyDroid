@@ -15,26 +15,21 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#include "../daos/MultimediaDao.h"
+#include "../../models/MultimediaHandler.h"
 
-#include <cstddef>
-#include <string>
-#include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
+std::vector<MultimediaHandler> MultimediaDaoImpl::getMultimedia(const std::string& alias) const {
+    std::vector<Multimedia> multimedia = apiService.getMultimeida(alias);
+    std::vector<MultimediaHandler> multimediaHandlers;
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
+    for (const Multimedia& _multimedia : multimedia) {
+        MultimediaHandler handler;
+        handler.id = _multimedia.id;
+        handler.alias = _multimedia.alias;
+        handler.routeFile = _multimedia.routeFile;
+        handler.type = _multimedia.type;
+        multimediaHandlers.push_back(handler);
+    }
 
-class ApiService {
-public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
-};
-
-#endif // API_SERVICE_H
+    return multimediaHandlers;
+}

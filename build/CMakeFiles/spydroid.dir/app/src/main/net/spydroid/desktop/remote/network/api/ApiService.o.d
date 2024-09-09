@@ -222,4 +222,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/Api
  /usr/include/c++/11/bits/stl_deque.h /usr/include/c++/11/bits/deque.tcc \
  /usr/include/c++/11/stack /usr/include/c++/11/bits/stl_stack.h \
  /usr/include/jsoncpp/json/writer.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/../models/Info.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/../models/Multimedia.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/../models/Sms.h

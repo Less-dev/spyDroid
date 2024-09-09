@@ -116,3 +116,131 @@ std::vector<Devices> ApiService::getDevice(const std::string& alias) const {
     }
     return devices;
 }
+
+
+std::vector<Info> ApiService::getInfo(const std::string& alias) const {
+    CURL* curl;
+    CURLcode res;
+    std::string readBuffer;
+    std::vector<Info> infor;
+    curl = curl_easy_init();
+
+    if(curl) {
+        std::string url = "http://localhost:8080/info?access_token=iygad7618wg8y1f7fgvas71f671&search=" + alias;
+        //std::cout << url << std::endl;
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        
+        // Get info
+        res = curl_easy_perform(curl);
+    
+        if(res != CURLE_OK) {
+            fprintf(stderr, "failed getting resource: %s\n", curl_easy_strerror(res));
+        } else {
+
+            // Parser Json
+            Json::Reader reader;
+            Json::Value jsonData;
+            if (reader.parse(readBuffer, jsonData)) {
+                for (const auto& info : jsonData) {
+                    Info _info;
+                    _info.id = info["id"].asInt();
+                    _info.alias = info["alias"].asString();
+                    _info.ip_address_public = info["ip_address_public"].asString();
+                    _info.ip_address_private = info["ip_address_private"].asString();
+                    _info.location = info["location"].asString();
+                    infor.push_back(_info);
+                }
+            } else {
+                std::cerr << "Error al parsear JSON" << std::endl;
+            }
+        }
+        curl_easy_cleanup(curl);
+    }
+    return infor;
+}
+
+std::vector<Multimedia> ApiService::getMultimeida (const std::string& alias) const {
+
+    CURL* curl;
+    CURLcode res;
+    std::string readBuffer;
+    std::vector<Multimedia> multir;
+    curl = curl_easy_init();
+
+    if(curl) {
+        std::string url = "http://localhost:8080/multimedia?access_token=iygad7618wg8y1f7fgvas71f671&search=" + alias;
+        //std::cout << url << std::endl;
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        
+        // Get info
+        res = curl_easy_perform(curl);
+    
+        if(res != CURLE_OK) {
+            fprintf(stderr, "failed getting resource: %s\n", curl_easy_strerror(res));
+        } else {
+
+            // Parser Json
+            Json::Reader reader;
+            Json::Value jsonData;
+            if (reader.parse(readBuffer, jsonData)) {
+                for (const auto& multimedia : jsonData) {
+                    Multimedia _multimedia;
+                    _multimedia.id = multimedia["id"].asInt();
+                    _multimedia.alias = multimedia["alias"].asString();
+                    _multimedia.routeFile = multimedia["routeFile"].asString();
+                    _multimedia.type = multimedia["type"].asString();
+                    multir.push_back(_multimedia);
+                }
+            } else {
+                std::cerr << "Error al parsear JSON" << std::endl;
+            }
+        }
+        curl_easy_cleanup(curl);
+    }
+    return multir;
+}
+
+std::vector<Sms> ApiService::getSms(const std::string& alias) const {
+    CURL* curl;
+    CURLcode res;
+    std::string readBuffer;
+    std::vector<Sms> smsr;
+    curl = curl_easy_init();
+
+    if(curl) {
+        std::string url = "http://localhost:8080/sms?access_token=iygad7618wg8y1f7fgvas71f671&search=" + alias;
+        //std::cout << url << std::endl;
+        curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
+        
+        // Get info
+        res = curl_easy_perform(curl);
+    
+        if(res != CURLE_OK) {
+            fprintf(stderr, "failed getting resource: %s\n", curl_easy_strerror(res));
+        } else {
+
+            // Parser Json
+            Json::Reader reader;
+            Json::Value jsonData;
+            if (reader.parse(readBuffer, jsonData)) {
+                for (const auto& sms : jsonData) {
+                    Sms _sms;
+                    _sms.id = sms["id"].asInt();
+                    _sms.alias = sms["alias"].asString();
+                    _sms.sms = sms["sms"].asString();
+                    smsr.push_back(_sms);
+                }
+            } else {
+                std::cerr << "Error al parsear JSON" << std::endl;
+            }
+        }
+        curl_easy_cleanup(curl);
+    }
+    return smsr;
+}

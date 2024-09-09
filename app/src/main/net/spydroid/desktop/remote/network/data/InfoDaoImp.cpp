@@ -15,26 +15,23 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#include "../daos/InfoDao.h"
+#include "../../models/InfoHandler.h"
 
-#include <cstddef>
-#include <string>
-#include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
+std::vector<InfoHandler> InfoDaoImpl::getInfo(const std::string& alias) const {
+    
+    std::vector<Info> info = apiService.getInfo(alias);
+    std::vector<InfoHandler> infoHandlers;
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
+    for (const Info& _info : info) {
+        InfoHandler handler;
+        handler.id = _info.id;
+        handler.alias = _info.alias;
+        handler.ip_address_public = _info.ip_address_public;
+        handler.ip_address_private = _info.ip_address_private;
+        handler.location = _info.location;
+        infoHandlers.push_back(handler);
+    }
 
-class ApiService {
-public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
-};
-
-#endif // API_SERVICE_H
+    return infoHandlers;
+}

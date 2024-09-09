@@ -15,26 +15,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef API_SERVICE_H
-#define API_SERVICE_H
+#include "../daos/SmsDao.h"
+#include "../../models/SmsHandler.h"
 
-#include <cstddef>
-#include <string>
-#include <vector>
-#include "../models/Devices.h"
-#include "../models/Info.h"
-#include "../models/Multimedia.h"
-#include "../models/Sms.h"
+std::vector<SmsHandler> SmsDaoImpl::getSms(const std::string& alias) const {
+    std::vector<Sms> sms = apiService.getSms(alias);
+    std::vector<SmsHandler> smsHandlers;
 
-size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
+    for (const Sms& _sms : sms) {
+        SmsHandler handler;
+        handler.id = _sms.id;
+        handler.alias = _sms.alias;
+        handler.sms = _sms.sms;
+        smsHandlers.push_back(handler);
+    }
 
-class ApiService {
-public:
-    std::vector<Devices> getDevices() const;
-    std::vector<Devices> getDevice(const std::string& alias) const;
-    std::vector<Info> getInfo(const std::string& alias) const;
-    std::vector<Multimedia> getMultimeida(const std::string& alias) const;
-    std::vector<Sms> getSms(const std::string& alias) const;
-};
-
-#endif // API_SERVICE_H
+    return smsHandlers;
+}

@@ -295,6 +295,51 @@ app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.s:
 .PHONY : app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.s
 
 # target to build an object file
+app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s
+.PHONY : app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s
+
+# target to build an object file
 app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o
 .PHONY : app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o
@@ -323,6 +368,51 @@ app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.i:
 app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.s
 .PHONY : app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s
+.PHONY : app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s
 
 # target to build an object file
 qrc_resources.o:
@@ -376,12 +466,30 @@ help:
 	@echo "... app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o"
 	@echo "... app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.i"
 	@echo "... app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.s"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.i"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.s"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.i"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.s"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.i"
+	@echo "... app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.s"
 	@echo "... app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o"
 	@echo "... app/src/main/net/spydroid/desktop/remote/network/api/ApiService.i"
 	@echo "... app/src/main/net/spydroid/desktop/remote/network/api/ApiService.s"
 	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o"
 	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.i"
 	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.s"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.i"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.s"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.i"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.s"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.i"
+	@echo "... app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.s"
 	@echo "... qrc_resources.o"
 	@echo "... qrc_resources.i"
 	@echo "... qrc_resources.s"
