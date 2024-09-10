@@ -227,7 +227,7 @@ void showDevicesTable(
     table->setStyleSheet(
         "QScrollBar:vertical {"
         "    background: #390009;"
-        "    width: 15px;"
+        "    width: 10px;"
         "}"
         "QScrollBar::handle:vertical {"
         "    background: #A9A9A9;"
@@ -239,7 +239,7 @@ void showDevicesTable(
         "}"
         "QScrollBar:horizontal {"
         "    background: #390009;"
-        "    height: 15px;"
+        "    height: 10px;"
         "}"
         "QScrollBar::handle:horizontal {"
         "    background: #A9A9A9;"
