@@ -31,6 +31,7 @@
 #include <cstdlib>
 #include <unistd.h>  
 #include "presentation/HomeScreen.h"
+#include "presentation/SmsScreen.h"
 #include "presentation/MultimediaScreen.h"
 
 int main(int argc, char *argv[])
@@ -53,10 +54,12 @@ int main(int argc, char *argv[])
 
     // Create views 
     HomeScreen* home = new HomeScreen;
+    SmsScreen* sms = new SmsScreen;
     MultimediaScreen* multimedia = new MultimediaScreen;
 
-    stackedWidget.addWidget(home);      // Index 0
+    stackedWidget.addWidget(home);         // Index 0
     stackedWidget.addWidget(multimedia);   // Índex 1
+    stackedWidget.addWidget(sms);          //Index 2
 
     // Show view home primary
     stackedWidget.setCurrentIndex(0);
@@ -65,10 +68,20 @@ int main(int argc, char *argv[])
 
     QObject::connect(home, &HomeScreen::goToMultimedia, [&stackedWidget]() {
         stackedWidget.setCurrentIndex(1);  // Change to view Multimedia
-        stackedWidget.setWindowTitle("Multimedia");
+        stackedWidget.setWindowTitle("Archivos multimedia");
+    });
+
+    QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(2);  // Change to view Sms
+        stackedWidget.setWindowTitle("Mensajes de texto");
     });
 
     QObject::connect(multimedia, &MultimediaScreen::goToHome, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(0);  // Change to view main
+        stackedWidget.setWindowTitle("Información general");
+    });
+
+    QObject::connect(sms, &SmsScreen::goToHome,  [&stackedWidget]() {
         stackedWidget.setCurrentIndex(0);  // Change to view main
         stackedWidget.setWindowTitle("Información general");
     });

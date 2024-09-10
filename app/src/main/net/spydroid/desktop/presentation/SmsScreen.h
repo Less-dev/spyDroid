@@ -24,13 +24,15 @@
 #include <QLabel>
 #include <QLineEdit>
 #include "../components/goBack.h"
+#include "../remote/domain/SmsRepository.h"
+#include "../remote/models/SmsHandler.h"
 
-class Profile : public QWidget
+class SmsScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Profile(QWidget *parent = nullptr);
+    explicit SmsScreen(QWidget *parent = nullptr);
 
 signals:
     void goToHome();  // Señal para navegar a la vista Home
@@ -39,6 +41,8 @@ private:
     QPushButton* backPage;
     QVBoxLayout* layout;
     QLabel* label;
+    SmsRepository* smsRepository;
+    std::vector<SmsHandler> smsHandler;
 };
 
 #endif // SMS_SCREEN_H

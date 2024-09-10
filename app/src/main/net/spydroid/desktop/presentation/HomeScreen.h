@@ -43,6 +43,7 @@ private slots:
 
 signals:
     void goToMultimedia();
+    void goToSms();
 
 private:
     QVBoxLayout* layout;

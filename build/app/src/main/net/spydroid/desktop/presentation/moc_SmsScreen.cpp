@@ -21,27 +21,27 @@
 QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
-struct qt_meta_stringdata_Profile_t {
+struct qt_meta_stringdata_SmsScreen_t {
     QByteArrayData data[3];
-    char stringdata0[18];
+    char stringdata0[20];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
-    qptrdiff(offsetof(qt_meta_stringdata_Profile_t, stringdata0) + ofs \
+    qptrdiff(offsetof(qt_meta_stringdata_SmsScreen_t, stringdata0) + ofs \
         - idx * sizeof(QByteArrayData)) \
     )
-static const qt_meta_stringdata_Profile_t qt_meta_stringdata_Profile = {
+static const qt_meta_stringdata_SmsScreen_t qt_meta_stringdata_SmsScreen = {
     {
-QT_MOC_LITERAL(0, 0, 7), // "Profile"
-QT_MOC_LITERAL(1, 8, 8), // "goToHome"
-QT_MOC_LITERAL(2, 17, 0) // ""
+QT_MOC_LITERAL(0, 0, 9), // "SmsScreen"
+QT_MOC_LITERAL(1, 10, 8), // "goToHome"
+QT_MOC_LITERAL(2, 19, 0) // ""
 
     },
-    "Profile\0goToHome\0"
+    "SmsScreen\0goToHome\0"
 };
 #undef QT_MOC_LITERAL
 
-static const uint qt_meta_data_Profile[] = {
+static const uint qt_meta_data_SmsScreen[] = {
 
  // content:
        8,       // revision
@@ -63,10 +63,10 @@ static const uint qt_meta_data_Profile[] = {
        0        // eod
 };
 
-void Profile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
+void SmsScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
 {
     if (_c == QMetaObject::InvokeMetaMethod) {
-        auto *_t = static_cast<Profile *>(_o);
+        auto *_t = static_cast<SmsScreen *>(_o);
         (void)_t;
         switch (_id) {
         case 0: _t->goToHome(); break;
@@ -75,8 +75,8 @@ void Profile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (Profile::*)();
-            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&Profile::goToHome)) {
+            using _t = void (SmsScreen::*)();
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&SmsScreen::goToHome)) {
                 *result = 0;
                 return;
             }
@@ -85,30 +85,30 @@ void Profile::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
     (void)_a;
 }
 
-QT_INIT_METAOBJECT const QMetaObject Profile::staticMetaObject = { {
+QT_INIT_METAOBJECT const QMetaObject SmsScreen::staticMetaObject = { {
     QMetaObject::SuperData::link<QWidget::staticMetaObject>(),
-    qt_meta_stringdata_Profile.data,
-    qt_meta_data_Profile,
+    qt_meta_stringdata_SmsScreen.data,
+    qt_meta_data_SmsScreen,
     qt_static_metacall,
     nullptr,
     nullptr
 } };
 
 
-const QMetaObject *Profile::metaObject() const
+const QMetaObject *SmsScreen::metaObject() const
 {
     return QObject::d_ptr->metaObject ? QObject::d_ptr->dynamicMetaObject() : &staticMetaObject;
 }
 
-void *Profile::qt_metacast(const char *_clname)
+void *SmsScreen::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
-    if (!strcmp(_clname, qt_meta_stringdata_Profile.stringdata0))
+    if (!strcmp(_clname, qt_meta_stringdata_SmsScreen.stringdata0))
         return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 
-int Profile::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
+int SmsScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 {
     _id = QWidget::qt_metacall(_c, _id, _a);
     if (_id < 0)
@@ -126,7 +126,7 @@ int Profile::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void Profile::goToHome()
+void SmsScreen::goToHome()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
 }
