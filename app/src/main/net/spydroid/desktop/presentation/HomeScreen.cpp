@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "home.h"
+#include "HomeScreen.h"
 #include <iostream>
 #include <QTableWidget>
 #include <QHeaderView>
@@ -44,7 +44,7 @@ public:
 };
 
 
-void Home::handleVncButtonClick() {
+void HomeScreen::handleVncButtonClick() {
     qDebug() << "Hola Mundo";
 }
 
@@ -266,7 +266,7 @@ void showDevicesTable(
 }
 
 
-void Home::searchDevice() {
+void HomeScreen::searchDevice() {
     QString searchText = textField->text().trimmed();
 
     if (searchText.isEmpty()) {
@@ -290,7 +290,7 @@ void Home::searchDevice() {
 }
 
 
-Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
+HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
     
     devicesRepository = new DevicesRepositoryImp();
     std::string ALL = "ALL";
@@ -318,8 +318,8 @@ Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
         button->setFixedWidth(150);
 
         // Connect button enter to the textfield
-        connect(button, &QPushButton::clicked, this, &Home::searchDevice);
-        connect(textField, &QLineEdit::returnPressed, this, &Home::searchDevice);
+        connect(button, &QPushButton::clicked, this, &HomeScreen::searchDevice);
+        connect(textField, &QLineEdit::returnPressed, this, &HomeScreen::searchDevice);
 
         QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         topLayout->addItem(spacer);

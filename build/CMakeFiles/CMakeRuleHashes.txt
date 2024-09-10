@@ -1,4 +1,7 @@
 # Hashes of file build rules.
+a435aa683eb02f693f7908206ba469fd app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.cpp
+6820d5365e24db3a165b2b37fdba6ee7 app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.cpp
+cc9a2b6469fd9c332a127d2c41dc722b app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.cpp
 f1b313d95b5b78bb1d29ec706e637c80 app/src/main/net/spydroid/desktop/presentation/moc_home.cpp
 1a51e7bc744deda446bb1dfd9562a344 app/src/main/net/spydroid/desktop/presentation/moc_profile.cpp
 be2945a2e5ce02f3309f6f0c8a126405 app/src/main/net/spydroid/desktop/remote/domain/moc_DevicesRepository.cpp

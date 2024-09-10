@@ -8,8 +8,10 @@ find_package(Qt5 COMPONENTS Widgets REQUIRED)
 find_package(CURL REQUIRED)
 
 set(HEADERS
-    app/src/main/net/spydroid/desktop/presentation/home.h
-    app/src/main/net/spydroid/desktop/presentation/profile.h
+    app/src/main/net/spydroid/desktop/presentation/HomeScreen.h
+    app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.h
+    app/src/main/net/spydroid/desktop/presentation/SmsScreen.h
+
 )
 
 include_directories(app/src/main/net/spydroid/desktop/presentation)
@@ -19,8 +21,9 @@ qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 
 add_executable(spydroid
   app/src/main/net/spydroid/desktop/main.cpp
-  app/src/main/net/spydroid/desktop/presentation/home.cpp
-  app/src/main/net/spydroid/desktop/presentation/profile.cpp
+  app/src/main/net/spydroid/desktop/presentation/HomeScreen.cpp
+  app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.cpp
+  app/src/main/net/spydroid/desktop/presentation/SmsScreen.cpp
   app/src/main/net/spydroid/desktop/data/colors.cpp
   app/src/main/net/spydroid/desktop/components/goBack.cpp
   app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp

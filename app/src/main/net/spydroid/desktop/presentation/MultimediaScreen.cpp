@@ -15,11 +15,11 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "profile.h"
+#include "MultimediaScreen.h"
 #include "../components/goBack.h"
 #include "QString"
 
-Profile::Profile(QWidget *parent) : QWidget(parent)
+MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 {
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
@@ -40,7 +40,7 @@ Profile::Profile(QWidget *parent) : QWidget(parent)
 
     vncConnect = new QPushButton("Connect to VNC", this);  // Botón para conectar al VNC
 
-    connect(vncConnect, &QPushButton::clicked, this, &Profile::onConnectToVnc);
+    connect(vncConnect, &QPushButton::clicked, this, &MultimediaScreen::onConnectToVnc);
     // Crear el layout vertical
     layout = new QVBoxLayout(this);
 
@@ -57,7 +57,7 @@ Profile::Profile(QWidget *parent) : QWidget(parent)
 }
 
 
-void Profile::onConnectToVnc() {
+void MultimediaScreen::onConnectToVnc() {
     QString ip = QString::fromStdString(vncData.ip);
     QString port = QString::number(vncData.port);
 

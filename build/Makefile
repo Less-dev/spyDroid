@@ -220,64 +220,94 @@ app/src/main/net/spydroid/desktop/main.s:
 .PHONY : app/src/main/net/spydroid/desktop/main.s
 
 # target to build an object file
-app/src/main/net/spydroid/desktop/presentation/home.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.o
-.PHONY : app/src/main/net/spydroid/desktop/presentation/home.o
+app/src/main/net/spydroid/desktop/presentation/HomeScreen.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/HomeScreen.o
+.PHONY : app/src/main/net/spydroid/desktop/presentation/HomeScreen.o
 
 # target to preprocess a source file
-app/src/main/net/spydroid/desktop/presentation/home.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.i
-.PHONY : app/src/main/net/spydroid/desktop/presentation/home.i
+app/src/main/net/spydroid/desktop/presentation/HomeScreen.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/HomeScreen.i
+.PHONY : app/src/main/net/spydroid/desktop/presentation/HomeScreen.i
 
 # target to generate assembly for a file
-app/src/main/net/spydroid/desktop/presentation/home.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/home.s
-.PHONY : app/src/main/net/spydroid/desktop/presentation/home.s
+app/src/main/net/spydroid/desktop/presentation/HomeScreen.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/HomeScreen.s
+.PHONY : app/src/main/net/spydroid/desktop/presentation/HomeScreen.s
 
 # target to build an object file
-app/src/main/net/spydroid/desktop/presentation/moc_home.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.o
-.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_home.o
+app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.o
+.PHONY : app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.o
 
 # target to preprocess a source file
-app/src/main/net/spydroid/desktop/presentation/moc_home.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.i
-.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_home.i
+app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.i
+.PHONY : app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.i
 
 # target to generate assembly for a file
-app/src/main/net/spydroid/desktop/presentation/moc_home.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_home.s
-.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_home.s
+app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.s
+.PHONY : app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.s
 
 # target to build an object file
-app/src/main/net/spydroid/desktop/presentation/moc_profile.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.o
-.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_profile.o
+app/src/main/net/spydroid/desktop/presentation/SmsScreen.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/SmsScreen.o
+.PHONY : app/src/main/net/spydroid/desktop/presentation/SmsScreen.o
 
 # target to preprocess a source file
-app/src/main/net/spydroid/desktop/presentation/moc_profile.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.i
-.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_profile.i
+app/src/main/net/spydroid/desktop/presentation/SmsScreen.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/SmsScreen.i
+.PHONY : app/src/main/net/spydroid/desktop/presentation/SmsScreen.i
 
 # target to generate assembly for a file
-app/src/main/net/spydroid/desktop/presentation/moc_profile.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_profile.s
-.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_profile.s
+app/src/main/net/spydroid/desktop/presentation/SmsScreen.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/SmsScreen.s
+.PHONY : app/src/main/net/spydroid/desktop/presentation/SmsScreen.s
 
 # target to build an object file
-app/src/main/net/spydroid/desktop/presentation/profile.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.o
-.PHONY : app/src/main/net/spydroid/desktop/presentation/profile.o
+app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.o
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.o
 
 # target to preprocess a source file
-app/src/main/net/spydroid/desktop/presentation/profile.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.i
-.PHONY : app/src/main/net/spydroid/desktop/presentation/profile.i
+app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.i
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.i
 
 # target to generate assembly for a file
-app/src/main/net/spydroid/desktop/presentation/profile.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/profile.s
-.PHONY : app/src/main/net/spydroid/desktop/presentation/profile.s
+app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.s
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.o
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.i
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.s
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.o
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.i
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.s
+.PHONY : app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.s
 
 # target to build an object file
 app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o:
@@ -451,18 +481,24 @@ help:
 	@echo "... app/src/main/net/spydroid/desktop/main.o"
 	@echo "... app/src/main/net/spydroid/desktop/main.i"
 	@echo "... app/src/main/net/spydroid/desktop/main.s"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/home.o"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/home.i"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/home.s"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_home.o"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_home.i"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_home.s"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_profile.o"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_profile.i"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_profile.s"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/profile.o"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/profile.i"
-	@echo "... app/src/main/net/spydroid/desktop/presentation/profile.s"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/HomeScreen.o"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/HomeScreen.i"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/HomeScreen.s"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.o"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.i"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.s"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/SmsScreen.o"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/SmsScreen.i"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/SmsScreen.s"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.o"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.i"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.s"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.o"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.i"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.s"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.o"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.i"
+	@echo "... app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.s"
 	@echo "... app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o"
 	@echo "... app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.i"
 	@echo "... app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.s"

@@ -23,8 +23,6 @@
 #include <QResource>
 #include <QDebug>
 #include "components/goBack.h"
-#include "presentation/home.h"
-#include "presentation/profile.h"
 #include <QStackedWidget>
 #include "string"
 #include "res/vnc_viewer.h"
@@ -32,20 +30,20 @@
 #include <fstream>
 #include <cstdlib>
 #include <unistd.h>  
+#include "presentation/HomeScreen.h"
+#include "presentation/MultimediaScreen.h"
 
 int main(int argc, char *argv[])
 {
 
     std::string filePath = "/tmp/vnc_viewer";
 
-    // Verificar si el archivo ya existe
-    if (access(filePath.c_str(), F_OK) == -1) {  // F_OK verifica la existencia del archivo
-        // Solo escribir si el archivo no existe
+    // If file exist
+    if (access(filePath.c_str(), F_OK) == -1) {
         std::ofstream outfile(filePath, std::ios::binary);
         outfile.write(reinterpret_cast<const char*>(vncviewer), vncviewer_len);
         outfile.close();
 
-        // Dar permisos de ejecución
         system(("chmod +x " + filePath).c_str());
     }
 
@@ -53,30 +51,26 @@ int main(int argc, char *argv[])
 
     QStackedWidget stackedWidget; 
 
-    // Crear las vistas Home y Profile
-    Home* home = new Home;
-    Profile* profile = new Profile;
+    // Create views 
+    HomeScreen* home = new HomeScreen;
+    MultimediaScreen* multimedia = new MultimediaScreen;
 
-    // Añadir las vistas al QStackedWidget
-    stackedWidget.addWidget(home);      // Índice 0
-    stackedWidget.addWidget(profile);   // Índice 1
+    stackedWidget.addWidget(home);      // Index 0
+    stackedWidget.addWidget(multimedia);   // Índex 1
 
-    // Mostrar inicialmente la vista Home
+    // Show view home primary
     stackedWidget.setCurrentIndex(0);
     stackedWidget.showMaximized();
-    stackedWidget.setWindowTitle("Inicio");
-    //stackedWidget.setWindowFlags(Qt::FramelessWindowHint); 
+    stackedWidget.setWindowTitle("Información general");
 
-    // Conectar la señal para navegar de Home a Profile
-    QObject::connect(home, &Home::goToProfile, [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(1);  // Cambiar a la vista Profile
-        stackedWidget.setWindowTitle("Perfil");
+    QObject::connect(home, &HomeScreen::goToMultimedia, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(1);  // Change to view Multimedia
+        stackedWidget.setWindowTitle("Multimedia");
     });
 
-    // Conectar la señal para navegar de Profile a Home
-    QObject::connect(profile, &Profile::goToHome, [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(0);  // Cambiar a la vista Home
-        stackedWidget.setWindowTitle("Inicio");
+    QObject::connect(multimedia, &MultimediaScreen::goToHome, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(0);  // Change to view main
+        stackedWidget.setWindowTitle("Información general");
     });
 
     return app.exec();

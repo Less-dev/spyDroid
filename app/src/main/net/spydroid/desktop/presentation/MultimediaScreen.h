@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef PROFILE_H
-#define PROFILE_H
+#ifndef MULTIMEDIA_SCREEN_H
+#define MULTIMEDIA_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -28,12 +28,12 @@
 
 static VncData vncData;
 
-class Profile : public QWidget
+class MultimediaScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Profile(QWidget *parent = nullptr);
+    explicit MultimediaScreen(QWidget *parent = nullptr);
 
 signals:
     void goToHome();  // Señal para navegar a la vista Home
@@ -48,4 +48,4 @@ private:
     QLabel* label;
 };
 
-#endif // PROFILE_H
+#endif // MULTIMEDIA_SCREEN_H

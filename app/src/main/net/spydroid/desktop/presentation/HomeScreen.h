@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOME_H
-#define HOME_H
+#ifndef HomeScreen_H
+#define HomeScreen_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -30,19 +30,19 @@
 #include "../remote/models/InfoHandler.h"
 #include "../models/InformationMain.h"
 
-class Home : public QWidget
+class HomeScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit Home(QWidget *parent = nullptr);
+    explicit HomeScreen(QWidget *parent = nullptr);
 
 private slots:
     void searchDevice();  // Slot para manejar la búsqueda
     void handleVncButtonClick();
 
 signals:
-    void goToProfile();
+    void goToMultimedia();
 
 private:
     QVBoxLayout* layout;
@@ -54,4 +54,4 @@ private:
     std::vector<DevicesHandler> devices;
 };
 
-#endif // HOME_H
+#endif // HomeScreen_H
