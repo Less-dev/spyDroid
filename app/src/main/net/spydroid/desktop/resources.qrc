@@ -6,5 +6,6 @@
         <file alias ="messages.png">res/drawable/messages_ic.png</file>
         <file alias ="multimedia.png">res/drawable/multimedia_ic.png</file>
         <file alias ="contacts.png">res/drawable/contacts_ic.png</file>
+        <file alias ="background.png">res/drawable/background.png</file>
     </qresource>
 </RCC>

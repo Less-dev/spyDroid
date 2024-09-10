@@ -225,6 +225,13 @@ void showDevicesTable(
     
 
     table->setStyleSheet(
+        "QTableWidget {"
+        "    background-image: url(:/drawable/background.png);"
+        "    background-position: center;"
+        "    background-repeat: no-repeat;"
+        "    width: 100px;"
+        "    height: 100px;"
+        "}"
         "QScrollBar:vertical {"
         "    background: #390009;"
         "    width: 10px;"
