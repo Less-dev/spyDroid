@@ -332,13 +332,25 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
         
         showDevicesTable(devices, layout, table);
     } else {
-        // If devies is empty show this
         label = new QLabel("No se encontró información", this);
         label->setAlignment(Qt::AlignCenter);
-        label->setStyleSheet("QLabel { color : #ffdae0; }");
-        layout->addWidget(label);
-    }
+        label->setStyleSheet(
+            "QLabel { "
+            "    color : white; "            
+            "    font-weight: bold; "            
+            "    font-size: 30px; "             
+            "    background-image: url(:/drawable/background.png); "
+            "    background-position: center; " 
+            "    background-repeat: no-repeat; "
+            "    width: 100px; "               
+            "    height: 100px; "   
+            "   padding-bottom: 150px; "            
+            "}"
+        );
 
+        layout->addWidget(label);
+
+    }
     setLayout(layout);
 }
 
