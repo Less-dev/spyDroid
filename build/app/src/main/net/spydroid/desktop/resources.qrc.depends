@@ -2,5 +2,9 @@
     <qresource prefix="/drawable">
         <file alias ="goBack.png">res/drawable/goBack_ic.png</file>
         <file alias ="play.png">res/drawable/play_ic.png</file>
+        <file alias ="apps.png">res/drawable/apps_ic.png</file>
+        <file alias ="messages.png">res/drawable/messages_ic.png</file>
+        <file alias ="multimedia.png">res/drawable/multimedia_ic.png</file>
+        <file alias ="contacts.png">res/drawable/contacts_ic.png</file>
     </qresource>
 </RCC>

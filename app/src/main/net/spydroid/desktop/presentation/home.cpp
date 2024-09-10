@@ -27,65 +27,164 @@
 
 
 void Home::handleVncButtonClick() {
-    // Aquí manejas el clic del botón VNC
-    qDebug() << "Hola Mundo";  // Imprime "Hola Mundo" cuando se presiona el botón
+    qDebug() << "Hola Mundo";
 }
 
-void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* layout, QTableWidget* &table) {
-    // Limpiar la tabla existente si ya existe
+void showDevicesTable(
+    const std::vector<DevicesHandler>& devices,
+    QVBoxLayout* layout,
+    QTableWidget* &table
+) {
+    // Clean table if exist it
     if (table) {
         layout->removeWidget(table);
-        table->deleteLater();  // Eliminar el widget de la tabla
+        table->deleteLater();  // Delete widget of the table
     }
 
-    // Crear una nueva tabla con el número de filas igual al número de dispositivos y 5 columnas
-    table = new QTableWidget(static_cast<int>(devices.size()), 6);
+    // Create table
+    table = new QTableWidget(static_cast<int>(devices.size()), 10);
+    
+    // Title tables
     table->setHorizontalHeaderLabels(
         QStringList() <<
-                "Dispositivo" <<
-                "Nombre" <<
-                 "Dirección IP pública" <<
-                  "Dirección IP privada" <<
-                   "Localización" <<
-                   "Servidor Vnc"
+            "Alias" <<
+            "Nombre" <<
+            "Dirección IP pública" <<
+            "Dirección IP privada" <<
+            "Localización" <<
+            "Mensajes de texto" <<
+            "Multimedia" <<
+            "Apps" <<
+            "Contactos" <<
+            "Servidor Vnc" 
+
     );
 
-    // Poblar la tabla con los datos de dispositivos
+
+    QFont boldFont;
+    boldFont.setBold(true);
+    
     int row = 0;
+    
     for (const auto& device : devices) {
-        // Columna alias
-        QTableWidgetItem* aliasItem = new QTableWidgetItem(QString::fromStdString(device.alias));
-        aliasItem->setTextAlignment(Qt::AlignLeft | Qt::AlignTop);
-        aliasItem->setToolTip(QString::fromStdString(device.alias));
-        table->setItem(row, 0, aliasItem);
 
-        // Columna dispositivo
-        QTableWidgetItem* nameItem = new QTableWidgetItem(QString::fromStdString(device.name));
-        table->setItem(row, 1, nameItem);
+        
+        QLineEdit* alias = new QLineEdit(QString::fromStdString(device.alias));
+        alias->setReadOnly(true); 
+        alias->setFont(boldFont);  
+        alias->setStyleSheet(
+            "QLineEdit { background: transparent; border: none; color: #edff21; }"
+            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
+            ); 
+        
+        table->setCellWidget(row, 0, alias);
 
-        // Columna IP pública
-        QTableWidgetItem* ipAddressPublic = new QTableWidgetItem(QString::fromStdString(device.ip_address_public));
-        table->setItem(row, 2, ipAddressPublic);
 
-        // Columna IP privada
-        QTableWidgetItem* ipAddressPrivate = new QTableWidgetItem(QString::fromStdString(device.ip_address_private));
-        table->setItem(row, 3, ipAddressPrivate);
+        QLineEdit* name = new QLineEdit(QString::fromStdString(device.name));
+        name->setReadOnly(true);
+        name->setStyleSheet(
+            "QLineEdit { background: transparent; border: none; color: #e3e3e3; }"
+            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
+        ); 
+        
+        table->setCellWidget(row, 1, name);
 
-        // Columna coordenadas geográficas
-        QTableWidgetItem* location = new QTableWidgetItem(QString::fromStdString(device.location));
-        table->setItem(row, 4, location);
 
-        // Nueva columna - Servidor VNC
+        QLineEdit* ip_address_public = new QLineEdit(QString::fromStdString(device.ip_address_public));
+        ip_address_public->setReadOnly(true);
+        ip_address_public->setFont(boldFont);  
+        ip_address_public->setStyleSheet(
+            "QLineEdit { background: transparent; border: none; color: #e3e3e3; }"
+            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
+        ); 
+        
+        table->setCellWidget(row, 2, ip_address_public);
+
+        QLineEdit* ip_address_private = new QLineEdit(QString::fromStdString(device.ip_address_private));
+        ip_address_private->setReadOnly(true);
+        ip_address_private->setFont(boldFont);  
+        ip_address_private->setStyleSheet(
+            "QLineEdit { background: transparent; border: none; color: #e3e3e3; }"
+            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
+        ); 
+        
+        table->setCellWidget(row, 3, ip_address_private);
+
+
+        QLineEdit* location = new QLineEdit(QString::fromStdString(device.location));
+        location->setReadOnly(true);
+        location->setStyleSheet(
+           "QLineEdit { background: transparent; border: none; color: #00913f; }"
+            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
+        ); 
+
+        table->setCellWidget(row, 4, location);
+
+
+        QPushButton* messagesButton = new QPushButton();
+        QIcon messagesIcon(":/drawable/messages.png");  
+        
+        messagesButton->setIcon(messagesIcon);
+        messagesButton->setIconSize(QSize(25, 25));  
+        messagesButton->setFlat(true);  
+        
+        table->setCellWidget(row, 5, messagesButton);  
+        QObject::connect(messagesButton, &QPushButton::clicked, []() {
+            qDebug() << "Hola Mundo";
+        });
+
+
+        QPushButton* multimediaButton = new QPushButton();
+        QIcon multimediaIcon(":/drawable/multimedia.png");  
+
+        multimediaButton->setIcon(multimediaIcon);
+        multimediaButton->setIconSize(QSize(30, 30));  
+        multimediaButton->setFlat(true);  
+
+        table->setCellWidget(row, 6, multimediaButton);  
+        QObject::connect(multimediaButton, &QPushButton::clicked, []() {
+            qDebug() << "Hola Mundo";
+        });
+
+
+
+        QPushButton* appsButton = new QPushButton();
+        QIcon appsIcon(":/drawable/apps.png");  
+
+        appsButton->setIcon(appsIcon);
+        appsButton->setIconSize(QSize(25, 25));  
+        appsButton->setFlat(true);  
+        
+        table->setCellWidget(row, 7, appsButton);  
+        QObject::connect(appsButton, &QPushButton::clicked, []() {
+            qDebug() << "Hola Mundo";
+        });
+
+
+        QPushButton* contactsButton = new QPushButton();
+        QIcon contactsIcon(":/drawable/contacts.png");  
+        
+        contactsButton->setIcon(contactsIcon);
+        contactsButton->setIconSize(QSize(25, 25));  
+        contactsButton->setFlat(true);  
+        
+        table->setCellWidget(row, 8, contactsButton);  
+        QObject::connect(contactsButton, &QPushButton::clicked, []() {
+            qDebug() << "Hola Mundo";
+        });
+
 
         if (device.ip_address_private == "192.168.100.212" ||
             device.ip_address_private == "80.74.124.12") {
 
             QPushButton* vncButton = new QPushButton();
-            QIcon vncIcon(":/drawable/play.png");  // Asegúrate de que la ruta al ícono sea correcta
+            QIcon vncIcon(":/drawable/play.png");  
+            
             vncButton->setIcon(vncIcon);
-            vncButton->setIconSize(QSize(20, 20));  // Ajustar el tamaño del ícono
-            vncButton->setFlat(true);  // Botón sin borde
-            table->setCellWidget(row, 5, vncButton);  // Insertar el botón en la celda
+            vncButton->setIconSize(QSize(20, 20));  
+            vncButton->setFlat(true);  
+            
+            table->setCellWidget(row, 9, vncButton);  
             QObject::connect(vncButton, &QPushButton::clicked, []() {
                 qDebug() << "Hola Mundo";
             });
@@ -95,45 +194,36 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
                 QString::fromStdString(message)
             );
             vncServer->setForeground(QBrush(QColor("#CB1D11")));
-            table->setItem(row, 5, vncServer);
+            table->setItem(row, 9, vncServer);
         }
-
-
-
-        
-        // Estilo y colores
-        aliasItem->setForeground(QBrush(QColor("#FFFFFF")));  // Color del alias
-        nameItem->setForeground(QBrush(QColor("#0000FF")));   // Color del nombre del dispositivo
-        ipAddressPublic->setForeground(QBrush(QColor("#FFFFFF")));  // Color de la IP pública
-        ipAddressPrivate->setForeground(QBrush(QColor("#0000FF"))); // Color de la IP privada
-        location->setForeground(QBrush(QColor("#FFFFFF")));  // Color de la localización
 
         ++row;
     }
 
-    // Ajustar tamaño de las columnas al contenido de los encabezados
+
+    table->setSelectionMode(QAbstractItemView::SingleSelection);
+    table->setSelectionBehavior(QAbstractItemView::SelectItems);
+
+    // Resize columns
     for (int col = 0; col < table->columnCount(); ++col) {
         table->resizeColumnToContents(col);
     }
 
-    // Ajustar las filas al contenido
+    // Fit rows to content
     table->resizeRowsToContents();
 
-    // Ajustes interactivos
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Interactive);
 
-    // Deshabilitar la edición de la tabla
+    // Disable table editing
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    // Configurar paleta de colores
     QPalette palette = table->palette();
     palette.setColor(QPalette::Base, QColor("#260006"));
     table->setPalette(palette);
     table->setAutoFillBackground(true);
     table->setBackgroundRole(QPalette::Base);
 
-    // Aplicar estilo a la tabla y a las barras de desplazamiento
     table->setStyleSheet(
         "QScrollBar:vertical {"
         "    background: #390009;"
@@ -162,7 +252,7 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
 
         "QTableWidget::item:selected {"
         "    background-color: #390009;"
-        "}"
+        "}"    
     );
 
     layout->addWidget(table);
@@ -172,49 +262,46 @@ void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* l
 Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
     
     devicesRepository = new DevicesRepositoryImp();
-
     std::string ALL = "ALL";
-    // Obtener todos los dispositivos
     devices = devicesRepository->getDevice(ALL);
 
-    // Establecer las propiedades de la ventana
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
-    pal.setColor(QPalette::Background, QColor("#260006"));  // Fondo oscuro
+    pal.setColor(QPalette::Background, QColor("#260006"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
     layout = new QVBoxLayout(this);
 
     if (!devices.empty()) {
-        // Crear la barra superior con campo de texto de búsqueda y botón
+
+        // Create TextField
         QHBoxLayout* topLayout = new QHBoxLayout();
         textField = new QLineEdit(this);
-        textField->setPlaceholderText("Buscar dispositivo (por Dispositivo)...");
+        textField->setPlaceholderText("Buscar dispositivo (por su alias)...");
         textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #390009; }");
         textField->setFixedWidth(400);
 
+        // Create Button Search
         button = new QPushButton("Buscar", this);
         button->setFixedWidth(150);
 
-        // Conectar el botón y el evento de tecla "Enter" a la función de búsqueda
+        // Connect button enter to the textfield
         connect(button, &QPushButton::clicked, this, &Home::searchDevice);
         connect(textField, &QLineEdit::returnPressed, this, &Home::searchDevice);
 
-        // Añadir un espaciador a la izquierda para alinear a la derecha
         QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         topLayout->addItem(spacer);
 
-        // Añadir el campo de texto y el botón al layout
+        // Add widgets to the view
         topLayout->addWidget(textField);
         topLayout->addWidget(button);
         
         layout->addLayout(topLayout);
         
-        // Mostrar la tabla con dispositivos iniciales
         showDevicesTable(devices, layout, table);
     } else {
-        // Mostrar mensaje si no hay dispositivos
+        // If devies is empty show this
         label = new QLabel("No se encontró información", this);
         label->setAlignment(Qt::AlignCenter);
         label->setStyleSheet("QLabel { color : #ffdae0; }");
@@ -224,24 +311,24 @@ Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
     setLayout(layout);
 }
 
-// Función que maneja la búsqueda de dispositivos
 void Home::searchDevice() {
     QString searchText = textField->text().trimmed();
 
     if (searchText.isEmpty()) {
-        QMessageBox::warning(this, "Campo vacío", "Por favor, ingrese un dispositivo para buscar.");
+        QMessageBox::warning(this, "Campo vacío",
+            "Por favor, ingrese un alias para buscar."
+         );
     } else {
-        // Obtener dispositivo específico basado en el alias
+
         std::string alias = searchText.toStdString();
         std::cout << alias << std::endl;
         std::vector<DevicesHandler> result = devicesRepository->getDevice(searchText.toStdString());
 
         if (result.empty()) {
-            // Mostrar mensaje si no se encuentra el dispositivo
             QMessageBox::information(this, "No encontrado",
-             "No se encontró un dispositivo llamado así. Escriba 'ALL' para visualizar todos los dispositivos");
+                "No se encontró un dispositivo con ese alias llamado así. Escriba 'ALL' para visualizar todos los dispositivos"
+             );
         } else {
-            // Actualizar la tabla con el resultado de la búsqueda
             showDevicesTable(result, layout, table);
         }
     }
