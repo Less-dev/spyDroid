@@ -288,6 +288,8 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_HomeS
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractbutton.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qicon.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qwidget.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLabel \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlabel.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qframe.h \
@@ -331,23 +333,4 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_HomeS
  /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../api/ApiService.h \
  /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/DevicesHandler.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/InfoRepository.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Info.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/InfoDao.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/InfoHandler.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/InfoHandler.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/models/DevicesHandler.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/models/InfoHandler.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../models/InformationMain.h \
- /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
- /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \
- /usr/include/c++/11/bits/locale_facets.h /usr/include/c++/11/cwctype \
- /usr/include/wctype.h /usr/include/x86_64-linux-gnu/bits/wctype-wchar.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_base.h \
- /usr/include/x86_64-linux-gnu/c++/11/bits/ctype_inline.h \
- /usr/include/c++/11/bits/locale_facets.tcc \
- /usr/include/c++/11/bits/basic_ios.tcc \
- /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../models/../remote/models/DevicesHandler.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../models/../remote/models/InfoHandler.h
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../remote/models/DevicesHandler.h

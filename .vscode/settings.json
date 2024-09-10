@@ -64,6 +64,7 @@
         "cinttypes": "cpp",
         "typeinfo": "cpp",
         "variant": "cpp",
-        "qstackedwidget": "cpp"
+        "qstackedwidget": "cpp",
+        "qdebug": "cpp"
     }
 }

@@ -335,6 +335,8 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /usr/include/x86_64-linux-gnu/bits/unistd_ext.h \
  /usr/include/linux/close_range.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/HomeScreen.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/QString \
+ /usr/include/x86_64-linux-gnu/qt5/QtCore/qstring.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QLineEdit \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qlineedit.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextcursor.h \
@@ -370,16 +372,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../api/ApiService.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/DevicesHandler.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/InfoRepository.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Info.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/InfoDao.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/../../models/InfoHandler.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/InfoHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/models/DevicesHandler.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/models/InfoHandler.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../models/InformationMain.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../models/../remote/models/DevicesHandler.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../models/../remote/models/InfoHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/SmsScreen.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/SmsRepository.h \

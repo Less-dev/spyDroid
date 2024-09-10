@@ -18,6 +18,7 @@
 #include "SmsScreen.h"
 #include "../components/goBack.h"
 #include "QString"
+#include "iostream"
 
 SmsScreen::SmsScreen(QWidget *parent) : QWidget(parent)
 {
@@ -42,4 +43,12 @@ SmsScreen::SmsScreen(QWidget *parent) : QWidget(parent)
     layout->addWidget(label);
     // Establecer el layout para esta vista
     this->setLayout(layout);
+}
+
+
+void SmsScreen::setDeviceAlias(const QString& alias) {
+    deviceAlias = alias;
+    
+    // Imprimir el alias en la consola con std::cout
+    std::cout << "Alias del dispositivo: " << alias.toStdString() << std::endl;
 }

@@ -48,7 +48,7 @@ void HomeScreen::handleVncButtonClick() {
     qDebug() << "Hola Mundo";
 }
 
-void showDevicesTable(
+void HomeScreen::showDevicesTable(
     const std::vector<DevicesHandler>& devices,
     QVBoxLayout* layout,
     QTableWidget* &table
@@ -123,10 +123,10 @@ void showDevicesTable(
         messagesButton->setFlat(true);  
         
         table->setCellWidget(row, 5, messagesButton);  
-        QObject::connect(messagesButton, &QPushButton::clicked, []() {
-            qDebug() << "Hola Mundo";
+        
+        QObject::connect(messagesButton, &QPushButton::clicked, [this, device]() {
+            emit goToSms(QString::fromStdString(device.alias));  // Change to Sms and pass alias actual
         });
-
 
         // Multimedia
         QPushButton* multimediaButton = new QPushButton();

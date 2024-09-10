@@ -22,8 +22,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_HomeScreen_t {
-    QByteArrayData data[6];
-    char stringdata0[69];
+    QByteArrayData data[7];
+    char stringdata0[75];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -36,12 +36,13 @@ QT_MOC_LITERAL(0, 0, 10), // "HomeScreen"
 QT_MOC_LITERAL(1, 11, 14), // "goToMultimedia"
 QT_MOC_LITERAL(2, 26, 0), // ""
 QT_MOC_LITERAL(3, 27, 7), // "goToSms"
-QT_MOC_LITERAL(4, 35, 12), // "searchDevice"
-QT_MOC_LITERAL(5, 48, 20) // "handleVncButtonClick"
+QT_MOC_LITERAL(4, 35, 5), // "alias"
+QT_MOC_LITERAL(5, 41, 12), // "searchDevice"
+QT_MOC_LITERAL(6, 54, 20) // "handleVncButtonClick"
 
     },
     "HomeScreen\0goToMultimedia\0\0goToSms\0"
-    "searchDevice\0handleVncButtonClick"
+    "alias\0searchDevice\0handleVncButtonClick"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,15 +61,15 @@ static const uint qt_meta_data_HomeScreen[] = {
 
  // signals: name, argc, parameters, tag, flags
        1,    0,   34,    2, 0x06 /* Public */,
-       3,    0,   35,    2, 0x06 /* Public */,
+       3,    1,   35,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,   36,    2, 0x08 /* Private */,
-       5,    0,   37,    2, 0x08 /* Private */,
+       5,    0,   38,    2, 0x08 /* Private */,
+       6,    0,   39,    2, 0x08 /* Private */,
 
  // signals: parameters
     QMetaType::Void,
-    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,    4,
 
  // slots: parameters
     QMetaType::Void,
@@ -84,7 +85,7 @@ void HomeScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         (void)_t;
         switch (_id) {
         case 0: _t->goToMultimedia(); break;
-        case 1: _t->goToSms(); break;
+        case 1: _t->goToSms((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 2: _t->searchDevice(); break;
         case 3: _t->handleVncButtonClick(); break;
         default: ;
@@ -99,14 +100,13 @@ void HomeScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
             }
         }
         {
-            using _t = void (HomeScreen::*)();
+            using _t = void (HomeScreen::*)(const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&HomeScreen::goToSms)) {
                 *result = 1;
                 return;
             }
         }
     }
-    (void)_a;
 }
 
 QT_INIT_METAOBJECT const QMetaObject HomeScreen::staticMetaObject = { {
@@ -156,9 +156,10 @@ void HomeScreen::goToMultimedia()
 }
 
 // SIGNAL 1
-void HomeScreen::goToSms()
+void HomeScreen::goToSms(const QString & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 1, _a);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

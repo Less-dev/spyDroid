@@ -1,0 +1,97 @@
+[
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/main.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/main.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/HomeScreen.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/HomeScreen.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/HomeScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/SmsScreen.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/SmsScreen.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/SmsScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/data/colors.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/data/colors.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/qrc_resources.o -c /home/less/SPYDROID/c2-desktop/build/qrc_resources.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/build/qrc_resources.cpp"
+}
+]

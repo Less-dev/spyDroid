@@ -71,8 +71,9 @@ int main(int argc, char *argv[])
         stackedWidget.setWindowTitle("Archivos multimedia");
     });
 
-    QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(2);  // Change to view Sms
+    QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget, sms](const QString& alias) {
+        sms->setDeviceAlias(alias);  // Pasar el alias a SmsScreen
+        stackedWidget.setCurrentIndex(2);  // Cambiar a la vista SmsScreen
         stackedWidget.setWindowTitle("Mensajes de texto");
     });
 

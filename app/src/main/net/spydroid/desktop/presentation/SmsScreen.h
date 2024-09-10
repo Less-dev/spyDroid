@@ -33,6 +33,7 @@ class SmsScreen : public QWidget
 
 public:
     explicit SmsScreen(QWidget *parent = nullptr);
+    void setDeviceAlias(const QString& alias);
 
 signals:
     void goToHome();  // Señal para navegar a la vista Home
@@ -43,6 +44,7 @@ private:
     QLabel* label;
     SmsRepository* smsRepository;
     std::vector<SmsHandler> smsHandler;
+    QString deviceAlias;
 };
 
 #endif // SMS_SCREEN_H
