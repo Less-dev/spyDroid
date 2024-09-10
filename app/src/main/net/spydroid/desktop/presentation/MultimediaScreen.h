@@ -34,6 +34,7 @@ class MultimediaScreen : public QWidget
 
 public:
     explicit MultimediaScreen(QWidget *parent = nullptr);
+    void setDeviceAlias(const QString& alias);
 
 signals:
     void goToHome();  // Señal para navegar a la vista Home
@@ -46,6 +47,7 @@ private:
     QPushButton* vncConnect;  // Botón para iniciar la conexión VNC
     QVBoxLayout* layout;
     QLabel* label;
+    QString deviceAlias;
 };
 
 #endif // MULTIMEDIA_SCREEN_H

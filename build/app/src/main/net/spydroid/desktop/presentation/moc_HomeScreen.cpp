@@ -35,14 +35,14 @@ static const qt_meta_stringdata_HomeScreen_t qt_meta_stringdata_HomeScreen = {
 QT_MOC_LITERAL(0, 0, 10), // "HomeScreen"
 QT_MOC_LITERAL(1, 11, 14), // "goToMultimedia"
 QT_MOC_LITERAL(2, 26, 0), // ""
-QT_MOC_LITERAL(3, 27, 7), // "goToSms"
-QT_MOC_LITERAL(4, 35, 5), // "alias"
+QT_MOC_LITERAL(3, 27, 5), // "alias"
+QT_MOC_LITERAL(4, 33, 7), // "goToSms"
 QT_MOC_LITERAL(5, 41, 12), // "searchDevice"
 QT_MOC_LITERAL(6, 54, 20) // "handleVncButtonClick"
 
     },
-    "HomeScreen\0goToMultimedia\0\0goToSms\0"
-    "alias\0searchDevice\0handleVncButtonClick"
+    "HomeScreen\0goToMultimedia\0\0alias\0"
+    "goToSms\0searchDevice\0handleVncButtonClick"
 };
 #undef QT_MOC_LITERAL
 
@@ -60,16 +60,16 @@ static const uint qt_meta_data_HomeScreen[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,   34,    2, 0x06 /* Public */,
-       3,    1,   35,    2, 0x06 /* Public */,
+       1,    1,   34,    2, 0x06 /* Public */,
+       4,    1,   37,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   38,    2, 0x08 /* Private */,
-       6,    0,   39,    2, 0x08 /* Private */,
+       5,    0,   40,    2, 0x08 /* Private */,
+       6,    0,   41,    2, 0x08 /* Private */,
 
  // signals: parameters
-    QMetaType::Void,
-    QMetaType::Void, QMetaType::QString,    4,
+    QMetaType::Void, QMetaType::QString,    3,
+    QMetaType::Void, QMetaType::QString,    3,
 
  // slots: parameters
     QMetaType::Void,
@@ -84,7 +84,7 @@ void HomeScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         auto *_t = static_cast<HomeScreen *>(_o);
         (void)_t;
         switch (_id) {
-        case 0: _t->goToMultimedia(); break;
+        case 0: _t->goToMultimedia((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 1: _t->goToSms((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 2: _t->searchDevice(); break;
         case 3: _t->handleVncButtonClick(); break;
@@ -93,7 +93,7 @@ void HomeScreen::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
         {
-            using _t = void (HomeScreen::*)();
+            using _t = void (HomeScreen::*)(const QString & );
             if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&HomeScreen::goToMultimedia)) {
                 *result = 0;
                 return;
@@ -150,9 +150,10 @@ int HomeScreen::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void HomeScreen::goToMultimedia()
+void HomeScreen::goToMultimedia(const QString & _t1)
 {
-    QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(std::addressof(_t1))) };
+    QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 
 // SIGNAL 1

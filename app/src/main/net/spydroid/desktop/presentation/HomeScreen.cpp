@@ -137,8 +137,8 @@ void HomeScreen::showDevicesTable(
         multimediaButton->setFlat(true);  
 
         table->setCellWidget(row, 6, multimediaButton);  
-        QObject::connect(multimediaButton, &QPushButton::clicked, []() {
-            qDebug() << "Hola Mundo";
+        QObject::connect(multimediaButton, &QPushButton::clicked, [this, device]() {
+            emit goToMultimedia(QString::fromStdString(device.alias));  // Change to Sms and pass alias actual
         });
 
         // Apps

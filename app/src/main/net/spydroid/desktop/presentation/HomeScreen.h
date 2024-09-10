@@ -40,7 +40,7 @@ private slots:
     void handleVncButtonClick();
 
 signals:
-    void goToMultimedia();
+    void goToMultimedia(const QString& alias);
     void goToSms(const QString& alias);
 
 private:

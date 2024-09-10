@@ -18,6 +18,7 @@
 #include "MultimediaScreen.h"
 #include "../components/goBack.h"
 #include "QString"
+#include "iostream"
 
 MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 {
@@ -27,8 +28,6 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     
-
-
 
     backPage = goBack(this, [this]() {
         emit goToHome();
@@ -71,4 +70,11 @@ void MultimediaScreen::onConnectToVnc() {
 
     // Ejecutar el comando
     system(command.toStdString().c_str());
+}
+
+void MultimediaScreen::setDeviceAlias(const QString& alias) {
+    deviceAlias = alias;
+    
+    // Imprimir el alias en la consola con std::cout
+    std::cout << "Alias del dispositivo: " << alias.toStdString() << std::endl;
 }

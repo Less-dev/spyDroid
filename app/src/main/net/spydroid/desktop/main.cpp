@@ -66,15 +66,16 @@ int main(int argc, char *argv[])
     stackedWidget.showMaximized();
     stackedWidget.setWindowTitle("Información general");
 
-    QObject::connect(home, &HomeScreen::goToMultimedia, [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(1);  // Change to view Multimedia
-        stackedWidget.setWindowTitle("Archivos multimedia");
+    QObject::connect(home, &HomeScreen::goToMultimedia, [&stackedWidget, multimedia](const QString& alias) {
+        multimedia->setDeviceAlias(alias);
+        stackedWidget.setCurrentIndex(1);  // Change to view main
+        stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
     });
 
     QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget, sms](const QString& alias) {
         sms->setDeviceAlias(alias);  // Pasar el alias a SmsScreen
         stackedWidget.setCurrentIndex(2);  // Cambiar a la vista SmsScreen
-        stackedWidget.setWindowTitle("Mensajes de texto");
+        stackedWidget.setWindowTitle("Mensajes de texto de " + alias);
     });
 
     QObject::connect(multimedia, &MultimediaScreen::goToHome, [&stackedWidget]() {
