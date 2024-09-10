@@ -23,7 +23,25 @@
 #include <QMessageBox>
 #include "QObject"
 #include "QDebug"
+#include <QStyledItemDelegate>
+#include <QPainter>
 
+class ElidedItemDelegate : public QStyledItemDelegate {
+public:
+    explicit ElidedItemDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
+
+    void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
+        // Get text from celd
+        QString text = index.data(Qt::DisplayRole).toString();
+
+        QString elidedText = option.fontMetrics.elidedText(text, Qt::ElideRight, option.rect.width());
+
+        QStyleOptionViewItem elidedOption(option);
+        elidedOption.text = elidedText;
+
+        QStyledItemDelegate::paint(painter, elidedOption, index);
+    }
+};
 
 
 void Home::handleVncButtonClick() {
@@ -68,59 +86,35 @@ void showDevicesTable(
     
     for (const auto& device : devices) {
 
-        
-        QLineEdit* alias = new QLineEdit(QString::fromStdString(device.alias));
-        alias->setReadOnly(true); 
-        alias->setFont(boldFont);  
-        alias->setStyleSheet(
-            "QLineEdit { background: transparent; border: none; color: #edff21; }"
-            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
-            ); 
-        
-        table->setCellWidget(row, 0, alias);
+        // Alias
+        QTableWidgetItem* aliasItem = new QTableWidgetItem(QString::fromStdString(device.alias));
+        aliasItem->setFont(boldFont); 
+        aliasItem->setForeground(QColor("#edff21"));
+        table->setItem(row, 0, aliasItem);
 
+        // Name
+        QTableWidgetItem* nameItem = new QTableWidgetItem(QString::fromStdString(device.name));
+        nameItem->setForeground(QColor("#e3e3e3"));
+        table->setItem(row, 1, nameItem);
 
-        QLineEdit* name = new QLineEdit(QString::fromStdString(device.name));
-        name->setReadOnly(true);
-        name->setStyleSheet(
-            "QLineEdit { background: transparent; border: none; color: #e3e3e3; }"
-            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
-        ); 
-        
-        table->setCellWidget(row, 1, name);
+        // Public IP Address
+        QTableWidgetItem* ipPublicItem = new QTableWidgetItem(QString::fromStdString(device.ip_address_public));
+        ipPublicItem->setFont(boldFont);
+        ipPublicItem->setForeground(QColor("#e3e3e3"));
+        table->setItem(row, 2, ipPublicItem);
 
+        // Private IP Address
+        QTableWidgetItem* ipPrivateItem = new QTableWidgetItem(QString::fromStdString(device.ip_address_private));
+        ipPrivateItem->setFont(boldFont);
+        ipPrivateItem->setForeground(QColor("#e3e3e3"));
+        table->setItem(row, 3, ipPrivateItem);
 
-        QLineEdit* ip_address_public = new QLineEdit(QString::fromStdString(device.ip_address_public));
-        ip_address_public->setReadOnly(true);
-        ip_address_public->setFont(boldFont);  
-        ip_address_public->setStyleSheet(
-            "QLineEdit { background: transparent; border: none; color: #e3e3e3; }"
-            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
-        ); 
-        
-        table->setCellWidget(row, 2, ip_address_public);
+        // Location
+        QTableWidgetItem* locationItem = new QTableWidgetItem(QString::fromStdString(device.location));
+        locationItem->setForeground(QColor("#00913f"));
+        table->setItem(row, 4, locationItem);
 
-        QLineEdit* ip_address_private = new QLineEdit(QString::fromStdString(device.ip_address_private));
-        ip_address_private->setReadOnly(true);
-        ip_address_private->setFont(boldFont);  
-        ip_address_private->setStyleSheet(
-            "QLineEdit { background: transparent; border: none; color: #e3e3e3; }"
-            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
-        ); 
-        
-        table->setCellWidget(row, 3, ip_address_private);
-
-
-        QLineEdit* location = new QLineEdit(QString::fromStdString(device.location));
-        location->setReadOnly(true);
-        location->setStyleSheet(
-           "QLineEdit { background: transparent; border: none; color: #00913f; }"
-            "QLineEdit::selection { color: #FF6666; background-color: #260006; }"
-        ); 
-
-        table->setCellWidget(row, 4, location);
-
-
+        // Messages
         QPushButton* messagesButton = new QPushButton();
         QIcon messagesIcon(":/drawable/messages.png");  
         
@@ -134,6 +128,7 @@ void showDevicesTable(
         });
 
 
+        // Multimedia
         QPushButton* multimediaButton = new QPushButton();
         QIcon multimediaIcon(":/drawable/multimedia.png");  
 
@@ -146,8 +141,7 @@ void showDevicesTable(
             qDebug() << "Hola Mundo";
         });
 
-
-
+        // Apps
         QPushButton* appsButton = new QPushButton();
         QIcon appsIcon(":/drawable/apps.png");  
 
@@ -161,6 +155,7 @@ void showDevicesTable(
         });
 
 
+        // Contacts
         QPushButton* contactsButton = new QPushButton();
         QIcon contactsIcon(":/drawable/contacts.png");  
         
@@ -173,7 +168,7 @@ void showDevicesTable(
             qDebug() << "Hola Mundo";
         });
 
-
+        // Vnc Server
         if (device.ip_address_private == "192.168.100.212" ||
             device.ip_address_private == "80.74.124.12") {
 
@@ -200,6 +195,7 @@ void showDevicesTable(
         ++row;
     }
 
+    table->setItemDelegate(new ElidedItemDelegate(table));
 
     table->setSelectionMode(QAbstractItemView::SingleSelection);
     table->setSelectionBehavior(QAbstractItemView::SelectItems);
@@ -214,6 +210,9 @@ void showDevicesTable(
 
     table->horizontalHeader()->setSectionResizeMode(QHeaderView::Interactive);
     table->verticalHeader()->setSectionResizeMode(QHeaderView::Interactive);
+    table->horizontalHeader()->setMinimumSectionSize(120); 
+    table->verticalHeader()->setMinimumSectionSize(45);  
+
 
     // Disable table editing
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
@@ -223,6 +222,7 @@ void showDevicesTable(
     table->setPalette(palette);
     table->setAutoFillBackground(true);
     table->setBackgroundRole(QPalette::Base);
+    
 
     table->setStyleSheet(
         "QScrollBar:vertical {"
@@ -231,7 +231,7 @@ void showDevicesTable(
         "}"
         "QScrollBar::handle:vertical {"
         "    background: #A9A9A9;"
-        "    min-height: 20px;"
+        "    min-height: 10px;"
         "}"
         "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {"
         "    background: #2E2E2E;"
@@ -243,7 +243,7 @@ void showDevicesTable(
         "}"
         "QScrollBar::handle:horizontal {"
         "    background: #A9A9A9;"
-        "    min-width: 20px;"
+        "    min-width: 10px;"
         "}"
         "QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {"
         "    background: #390009;"
@@ -256,6 +256,30 @@ void showDevicesTable(
     );
 
     layout->addWidget(table);
+}
+
+
+void Home::searchDevice() {
+    QString searchText = textField->text().trimmed();
+
+    if (searchText.isEmpty()) {
+        QMessageBox::warning(this, "Campo vacío",
+            "Por favor, ingrese un alias para buscar."
+         );
+    } else {
+
+        std::string alias = searchText.toStdString();
+        std::cout << alias << std::endl;
+        std::vector<DevicesHandler> result = devicesRepository->getDevice(searchText.toStdString());
+
+        if (result.empty()) {
+            QMessageBox::information(this, "No encontrado",
+                "No se encontró un dispositivo con ese alias llamado así. Escriba 'ALL' para visualizar todos los dispositivos"
+             );
+        } else {
+            showDevicesTable(result, layout, table);
+        }
+    }
 }
 
 
@@ -311,27 +335,5 @@ Home::Home(QWidget *parent) : QWidget(parent), table(nullptr) {
     setLayout(layout);
 }
 
-void Home::searchDevice() {
-    QString searchText = textField->text().trimmed();
-
-    if (searchText.isEmpty()) {
-        QMessageBox::warning(this, "Campo vacío",
-            "Por favor, ingrese un alias para buscar."
-         );
-    } else {
-
-        std::string alias = searchText.toStdString();
-        std::cout << alias << std::endl;
-        std::vector<DevicesHandler> result = devicesRepository->getDevice(searchText.toStdString());
-
-        if (result.empty()) {
-            QMessageBox::information(this, "No encontrado",
-                "No se encontró un dispositivo con ese alias llamado así. Escriba 'ALL' para visualizar todos los dispositivos"
-             );
-        } else {
-            showDevicesTable(result, layout, table);
-        }
-    }
-}
 
 
