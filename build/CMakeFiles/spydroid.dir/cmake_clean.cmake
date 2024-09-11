@@ -1,6 +1,10 @@
 file(REMOVE_RECURSE
+  "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/CardSms.o"
+  "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/CardSms.o.d"
   "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o"
   "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o.d"
+  "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/moc_CardSms.o"
+  "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/moc_CardSms.o.d"
   "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.o"
   "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/data/colors.o.d"
   "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o"
@@ -37,6 +41,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.o.d"
   "CMakeFiles/spydroid.dir/qrc_resources.o"
   "CMakeFiles/spydroid.dir/qrc_resources.o.d"
+  "app/src/main/net/spydroid/desktop/components/moc_CardSms.cpp"
   "app/src/main/net/spydroid/desktop/presentation/moc_HomeScreen.cpp"
   "app/src/main/net/spydroid/desktop/presentation/moc_MultimediaScreen.cpp"
   "app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.cpp"

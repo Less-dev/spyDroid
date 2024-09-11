@@ -72,21 +72,27 @@ int main(int argc, char *argv[])
         stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
     });
 
-    QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget, sms](const QString& alias) {
-        sms->setDeviceAlias(alias);  // Pasar el alias a SmsScreen
+    QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
+        SmsScreen* newSmsScreen = new SmsScreen(alias);
+    
+        QObject::connect(newSmsScreen, &SmsScreen::goToHome, [&stackedWidget]() {
+            stackedWidget.setCurrentIndex(0);  // Change to home view
+            stackedWidget.setWindowTitle("Información general");
+        });
+    
+        stackedWidget.removeWidget(sms);  // Remover la vista antigua
+        delete sms;  // Eliminar la instancia antigua
+        sms = newSmsScreen;  // Asignar la nueva instancia
+        stackedWidget.addWidget(sms);  // Añadir la nueva vista
         stackedWidget.setCurrentIndex(2);  // Cambiar a la vista SmsScreen
         stackedWidget.setWindowTitle("Mensajes de texto de " + alias);
     });
+
+
 
     QObject::connect(multimedia, &MultimediaScreen::goToHome, [&stackedWidget]() {
         stackedWidget.setCurrentIndex(0);  // Change to view main
         stackedWidget.setWindowTitle("Información general");
     });
-
-    QObject::connect(sms, &SmsScreen::goToHome,  [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(0);  // Change to view main
-        stackedWidget.setWindowTitle("Información general");
-    });
-
     return app.exec();
 }

@@ -11,7 +11,7 @@ set(HEADERS
     app/src/main/net/spydroid/desktop/presentation/HomeScreen.h
     app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.h
     app/src/main/net/spydroid/desktop/presentation/SmsScreen.h
-
+    app/src/main/net/spydroid/desktop/components/CardSms.h
 )
 
 include_directories(app/src/main/net/spydroid/desktop/presentation)
@@ -26,6 +26,7 @@ add_executable(spydroid
   app/src/main/net/spydroid/desktop/presentation/SmsScreen.cpp
   app/src/main/net/spydroid/desktop/data/colors.cpp
   app/src/main/net/spydroid/desktop/components/goBack.cpp
+  app/src/main/net/spydroid/desktop/components/CardSms.cpp
   app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
   app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp
   app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp

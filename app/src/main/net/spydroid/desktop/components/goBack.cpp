@@ -73,7 +73,7 @@ QPushButton* goBack(QWidget* parent, const std::function<void()>& onClick)
     button->setFixedSize(60, 30);
 
     // Eliminar cualquier margen o padding del botón
-    button->setStyleSheet("border: none; padding: 0px;");
+    button->setStyleSheet("border: none; padding: 0px; QPushButton { outline: none; }");
 
     // Conectar la señal de clic con la lambda o función recibida
     QObject::connect(button, &QPushButton::clicked, onClick);

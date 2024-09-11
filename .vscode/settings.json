@@ -65,6 +65,8 @@
         "typeinfo": "cpp",
         "variant": "cpp",
         "qstackedwidget": "cpp",
-        "qdebug": "cpp"
+        "qdebug": "cpp",
+        "qlineedit": "cpp",
+        "qwidget": "cpp"
     }
 }

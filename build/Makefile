@@ -175,6 +175,21 @@ spydroid/fast:
 .PHONY : spydroid/fast
 
 # target to build an object file
+app/src/main/net/spydroid/desktop/components/CardSms.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/CardSms.o
+.PHONY : app/src/main/net/spydroid/desktop/components/CardSms.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/components/CardSms.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/CardSms.i
+.PHONY : app/src/main/net/spydroid/desktop/components/CardSms.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/components/CardSms.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/CardSms.s
+.PHONY : app/src/main/net/spydroid/desktop/components/CardSms.s
+
+# target to build an object file
 app/src/main/net/spydroid/desktop/components/goBack.o:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.o
 .PHONY : app/src/main/net/spydroid/desktop/components/goBack.o
@@ -188,6 +203,21 @@ app/src/main/net/spydroid/desktop/components/goBack.i:
 app/src/main/net/spydroid/desktop/components/goBack.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/goBack.s
 .PHONY : app/src/main/net/spydroid/desktop/components/goBack.s
+
+# target to build an object file
+app/src/main/net/spydroid/desktop/components/moc_CardSms.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/moc_CardSms.o
+.PHONY : app/src/main/net/spydroid/desktop/components/moc_CardSms.o
+
+# target to preprocess a source file
+app/src/main/net/spydroid/desktop/components/moc_CardSms.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/moc_CardSms.i
+.PHONY : app/src/main/net/spydroid/desktop/components/moc_CardSms.i
+
+# target to generate assembly for a file
+app/src/main/net/spydroid/desktop/components/moc_CardSms.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/spydroid.dir/build.make CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/moc_CardSms.s
+.PHONY : app/src/main/net/spydroid/desktop/components/moc_CardSms.s
 
 # target to build an object file
 app/src/main/net/spydroid/desktop/data/colors.o:
@@ -472,9 +502,15 @@ help:
 	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... spydroid"
+	@echo "... app/src/main/net/spydroid/desktop/components/CardSms.o"
+	@echo "... app/src/main/net/spydroid/desktop/components/CardSms.i"
+	@echo "... app/src/main/net/spydroid/desktop/components/CardSms.s"
 	@echo "... app/src/main/net/spydroid/desktop/components/goBack.o"
 	@echo "... app/src/main/net/spydroid/desktop/components/goBack.i"
 	@echo "... app/src/main/net/spydroid/desktop/components/goBack.s"
+	@echo "... app/src/main/net/spydroid/desktop/components/moc_CardSms.o"
+	@echo "... app/src/main/net/spydroid/desktop/components/moc_CardSms.i"
+	@echo "... app/src/main/net/spydroid/desktop/components/moc_CardSms.s"
 	@echo "... app/src/main/net/spydroid/desktop/data/colors.o"
 	@echo "... app/src/main/net/spydroid/desktop/data/colors.i"
 	@echo "... app/src/main/net/spydroid/desktop/data/colors.s"

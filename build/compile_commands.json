@@ -31,6 +31,11 @@
 },
 {
   "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/CardSms.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/CardSms.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/CardSms.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
   "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.o -c /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp",
   "file": "/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp"
 },
@@ -88,6 +93,11 @@
   "directory": "/home/less/SPYDROID/c2-desktop/build",
   "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.cpp",
   "file": "/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/moc_SmsScreen.cpp"
+},
+{
+  "directory": "/home/less/SPYDROID/c2-desktop/build",
+  "command": "/usr/bin/c++ -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB -I/home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation -isystem /usr/include/jsoncpp -isystem /usr/include/x86_64-linux-gnu/qt5 -isystem /usr/include/x86_64-linux-gnu/qt5/QtWidgets -isystem /usr/include/x86_64-linux-gnu/qt5/QtGui -isystem /usr/include/x86_64-linux-gnu/qt5/QtCore -isystem /usr/lib/x86_64-linux-gnu/qt5/mkspecs/linux-g++ -g -fPIC -o CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/components/moc_CardSms.o -c /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/components/moc_CardSms.cpp",
+  "file": "/home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/components/moc_CardSms.cpp"
 },
 {
   "directory": "/home/less/SPYDROID/c2-desktop/build",

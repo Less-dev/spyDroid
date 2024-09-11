@@ -32,8 +32,7 @@ class SmsScreen : public QWidget
     Q_OBJECT
 
 public:
-    explicit SmsScreen(QWidget *parent = nullptr);
-    void setDeviceAlias(const QString& alias);
+    explicit SmsScreen(const QString& alias = "", QWidget *parent = nullptr);  // Constructor con alias
 
 signals:
     void goToHome();  // Señal para navegar a la vista Home

@@ -15,14 +15,16 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+
+
 #include "SmsScreen.h"
 #include "../components/goBack.h"
+#include "../components/CardSms.h"
 #include "QString"
 #include "iostream"
 
-SmsScreen::SmsScreen(QWidget *parent) : QWidget(parent)
+SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), deviceAlias(alias)
 {
-    
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
     pal.setColor(QPalette::Background, QColor("#260006"));  // El mismo color que la ventana principal
@@ -35,20 +37,15 @@ SmsScreen::SmsScreen(QWidget *parent) : QWidget(parent)
 
 
     layout = new QVBoxLayout(this);
-
-    label = new QLabel("Mensajes de texto", this);
-    label->setAlignment(Qt::AlignCenter);
-
     layout->addWidget(backPage);
-    layout->addWidget(label);
-    // Establecer el layout para esta vista
+
+    // Cargar los mensajes basados en el alias pasado
+    smsRepository = new SmsRepositoryImp();
+    std::vector<SmsHandler> smsList = smsRepository->getSms(alias.toStdString());
+
+    for (const auto& smsHandler: smsList) {
+        CardSms* card = new CardSms(smsHandler, this);
+        layout->addWidget(card);
+    }
     this->setLayout(layout);
-}
-
-
-void SmsScreen::setDeviceAlias(const QString& alias) {
-    deviceAlias = alias;
-    
-    // Imprimir el alias en la consola con std::cout
-    std::cout << "Alias del dispositivo: " << alias.toStdString() << std::endl;
 }
