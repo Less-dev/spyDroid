@@ -17,9 +17,8 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QLabel* idLabel;
-    QLabel* aliasLabel;
-    QLabel* smsLabel;
+    QLabel* date;
+    QLabel* sms;
     QVBoxLayout* layout;
 };
 

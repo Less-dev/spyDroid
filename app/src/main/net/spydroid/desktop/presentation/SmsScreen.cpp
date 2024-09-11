@@ -70,7 +70,8 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
 
         // Crear un layout horizontal (QHBoxLayout) para centrar la tarjeta
         QHBoxLayout* hLayout = new QHBoxLayout();
-        hLayout->setAlignment(Qt::AlignCenter);  // Centrar horizontalmente
+        hLayout->setAlignment(Qt::AlignLeft);  // Centrar horizontalmente
+        hLayout->addSpacing(20);  // Ajusta el valor de 20 a la cantidad deseada de padding
 
         // Añadir la tarjeta al layout horizontal
         hLayout->addWidget(card);
