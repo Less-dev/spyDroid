@@ -67,6 +67,7 @@
         "qstackedwidget": "cpp",
         "qdebug": "cpp",
         "qlineedit": "cpp",
-        "qwidget": "cpp"
+        "qwidget": "cpp",
+        "qstring": "cpp"
     }
 }

@@ -16,7 +16,7 @@
  */
 
 #include "MultimediaScreen.h"
-#include "../components/goBack.h"
+#include "../components/GoBack.h"
 #include "QString"
 #include "iostream"
 

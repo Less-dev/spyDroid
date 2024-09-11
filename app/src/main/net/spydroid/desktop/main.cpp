@@ -22,7 +22,7 @@
 #include <QVBoxLayout>
 #include <QResource>
 #include <QDebug>
-#include "components/goBack.h"
+#include "components/GoBack.h"
 #include <QStackedWidget>
 #include "string"
 #include "res/vnc_viewer.h"

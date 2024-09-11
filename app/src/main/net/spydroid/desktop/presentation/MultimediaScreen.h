@@ -23,7 +23,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
-#include "../components/goBack.h"
+#include "../components/GoBack.h"
 #include "../models/VncData.h"
 
 static VncData vncData;

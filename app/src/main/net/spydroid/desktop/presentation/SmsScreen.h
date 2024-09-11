@@ -23,7 +23,7 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
-#include "../components/goBack.h"
+#include "../components/GoBack.h"
 #include "../remote/domain/SmsRepository.h"
 #include "../remote/models/SmsHandler.h"
 

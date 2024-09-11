@@ -1,47 +1,62 @@
-# Check for Json
+# Check for required packages
 find_package(jsoncpp REQUIRED)
-
-# Check Qt5
 find_package(Qt5 COMPONENTS Widgets REQUIRED)
-
-# Check Curl 
 find_package(CURL REQUIRED)
 
+# Define directories
+set(SOURCE_DIR app/src/main/net/spydroid/desktop)
+set(INCLUDE_DIR ${SOURCE_DIR}/presentation)
+
+# Define header files
 set(HEADERS
-    app/src/main/net/spydroid/desktop/presentation/HomeScreen.h
-    app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.h
-    app/src/main/net/spydroid/desktop/presentation/SmsScreen.h
-    app/src/main/net/spydroid/desktop/components/CardSms.h
+    ${INCLUDE_DIR}/HomeScreen.h
+    ${INCLUDE_DIR}/MultimediaScreen.h
+    ${INCLUDE_DIR}/SmsScreen.h
+    ${SOURCE_DIR}/components/CardSms.h
+    ${SOURCE_DIR}/components/GoBack.h
 )
 
-include_directories(app/src/main/net/spydroid/desktop/presentation)
+# Define source files
+set(SOURCES
+    ${SOURCE_DIR}/main.cpp
+    ${INCLUDE_DIR}/HomeScreen.cpp
+    ${INCLUDE_DIR}/MultimediaScreen.cpp
+    ${INCLUDE_DIR}/SmsScreen.cpp
+    ${SOURCE_DIR}/data/colors.cpp
+    ${SOURCE_DIR}/components/GoBack.cpp
+    ${SOURCE_DIR}/components/CardSms.cpp
+    ${SOURCE_DIR}/remote/network/api/ApiService.cpp
+    ${SOURCE_DIR}/remote/network/data/DevicesDaoImp.cpp
+    ${SOURCE_DIR}/remote/network/data/InfoDaoImp.cpp
+    ${SOURCE_DIR}/remote/network/data/MultimediaDaoImp.cpp
+    ${SOURCE_DIR}/remote/network/data/SmsDaoImp.cpp
+    ${SOURCE_DIR}/remote/data/DevicesRepositoryImp.cpp
+    ${SOURCE_DIR}/remote/data/InfoRepositoryImp.cpp
+    ${SOURCE_DIR}/remote/data/MultimediaRepositoryImp.cpp
+    ${SOURCE_DIR}/remote/data/SmsRepositoryImp.cpp
+)
 
-# Add files for the moc
+# Create the executable
+add_executable(spydroid ${SOURCES})
+
+# Add MOC sources
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+target_sources(spydroid PRIVATE ${MOC_SOURCES})
 
-add_executable(spydroid
-  app/src/main/net/spydroid/desktop/main.cpp
-  app/src/main/net/spydroid/desktop/presentation/HomeScreen.cpp
-  app/src/main/net/spydroid/desktop/presentation/MultimediaScreen.cpp
-  app/src/main/net/spydroid/desktop/presentation/SmsScreen.cpp
-  app/src/main/net/spydroid/desktop/data/colors.cpp
-  app/src/main/net/spydroid/desktop/components/goBack.cpp
-  app/src/main/net/spydroid/desktop/components/CardSms.cpp
-  app/src/main/net/spydroid/desktop/remote/network/api/ApiService.cpp
-  app/src/main/net/spydroid/desktop/remote/network/data/DevicesDaoImp.cpp
-  app/src/main/net/spydroid/desktop/remote/network/data/InfoDaoImp.cpp
-  app/src/main/net/spydroid/desktop/remote/network/data/MultimediaDaoImp.cpp
-  app/src/main/net/spydroid/desktop/remote/network/data/SmsDaoImp.cpp
-  app/src/main/net/spydroid/desktop/remote/data/DevicesRepositoryImp.cpp
-  app/src/main/net/spydroid/desktop/remote/data/InfoRepositoryImp.cpp
-  app/src/main/net/spydroid/desktop/remote/data/MultimediaRepositoryImp.cpp
-  app/src/main/net/spydroid/desktop/remote/data/SmsRepositoryImp.cpp
-  ${SOURCES} ${HEADERS} ${MOC_SOURCES}
-)
-
+# Add resources
 qt5_add_resources(RESOURCES app/src/main/net/spydroid/desktop/resources.qrc)
 target_sources(spydroid PRIVATE ${RESOURCES})
 
-target_link_libraries(spydroid ${GETTEXT_LIBRARIES} ${CURL_LIBRARIES} jsoncpp_lib Qt5::Widgets)
+# Link libraries
+target_link_libraries(spydroid
+    ${GETTEXT_LIBRARIES}
+    ${CURL_LIBRARIES}
+    jsoncpp_lib
+    Qt5::Widgets
+)
 
+# Include directories
+target_include_directories(spydroid PRIVATE ${INCLUDE_DIR})
+
+# Install targets
 install(TARGETS spydroid DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})

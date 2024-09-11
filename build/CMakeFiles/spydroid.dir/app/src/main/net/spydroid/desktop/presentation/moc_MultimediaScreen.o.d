@@ -300,7 +300,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/moc_Multi
  /usr/include/c++/11/variant \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
- /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../components/GoBack.h \
  /home/less/SPYDROID/c2-desktop/build/app/src/main/net/spydroid/desktop/presentation/../../../../../../../../app/src/main/net/spydroid/desktop/presentation/../models/VncData.h \
  /usr/include/c++/11/iostream /usr/include/c++/11/ostream \
  /usr/include/c++/11/ios /usr/include/c++/11/bits/basic_ios.h \

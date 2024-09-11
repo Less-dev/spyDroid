@@ -305,7 +305,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qtextstream.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qset.h \
  /usr/include/x86_64-linux-gnu/qt5/QtCore/qcontiguouscache.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/components/GoBack.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QPushButton \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qpushbutton.h \
  /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractbutton.h \
@@ -374,7 +374,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/main.o: \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/models/DevicesHandler.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/SmsScreen.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/GoBack.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/SmsRepository.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Sms.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/daos/SmsDao.h \

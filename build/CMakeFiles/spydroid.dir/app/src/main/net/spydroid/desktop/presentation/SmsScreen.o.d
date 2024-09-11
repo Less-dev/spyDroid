@@ -299,7 +299,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/SmsScreen
  /usr/include/c++/11/variant \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qpen.h \
  /usr/include/x86_64-linux-gnu/qt5/QtGui/qtextoption.h \
- /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/goBack.h \
+ /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../components/GoBack.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/SmsRepository.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/models/Sms.h \
  /home/less/SPYDROID/c2-desktop/app/src/main/net/spydroid/desktop/presentation/../remote/domain/../network/api/ApiService.h \
@@ -325,4 +325,7 @@ CMakeFiles/spydroid.dir/app/src/main/net/spydroid/desktop/presentation/SmsScreen
  /usr/include/c++/11/bits/locale_facets.tcc \
  /usr/include/c++/11/bits/basic_ios.tcc \
  /usr/include/c++/11/bits/ostream.tcc /usr/include/c++/11/istream \
- /usr/include/c++/11/bits/istream.tcc
+ /usr/include/c++/11/bits/istream.tcc \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/QScrollArea \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qscrollarea.h \
+ /usr/include/x86_64-linux-gnu/qt5/QtWidgets/qabstractscrollarea.h

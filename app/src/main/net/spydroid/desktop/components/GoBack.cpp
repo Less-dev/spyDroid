@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "goBack.h"
+#include "GoBack.h"
 #include <QIcon>
 #include <QObject>
 #include <QTimer>
