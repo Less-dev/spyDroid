@@ -1,7 +1,0 @@
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/spydroid.dir
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/edit_cache.dir
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/rebuild_cache.dir
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/list_install_components.dir
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/install.dir
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/install/local.dir
-/home/less/SPYDROID/c2-desktop/build/CMakeFiles/install/strip.dir
