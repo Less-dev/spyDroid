@@ -1,0 +1,36 @@
+build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+makefile
+cmake_install.cmake
+*.cmake
+
+# Files generated 
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+
+# debug
+*.gch
+*.dSYM/
+*.pdb
+
+# FIles id
+.vscode/
+.idea/
+*.swp
+*.swo
+*.sublime-project
+*.sublime-workspace
+
+# system
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
