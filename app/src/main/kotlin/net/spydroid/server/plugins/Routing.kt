@@ -65,9 +65,7 @@ private object BAD_REQUESTS_RESPONSES {
 
 private const val SUCCESSFULL_POST = "Successfully uploaded data"
 
-fun Application.configureRouting() {
-    val validTokens = setOf("iygad7618wg8y1f7fgvas71f671", "otroTokenValido")
-
+fun Application.configureRouting(validTokens: Set<String>) {
     routing {
         devices(validTokens)
         //info(validTokens)

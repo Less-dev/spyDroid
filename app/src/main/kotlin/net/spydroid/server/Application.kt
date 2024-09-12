@@ -31,12 +31,14 @@ fun main(args: Array<String>) {
 }
 
 fun Application.module() {
+    val validTokens = setOf("iygad7618wg8y1f7fgvas71f671", "otroTokenValido")
+
     configurationKoin()
     configureDatabases()
     configureSerialization()
     configureAuthentication()
-    configureRouting()
-    configurationMultipart()
+    configureRouting(validTokens = validTokens)
+    configurationMultipart(validTokens = validTokens)
 }
 
 
