@@ -24,4 +24,7 @@ data class DeviceHandler(
     val id: Int? = 0,
     val alias: String,
     val name: String,
+    val ip_address_public: String,
+    val ip_address_private: String,
+    val location: String,
 )

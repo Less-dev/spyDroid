@@ -70,7 +70,7 @@ fun Application.configureRouting() {
 
     routing {
         devices(validTokens)
-        info(validTokens)
+        //info(validTokens)
         sms(validTokens)
         multimedia(validTokens)
     }
@@ -86,6 +86,18 @@ private fun Route.devices(validTokens: Set<String>) {
 
     val DEVICES_MESSAGES = object {
         val NAME = "Missing Name"
+    }
+
+    val INFO_PARAMAS = object {
+        val IP_PUBLIC = "ip_public"
+        val IP_PRIVATE = "ip_private"
+        val LOCATION = "location"
+    }
+
+    val INFO_MESSAGES = object {
+        val IP_PUBLIC = "Missing Public Ip Address "
+        val IP_PRIVATE = "Missing Private Ip Address"
+        val LOCATION = "Missing Location"
     }
 
     get(Routes.DEVICES) {
@@ -121,12 +133,29 @@ private fun Route.devices(validTokens: Set<String>) {
             HttpStatusCode.BadRequest,
             DEVICES_MESSAGES.NAME
         )
+        val ip_address_public = params[INFO_PARAMAS.IP_PUBLIC] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.IP_PUBLIC
+        )
+
+        val ip_address_private = params[INFO_PARAMAS.IP_PRIVATE] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.IP_PRIVATE
+        )
+
+        val location = params[INFO_PARAMAS.LOCATION] ?: return@post call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.LOCATION
+        )
         if (accessToken in validTokens) {
             this.launch(Dispatchers.IO) {
                 devicesRepository.insert(
                     DeviceHandler(
                         alias = alias,
-                        name = name
+                        name = name,
+                        ip_address_public = ip_address_public,
+                        ip_address_private = ip_address_private,
+                        location = location
                     )
                 )
             }
@@ -161,12 +190,30 @@ private fun Route.devices(validTokens: Set<String>) {
             BAD_REQUESTS_RESPONSES.ACCESS_TOKEN
         )
 
+        val ip_address_public = params[INFO_PARAMAS.IP_PUBLIC] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.IP_PUBLIC
+        )
+
+        val ip_address_private = params[INFO_PARAMAS.IP_PRIVATE] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.IP_PRIVATE
+        )
+
+        val location = params[INFO_PARAMAS.LOCATION] ?: return@put call.respond(
+            HttpStatusCode.BadRequest,
+            INFO_MESSAGES.LOCATION
+        )
+
         if (accessToken in validTokens) {
             try {
                 devicesRepository.update(
                     DeviceHandler(
                         alias = alias,
-                        name = newName
+                        name = newName,
+                        ip_address_public = ip_address_public,
+                        ip_address_private = ip_address_private,
+                        location = location
                     )
                 )
                 call.respond(HttpStatusCode.OK, "Device name updated successfully")
@@ -186,6 +233,7 @@ private fun Route.devices(validTokens: Set<String>) {
 }
 
 
+/*
 private fun Route.info(validTokens: Set<String>) {
 
     val infoRepository: InfoRepository by inject()
@@ -320,6 +368,7 @@ private fun Route.info(validTokens: Set<String>) {
         }
     }
 }
+ */
 
 private fun Route.sms(validTokens: Set<String>) {
 

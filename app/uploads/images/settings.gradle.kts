@@ -15,14 +15,4 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-package net.spydroid.server.db.entities
-
-import org.jetbrains.exposed.sql.Table
-
-object Devices: Table() {
-    val id = integer("id_device").autoIncrement()
-    val alias = varchar("alias", 50)
-    val name = varchar("name", 50)
-    override val primaryKey: PrimaryKey
-        get() = PrimaryKey(id)
-}
+rootProject.name = "net.spydroid.server"
