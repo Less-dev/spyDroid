@@ -34,6 +34,9 @@ class DevicesDaoHandler : DevicesDao {
                     id = it[Devices.id],
                     name = it[Devices.name],
                     alias = it[Devices.alias],
+                    ip_address_public = it[Devices.ip_address_public],
+                    ip_address_private = it[Devices.ip_address_private],
+                    location = it[Devices.location]
                 )
             }
         }
@@ -46,6 +49,9 @@ class DevicesDaoHandler : DevicesDao {
                         id = it[Devices.id],
                         name = it[Devices.name],
                         alias = it[Devices.alias],
+                        ip_address_public = it[Devices.ip_address_public],
+                        ip_address_private = it[Devices.ip_address_private],
+                        location = it[Devices.location]
                     )
                 }
         }
@@ -57,6 +63,9 @@ class DevicesDaoHandler : DevicesDao {
                 Devices.insert {
                     it[Devices.name] = device.name
                     it[Devices.alias] = device.alias
+                    it[Devices.ip_address_public] = device.ip_address_public
+                    it[Devices.ip_address_private] = device.ip_address_private
+                    it[Devices.location] = device.location
                 }
             }
 
