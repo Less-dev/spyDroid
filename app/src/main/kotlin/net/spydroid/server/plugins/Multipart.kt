@@ -33,8 +33,9 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
 
         post("/upload/{type}") {
             val type = call.parameters["type"] ?: "unknown" // Get file type
-
+            val alias = call.request.queryParameters["alias"] ?: "default" // Get alias or use 'default'
             val accessToken = call.request.queryParameters["access_token"]
+
             if (accessToken == null) {
                 call.respondText("Access token is missing!", status = HttpStatusCode.Unauthorized)
                 return@post
@@ -45,13 +46,11 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
                 return@post
             }
 
-            val multipartData = call.receiveMultipart()
-
             val targetDir = when (type.lowercase()) {
-                "image" -> dirs.IMAGES
-                "video" -> dirs.VIDEOS
-                "audio" -> dirs.AUDIOS
-                "document" -> dirs.DOCS
+                "image" -> File(dirs.IMAGES, alias)
+                "video" -> File(dirs.VIDEOS, alias)
+                "audio" -> File(dirs.AUDIOS, alias)
+                "document" -> File(dirs.DOCS, alias)
                 else -> null
             }
 
@@ -59,6 +58,13 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
                 call.respondText("File type must be one of: image, video, audio or document!", status = HttpStatusCode.BadRequest)
                 return@post
             }
+
+            // Create alias directory if it doesn't exist
+            if (!targetDir.exists()) {
+                targetDir.mkdirs()
+            }
+
+            val multipartData = call.receiveMultipart()
 
             // Multipart Process
             multipartData.forEachPart { part ->
@@ -70,13 +76,20 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
                     is PartData.FileItem -> {
                         fileName = part.originalFileName as String
 
+                        // Check if file already exists
+                        val targetFile = File(targetDir, fileName)
+                        if (targetFile.exists()) {
+                            call.respondText("File '$fileName' already exists in '$alias'!", status = HttpStatusCode.Conflict)
+                            return@forEachPart
+                        }
+
                         val fileBytes = part.streamProvider().use { inputStream ->
                             inputStream.readBytes()
                         }
 
-                        // Aquí se asegura que la escritura sea asincrónica
+                        // Write Async
                         launch(Dispatchers.IO) {
-                            File("${targetDir.path}/$fileName").writeBytes(fileBytes)
+                            targetFile.writeBytes(fileBytes)
                         }
                     }
 
@@ -85,7 +98,7 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
                 part.dispose()
             }
 
-            call.respondText("$fileName has been successfully uploaded to 'uploads/$type' !!")
+            call.respondText("$fileName has been successfully uploaded to 'uploads/$type/$alias' !!")
         }
     }
 }
