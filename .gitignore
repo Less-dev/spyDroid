@@ -12,3 +12,6 @@
 /captures
 .externalNativeBuild
 .cxx
+/secrets.properties
+/app/src/main/assets/secrets.properties
+.idea

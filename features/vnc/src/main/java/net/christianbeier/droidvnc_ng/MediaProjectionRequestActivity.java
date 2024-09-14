@@ -61,6 +61,7 @@ public class MediaProjectionRequestActivity extends AppCompatActivity {
             else
                 Log.i(TAG, "User acknowledged");
 
+
             Intent intent = new Intent(this, VncService.class);
             intent.setAction(VncService.ACTION_HANDLE_MEDIA_PROJECTION_RESULT);
             intent.putExtra(VncService.EXTRA_ACCESS_KEY, PreferenceManager.getDefaultSharedPreferences(this).getString(Constants.PREFS_KEY_SETTINGS_ACCESS_KEY, new Defaults(this).getAccessKey()));

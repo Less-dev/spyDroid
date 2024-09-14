@@ -17,9 +17,10 @@
 
 package net.spydroid.common.remote.network.models
 
+private val NOT_FOUND = "not_found"
 data class MultimediaDevices(
     val id: Int = 0,
     val alias: String,
-    val routeFile: String,
-    val type: String
+    val routeFile: String = NOT_FOUND,
+    val type: String = NOT_FOUND
 )

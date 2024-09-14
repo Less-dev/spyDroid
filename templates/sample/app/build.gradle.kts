@@ -96,4 +96,8 @@ dependencies {
     implementation(libs.androidx.media3.exoplayer)
     implementation(libs.androidx.media3.ui)
     implementation(libs.androidx.media3.session)
+
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }
