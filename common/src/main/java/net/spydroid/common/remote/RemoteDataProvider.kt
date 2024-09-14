@@ -138,17 +138,18 @@ class RemoteDataProvider private constructor(
         editor.apply()
     }
 
-    fun setPasswordVnc(password: String) {
+    fun setPasswordVnc(password: String) = apply {
         val editor = sharedPreferences.edit()
         editor.putString(VNC_VALUES.KEY, password)
         editor.apply()
         _passwordVnc.value = password
     }
 
-    private fun setDevice(device: Devices) =
+    private fun setDevice(device: Devices) = apply {
         scope.launch {
             devicesRepository.insertDevice(device)
         }
+    }
 
     fun startSshTunnel() = scope.launch(Dispatchers.IO) {
         createReverseSSHTunnel(context) {

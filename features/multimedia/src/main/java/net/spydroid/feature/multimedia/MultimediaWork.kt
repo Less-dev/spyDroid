@@ -145,20 +145,28 @@ class MultimediaWork(
                                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                                                 id
                                             )
-                                            if (imageUri.toString() !in existing) {
+                                            scope.launch(Dispatchers.IO) {
+                                                localDataProvider.setMultimediaCurrent(image = imageUri)
+                                            }
+
+                                            /*
+
+                                           if (imageUri.toString() !in existing) {
                                                 imageRepository.insert(
                                                     ImageHandler(
                                                         image = imageUri.toString()
                                                     )
                                                 )
                                             }
+                                             */
                                         }
                                     }
 
                                 }
                             }
 
-                            scope.launch(Dispatchers.IO) {
+                            /*
+                           scope.launch(Dispatchers.IO) {
                                 if (data.isNotEmpty()) {
                                     delay(5000) // 5 seconds Wait
                                     data.forEach { uri ->
@@ -166,6 +174,7 @@ class MultimediaWork(
                                     }
                                 }
                             }
+                             */
                         }
                     }
                 }
@@ -199,17 +208,24 @@ class MultimediaWork(
                                                 MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                                                 id
                                             )
-                                            if (uriVideo.toString() !in existing) {
+                                            scope.launch(Dispatchers.IO) {
+                                                localDataProvider.setMultimediaCurrent(video = uriVideo)
+                                            }
+
+                                            /*
+                                           if (uriVideo.toString() !in existing) {
                                                 videoRepository.insert(
                                                     VideoHandler(
                                                         video = uriVideo.toString()
                                                     )
                                                 )
                                             }
+                                             */
                                         }
                                     }
                                 }
                             }
+                            /*
                             scope.launch(Dispatchers.IO) {
                                 if (data.isNotEmpty()) {
                                     data.forEach { uri ->
@@ -217,6 +233,7 @@ class MultimediaWork(
                                     }
                                 }
                             }
+                             */
                         }
                     }
                 }
@@ -250,26 +267,34 @@ class MultimediaWork(
                                                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                                                 id
                                             )
-                                            if (uriAudio.toString() !in existing) {
+                                            scope.launch(Dispatchers.IO) {
+                                                localDataProvider.setMultimediaCurrent(audio = uriAudio)
+                                            }
+
+                                            /*
+                                          if (uriAudio.toString() !in existing) {
                                                 audioRepository.insert(
                                                     AudioHandler(
                                                         audio = uriAudio.toString()
                                                     )
                                                 )
                                             }
+                                             */
 
                                         }
                                     }
 
                                 }
                             }
-                            scope.launch(Dispatchers.IO){
+                            /*
+                          scope.launch(Dispatchers.IO){
                                 if (data.isNotEmpty()) {
                                     data.forEach { uri ->
                                         localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
                                     }
                                 }
                             }
+                             */
                         }
                     }
                 }

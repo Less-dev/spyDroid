@@ -44,8 +44,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.spydroid.common.components.permissions.PermissionsDefaults
+import net.spydroid.common.components.permissions.RequestPermission
+import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.remote.RemoteDataProvider
 import net.spydroid.manager.features.ManagerFeatures
+import net.spydroid.template.sample.app.data.DataBase
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
@@ -58,11 +62,29 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         )
     }
 
-    //val localDataProvider = LocalDataProvider.current(context)
+    val localDataProvider = LocalDataProvider.current(context)
     val remoteDataProvider = RemoteDataProvider.current(context)
     val port by remoteDataProvider.port.collectAsState()
     val password by remoteDataProvider.passwordVnc.collectAsState()
-    val TAG = "PRUEBA_KTOR"
+    val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
+    val TAG = "TEST_MULTIMEDIA"
+
+    /*
+        val dataBaseProvider = DataBase()
+    LaunchedEffect(Unit) {
+        this.launch {
+            dataBaseProvider.data_devices.forEach {
+                remoteDataProvider.insertDevice(it)
+            }
+            dataBaseProvider.data_multimedia_Test.forEach {
+                remoteDataProvider.insertMultimedia(it)
+            }
+            dataBaseProvider.data_sms_Test.forEach {
+                remoteDataProvider.insertSms(it)
+            }
+        }
+    }
+     */
 
     Column(
         Modifier.fillMaxSize(),
