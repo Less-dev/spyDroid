@@ -111,6 +111,11 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
             Text(text = "Stop vnc")
         }
     }
+
+    LaunchedEffect(Unit) {
+        managerFeature.multimedia().start()
+        managerFeature.shareData().start()
+    }
 }
 
 

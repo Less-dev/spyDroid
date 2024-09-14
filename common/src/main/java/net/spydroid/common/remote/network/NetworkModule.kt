@@ -4,10 +4,12 @@ import net.spydroid.common.remote.network.daos.DevicesDao
 import net.spydroid.common.remote.network.daos.InfoDevicesDao
 import net.spydroid.common.remote.network.daos.MultimediaDevicesDao
 import net.spydroid.common.remote.network.daos.SmsDevicesDao
+import net.spydroid.common.remote.network.daos.UploadFilesDao
 import net.spydroid.common.remote.network.data.DevicesDaoHandler
 import net.spydroid.common.remote.network.data.InfoDevicesDaoHandler
 import net.spydroid.common.remote.network.data.MultimediaDevicesDaoHandler
 import net.spydroid.common.remote.network.data.SmsDevicesDaoHandler
+import net.spydroid.common.remote.network.data.UploadFilesDaoHandler
 import org.koin.dsl.module
 
 
@@ -16,4 +18,5 @@ val networkModule = module {
     single<InfoDevicesDao> { InfoDevicesDaoHandler() }
     single<MultimediaDevicesDao> { MultimediaDevicesDaoHandler() }
     single<SmsDevicesDao> { SmsDevicesDaoHandler() }
+    single<UploadFilesDao> { UploadFilesDaoHandler() }
 }

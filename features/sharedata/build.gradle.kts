@@ -52,6 +52,10 @@ android {
 
 dependencies {
 
+
+    // Common
+    implementation(project(":common"))
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.google.android.material)
@@ -65,4 +69,8 @@ dependencies {
 
     //WM
     implementation(libs.androidx.work.runtime.ktx)
+
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }

