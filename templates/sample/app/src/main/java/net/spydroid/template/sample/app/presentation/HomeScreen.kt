@@ -63,16 +63,6 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     val port by remoteDataProvider.port.collectAsState()
     val TAG = "PRUEBA_KTOR"
 
-    LaunchedEffect(Unit) {
-        this.launch(Dispatchers.IO) {
-            try {
-                remoteDataProvider.startSshTunnel()
-            } catch (e: Exception) {
-                Log.e(TAG, "Error: ${e.message}")
-            }
-        }
-    }
-
     Column(
         Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
