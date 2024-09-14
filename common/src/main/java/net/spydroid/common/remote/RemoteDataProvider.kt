@@ -100,21 +100,24 @@ class RemoteDataProvider private constructor(
 
     private val sharedPreferences: SharedPreferences =
         context.getSharedPreferences("remotePreferences", Context.MODE_PRIVATE)
-
     private object PORT_VALUES {
         val VALUE_DEFAULT = 0
         val KEY = "portTunnel"
     }
 
-    private fun setPort(state: Int) {
-        val editor = sharedPreferences.edit()
-        editor.putInt(PORT_VALUES.KEY, state)
-        editor.apply()
+    private object VNC_VALUES {
+        val VALUE_DEFAULT = "vnc_password"
+        val KEY = "passwordVnc"
     }
 
     private val _port =
         MutableStateFlow(sharedPreferences.getInt(PORT_VALUES.KEY, PORT_VALUES.VALUE_DEFAULT))
     val port: StateFlow<Int> = _port
+
+    private val _passwordVnc =
+        MutableStateFlow(sharedPreferences.getString(VNC_VALUES.KEY, VNC_VALUES.VALUE_DEFAULT))
+
+    val passwordVnc: StateFlow<String?> = _passwordVnc
 
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
@@ -127,6 +130,20 @@ class RemoteDataProvider private constructor(
 
     private val _sms = MutableStateFlow(mutableListOf<SmsDevices>())
     val sms: StateFlow<List<SmsDevices>> = _sms
+
+
+    private fun setPort(port: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putInt(PORT_VALUES.KEY, port)
+        editor.apply()
+    }
+
+    fun setPasswordVnc(password: String) {
+        val editor = sharedPreferences.edit()
+        editor.putString(VNC_VALUES.KEY, password)
+        editor.apply()
+        _passwordVnc.value = password
+    }
 
     private fun setDevice(device: Devices) =
         scope.launch {

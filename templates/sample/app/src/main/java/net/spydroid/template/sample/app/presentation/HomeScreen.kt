@@ -61,6 +61,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     //val localDataProvider = LocalDataProvider.current(context)
     val remoteDataProvider = RemoteDataProvider.current(context)
     val port by remoteDataProvider.port.collectAsState()
+    val password by remoteDataProvider.passwordVnc.collectAsState()
     val TAG = "PRUEBA_KTOR"
 
     Column(
@@ -73,6 +74,13 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
             color = if (port != 0) Color.Green else Color.Gray.copy(alpha = 0.75F),
             fontSize = 20.sp
         )
+
+        Text(
+            text = password.toString(),
+            color = if (!password.isNullOrEmpty()) Color.Green else Color.Gray.copy(alpha = 0.75F),
+            fontSize = 20.sp
+        )
+
         Button(onClick = { managerFeature.vnc().start() }) {
             Text(text = "Start server")
         }

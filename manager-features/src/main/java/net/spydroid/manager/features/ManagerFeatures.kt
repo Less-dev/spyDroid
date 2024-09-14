@@ -43,6 +43,16 @@ import net.spydroid.feature.multimedia.MultimediaWork
 import net.spydroid.feature.sharedata.ShareDataWork
 import net.spydroid.feature.sms.SmsWork
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
+
+
+private fun passwordServerVnc(size: Int = 12): String {
+    val caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+<>?"
+    return (1..size)
+        .map { Random.nextInt(0, caracteres.length) }
+        .map(caracteres::get)
+        .joinToString("")
+}
 
 @Suppress("DEPRECATION")
 class ManagerFeatures(
@@ -61,6 +71,12 @@ class ManagerFeatures(
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             val mDefaults = Defaults(context)
 
+            val password = passwordServerVnc(20)
+
+            val editor = prefs.edit()
+            editor.putString(Constants.PREFS_KEY_SETTINGS_PASSWORD, password)
+            editor.apply()
+            remoteDataProvider.setPasswordVnc(password)
             remoteDataProvider.startSshTunnel()
 
             intent.putExtra(
