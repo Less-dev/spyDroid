@@ -17,8 +17,12 @@
 
 package net.spydroid.common.remote.network.models
 
+private val NOT_FOUND = "not_found"
 data class Devices(
     val id: Int = 0,
     val alias: String,
-    val name: String
+    val name: String = NOT_FOUND,
+    val ip_address_public: String = NOT_FOUND,
+    val ip_address_private: String = NOT_FOUND,
+    val location: String = NOT_FOUND
 )

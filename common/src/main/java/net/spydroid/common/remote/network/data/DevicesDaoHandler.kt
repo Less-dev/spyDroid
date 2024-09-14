@@ -63,7 +63,10 @@ class DevicesDaoHandler : DevicesDao {
             val response = apiService.createDevice(
                 accessToken = "iygad7618wg8y1f7fgvas71f671",
                 alias = device.alias,
-                name = device.name
+                name = device.name,
+                ipPublic = device.ip_address_public,
+                ipPrivate = device.ip_address_private,
+                location = device.location
             ).execute()
             if (response.isSuccessful){
                 Log.i(TAG, "DISPOSITIVO INSERTADO EN LA BASE DE DATOS!")

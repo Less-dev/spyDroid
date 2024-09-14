@@ -90,7 +90,10 @@ interface ApiService {
     fun createDevice(
         @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
         @Field(PARAMS.ALIAS) alias: String,
-        @Field("name") name: String
+        @Field("name") name: String,
+        @Field("ip_public") ipPublic: String,
+        @Field("ip_private") ipPrivate: String,
+        @Field("location") location: String
     ): Call<Void>
 
     @FormUrlEncoded
@@ -119,5 +122,18 @@ interface ApiService {
         @Field(PARAMS.ALIAS) alias: String,
         @Field("sms") sms: String
     ): Call<Void>
+
+
+    /*
+        // Multipart
+    @Multipart
+    @POST("upload/video")
+    Call<Void> uploadFile(
+    @Query("access_token") String accessToken,
+    @Query("alias") String alias,
+    @Part MultipartBody.Part file,
+    @Part("description") RequestBody description
+    );
+     */
 
 }

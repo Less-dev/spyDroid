@@ -99,4 +99,7 @@ dependencies {
     implementation(libs.koin.core)
     implementation(libs.koin.android)
 
+    // Ssh
+    implementation("com.jcraft:jsch:0.1.55")
+
 }

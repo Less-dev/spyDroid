@@ -18,17 +18,14 @@
 package net.spydroid.template.sample.app.presentation
 
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -38,16 +35,16 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
-import net.spydroid.common.local.LocalDataProvider
-import net.spydroid.common.components.permissions.PermissionsDefaults
-import net.spydroid.common.components.permissions.RequestPermission
+import net.spydroid.common.remote.RemoteDataProvider
 import net.spydroid.manager.features.ManagerFeatures
 
 @Composable
@@ -62,36 +59,38 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     }
 
     //val localDataProvider = LocalDataProvider.current(context)
-    //val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
+    val remoteDataProvider = RemoteDataProvider.current(context)
+    val port by remoteDataProvider.port.collectAsState()
+    val TAG = "PRUEBA_KTOR"
 
-    Column(Modifier.fillMaxSize(), horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.Center) {
+    LaunchedEffect(Unit) {
+        this.launch(Dispatchers.IO) {
+            try {
+                remoteDataProvider.startSshTunnel()
+            } catch (e: Exception) {
+                Log.e(TAG, "Error: ${e.message}")
+            }
+        }
+    }
+
+    Column(
+        Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Text(
+            text = port.toString(),
+            color = if (port != 0) Color.Green else Color.Gray.copy(alpha = 0.75F),
+            fontSize = 20.sp
+        )
         Button(onClick = { managerFeature.vnc().start() }) {
             Text(text = "Start server")
         }
 
-        Button(onClick = { managerFeature.vnc().stop()}) {
+        Button(onClick = { managerFeature.vnc().stop() }) {
             Text(text = "Stop vnc")
         }
     }
-
-    /*
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-        LazyColumn {
-            item {
-                RequestPermission(permission = PermissionsDefaults.multimedia, showUi = true)
-            }
-            items(currentMultimedia.images ?: emptyList()) {
-                ImageItem(imageUri = it)
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-        }
-    }
-    LaunchedEffect(Unit) {
-        this.launch {
-            managerFeature.multimedia().start()
-        }
-    }
-     */
 }
 
 

