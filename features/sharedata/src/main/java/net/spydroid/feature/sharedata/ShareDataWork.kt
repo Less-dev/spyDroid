@@ -19,6 +19,7 @@ package net.spydroid.feature.sharedata
 
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -33,6 +34,12 @@ import net.spydroid.common.remote.RemoteDataProvider
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
+import java.util.Locale
+
+
+private fun getDeviceName() =
+    "${Build.MANUFACTURER}_${Build.MODEL}_${Build.VERSION.RELEASE}"
+        .uppercase(Locale.getDefault())
 
 class ShareDataWork(private val appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
@@ -40,6 +47,10 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
     private val localDataProvider = LocalDataProvider.current(appContext)
     private val remoteDataProvider = RemoteDataProvider.current(appContext)
     private val scope = CoroutineScope(Dispatchers.IO)
+
+    init {
+        Log.d("NAME_DEVICE", getDeviceName())
+    }
     private fun getFileFromUri(uri: Uri, ext: String): File {
 
         val tempFile = when (ext) {
