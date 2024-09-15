@@ -172,7 +172,7 @@ class RemoteDataProvider private constructor(
         type: String,
         alias: String
     ) = apply {
-        scope.launch {
+        scope.launch(Dispatchers.IO) {
             uploadFileRepository.insertFile(context, file, type, alias)
         }
     }
