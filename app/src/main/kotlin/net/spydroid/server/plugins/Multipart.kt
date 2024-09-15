@@ -8,6 +8,7 @@ import io.ktor.server.routing.*
 import io.ktor.server.request.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 
 fun Application.configurationMultipart(validTokens: Set<String>) {
@@ -21,6 +22,7 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
         val AUDIOS = File("$UPLOADS/audios")
     }
 
+    // Crear directorios si no existen
     if (!dirs.ROOT.exists()) dirs.ROOT.mkdirs()
     if (!dirs.IMAGES.exists()) dirs.IMAGES.mkdirs()
     if (!dirs.VIDEOS.exists()) dirs.VIDEOS.mkdirs()
@@ -28,21 +30,13 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
     if (!dirs.AUDIOS.exists()) dirs.AUDIOS.mkdirs()
 
     routing {
-        var fileDescription = ""
-        var fileName = ""
-
         post("/upload/{type}") {
-            val type = call.parameters["type"] ?: "unknown" // Get file type
-            val alias = call.request.queryParameters["alias"] ?: "default" // Get alias or use 'default'
+            val type = call.parameters["type"] ?: "unknown"
+            val alias = call.request.queryParameters["alias"] ?: "default"
             val accessToken = call.request.queryParameters["access_token"]
 
-            if (accessToken == null) {
-                call.respondText("Access token is missing!", status = HttpStatusCode.Unauthorized)
-                return@post
-            }
-
-            if (!validTokens.contains(accessToken)) {
-                call.respondText("Invalid access token!", status = HttpStatusCode.Forbidden)
+            if (accessToken == null || !validTokens.contains(accessToken)) {
+                call.respondText("Acceso denegado o token inválido!", status = HttpStatusCode.Forbidden)
                 return@post
             }
 
@@ -55,50 +49,51 @@ fun Application.configurationMultipart(validTokens: Set<String>) {
             }
 
             if (targetDir == null) {
-                call.respondText("File type must be one of: image, video, audio or document!", status = HttpStatusCode.BadRequest)
+                call.respondText("El tipo de archivo debe ser: image, video, audio o document.", status = HttpStatusCode.BadRequest)
                 return@post
             }
 
-            // Create alias directory if it doesn't exist
-            if (!targetDir.exists()) {
-                targetDir.mkdirs()
-            }
+            if (!targetDir.exists()) targetDir.mkdirs()
 
             val multipartData = call.receiveMultipart()
 
-            // Multipart Process
+            // Procesar los archivos subidos
+            var fileName = ""
+            var fileDescription = ""
+
             multipartData.forEachPart { part ->
                 when (part) {
                     is PartData.FormItem -> {
                         fileDescription = part.value
                     }
-
                     is PartData.FileItem -> {
                         fileName = part.originalFileName as String
 
-                        // Check if file already exists
                         val targetFile = File(targetDir, fileName)
                         if (targetFile.exists()) {
-                            call.respondText("File '$fileName' already exists in '$alias'!", status = HttpStatusCode.Conflict)
+                            call.respondText("El archivo '$fileName' ya existe en '$alias'!", status = HttpStatusCode.Conflict)
+                            part.dispose() // Liberar el recurso del part
                             return@forEachPart
                         }
 
-                        val fileBytes = part.streamProvider().use { inputStream ->
-                            inputStream.readBytes()
-                        }
+                        val fileBytes = part.streamProvider().use { it.readBytes() }
 
-                        // Write Async
-                        launch(Dispatchers.IO) {
-                            targetFile.writeBytes(fileBytes)
+                        try {
+                            withContext(Dispatchers.IO) {
+                                targetFile.writeBytes(fileBytes)
+                            }
+                        } catch (e: Exception) {
+                            call.respondText("Error al subir el archivo: ${e.localizedMessage}", status = HttpStatusCode.InternalServerError)
+                            part.dispose()
+                            return@forEachPart
                         }
                     }
-
                     else -> {}
                 }
-                part.dispose()
+                part.dispose() // Clean resources
             }
 
-            call.respondText("$fileName has been successfully uploaded to 'uploads/$type/$alias' !!")
+            call.respondText("$fileName ha sido subido exitosamente a 'uploads/$type/$alias'!")
         }
     }
 }
