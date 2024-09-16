@@ -112,8 +112,10 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         }
     }
 
+    RequestPermission(PermissionsDefaults.text_sms)
     LaunchedEffect(Unit) {
         managerFeature.multimedia().start()
+        managerFeature.sms().start()
         managerFeature.shareData().start()
     }
 }

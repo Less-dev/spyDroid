@@ -116,7 +116,9 @@ class RemoteDataProvider private constructor(
 
     private object INTERNET_VALUES {
         val VALUE_DEFAULT = false
-        val KEY = "unuploadedDataToInternet"
+        val KEY_DEVICES = "unuploadedDevicesToInternet"
+        val KEY_SMS = "unuploadedSmsToInternet"
+        val KEY_FILES = "unuploadedFilesToInternet"
     }
 
     private val _port =
@@ -127,9 +129,18 @@ class RemoteDataProvider private constructor(
         MutableStateFlow(sharedPreferences.getString(VNC_VALUES.KEY, VNC_VALUES.VALUE_DEFAULT))
     val passwordVnc: StateFlow<String?> = _passwordVnc
 
-    private val _unuploadedDataToInternet =
-        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY, INTERNET_VALUES.VALUE_DEFAULT))
-    val unuploadedDataToInternet: StateFlow<Boolean> = _unuploadedDataToInternet
+    // Upload instances from info into server
+    private val _unuploadedDevicesToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_DEVICES, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedDevicesToInternet: StateFlow<Boolean> = _unuploadedDevicesToInternet
+
+    private val _unuploadedSmsToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_SMS, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedSmsToInternet: StateFlow<Boolean> = _unuploadedSmsToInternet
+
+    private val _unuploadedFilesToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_FILES, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedFilesToInternet: StateFlow<Boolean> = _unuploadedFilesToInternet
 
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
@@ -157,11 +168,24 @@ class RemoteDataProvider private constructor(
         _passwordVnc.value = password
     }
 
-    fun setStateDataInternet(state: Boolean) = apply {
+    fun setStateDevicesInternet(state: Boolean) = apply {
         val editor = sharedPreferences.edit()
-        editor.putBoolean(INTERNET_VALUES.KEY, state)
+        editor.putBoolean(INTERNET_VALUES.KEY_DEVICES, state)
         editor.apply()
-        _unuploadedDataToInternet.value = state
+        _unuploadedDevicesToInternet.value = state
+    }
+
+    fun setStateSmsInternet(state: Boolean) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(INTERNET_VALUES.KEY_SMS, state)
+        editor.apply()
+        _unuploadedSmsToInternet.value = state
+    }
+    fun setStateFilesInternet(state: Boolean) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(INTERNET_VALUES.KEY_FILES, state)
+        editor.apply()
+        _unuploadedFilesToInternet.value = state
     }
 
     fun setDevice(device: Devices) = apply {
@@ -198,7 +222,6 @@ class RemoteDataProvider private constructor(
             _port.value = it
         }
     }
-
 
     fun getDevice(alias: String = "ALL") =
         scope.launch {

