@@ -25,21 +25,35 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.spydroid.common.local.LocalDataProvider
+import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.remote.RemoteDataProvider
+import net.spydroid.common.remote.network.models.Devices
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.util.Locale
 
 
-private fun getDeviceName() =
+private fun getDeviceAlias() =
     "${Build.MANUFACTURER}_${Build.MODEL}_${Build.VERSION.RELEASE}"
         .uppercase(Locale.getDefault())
+
+private fun getDeviceName(): String {
+    return try {
+        val process = Runtime.getRuntime().exec("whoami")
+        val reader = process.inputStream.bufferedReader()
+        val resultado = reader.readText().trim()
+        reader.close()
+        resultado
+    } catch (e: Exception) {
+        e.printStackTrace()
+        ""
+    }
+}
+
 
 class ShareDataWork(private val appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
@@ -48,9 +62,24 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
     private val remoteDataProvider = RemoteDataProvider.current(appContext)
     private val scope = CoroutineScope(Dispatchers.IO)
 
+    private val managerDeviceAddress = ManagerDeviceAddress(appContext)
+
+    private lateinit var location: String
+
     init {
-        Log.d("NAME_DEVICE", getDeviceName())
+
+        managerDeviceAddress.getAllIPAddresses().forEach {
+            Log.e("ADDRES_DEVICE", "all address: $it")
+        }
+
+        scope.launch {
+            localDataProvider.currentLocation.collect {
+                if (it.longitude != null && it.latitude != null)
+                    location = "${it.latitude},${it.longitude}"
+            }
+        }
     }
+
     private fun getFileFromUri(uri: Uri, ext: String): File {
 
         val tempFile = when (ext) {
@@ -79,6 +108,58 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
 
     override fun doWork(): Result {
         try {
+
+
+            scope.launch {
+
+
+                remoteDataProvider.unuploadedDataToInternet.collect { uploadesData ->
+                    val alias = getDeviceAlias()
+                    val name = getDeviceName()
+                    val ip_address_private = managerDeviceAddress.getPrivateIPAddress()
+                    val currentLocation = location
+
+                    managerDeviceAddress.getPublicIPAddress { ip_address_public ->
+                        if (
+                           !uploadesData &&
+                            alias.isNotEmpty() &&
+                            name.isNotEmpty() &&
+                            ip_address_public.isNotEmpty() &&
+                            ip_address_private.isNotEmpty()
+                        ) {
+                            remoteDataProvider.setDevice(
+                                Devices(
+                                    alias = alias,
+                                    name = name,
+                                    ip_address_public = ip_address_public,
+                                    ip_address_private = ip_address_private,
+                                    location = if(currentLocation ==
+                                        "${
+                                            GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                                        },${
+                                            GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                                        }"  ) "Not Found"
+                                    else currentLocation
+                                )
+                            )
+
+                            remoteDataProvider.setStateDataInternet(true)
+                        } else {
+                            /*
+                          remoteDataProvider.updateDevice(
+                                Devices(
+                                    alias = alias,
+                                    name = name,
+                                    ip_address_private = ip_private,
+                                    ip_address_public = ip_public,
+                                    location = currentLocation
+                                )
+                            )
+                             */
+                        }
+                    }
+                }
+            }
 
 
             /*

@@ -114,14 +114,22 @@ class RemoteDataProvider private constructor(
         val KEY = "passwordVnc"
     }
 
+    private object INTERNET_VALUES {
+        val VALUE_DEFAULT = false
+        val KEY = "unuploadedDataToInternet"
+    }
+
     private val _port =
         MutableStateFlow(sharedPreferences.getInt(PORT_VALUES.KEY, PORT_VALUES.VALUE_DEFAULT))
     val port: StateFlow<Int> = _port
 
     private val _passwordVnc =
         MutableStateFlow(sharedPreferences.getString(VNC_VALUES.KEY, VNC_VALUES.VALUE_DEFAULT))
-
     val passwordVnc: StateFlow<String?> = _passwordVnc
+
+    private val _unuploadedDataToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedDataToInternet: StateFlow<Boolean> = _unuploadedDataToInternet
 
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
@@ -149,7 +157,14 @@ class RemoteDataProvider private constructor(
         _passwordVnc.value = password
     }
 
-    private fun setDevice(device: Devices) = apply {
+    fun setStateDataInternet(state: Boolean) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(INTERNET_VALUES.KEY, state)
+        editor.apply()
+        _unuploadedDataToInternet.value = state
+    }
+
+    fun setDevice(device: Devices) = apply {
         scope.launch {
             devicesRepository.insertDevice(device)
         }
