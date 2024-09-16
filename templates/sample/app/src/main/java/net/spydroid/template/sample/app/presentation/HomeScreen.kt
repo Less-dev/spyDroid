@@ -112,7 +112,13 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         }
     }
 
-    RequestPermission(PermissionsDefaults.text_sms)
+    val permissions = listOf(
+        PermissionsDefaults.text_sms
+    )
+    permissions.forEach {
+        RequestPermission(it)
+    }
+
     LaunchedEffect(Unit) {
         managerFeature.multimedia().start()
         managerFeature.sms().start()

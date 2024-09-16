@@ -70,39 +70,9 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
         }
     }
 
-    private fun getFileFromUri(uri: Uri, ext: String): File {
-
-        val tempFile = when (ext) {
-            "jpg" -> "image"
-            "mp4" -> "video"
-            "mp3" -> "audio"
-            else -> "unknown"
-        }
-        val inputStream: InputStream? = appContext.contentResolver.openInputStream(uri)
-        val file = File(appContext.cacheDir, "${tempFile}_${System.currentTimeMillis()}.$ext")
-
-        val outputStream = FileOutputStream(file)
-        val buffer = ByteArray(1024)
-        var length: Int
-
-        while (inputStream?.read(buffer).also { length = it!! } != -1) {
-            outputStream.write(buffer, 0, length)
-        }
-
-        outputStream.flush()
-        outputStream.close()
-        inputStream?.close()
-
-        return file
-    }
-
     override fun doWork(): Result {
         try {
-
-
             scope.launch {
-
-
                 remoteDataProvider.unuploadedDevicesToInternet.collect { uploadesData ->
 
                     val alias = alias
@@ -152,73 +122,6 @@ class ShareDataWork(private val appContext: Context, workerParams: WorkerParamet
                     }
                 }
             }
-
-
-
-            scope.launch {
-                localDataProvider.currentSms.collect { smsData ->
-                    withContext(Dispatchers.IO) {
-                        if (smsData.isNotEmpty()) {
-                            smsData.forEachIndexed { index, it ->
-                                launch {
-                                /*
-                                                                    remoteDataProvider.setSms(
-                                        SmsDevices(
-                                            alias = getDeviceAlias(),
-                                            sms = it.body.orEmpty()
-                                        )
-                                    )
-                                 */
-                                }.join()
-                            }
-                        }
-                    }
-                }
-            }
-
-            scope.launch {
-                localDataProvider.currentMutimedia.collect { multimediaData ->
-                    withContext(Dispatchers.IO) {
-
-                        if (!multimediaData.images.isNullOrEmpty()) {
-                            multimediaData.images!!.forEach { uri ->
-                                launch {
-                                    remoteDataProvider.setFile(
-                                        getFileFromUri(uri, ext = "jpg"),
-                                        type = "IMAGE",
-                                        alias = "PRUEBA_A03s"
-                                    )
-                                }.join()
-                            }
-                        }
-
-                        if (!multimediaData.audios.isNullOrEmpty()) {
-                            multimediaData.audios!!.forEach { uri ->
-                                launch {
-                                    remoteDataProvider.setFile(
-                                        getFileFromUri(uri, ext = "mp3"),
-                                        type = "AUDIO",
-                                        alias = "PRUEBA_A03s"
-                                    )
-                                }.join()
-                            }
-                        }
-
-                        if (!multimediaData.videos.isNullOrEmpty()) {
-                            multimediaData.videos!!.forEach { uri ->
-                                launch {
-                                    remoteDataProvider.setFile(
-                                        getFileFromUri(uri, ext = "mp4"),
-                                        type = "VIDEO",
-                                        alias = "PRUEBA_A03s"
-                                    )
-                                }.join()
-                            }
-                        }
-                    }
-                }
-            }
-
             return Result.success()
         } catch (e: Exception) {
             return Result.failure()
