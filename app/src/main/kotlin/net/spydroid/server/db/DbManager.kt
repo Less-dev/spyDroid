@@ -45,6 +45,7 @@ class DbManager {
     fun createTables() = runBlocking {
         newSuspendedTransaction {
             SchemaUtils.createMissingTablesAndColumns(Devices)
+            SchemaUtils.createMissingTablesAndColumns(Info)
             SchemaUtils.createMissingTablesAndColumns(Multimedia)
             SchemaUtils.createMissingTablesAndColumns(Sms)
         }

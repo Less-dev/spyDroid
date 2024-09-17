@@ -30,13 +30,11 @@ class InfoDaoHandler : InfoDao {
     override suspend fun getInfo(): List<InfoHandler> =
         transaction {
             Info.selectAll().map {
-
                 InfoHandler(
                     id = it[Info.id],
                     alias = it[Info.alias],
-                    ip_address_public = it[Info.ip_address_public],
-                    ip_address_private = it[Info.ip_address_private],
-                    location = it[Info.location],
+                    vnc_password = it[Info.vnc_password],
+                    vnc_port = it[Info.vnc_port]
                 )
             }
         }
@@ -48,9 +46,8 @@ class InfoDaoHandler : InfoDao {
                     InfoHandler(
                         id = it[Info.id],
                         alias = it[Info.alias],
-                        ip_address_public = it[Info.ip_address_public],
-                        ip_address_private = it[Info.ip_address_private],
-                        location = it[Info.location],
+                        vnc_password = it[Info.vnc_password],
+                        vnc_port = it[Info.vnc_port]
                     )
                 }
         }
@@ -60,9 +57,8 @@ class InfoDaoHandler : InfoDao {
             transaction {
                 Info.insert {
                     it[Info.alias] = info.alias
-                    it[Info.ip_address_public] = info.ip_address_public
-                    it[Info.ip_address_private] = info.ip_address_private
-                    it[Info.location] = info.location
+                    it[Info.vnc_password] = info.vnc_password
+                    it[Info.vnc_port] = info.vnc_port
                 }
             }
             println("Información subida correctamente a la base de datos.")
@@ -77,9 +73,8 @@ class InfoDaoHandler : InfoDao {
             transaction {
                 val updatedRows = Info.update({ Info.alias eq info.alias }) {
                     it[alias] = info.alias
-                    it[ip_address_public] = info.ip_address_public
-                    it[ip_address_private] = info.ip_address_private
-                    it[location] = info.location
+                    it[vnc_password] = info.vnc_password
+                    it[Info.vnc_port] = info.vnc_port
                 }
 
                 if (updatedRows == 0) {
