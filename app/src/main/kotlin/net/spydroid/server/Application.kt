@@ -23,6 +23,7 @@ import net.spydroid.server.plugins.configureAuthentication
 import net.spydroid.server.plugins.configurationKoin
 import net.spydroid.server.plugins.configurationMultipart
 import net.spydroid.server.plugins.configureDatabases
+import net.spydroid.server.plugins.configureFileDownload
 import net.spydroid.server.plugins.configureRouting
 import net.spydroid.server.plugins.configureSerialization
 
@@ -39,6 +40,7 @@ fun Application.module() {
     configureAuthentication()
     configureRouting(validTokens = validTokens)
     configurationMultipart(validTokens = validTokens)
+    configureFileDownload(validTokens = validTokens)
 }
 
 
