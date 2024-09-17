@@ -105,9 +105,8 @@ interface ApiService {
     fun createInfo(
         @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
         @Field(PARAMS.ALIAS) alias: String,
-        @Field("ip_public") ipPublic: String,
-        @Field("ip_private") ipPrivate: String,
-        @Field("location") location: String
+        @Field("vnc_password") vnc_password: String,
+        @Field("vnc_port") vnc_port: Int,
     ): Call<Void>
 
     @FormUrlEncoded

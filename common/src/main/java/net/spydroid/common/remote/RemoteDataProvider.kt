@@ -168,6 +168,12 @@ class RemoteDataProvider private constructor(
         _passwordVnc.value = password
     }
 
+    fun setInfo(info: InfoDevices) = apply {
+        scope.launch {
+            infoRepository.insertInfo(info)
+        }
+    }
+
     fun setStateDevicesInternet(state: Boolean) = apply {
         val editor = sharedPreferences.edit()
         editor.putBoolean(INTERNET_VALUES.KEY_DEVICES, state)
@@ -216,9 +222,10 @@ class RemoteDataProvider private constructor(
         }
     }
 
-    fun startSshTunnel() = scope.launch(Dispatchers.IO) {
+    fun startSshTunnel(port: (Int) -> Unit) = scope.launch(Dispatchers.IO) {
         createReverseSSHTunnel(context) {
             setPort(it)
+            port(it)
             _port.value = it
         }
     }

