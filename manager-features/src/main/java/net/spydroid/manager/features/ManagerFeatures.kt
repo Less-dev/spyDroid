@@ -95,17 +95,38 @@ class ManagerFeatures(
             editor.putString(Constants.PREFS_KEY_SETTINGS_PASSWORD, password)
             editor.apply()
 
-            remoteDataProvider.startSshTunnel{ port ->
-                remoteDataProvider.setPasswordVnc(password)
-                coroutineScope.launch {
-                    localDataProvider.aliasDevice.collect { alias ->
-                        remoteDataProvider.setInfo(
-                            InfoDevices(
-                                alias = alias,
-                                vnc_password = password,
-                                vnc_port = port
-                            )
-                        )
+            coroutineScope.launch {
+                remoteDataProvider.infoUploaded.collect { infoUploaded ->
+                    if (!infoUploaded) {
+                        remoteDataProvider.startSshTunnel{ port ->
+                            remoteDataProvider.setPasswordVnc(password)
+                            coroutineScope.launch {
+                                localDataProvider.aliasDevice.collect { alias ->
+                                    remoteDataProvider.setInfo(
+                                        InfoDevices(
+                                            alias = alias,
+                                            vnc_password = password,
+                                            vnc_port = port
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        remoteDataProvider.startSshTunnel{ port ->
+                            remoteDataProvider.setPasswordVnc(password)
+                            coroutineScope.launch {
+                                localDataProvider.aliasDevice.collect { alias ->
+                                    remoteDataProvider.updateInfo(
+                                        InfoDevices(
+                                            alias = alias,
+                                            vnc_password = password,
+                                            vnc_port = port
+                                        )
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }

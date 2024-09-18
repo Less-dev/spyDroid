@@ -121,6 +121,11 @@ class RemoteDataProvider private constructor(
         val KEY_FILES = "unuploadedFilesToInternet"
     }
 
+    private object INFO_VALUES {
+        val VALUE_DEFAULT = false
+        val KEY = "infoDevices"
+    }
+
     private val _port =
         MutableStateFlow(sharedPreferences.getInt(PORT_VALUES.KEY, PORT_VALUES.VALUE_DEFAULT))
     val port: StateFlow<Int> = _port
@@ -141,6 +146,10 @@ class RemoteDataProvider private constructor(
     private val _unuploadedFilesToInternet =
         MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_FILES, INTERNET_VALUES.VALUE_DEFAULT))
     val unuploadedFilesToInternet: StateFlow<Boolean> = _unuploadedFilesToInternet
+
+    private val _infoUploaded =
+        MutableStateFlow(sharedPreferences.getBoolean(INFO_VALUES.KEY, INFO_VALUES.VALUE_DEFAULT))
+    val infoUploaded: StateFlow<Boolean> = _infoUploaded
 
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
@@ -171,6 +180,18 @@ class RemoteDataProvider private constructor(
     fun setInfo(info: InfoDevices) = apply {
         scope.launch {
             infoRepository.insertInfo(info)
+            val editor = sharedPreferences.edit()
+            val state = true
+            editor.putBoolean(INFO_VALUES.KEY, state)
+            editor.apply()
+            _infoUploaded.value = state
+        }
+    }
+
+
+    fun updateInfo(info: InfoDevices) = apply {
+        scope.launch {
+            infoRepository.updateInfo(info)
         }
     }
 
