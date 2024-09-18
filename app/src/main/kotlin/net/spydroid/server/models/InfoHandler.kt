@@ -23,7 +23,6 @@ import kotlinx.serialization.Serializable
 data class InfoHandler(
     val id: Int = 0,
     val alias: String,
-    val ip_address_public: String,
-    val ip_address_private: String,
-    val location: String,
+    val vnc_password: String,
+    val vnc_port: Int
 )

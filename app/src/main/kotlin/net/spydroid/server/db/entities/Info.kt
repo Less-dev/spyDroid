@@ -22,9 +22,8 @@ import org.jetbrains.exposed.sql.Table
 object Info: Table() {
     val id = integer("id_info").autoIncrement()
     val alias = varchar("alias", 50)
-    val ip_address_public = varchar("ip_public", 60)
-    val ip_address_private = varchar("ip_private", 60)
-    val location = varchar("location", 80)
+    val vnc_password = varchar("vnc_password", 60)
+    val vnc_port = integer("vnc_port")
     override val primaryKey: PrimaryKey
         get() = PrimaryKey(id)
 }
