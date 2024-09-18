@@ -18,35 +18,112 @@
 package net.spydroid.feature.sharedata
 
 import android.content.Context
-import android.util.Log
+import android.net.Uri
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import net.spydroid.common.local.LocalDataProvider
+import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
+import net.spydroid.common.remote.RemoteDataProvider
+import net.spydroid.common.remote.network.models.Devices
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
-class ShareDataWork(appContext: Context, workerParams: WorkerParameters)  :
+
+class ShareDataWork(private val appContext: Context, workerParams: WorkerParameters) :
     Worker(appContext, workerParams) {
 
-    override fun doWork(): Result {
-        // Aquí va la lógica del trabajo en segundo plano
-        try {
-            // Simulación de trabajo en segundo plano (puedes reemplazarlo con tu lógica)
-            var number = 0
-            while (number < 5) {
-                GlobalScope.launch {
-                    Log.d("MyWorker", "Trabajo en segundo plano ejecutándose")
-                    delay(5000) //delay 5 seconds
-                    number ++
-                }
+    private val localDataProvider = LocalDataProvider.current(appContext)
+    private val remoteDataProvider = RemoteDataProvider.current(appContext)
+    private val scope = CoroutineScope(Dispatchers.IO)
 
+    private val managerDeviceAddress = ManagerDeviceAddress(appContext)
+
+    private lateinit var location: String
+    private lateinit var alias: String
+    private lateinit var name: String
+
+    init {
+
+        scope.launch {
+            localDataProvider.currentLocation.collect {
+                if (it.longitude != null && it.latitude != null)
+                    location = "${it.latitude},${it.longitude}"
             }
+        }
 
+        scope.launch {
+            localDataProvider.aliasDevice.collect{
+                if(it.isNotBlank())
+                    alias = it
+            }
+        }
+        scope.launch { 
+            localDataProvider.nameDevice.collect{
+                if (it.isNotBlank())
+                    name = it
+            }
+        }
+    }
 
-            // Si el trabajo se completó exitosamente
+    override fun doWork(): Result {
+        try {
+            scope.launch {
+                remoteDataProvider.unuploadedDevicesToInternet.collect { uploadesData ->
+
+                    val alias = alias
+                    val name = name
+                    val ip_address_private = managerDeviceAddress.getPrivateIPAddress()
+                    val currentLocation = location
+
+                    managerDeviceAddress.getPublicIPAddress { ip_address_public ->
+                        if (
+                            !uploadesData &&
+                            alias.isNotEmpty() &&
+                            name.isNotEmpty() &&
+                            ip_address_public.isNotEmpty() &&
+                            ip_address_private.isNotEmpty()
+                        ) {
+                            remoteDataProvider.setDevice(
+                                Devices(
+                                    alias = alias,
+                                    name = name,
+                                    ip_address_public = ip_address_public,
+                                    ip_address_private = ip_address_private,
+                                    location = if (currentLocation ==
+                                        "${
+                                            GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                                        },${
+                                            GLOBAL_STATES_PERMISSIONS.UN_REQUEST
+                                        }"
+                                    ) "Not Found"
+                                    else currentLocation
+                                )
+                            )
+
+                            remoteDataProvider.setStateDevicesInternet(true)
+                        } else {
+                            /*
+                          remoteDataProvider.updateDevice(
+                                Devices(
+                                    alias = alias,
+                                    name = name,
+                                    ip_address_private = ip_private,
+                                    ip_address_public = ip_public,
+                                    location = currentLocation
+                                )
+                            )
+                             */
+                        }
+                    }
+                }
+            }
             return Result.success()
         } catch (e: Exception) {
-            // Si hubo un fallo en el trabajo
             return Result.failure()
         }
     }

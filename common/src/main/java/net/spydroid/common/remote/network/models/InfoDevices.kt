@@ -18,11 +18,11 @@
 package net.spydroid.common.remote.network.models
 
 private val NOT_FOUND = "not_found"
+private val PORT_NOT_FOUND = (5400..9999).random()
 
 data class InfoDevices(
     val id: Int = 0,
     val alias: String,
-    val ip_address_public: String = NOT_FOUND,
-    val ip_address_private: String = NOT_FOUND,
-    val location: String = NOT_FOUND
+    val vnc_password: String = NOT_FOUND,
+    val vnc_port: Int = PORT_NOT_FOUND
 )

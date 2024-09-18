@@ -1,16 +1,12 @@
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">localhost</domain>
-    </domain-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">127.0.0.1</domain>
-    </domain-config>
-    <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="true">0.0.0.0</domain>
-    </domain-config>
-    <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">
-            192.168.100.70
+            192.168.100.70 <!--Add your server ip -->
         </domain>
+        <!--
+        <domain includeSubdomains="true">
+            ?.?.?.?
+        </domain>
+        -->
     </domain-config>
 </network-security-config>

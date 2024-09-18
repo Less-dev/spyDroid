@@ -77,4 +77,8 @@ dependencies {
 
     //WM
     implementation(libs.androidx.work.runtime.ktx)
+
+    // Koin
+    implementation(libs.koin.core)
+    implementation(libs.koin.android)
 }

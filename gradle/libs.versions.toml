@@ -48,6 +48,7 @@ hilt = "2.51.1"
 junit = "4.13.2"
 
 # Preference
+okhttp = "4.9.0"
 preference = "1.2.1"
 
 # AppCompat
@@ -199,6 +200,7 @@ kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-p
 kotlin-jetbrains-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk7", version.ref = "kotlinStdlib"}
 
 # Play Services
+okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "playServicesLocation" }
 play-services-maps = { module = "com.google.android.gms:play-services-maps", version.ref = "playServicesMaps" }
 

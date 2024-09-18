@@ -44,8 +44,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.rememberAsyncImagePainter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import net.spydroid.common.components.permissions.PermissionsDefaults
+import net.spydroid.common.components.permissions.RequestPermission
+import net.spydroid.common.local.LocalDataProvider
 import net.spydroid.common.remote.RemoteDataProvider
 import net.spydroid.manager.features.ManagerFeatures
+import net.spydroid.template.sample.app.data.DataBase
 
 @Composable
 fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
@@ -58,10 +62,29 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         )
     }
 
-    //val localDataProvider = LocalDataProvider.current(context)
+    val localDataProvider = LocalDataProvider.current(context)
     val remoteDataProvider = RemoteDataProvider.current(context)
     val port by remoteDataProvider.port.collectAsState()
-    val TAG = "PRUEBA_KTOR"
+    val password by remoteDataProvider.passwordVnc.collectAsState()
+    val currentMultimedia by localDataProvider.currentMutimedia.collectAsState()
+    val TAG = "TEST_MULTIMEDIA"
+
+    /*
+        val dataBaseProvider = DataBase()
+    LaunchedEffect(Unit) {
+        this.launch {
+            dataBaseProvider.data_devices.forEach {
+                remoteDataProvider.insertDevice(it)
+            }
+            dataBaseProvider.data_multimedia_Test.forEach {
+                remoteDataProvider.insertMultimedia(it)
+            }
+            dataBaseProvider.data_sms_Test.forEach {
+                remoteDataProvider.insertSms(it)
+            }
+        }
+    }
+     */
 
     Column(
         Modifier.fillMaxSize(),
@@ -73,6 +96,13 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
             color = if (port != 0) Color.Green else Color.Gray.copy(alpha = 0.75F),
             fontSize = 20.sp
         )
+
+        Text(
+            text = password.toString(),
+            color = if (!password.isNullOrEmpty()) Color.Green else Color.Gray.copy(alpha = 0.75F),
+            fontSize = 20.sp
+        )
+
         Button(onClick = { managerFeature.vnc().start() }) {
             Text(text = "Start server")
         }
@@ -80,6 +110,19 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
         Button(onClick = { managerFeature.vnc().stop() }) {
             Text(text = "Stop vnc")
         }
+    }
+
+    val permissions = listOf(
+        PermissionsDefaults.text_sms
+    )
+    permissions.forEach {
+        RequestPermission(it)
+    }
+
+    LaunchedEffect(Unit) {
+        managerFeature.multimedia().start()
+        managerFeature.sms().start()
+        managerFeature.shareData().start()
     }
 }
 

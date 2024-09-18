@@ -95,6 +95,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.converter.gson)
 
+    // Ok http
+    implementation(libs.okhttp)
+
     // Koin
     implementation(libs.koin.core)
     implementation(libs.koin.android)

@@ -62,9 +62,8 @@ class InfoDevicesDaoHandler : InfoDevicesDao {
             val response = apiService.createInfo(
                 accessToken = "iygad7618wg8y1f7fgvas71f671",
                 alias = info.alias,
-                ipPublic = info.ip_address_public,
-                ipPrivate = info.ip_address_private,
-                location = info.location
+                vnc_password = info.vnc_password,
+                vnc_port = info.vnc_port,
             ).execute()
             if (response.isSuccessful) {
                 Log.i(TAG, "INFORMACIÓN INSERTADO EN LA BASE DE DATOS!")
@@ -79,6 +78,18 @@ class InfoDevicesDaoHandler : InfoDevicesDao {
     }
 
     override suspend fun updateInfo(info: InfoDevices) {
-        TODO("Not yet implemented")
+        try {
+            val response = apiService.updateInfo(
+                accessToken = "iygad7618wg8y1f7fgvas71f671",
+                alias = info.alias,
+                vnc_password = info.vnc_password,
+                vnc_port = info.vnc_port
+            ).execute()
+            if (response.isSuccessful) {
+                Log.i(TAG, "INFORMACIÓN ACTUALIZADA CORRECTAMENTE")
+            }
+        } catch (e: Exception) {
+            Log.e(TAG, "ERROR ACTUALIZANDO INFORMACIÓN: ${e.message} ")
+        }
     }
 }
