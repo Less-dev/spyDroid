@@ -21,3 +21,7 @@
 std::vector<MultimediaHandler> MultimediaRepositoryImp::getMultimedia(const std::string& alias) const {
     return multimediaDao.getMultimedia(alias);
 }
+
+void MultimediaRepositoryImp::getAudios(const std::string& alias) const {
+    return multimediaDao.getAudios(alias);
+}

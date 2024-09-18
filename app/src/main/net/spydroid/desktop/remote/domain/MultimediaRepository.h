@@ -31,6 +31,7 @@ public:
 
     
     virtual std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const = 0;
+    virtual void getAudios(const std::string& alias) const = 0;
 };
 
 class MultimediaRepositoryImp: public MultimediaRepository {
@@ -39,6 +40,7 @@ public:
     MultimediaRepositoryImp() = default;
 
     std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const override;
+    void getAudios(const std::string& alias) const override;
 
 private:
     MultimediaDaoImpl multimediaDao;

@@ -33,3 +33,7 @@ std::vector<MultimediaHandler> MultimediaDaoImpl::getMultimedia(const std::strin
 
     return multimediaHandlers;
 }
+
+void MultimediaDaoImpl::getAudios(const std::string& alias) const {
+    return apiService.getAudios(alias);
+}

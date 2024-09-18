@@ -27,6 +27,7 @@
 #include <QTableWidget>
 #include "../remote/domain/DevicesRepository.h"
 #include "../remote/domain/InfoRepository.h"
+#include "../remote/domain/MultimediaRepository.h"
 #include "../remote/models/DevicesHandler.h"
 #include "../remote/models/InfoHandler.h"
 
@@ -53,6 +54,7 @@ private:
     QTableWidget* table;
     DevicesRepository* devicesRepository;
     InfoRepository* infoRepository;
+    MultimediaRepository* multimediaRepository;
     std::vector<InfoHandler> infoHandler;
     std::vector<DevicesHandler> devices;
 

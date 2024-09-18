@@ -60,6 +60,7 @@ void HomeScreen::showDevicesTable(
     }
 
     infoRepository = new InfoRepositoryImp();
+    multimediaRepository = new MultimediaRepositoryImp();
 
 
     // Create table
@@ -141,6 +142,7 @@ void HomeScreen::showDevicesTable(
 
         table->setCellWidget(row, 6, multimediaButton);  
         QObject::connect(multimediaButton, &QPushButton::clicked, [this, device]() {
+            multimediaRepository->getAudios(device.alias);
             emit goToMultimedia(QString::fromStdString(device.alias));  // Change to Sms and pass alias actual
         });
 

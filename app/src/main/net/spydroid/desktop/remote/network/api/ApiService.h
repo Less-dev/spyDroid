@@ -35,6 +35,7 @@ public:
     std::vector<Info> getInfo(const std::string& alias) const;
     std::vector<Multimedia> getMultimeida(const std::string& alias) const;
     std::vector<Sms> getSms(const std::string& alias) const;
+    void getAudios(const std::string& alias) const;
 };
 
 #endif // API_SERVICE_H
