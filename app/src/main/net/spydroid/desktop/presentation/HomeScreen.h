@@ -26,7 +26,9 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include "../remote/domain/DevicesRepository.h"
+#include "../remote/domain/InfoRepository.h"
 #include "../remote/models/DevicesHandler.h"
+#include "../remote/models/InfoHandler.h"
 
 class HomeScreen : public QWidget
 {
@@ -50,6 +52,8 @@ private:
     QLineEdit* textField;
     QTableWidget* table;
     DevicesRepository* devicesRepository;
+    InfoRepository* infoRepository;
+    std::vector<InfoHandler> infoHandler;
     std::vector<DevicesHandler> devices;
 
     // Declaración de la función showDevicesTable

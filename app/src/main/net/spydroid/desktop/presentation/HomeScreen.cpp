@@ -59,6 +59,9 @@ void HomeScreen::showDevicesTable(
         table->deleteLater();  // Delete widget of the table
     }
 
+    infoRepository = new InfoRepositoryImp();
+
+
     // Create table
     table = new QTableWidget(static_cast<int>(devices.size()), 10);
     
@@ -169,8 +172,8 @@ void HomeScreen::showDevicesTable(
         });
 
         // Vnc Server
-        if (device.ip_address_private == "192.168.100.212" ||
-            device.ip_address_private == "80.74.124.12") {
+
+        if (!infoRepository->getInfo(device.alias).empty()) {
 
             QPushButton* vncButton = new QPushButton();
             QIcon vncIcon(":/drawable/play.png");  
@@ -179,9 +182,31 @@ void HomeScreen::showDevicesTable(
             vncButton->setIconSize(QSize(20, 20));  
             vncButton->setFlat(true);  
             
+
             table->setCellWidget(row, 9, vncButton);  
-            QObject::connect(vncButton, &QPushButton::clicked, []() {
-                qDebug() << "Hola Mundo";
+
+            QObject::connect(vncButton, &QPushButton::clicked, [this, device]() {
+                infoHandler = infoRepository->getInfo(device.alias);
+
+                std::string _ipAddress = "217.15.171.116";
+
+                std::string _password = infoHandler[0].vnc_password;
+                std::string _port = infoHandler[0].vnc_port;
+                int _port_ = std::stoi(_port);
+
+                QString ip = QString::fromStdString(_ipAddress);
+                QString port = QString::number(_port_);
+
+                QString command = 
+                QString("bash -c '/tmp/vnc_viewer %1:%2 &' 2>/dev/null")
+                    .arg(ip)
+                    .arg(port);
+
+                std::cout << command.toStdString().c_str() << std::endl;      
+
+                system(command.toStdString().c_str());
+                std::cout << "Password: " << _password << std::endl;
+                
             });
         } else {
             std::string message = "Servidor apagado";

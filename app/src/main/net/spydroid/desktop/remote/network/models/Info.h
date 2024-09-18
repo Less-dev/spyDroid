@@ -24,9 +24,8 @@
 struct Info {
     int id;
     std::string alias;
-    std::string ip_address_public;
-    std::string ip_address_private;
-    std::string location;
+    std::string vnc_password;
+    std::string vnc_port;
 };
 
 #endif //INFO_H

@@ -25,7 +25,7 @@
 #include "components/GoBack.h"
 #include <QStackedWidget>
 #include "string"
-#include "res/vnc_viewer.h"
+#include "res/bin/vnc_viewer.h"
 #include <iostream>
 #include <fstream>
 #include <cstdlib>

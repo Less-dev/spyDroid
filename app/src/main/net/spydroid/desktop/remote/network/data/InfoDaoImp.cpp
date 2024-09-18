@@ -27,9 +27,8 @@ std::vector<InfoHandler> InfoDaoImpl::getInfo(const std::string& alias) const {
         InfoHandler handler;
         handler.id = _info.id;
         handler.alias = _info.alias;
-        handler.ip_address_public = _info.ip_address_public;
-        handler.ip_address_private = _info.ip_address_private;
-        handler.location = _info.location;
+        handler.vnc_password = _info.vnc_password;
+        handler.vnc_port = _info.vnc_port;
         infoHandlers.push_back(handler);
     }
 

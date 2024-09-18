@@ -150,9 +150,8 @@ std::vector<Info> ApiService::getInfo(const std::string& alias) const {
                     Info _info;
                     _info.id = info["id"].asInt();
                     _info.alias = info["alias"].asString();
-                    _info.ip_address_public = info["ip_address_public"].asString();
-                    _info.ip_address_private = info["ip_address_private"].asString();
-                    _info.location = info["location"].asString();
+                    _info.vnc_password = info["vnc_password"].asString();
+                    _info.vnc_port = info["vnc_port"].asString();
                     infor.push_back(_info);
                 }
             } else {
