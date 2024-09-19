@@ -113,7 +113,7 @@ fun HomeScreen(homeViewModel: HomeViewModel = viewModel()) {
     }
 
     val permissions = listOf(
-        PermissionsDefaults.text_sms
+        PermissionsDefaults.multimedia
     )
     permissions.forEach {
         RequestPermission(it)
