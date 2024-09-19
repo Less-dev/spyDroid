@@ -31,6 +31,9 @@ public:
 
     
     virtual std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const = 0;
+    virtual void getImages(const std::string& alias) const = 0;
+    virtual void getVideos(const std::string& alias) const = 0;
+    virtual void getDocuments(const std::string& alias) const = 0;
     virtual void getAudios(const std::string& alias) const = 0;
 };
 
@@ -40,6 +43,9 @@ public:
     MultimediaRepositoryImp() = default;
 
     std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const override;
+    void getImages(const std::string& alias) const override;
+    void getVideos(const std::string& alias) const override;
+    void getDocuments(const std::string& alias) const override;
     void getAudios(const std::string& alias) const override;
 
 private:

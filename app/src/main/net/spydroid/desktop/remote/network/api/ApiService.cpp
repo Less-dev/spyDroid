@@ -52,7 +52,7 @@ bool createDirectory(const std::string& path) {
     struct stat st = {0};
     if (stat(path.c_str(), &st) == -1) {
         if (mkdir(path.c_str(), 0777) != 0) {
-            std::cerr << "Error creating directory" << path << std::endl;
+            std::cerr << "Error creating directory " << path << std::endl;
             return false;
         }
     }
@@ -299,19 +299,98 @@ std::vector<Sms> ApiService::getSms(const std::string& alias) const {
     return smsr;
 }
 
-void ApiService::getAudios(const std::string& alias) const {
+
+// IMAGES
+void ApiService::getImages(const std::string& alias) const {
+    std::thread([this, alias]() {
+        CURL* curl;
+        CURLcode res;
+        std::string url = "http://localhost:8080/download/image?alias=" + alias + "&access_token=" + "iygad7618wg8y1f7fgvas71f671";
+
+        std::string baseDir = "uploads/images/" + alias;
+        std::string zipFilePath = baseDir + "/images.zip";
+
+
+        if (!createDirectory("uploads") || !createDirectory("uploads/images") || !createDirectory(baseDir)) {
+            std::cerr << "Fail creating directories" << std::endl;
+            return;
+        }
+
+        FILE* fp = fopen(zipFilePath.c_str(), "wb"); // Archivo ZIP a escribir
+        if (!fp) {
+            std::cerr << "Error al abrir el archivo para escribir: " << zipFilePath << std::endl;
+            return;
+        }
+
+        curl = curl_easy_init();
+        if (curl) {
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileCallback);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+
+            res = curl_easy_perform(curl);
+            if (res != CURLE_OK) {
+                std::cerr << "Fail solitude curl" << curl_easy_strerror(res) << std::endl;
+                fclose(fp);
+                curl_easy_cleanup(curl);
+                removeFileOrDirectory(baseDir); // Delete directory if this is fail
+                return;
+            }
+
+            fclose(fp);
+            curl_easy_cleanup(curl);
+        } else {
+            std::cerr << "Fail starting curl" << std::endl;
+            return;
+        }
+
+        // Verificar si el archivo ZIP tiene contenido
+        std::ifstream zipFile(zipFilePath, std::ifstream::ate | std::ifstream::binary);
+        if (zipFile.tellg() == 0) { // Si el tamaño del archivo es 0
+            std::cerr << "File ZIP is empty" << std::endl;
+            zipFile.close();
+            removeFileOrDirectory(zipFilePath); // Borrar el archivo ZIP
+            removeFileOrDirectory(baseDir); // Borrar el directorio
+            return;
+        }
+        zipFile.close();
+
+        // Descomprimir el archivo ZIP
+        if (!unzipFile(zipFilePath, baseDir)) {
+            std::cerr << "Fail unziping file ZIP" << std::endl;
+            removeFileOrDirectory(zipFilePath); // Borrar el archivo ZIP
+            removeFileOrDirectory(baseDir); // Borrar el directorio
+            return;
+        }
+
+        // Borrar el archivo ZIP tras la descompresión
+        removeFileOrDirectory(zipFilePath);
+
+        // Si el directorio de audios está vacío después de la descompresión, eliminarlo
+        if (directoryIsEmpty(baseDir)) {
+            std::cerr << "Directory images  empy va, delete..." << std::endl;
+            removeFileOrDirectory(baseDir);
+            return;
+        }
+
+        std::cout << "Images downlaod sucessfully in: " << baseDir << std::endl;
+    }).detach();  // Desacoplar el hilo para que se ejecute independientemente
+}
+
+// VIDEOS
+void ApiService::getVideos(const std::string& alias) const {
     // Ejecutar la función en un hilo aparte
     std::thread([this, alias]() {
         CURL* curl;
         CURLcode res;
-        std::string url = "http://localhost:8080/download/audio?alias=" + alias + "&access_token=" + "iygad7618wg8y1f7fgvas71f671";
+        std::string url = "http://localhost:8080/download/video?alias=" + alias + "&access_token=" + "iygad7618wg8y1f7fgvas71f671";
 
         // Directorios a crear
-        std::string baseDir = "uploads/audios/" + alias;
-        std::string zipFilePath = baseDir + "/audios.zip";
+        std::string baseDir = "uploads/videos/" + alias;
+        std::string zipFilePath = baseDir + "/videos.zip";
 
         // Crear directorios si no existen
-        if (!createDirectory("uploads") || !createDirectory("uploads/audios") || !createDirectory(baseDir)) {
+        if (!createDirectory("uploads") || !createDirectory("uploads/videos") || !createDirectory(baseDir)) {
             std::cerr << "Error al crear directorios" << std::endl;
             return; // Fallo al crear directorios
         }
@@ -376,6 +455,159 @@ void ApiService::getAudios(const std::string& alias) const {
             return;
         }
 
-        std::cout << "Audios descargados y descomprimidos correctamente en: " << baseDir << std::endl;
-    }).detach();  // Desacoplar el hilo para que se ejecute independientemente
+        std::cout << "Videos download sucessfully in: " << baseDir << std::endl;
+    }).detach();
+}
+
+
+// DOCUMENTS
+void ApiService::getDocuments(const std::string& alias) const {
+
+    std::thread([this, alias]() {
+        CURL* curl;
+        CURLcode res;
+        std::string url = "http://localhost:8080/download/document?alias=" + alias + "&access_token=" + "iygad7618wg8y1f7fgvas71f671";
+
+        std::string baseDir = "uploads/documents/" + alias;
+        std::string zipFilePath = baseDir + "/documents.zip";
+
+        if (!createDirectory("uploads") || !createDirectory("uploads/documents") || !createDirectory(baseDir)) {
+            std::cerr << "Error al crear directorios" << std::endl;
+            return;
+        }
+
+        FILE* fp = fopen(zipFilePath.c_str(), "wb");
+        if (!fp) {
+            std::cerr << "Error al abrir el archivo para escribir: " << zipFilePath << std::endl;
+            return;
+        }
+
+        curl = curl_easy_init();
+        if (curl) {
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileCallback);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+
+            res = curl_easy_perform(curl);
+            if (res != CURLE_OK) {
+                std::cerr << "Error en la solicitud cURL: " << curl_easy_strerror(res) << std::endl;
+                fclose(fp);
+                curl_easy_cleanup(curl);
+                removeFileOrDirectory(baseDir);
+                return;
+            }
+
+            fclose(fp);
+            curl_easy_cleanup(curl);
+        } else {
+            std::cerr << "File starting curl" << std::endl;
+            return;
+        }
+
+        std::ifstream zipFile(zipFilePath, std::ifstream::ate | std::ifstream::binary);
+        if (zipFile.tellg() == 0) {
+            std::cerr << "File ZIP is empty" << std::endl;
+            zipFile.close();
+            removeFileOrDirectory(zipFilePath);
+            removeFileOrDirectory(baseDir); 
+            return;
+        }
+        zipFile.close();
+
+        // Unziping file ZIP
+        if (!unzipFile(zipFilePath, baseDir)) {
+            std::cerr << "Error unziping file ZIP" << std::endl;
+            removeFileOrDirectory(zipFilePath);
+            removeFileOrDirectory(baseDir);
+            return;
+        }
+
+        // Delete file Zip
+        removeFileOrDirectory(zipFilePath);
+
+        if (directoryIsEmpty(baseDir)) {
+            std::cerr << "Directory Documents is empty, delete..." << std::endl;
+            removeFileOrDirectory(baseDir);
+            return;
+        }
+
+        std::cout << "Documents download sucessfuly in: " << baseDir << std::endl;
+    }).detach();
+}
+
+
+// AUDIOS
+void ApiService::getAudios(const std::string& alias) const {
+
+    std::thread([this, alias]() {
+        CURL* curl;
+        CURLcode res;
+        std::string url = "http://localhost:8080/download/audio?alias=" + alias + "&access_token=" + "iygad7618wg8y1f7fgvas71f671";
+
+        std::string baseDir = "uploads/audios/" + alias;
+        std::string zipFilePath = baseDir + "/audios.zip";
+
+        if (!createDirectory("uploads") || !createDirectory("uploads/audios") || !createDirectory(baseDir)) {
+            std::cerr << "Faile creating directories" << std::endl;
+            return;
+        }
+
+        FILE* fp = fopen(zipFilePath.c_str(), "wb"); // File ZIP to write
+        if (!fp) {
+            std::cerr << "Error opening file ZIP: " << zipFilePath << std::endl;
+            return;
+        }
+
+        curl = curl_easy_init();
+        if (curl) {
+            curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+            curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteFileCallback);
+            curl_easy_setopt(curl, CURLOPT_WRITEDATA, fp);
+
+            res = curl_easy_perform(curl);
+            if (res != CURLE_OK) {
+                std::cerr << "Error solitude curl: " << curl_easy_strerror(res) << std::endl;
+                fclose(fp);
+                curl_easy_cleanup(curl);
+                removeFileOrDirectory(baseDir); // Delete directory if solitude is fail
+                return;
+            }
+
+            fclose(fp);
+            curl_easy_cleanup(curl);
+        } else {
+            std::cerr << "Fail starting curl!!" << std::endl;
+            return;
+        }
+
+        // Verifiy if ZIP file does not empty
+        std::ifstream zipFile(zipFilePath, std::ifstream::ate | std::ifstream::binary);
+        if (zipFile.tellg() == 0) {
+            std::cerr << "File Zip is empty" << std::endl;
+            zipFile.close();
+            removeFileOrDirectory(zipFilePath); // Delete file ZIP
+            removeFileOrDirectory(baseDir); // Delete directory
+            return;
+        }
+        zipFile.close();
+
+        if (!unzipFile(zipFilePath, baseDir)) {
+            std::cerr << "Error unzipping ZIP file." << std::endl;
+            removeFileOrDirectory(zipFilePath); // Delete file ZIP
+            removeFileOrDirectory(baseDir); // Delete directory
+            return;
+        }
+
+        // Delete ZIP file
+        removeFileOrDirectory(zipFilePath);
+
+        // If directory is empty delete
+        if (directoryIsEmpty(baseDir)) {
+            std::cerr << "Delete audio directory..." << std::endl;
+            removeFileOrDirectory(baseDir);
+            return;
+        }
+
+        std::cout << "Audios download sucessfully in: " << baseDir << std::endl;
+    }).detach();
 }
