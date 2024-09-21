@@ -14,6 +14,7 @@ set(HEADERS
     ${INCLUDE_DIR}/SmsScreen.h
     ${SOURCE_DIR}/components/CardSms.h
     ${SOURCE_DIR}/components/GoBack.h
+    ${SOURCE_DIR}/components/CardMultimedia.h
 )
 
 # Define source files
@@ -25,6 +26,7 @@ set(SOURCES
     ${SOURCE_DIR}/data/colors.cpp
     ${SOURCE_DIR}/components/GoBack.cpp
     ${SOURCE_DIR}/components/CardSms.cpp
+    ${SOURCE_DIR}/components/CardMultimedia.cpp
     ${SOURCE_DIR}/remote/network/api/ApiService.cpp
     ${SOURCE_DIR}/remote/network/data/DevicesDaoImp.cpp
     ${SOURCE_DIR}/remote/network/data/InfoDaoImp.cpp

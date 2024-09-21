@@ -17,6 +17,7 @@
 
 #include "MultimediaScreen.h"
 #include "../components/GoBack.h"
+#include "../components/CardMultimedia.h"
 #include "QString"
 #include "iostream"
 
@@ -24,7 +25,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 {
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
-    pal.setColor(QPalette::Background, QColor("#260006"));  // El mismo color que la ventana principal
+    pal.setColor(QPalette::Window, QColor("#260006"));  // El mismo color que la ventana principal
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     
@@ -33,48 +34,62 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         emit goToHome();
     });
 
+    layout = new QVBoxLayout(this);  // Layout principal (para centrar todo)
+    gridLayout = new QGridLayout();  // Layout en cuadrícula para las tarjetas
 
-    vncData.ip = "192.168.100.242";
-    vncData.port = 5300;
-
-    vncConnect = new QPushButton("Connect to VNC", this);  // Botón para conectar al VNC
-
-    connect(vncConnect, &QPushButton::clicked, this, &MultimediaScreen::onConnectToVnc);
-    // Crear el layout vertical
-    layout = new QVBoxLayout(this);
-
-    // Crear y configurar el QLabel
-    label = new QLabel("Vista de Perfil", this);
-    label->setAlignment(Qt::AlignCenter);
+    CardMultimedia* cardImages = new CardMultimedia(
+        ":/drawable/images.png",
+        "Imagenes",
+        "Visualice imagenes de el dispositivo",
+        []() {
+            std::cout << "CLICK IMAGES!!" << std::endl;
+        }
+    );
 
 
-    layout->addWidget(backPage);
-    layout->addWidget(vncConnect);
-    layout->addWidget(label);
-    // Establecer el layout para esta vista
-    this->setLayout(layout);
-}
+    CardMultimedia* cardVideos = new CardMultimedia(
+        ":/drawable/videos.png",
+        "Videos",
+        "Visualice Videos de el dispositivo",
+        []() {
+            std::cout << "CLICK VIDEOS!!" << std::endl;
+        }
+    );
 
+    CardMultimedia* cardAudios = new CardMultimedia(
+        ":/drawable/audios.png",
+        "Audios",
+        "Visualice AUDIOS de el dispositivo",
+        []() {
+            std::cout << "CLICK AUDIOS!!" << std::endl;
+        }
+    );
 
-void MultimediaScreen::onConnectToVnc() {
-    QString ip = QString::fromStdString(vncData.ip);
-    QString port = QString::number(vncData.port);
+    CardMultimedia* cardDocuments = new CardMultimedia(
+        ":/drawable/documents.png",
+        "Documentos",
+        "Visualice Documentos de el dispositivo",
+        []() {
+            std::cout << "CLICK DOCUMENTS!!" << std::endl;
+        }
+    );
 
-    // Crear el comando concatenando la IP y el puerto
-    QString command = 
-        QString("bash -c '/tmp/vnc_viewer %1:%2 &' 2>/dev/null")
-            .arg(ip)
-            .arg(port);
+    // Añadir widgets al QGridLayout en la posición que deseas
+    gridLayout->addWidget(cardImages, 0, 0);  // Fila 0, Columna 0
+    gridLayout->addWidget(cardVideos, 0, 1);  // Fila 0, Columna 1
+    gridLayout->addWidget(cardAudios, 1, 0);  // Fila 1, Columna 0
+    gridLayout->addWidget(cardDocuments, 1, 1);  // Fila 1, Columna 1
 
-    std::cout << command.toStdString().c_str() << std::endl;      
+    // Centrar el gridLayout dentro del layout principal
+    layout->addStretch();  // Añadir un estiramiento arriba para centrar verticalmente
+    layout->addLayout(gridLayout);  // Añadir el layout en cuadrícula
+    layout->addStretch();  // Añadir un estiramiento abajo para centrar verticalmente
 
-    // Ejecutar el comando
-    system(command.toStdString().c_str());
-}
+    // Alineación horizontal del contenido en el gridLayout
+    gridLayout->setAlignment(Qt::AlignCenter);  // Alinea todo el grid en el centro horizontal
+    gridLayout->setHorizontalSpacing(20);  // Ajusta el espacio horizontal entre las tarjetas (opcional)
+    gridLayout->setVerticalSpacing(20);    // Ajusta el espacio vertical entre las tarjetas (opcional)
 
-void MultimediaScreen::setDeviceAlias(const QString& alias) {
-    deviceAlias = alias;
-    
-    // Imprimir el alias en la consola con std::cout
-    std::cout << "Alias del dispositivo: " << alias.toStdString() << std::endl;
+    this->setLayout(layout);  // Establecer el layout principal para la ventana
+
 }

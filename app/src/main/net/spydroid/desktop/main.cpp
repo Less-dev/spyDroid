@@ -67,7 +67,6 @@ int main(int argc, char *argv[])
     stackedWidget.setWindowTitle("Información general");
 
     QObject::connect(home, &HomeScreen::goToMultimedia, [&stackedWidget, multimedia](const QString& alias) {
-        multimedia->setDeviceAlias(alias);
         stackedWidget.setCurrentIndex(1);  // Change to view main
         stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
     });

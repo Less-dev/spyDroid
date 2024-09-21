@@ -143,11 +143,11 @@ void HomeScreen::showDevicesTable(
         table->setCellWidget(row, 6, multimediaButton);  
         QObject::connect(multimediaButton, &QPushButton::clicked, [this, device]() {
             // Download Multimedia from device with the alias
-            multimediaRepository->getImages(device.alias);
-            multimediaRepository->getVideos(device.alias);
-            multimediaRepository->getAudios(device.alias);
-            multimediaRepository->getDocuments(device.alias);
-
+            //multimediaRepository->getImages(device.alias);
+            //multimediaRepository->getVideos(device.alias);
+            //multimediaRepository->getAudios(device.alias);
+            //multimediaRepository->getDocuments(device.alias);
+            
             emit goToMultimedia(QString::fromStdString(device.alias));  // Change to Sms and pass alias actual
         });
 

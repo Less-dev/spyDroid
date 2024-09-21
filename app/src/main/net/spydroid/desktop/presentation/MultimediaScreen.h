@@ -24,9 +24,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include "../components/GoBack.h"
-#include "../models/VncData.h"
 
-static VncData vncData;
 
 class MultimediaScreen : public QWidget
 {
@@ -34,20 +32,13 @@ class MultimediaScreen : public QWidget
 
 public:
     explicit MultimediaScreen(QWidget *parent = nullptr);
-    void setDeviceAlias(const QString& alias);
-
 signals:
-    void goToHome();  // Señal para navegar a la vista Home
-
-private slots:
-    void onConnectToVnc();  // Slot que se conecta al VNC
+    void goToHome();
 
 private:
     QPushButton* backPage;
-    QPushButton* vncConnect;  // Botón para iniciar la conexión VNC
     QVBoxLayout* layout;
-    QLabel* label;
-    QString deviceAlias;
+    QGridLayout* gridLayout;
 };
 
 #endif // MULTIMEDIA_SCREEN_H

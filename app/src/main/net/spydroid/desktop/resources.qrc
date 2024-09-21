@@ -7,5 +7,9 @@
         <file alias ="multimedia.png">res/drawable/multimedia_ic.png</file>
         <file alias ="contacts.png">res/drawable/contacts_ic.png</file>
         <file alias ="background.png">res/drawable/background.png</file>
+        <file alias ="images.png">res/drawable/image_ic.png</file>
+        <file alias ="videos.png">res/drawable/video_ic.png</file>
+        <file alias ="audios.png">res/drawable/audio_ic.png</file>
+        <file alias ="documents.png">res/drawable/documents_ic.png</file>
     </qresource>
 </RCC>
