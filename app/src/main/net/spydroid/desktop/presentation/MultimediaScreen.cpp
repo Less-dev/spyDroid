@@ -24,7 +24,7 @@
 
 MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 {
-    this->setMinimumSize(600, 500);
+    this->setMinimumSize(640, 500);
     QPalette pal = this->palette();
     pal.setColor(QPalette::Window, QColor("#000000"));  // El mismo color que la ventana principal
     this->setAutoFillBackground(true);

@@ -20,6 +20,9 @@
 #include "CardMultimedia.h"
 #include <QPixmap>
 #include <QMouseEvent>
+#include <QPainter>
+#include <QBrush>
+
 
 // Constructor modificado
 CardMultimedia::CardMultimedia(
@@ -45,8 +48,8 @@ CardMultimedia::CardMultimedia(
 // Método para setear la imagen
 void CardMultimedia::setImage(const QString& imagePath) {
     QPixmap pixmap(imagePath);
-    imageLabel->setPixmap(pixmap.scaled(50, 50, Qt::KeepAspectRatio));  // Reducir tamaño a 40x40
-    imageLabel->setFixedSize(55, 55);  // Fijar el tamaño del QLabel
+    imageLabel->setPixmap(pixmap.scaled(55, 55, Qt::KeepAspectRatio));  // Reducir tamaño a 40x40
+    imageLabel->setFixedSize(75, 75);  // Fijar el tamaño del QLabel
 }
 
 // Método para setear el título
@@ -98,4 +101,24 @@ void CardMultimedia::mousePressEvent(QMouseEvent* event) {
         onClickAction(); // Llamar a la lambda cuando se haga click en el componente
     }
     QWidget::mousePressEvent(event); // Llamar al evento base
+}
+
+
+void CardMultimedia::paintEvent(QPaintEvent *event)
+{
+    QWidget::paintEvent(event);
+
+    QPainter painter(this);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    // Color de relleno con transparencia (negro con alfa 115)
+    QBrush brush(QColor(0, 0, 0, 115));  // Color de fondo negro con transparencia
+    painter.setBrush(brush);
+    
+    QPen pen(QColor("#800000"));  // Color del borde
+    pen.setWidth(4);  // Grosor del borde
+    painter.setPen(pen);
+    
+    // Dibujamos el rectángulo redondeado
+    painter.drawRoundedRect(0, 0, width(), height(), 15, 15);
 }
