@@ -361,7 +361,6 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
             "    color : white; "            
             "    font-weight: bold; "            
             "    font-size: 30px; "             
-            "   padding-bottom: 150px; "            
             "}"
         );
 
@@ -378,7 +377,7 @@ void HomeScreen::paintEvent(QPaintEvent *event) {
     QPixmap background(":/drawable/background.png");
 
     // Escalar la imagen al tamaño máximo permitido
-    QSize scaledSize = background.size().scaled(500, 350, Qt::KeepAspectRatio);
+    QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
 
     // Escalar el pixmap a la nueva tamaño
