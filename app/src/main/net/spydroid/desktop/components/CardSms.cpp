@@ -76,11 +76,11 @@ void CardSms::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // Color de relleno y borde
-    QBrush brush(QColor("#5c0a0a"));  // Color de fondo blanco
+    // Color de relleno con transparencia (negro con alfa 115)
+    QBrush brush(QColor(0, 0, 0, 115));  // Color de fondo negro con transparencia
     painter.setBrush(brush);
     
-    QPen pen(QColor("#800000"));  // Color del borde negro
+    QPen pen(QColor("#800000"));  // Color del borde
     pen.setWidth(4);  // Grosor del borde
     painter.setPen(pen);
     

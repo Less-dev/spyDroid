@@ -23,17 +23,18 @@
 #include "QString"
 #include "iostream"
 #include "QScrollArea"
+#include <QPainter>
+
 
 SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), deviceAlias(alias)
 {
     this->setMinimumSize(600, 500);
-    
-    // Configurar la paleta de colores del fondo
+
     QPalette pal = this->palette();
-    pal.setColor(QPalette::Background, QColor("#260006"));  // El mismo color que la ventana principal
+    pal.setColor(QPalette::Background, QColor("#000000"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
+    
     // Configurar el botón de volver atrás
     backPage = goBack(this, [this]() {
         emit goToHome();
@@ -59,6 +60,7 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
 
     // Crear un contenedor para las tarjetas con un QVBoxLayout
     QWidget* cardContainer = new QWidget;
+    cardContainer->setStyleSheet("background: transparent;"); 
     QVBoxLayout* cardLayout = new QVBoxLayout(cardContainer);
     cardLayout->setAlignment(Qt::AlignTop);  // Alinea las tarjetas hacia arriba
     cardLayout->setSpacing(10);              // Espacio entre las tarjetas
@@ -66,12 +68,10 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
     for (const auto& smsHandler : smsList) {
         // Crear una tarjeta de SMS (CardSms)
         CardSms* card = new CardSms(smsHandler, this);
-        card->setStyleSheet("background-color: white;");  // Fondo blanco para las tarjetas
-
         // Crear un layout horizontal (QHBoxLayout) para centrar la tarjeta
         QHBoxLayout* hLayout = new QHBoxLayout();
-        hLayout->setAlignment(Qt::AlignLeft);  // Centrar horizontalmente
-        hLayout->addSpacing(20);  // Ajusta el valor de 20 a la cantidad deseada de padding
+        hLayout->setAlignment(Qt::AlignCenter);  // Centrar horizontalmente
+        //hLayout->addSpacing(20);  // Ajusta el valor de 20 a la cantidad deseada de padding
 
         // Añadir la tarjeta al layout horizontal
         hLayout->addWidget(card);
@@ -87,7 +87,7 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
     QScrollArea* scrollArea = new QScrollArea;
     scrollArea->setWidgetResizable(true);  // Permitir que el contenido del área de scroll se redimensione
     scrollArea->setWidget(cardContainer);  // Asignar el contenedor de las tarjetas al área de scroll
-
+    scrollArea->setStyleSheet("background: transparent;");
     // Añadir el área de scroll al layout principal
     
     layout->addWidget(scrollArea);
@@ -117,4 +117,23 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
 
 
     this->setLayout(layout);
+}
+
+
+void SmsScreen::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/drawable/background.png");
+
+    // Escalar la imagen al tamaño máximo permitido
+    QSize scaledSize = background.size().scaled(500, 350, Qt::KeepAspectRatio);
+    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
+
+    // Escalar el pixmap a la nueva tamaño
+    QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    // Dibujar la imagen centrada
+    painter.drawPixmap(targetRect, scaledPixmap);
+
+    // Llamar al método base para asegurar que el evento de pintura continúe normalmente
+    QWidget::paintEvent(event);
 }

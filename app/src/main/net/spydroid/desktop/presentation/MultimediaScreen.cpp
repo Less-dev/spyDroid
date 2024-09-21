@@ -20,12 +20,13 @@
 #include "../components/CardMultimedia.h"
 #include "QString"
 #include "iostream"
+#include <QPainter>
 
 MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 {
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
-    pal.setColor(QPalette::Window, QColor("#260006"));  // El mismo color que la ventana principal
+    pal.setColor(QPalette::Window, QColor("#000000"));  // El mismo color que la ventana principal
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     
@@ -89,7 +90,24 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     gridLayout->setAlignment(Qt::AlignCenter);  // Alinea todo el grid en el centro horizontal
     gridLayout->setHorizontalSpacing(20);  // Ajusta el espacio horizontal entre las tarjetas (opcional)
     gridLayout->setVerticalSpacing(20);    // Ajusta el espacio vertical entre las tarjetas (opcional)
-
     this->setLayout(layout);  // Establecer el layout principal para la ventana
+}
 
+void MultimediaScreen::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+    QPixmap background(":/drawable/background.png");
+
+    // Escalar la imagen al tamaño máximo permitido
+    QSize scaledSize = background.size().scaled(500, 350, Qt::KeepAspectRatio);
+    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
+
+    // Escalar el pixmap a la nueva tamaño
+    QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    // Dibujar la imagen centrada
+    painter.drawPixmap(targetRect, scaledPixmap);
+
+    // Llamar al método base para asegurar que el evento de pintura continúe normalmente
+    QWidget::paintEvent(event);
 }

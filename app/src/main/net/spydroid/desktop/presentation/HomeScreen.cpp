@@ -250,7 +250,7 @@ void HomeScreen::showDevicesTable(
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QPalette palette = table->palette();
-    palette.setColor(QPalette::Base, QColor("#260006"));
+    palette.setColor(QPalette::Base, QColor("#000000"));
     table->setPalette(palette);
     table->setAutoFillBackground(true);
     table->setBackgroundRole(QPalette::Base);
@@ -330,7 +330,7 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
 
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
-    pal.setColor(QPalette::Background, QColor("#260006"));
+    pal.setColor(QPalette::Background, QColor("#000000"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
 
@@ -342,7 +342,7 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
         QHBoxLayout* topLayout = new QHBoxLayout();
         textField = new QLineEdit(this);
         textField->setPlaceholderText("Buscar dispositivo (por su alias)...");
-        textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #390009; }");
+        textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #000000; }");
         textField->setFixedWidth(400);
 
         // Create Button Search

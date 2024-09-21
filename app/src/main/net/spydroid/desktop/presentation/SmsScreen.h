@@ -26,6 +26,8 @@
 #include "../components/GoBack.h"
 #include "../remote/domain/SmsRepository.h"
 #include "../remote/models/SmsHandler.h"
+#include <QPaintEvent>
+
 
 class SmsScreen : public QWidget
 {
@@ -36,6 +38,9 @@ public:
 
 signals:
     void goToHome();  // Señal para navegar a la vista Home
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 
 private:
     QPushButton* backPage;

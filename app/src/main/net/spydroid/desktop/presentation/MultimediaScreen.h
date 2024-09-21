@@ -24,7 +24,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include "../components/GoBack.h"
-
+#include <QPaintEvent>
 
 class MultimediaScreen : public QWidget
 {
@@ -32,8 +32,13 @@ class MultimediaScreen : public QWidget
 
 public:
     explicit MultimediaScreen(QWidget *parent = nullptr);
+
 signals:
     void goToHome();
+
+protected:
+    // Sobrescribir el método paintEvent para manejar el fondo personalizado
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QPushButton* backPage;
