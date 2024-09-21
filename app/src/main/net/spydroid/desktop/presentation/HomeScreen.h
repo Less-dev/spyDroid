@@ -25,6 +25,7 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QTableWidget>
+#include <QPaintEvent>
 #include "../remote/domain/DevicesRepository.h"
 #include "../remote/domain/InfoRepository.h"
 #include "../remote/domain/MultimediaRepository.h"
@@ -45,6 +46,9 @@ private slots:
 signals:
     void goToMultimedia(const QString& alias);
     void goToSms(const QString& alias);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QVBoxLayout* layout;

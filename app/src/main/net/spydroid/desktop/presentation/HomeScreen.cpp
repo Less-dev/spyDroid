@@ -249,20 +249,10 @@ void HomeScreen::showDevicesTable(
     // Disable table editing
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-    QPalette palette = table->palette();
-    palette.setColor(QPalette::Base, QColor("#000000"));
-    table->setPalette(palette);
-    table->setAutoFillBackground(true);
-    table->setBackgroundRole(QPalette::Base);
-    
 
     table->setStyleSheet(
         "QTableWidget {"
-        "    background-image: url(:/drawable/background.png);"
-        "    background-position: center;"
-        "    background-repeat: no-repeat;"
-        "    width: 100px;"
-        "    height: 100px;"
+        "    background: transparent;"
         "}"
         "QScrollBar:vertical {"
         "    background: #390009;"
@@ -371,11 +361,6 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
             "    color : white; "            
             "    font-weight: bold; "            
             "    font-size: 30px; "             
-            "    background-image: url(:/drawable/background.png); "
-            "    background-position: center; " 
-            "    background-repeat: no-repeat; "
-            "    width: 100px; "               
-            "    height: 100px; "   
             "   padding-bottom: 150px; "            
             "}"
         );
@@ -388,3 +373,20 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
 
 
 
+void HomeScreen::paintEvent(QPaintEvent *event) {
+    QPainter painter(this);
+    QPixmap background(":/drawable/background.png");
+
+    // Escalar la imagen al tamaño máximo permitido
+    QSize scaledSize = background.size().scaled(500, 350, Qt::KeepAspectRatio);
+    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
+
+    // Escalar el pixmap a la nueva tamaño
+    QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+
+    // Dibujar la imagen centrada
+    painter.drawPixmap(targetRect, scaledPixmap);
+
+    // Llamar al método base para asegurar que el evento de pintura continúe normalmente
+    QWidget::paintEvent(event);
+}

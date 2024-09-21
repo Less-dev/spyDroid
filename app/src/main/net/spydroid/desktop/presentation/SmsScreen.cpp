@@ -101,11 +101,6 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
             "    color : white; "            
             "    font-weight: bold; "            
             "    font-size: 30px; "             
-            "    background-image: url(:/drawable/background.png); "
-            "    background-position: center; " 
-            "    background-repeat: no-repeat; "
-            "    width: 100px; "               
-            "    height: 100px; "   
             "   padding-bottom: 150px; "            
             "}"
         );
