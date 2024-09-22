@@ -16,86 +16,79 @@
  */
 
 #include "GoBack.h"
-#include <QIcon>
-#include <QObject>
 #include <QTimer>
-#include <QGraphicsOpacityEffect>
 #include <QPixmap>
 #include <QPainter>
 #include <QImage>
-#include <QColor>
+#include <QVBoxLayout>
 
-QIcon recolorIcon(const QString& iconPath, const QColor& newColor) {
-    // Cargar el QPixmap desde el archivo original del ícono
+// Constructor del GoBackButton
+GoBackButton::GoBackButton(QWidget* parent, const QColor& iconColor)
+    : QWidget(parent), currentColor(iconColor)
+{
+    // Crear el botón
+    button = new QPushButton(this);
+
+    // Asignar el ícono al botón desde los recursos
+    QIcon icon = createRecoloredIcon(":/drawable/goBack.png", iconColor);
+    button->setIcon(icon);
+
+    // Ajustar el tamaño del ícono y el botón
+    button->setIconSize(QSize(60, 30));
+    button->setFixedSize(60, 30);
+    button->setStyleSheet("border: none; padding: 0px; QPushButton { outline: none; }");
+
+    // Crear el efecto de opacidad
+    opacityEffect = new QGraphicsOpacityEffect(button);
+    opacityEffect->setOpacity(1.0);
+    button->setGraphicsEffect(opacityEffect);
+
+    // Manejar la opacidad al hacer clic en el botón
+    QObject::connect(button, &QPushButton::pressed, [this]() {
+        opacityEffect->setOpacity(0.5);  // Reducir opacidad a 50%
+        QTimer::singleShot(100, [this]() {
+            opacityEffect->setOpacity(1.0);  // Restaurar opacidad a 100%
+        });
+    });
+
+    // Layout opcional (si es necesario para usar en un layout externo)
+    QVBoxLayout* layout = new QVBoxLayout(this);
+    layout->addWidget(button);
+    layout->setContentsMargins(0, 0, 0, 0);  // Sin márgenes para permitir que el layout padre controle la posición
+    setLayout(layout);
+}
+
+// Método para asignar la acción de clic
+void GoBackButton::setOnClick(const std::function<void()>& onClick)
+{
+    QObject::connect(button, &QPushButton::clicked, onClick);
+}
+
+// Método para recolorear el ícono
+void GoBackButton::recolorIcon(const QColor& newColor)
+{
+    currentColor = newColor;
+    QIcon icon = createRecoloredIcon(":/drawable/goBack.png", newColor);
+    button->setIcon(icon);
+}
+
+// Función privada para recolorear el ícono
+QIcon GoBackButton::createRecoloredIcon(const QString& iconPath, const QColor& color)
+{
     QPixmap pixmap(iconPath);
-
-    // Crear una imagen a partir del pixmap
     QImage image = pixmap.toImage();
 
-    // Iterar sobre los píxeles para cambiar el color
     for (int y = 0; y < image.height(); ++y) {
         for (int x = 0; x < image.width(); ++x) {
-            // Obtener el color del píxel actual
-            QColor color = image.pixelColor(x, y);
-
-            // Si el píxel no es completamente transparente, aplicar el nuevo color
-            if (color.alpha() > 0) {
-                QColor pastelColor = newColor;
-                pastelColor.setAlpha(color.alpha());  // Mantener la transparencia original
-                image.setPixelColor(x, y, pastelColor);
+            QColor pixelColor = image.pixelColor(x, y);
+            if (pixelColor.alpha() > 0) {
+                QColor newPixelColor = color;
+                newPixelColor.setAlpha(pixelColor.alpha());
+                image.setPixelColor(x, y, newPixelColor);
             }
         }
     }
 
-    // Crear un nuevo pixmap a partir de la imagen modificada
     QPixmap newPixmap = QPixmap::fromImage(image);
-
-    // Retornar el QIcon con el pixmap recoloreado
     return QIcon(newPixmap);
-}
-
-
-// Implementación de la función goBack
-QPushButton* goBack(QWidget* parent, const std::function<void()>& onClick)
-{
-    // Crear el botón y asignarlo al widget padre
-    QPushButton* button = new QPushButton(parent);
-    // Asignar el ícono al botón desde los recursos
-
-    QColor pastelWhite(255, 255, 255, 200);  // Blanco pastel con un poco de transparencia
-    QIcon icon = recolorIcon(":/drawable/goBack.png", pastelWhite);
-    button->setIcon(icon);
-
-    // Ajustar el tamaño del ícono para que ocupe todo el botón
-    button->setIconSize(QSize(60, 30));
-
-    // Ajustar el tamaño del botón a 80x40 píxeles
-    button->setFixedSize(60, 30);
-
-    // Eliminar cualquier margen o padding del botón
-    button->setStyleSheet("border: none; padding: 0px; QPushButton { outline: none; }");
-
-    // Conectar la señal de clic con la lambda o función recibida
-    QObject::connect(button, &QPushButton::clicked, onClick);
-
-    // Crear un efecto de opacidad
-    QGraphicsOpacityEffect* opacityEffect = new QGraphicsOpacityEffect(button);
-
-    // Asegurarse de que la opacidad inicial sea 100% (1.0)
-    opacityEffect->setOpacity(1.0);
-    button->setGraphicsEffect(opacityEffect);
-
-    // Oscurecer temporalmente el ícono cuando el botón se presiona
-    QObject::connect(button, &QPushButton::pressed, [opacityEffect]() {
-        // Reducir la opacidad del ícono (oscurecer)
-        opacityEffect->setOpacity(0.5);  // 50% opacidad (oscurecido)
-
-        // Restablecer la opacidad original después de 0.1 segundos
-        QTimer::singleShot(100, [opacityEffect]() {
-            opacityEffect->setOpacity(1.0);  // 100% opacidad (original)
-        });
-    });
-
-    // Retornar el botón para agregarlo a la UI
-    return button;
 }

@@ -15,14 +15,33 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GOBACK_H
-#define GOBACK_H
+#ifndef GOBACKBUTTON_H
+#define GOBACKBUTTON_H
 
+#include <QWidget>
 #include <QPushButton>
-#include <functional>
+#include <QIcon>
+#include <QGraphicsOpacityEffect>
 
-// Declaración de la función goBack
-QPushButton* goBack(QWidget* parent, const std::function<void()>& onClick);
+class GoBackButton : public QWidget
+{
+    Q_OBJECT
 
-#endif // GOBACK_H
+public:
+    explicit GoBackButton(QWidget* parent = nullptr, const QColor& iconColor = QColor(255, 255, 255, 200));
 
+    // Método para configurar el callback de clic
+    void setOnClick(const std::function<void()>& onClick);
+
+    // Método para recolorear el ícono
+    void recolorIcon(const QColor& newColor);
+
+private:
+    QPushButton* button;
+    QGraphicsOpacityEffect* opacityEffect;
+    QColor currentColor;
+    QIcon createRecoloredIcon(const QString& iconPath, const QColor& color);
+
+};
+
+#endif // GOBACKBUTTON_H

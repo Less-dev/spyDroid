@@ -21,6 +21,7 @@
 #include "QString"
 #include "iostream"
 #include <QPainter>
+#include <QDebug>
 
 MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 {
@@ -30,12 +31,16 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     
-
-    backPage = goBack(this, [this]() {
-        emit goToHome();
-    });
-
     layout = new QVBoxLayout(this);  // Layout principal (para centrar todo)
+    layout->setContentsMargins(30, 30, 30, 30);  // Establecer márgenes del layout principal
+    
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    goBackButton->setOnClick([this]() {
+        emit goToHome();
+        // Aquí puedes manejar el evento, por ejemplo, navegar hacia atrás
+    });
+    layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
+
     gridLayout = new QGridLayout();  // Layout en cuadrícula para las tarjetas
 
     CardMultimedia* cardImages = new CardMultimedia(
@@ -96,17 +101,27 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 void MultimediaScreen::paintEvent(QPaintEvent *event)
 {
     QPainter painter(this);
-    QPixmap background(":/drawable/background.png");
+    painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
-    // Escalar la imagen al tamaño máximo permitido
+    // Dibujar la imagen de fondo centrada (sin cambios)
+    QPixmap background(":/drawable/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
-
-    // Escalar el pixmap a la nueva tamaño
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    // Dibujar la imagen centrada
     painter.drawPixmap(targetRect, scaledPixmap);
+
+    // Establecer el color y grosor del borde rojo
+    QPen pen(QColor("#FF0000"));  // Color rojo para el borde
+    pen.setWidth(4);  // Grosor del borde
+    painter.setPen(pen);
+
+    // Establecer un brush transparente para que solo se vea el borde
+    QBrush brush(Qt::NoBrush);
+    painter.setBrush(brush);
+
+    // Dibujar un rectángulo redondeado con padding de 20px (para que no toque los bordes)
+    int padding = 20;
+    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
 
     // Llamar al método base para asegurar que el evento de pintura continúe normalmente
     QWidget::paintEvent(event);

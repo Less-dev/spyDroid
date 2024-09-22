@@ -43,7 +43,6 @@ protected:
 
 
 private:
-    QPushButton* backPage;
     QVBoxLayout* layout;
     QLabel* label;
     SmsRepository* smsRepository;

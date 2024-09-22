@@ -41,7 +41,6 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    QPushButton* backPage;
     QVBoxLayout* layout;
     QGridLayout* gridLayout;
 };
