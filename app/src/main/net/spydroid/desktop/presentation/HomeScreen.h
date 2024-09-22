@@ -26,11 +26,6 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
-#include "../remote/domain/DevicesRepository.h"
-#include "../remote/domain/InfoRepository.h"
-#include "../remote/domain/MultimediaRepository.h"
-#include "../remote/models/DevicesHandler.h"
-#include "../remote/models/InfoHandler.h"
 
 class HomeScreen : public QWidget
 {
@@ -39,31 +34,12 @@ class HomeScreen : public QWidget
 public:
     explicit HomeScreen(QWidget *parent = nullptr);
 
-private slots:
-    void searchDevice();  // Slot para manejar la búsqueda
-    void handleVncButtonClick();
-
-signals:
-    void goToMultimedia(const QString& alias);
-    void goToSms(const QString& alias);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     QVBoxLayout* layout;
-    QLabel* label;
-    QPushButton* button;
-    QLineEdit* textField;
-    QTableWidget* table;
-    DevicesRepository* devicesRepository;
-    InfoRepository* infoRepository;
-    MultimediaRepository* multimediaRepository;
-    std::vector<InfoHandler> infoHandler;
-    std::vector<DevicesHandler> devices;
-
-    // Declaración de la función showDevicesTable
-    void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* layout, QTableWidget* &table);
 };
 
 #endif // HOMESCREEN_H

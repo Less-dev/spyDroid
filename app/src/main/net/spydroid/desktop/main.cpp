@@ -31,6 +31,7 @@
 #include <cstdlib>
 #include <unistd.h>  
 #include "presentation/HomeScreen.h"
+#include "presentation/GeneralInformationScreen.h"
 #include "presentation/SmsScreen.h"
 #include "presentation/MultimediaScreen.h"
 
@@ -56,22 +57,24 @@ int main(int argc, char *argv[])
     HomeScreen* home = new HomeScreen;
     SmsScreen* sms = new SmsScreen;
     MultimediaScreen* multimedia = new MultimediaScreen;
+    GeneralInformationScreen* generalInformation = new GeneralInformationScreen;
 
-    stackedWidget.addWidget(home);         // Index 0
-    stackedWidget.addWidget(multimedia);   // Índex 1
-    stackedWidget.addWidget(sms);          //Index 2
+    stackedWidget.addWidget(home);                      // Index 0
+    stackedWidget.addWidget(generalInformation);        // Index 1
+    stackedWidget.addWidget(multimedia);                // Índex 2
+    stackedWidget.addWidget(sms);                       // Index 3
 
     // Show view home primary
     stackedWidget.setCurrentIndex(0);
     stackedWidget.showMaximized();
-    stackedWidget.setWindowTitle("Información general");
+    stackedWidget.setWindowTitle("spydroid");
 
-    QObject::connect(home, &HomeScreen::goToMultimedia, [&stackedWidget, multimedia](const QString& alias) {
+    QObject::connect(generalInformation, &GeneralInformationScreen::goToMultimedia, [&stackedWidget, multimedia](const QString& alias) {
         stackedWidget.setCurrentIndex(1);  // Change to view main
         stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
     });
 
-    QObject::connect(home, &HomeScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
+    QObject::connect(generalInformation, &GeneralInformationScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
         SmsScreen* newSmsScreen = new SmsScreen(alias);
     
         QObject::connect(newSmsScreen, &SmsScreen::goToHome, [&stackedWidget]() {
@@ -93,5 +96,6 @@ int main(int argc, char *argv[])
         stackedWidget.setCurrentIndex(0);  // Change to view main
         stackedWidget.setWindowTitle("Información general");
     });
+
     return app.exec();
 }
