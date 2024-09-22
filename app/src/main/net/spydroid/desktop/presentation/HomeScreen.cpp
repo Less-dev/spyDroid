@@ -249,11 +249,27 @@ void HomeScreen::showDevicesTable(
     // Disable table editing
     table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-
+    
     table->setStyleSheet(
         "QTableWidget {"
         "    background: transparent;"
+        "    gridline-color: red;"  // Color de las líneas de la cuadrícula (incluyendo los bordes de las celdas)
+        "    border: 2px solid red;"  // Borde exterior de la tabla en rojo
         "}"
+    
+        /* Fondo rojo y bordes rojos para encabezados de fila y columna */
+        "QHeaderView::section {"
+        "    background-color: #390009;"  // Fondo rojo para encabezados
+        "    color: white;"  // Texto blanco en los encabezados
+        "    border: 1px solid red;"  // Bordes rojos en los encabezados
+        "}"
+    
+        /* Ajuste de color para los números de fila (encabezado vertical) */
+        "QTableCornerButton::section {"
+        "    background-color: #390009;"  // Fondo rojo para el botón de esquina superior izquierda
+        "    border: 1px solid #390009;"  // Bordes rojos en la esquina
+        "}"
+    
         "QScrollBar:vertical {"
         "    background: #390009;"
         "    width: 10px;"
@@ -278,11 +294,12 @@ void HomeScreen::showDevicesTable(
         "    background: #390009;"
         "    width: 0px;"
         "}"
-
+    
         "QTableWidget::item:selected {"
         "    background-color: #390009;"
-        "}"    
+        "}"
     );
+
 
     layout->addWidget(table);
 }
@@ -325,6 +342,7 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
     this->setPalette(pal);
 
     layout = new QVBoxLayout(this);
+    layout->setContentsMargins(30, 30, 30, 30);  
 
     if (!devices.empty()) {
 
@@ -374,17 +392,27 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
 
 void HomeScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    QPixmap background(":/drawable/background.png");
+    painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
-    // Escalar la imagen al tamaño máximo permitido
+    // Dibujar la imagen de fondo centrada (sin cambios)
+    QPixmap background(":/drawable/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
-
-    // Escalar el pixmap a la nueva tamaño
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-
-    // Dibujar la imagen centrada
     painter.drawPixmap(targetRect, scaledPixmap);
+
+    // Establecer el color y grosor del borde rojo
+    QPen pen(QColor("#FF0000"));  // Color rojo para el borde
+    pen.setWidth(4);  // Grosor del borde
+    painter.setPen(pen);
+
+    // Establecer un brush transparente para que solo se vea el borde
+    QBrush brush(Qt::NoBrush);
+    painter.setBrush(brush);
+
+    // Dibujar un rectángulo redondeado con padding de 20px (para que no toque los bordes)
+    int padding = 20;
+    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
 
     // Llamar al método base para asegurar que el evento de pintura continúe normalmente
     QWidget::paintEvent(event);
