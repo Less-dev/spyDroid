@@ -25,6 +25,12 @@ ItemBoard::ItemBoard(QWidget *parent)
     font.setPointSize(10);
     textLabel->setFont(font);
 
+    textLabel->setMaximumWidth(67);  // Establecer un ancho máximo de 50 píxeles
+
+    textLabel->setWordWrap(true);
+
+    textLabel->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Preferred);
+
     // Alinear el contenido dentro de cada QLabel
     imageLabel->setAlignment(Qt::AlignCenter);  // Centrar contenido de la imagen
     textLabel->setAlignment(Qt::AlignCenter);   // Centrar contenido del texto

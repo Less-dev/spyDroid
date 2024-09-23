@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/drawable">
+    <qresource prefix="/images">
         <file alias ="goBack.png">res/drawable/goBack_ic.png</file>
         <file alias ="play.png">res/drawable/play_ic.png</file>
         <file alias ="apps.png">res/drawable/apps_ic.png</file>
@@ -12,5 +12,7 @@
         <file alias ="audios.png">res/drawable/audio_ic.png</file>
         <file alias ="documents.png">res/drawable/documents_ic.png</file>
         <file alias ="home.png">res/drawable/home_ic.png</file>
+        <file alias ="android.png">res/drawable/android_ic.png</file>
+        <file alias ="builder.png">res/drawable/builder_ic.png</file>
     </qresource>
 </RCC>

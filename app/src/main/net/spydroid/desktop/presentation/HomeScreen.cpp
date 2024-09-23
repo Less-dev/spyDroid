@@ -32,30 +32,59 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
 
     // Ajustar los márgenes del layout para que los elementos se posicionen
-    // en la esquina superior izquierda de la pantalla. Puedes ajustar los valores según lo necesites.
     layout->setContentsMargins(30, 30, 30, 30);  // Márgenes ajustados (izquierda, arriba, derecha, abajo)
 
+    // Crear un widget contenedor para los ItemBoard
+    QWidget *itemBoardContainer = new QWidget(this);
+    QHBoxLayout *itemBoardLayout = new QHBoxLayout(itemBoardContainer);
+
+    itemBoardLayout->setAlignment(Qt::AlignLeft | Qt::AlignTop); // Alineación en la parte superior izquierda
+    itemBoardLayout->setSpacing(10);  // Espaciado entre los widgets
+
     // Crear el componente ItemBoard y configurarlo
-    ItemBoard *itemBoard = new ItemBoard(this);
-    itemBoard->setImage(QPixmap(":/drawable/home.png"));
-    itemBoard->setText("Dashboard");
-    connect(itemBoard, &ItemBoard::clicked, [this]() {
+    ItemBoard *dashBoard = new ItemBoard(itemBoardContainer);
+    dashBoard->setImage(QPixmap(":/images/home.png"));
+    dashBoard->setText("Panel");
+    connect(dashBoard, &ItemBoard::clicked, [this]() {
         emit goToDashBoard();
     });
 
-    // Añadir el ItemBoard al layout sin centrar todo el layout (por defecto se alineará arriba)
-    layout->addWidget(itemBoard, 0, Qt::AlignLeft | Qt::AlignTop);  // Posiciona el widget en la esquina superior izquierda
-    
-    // Aplicar el layout al widget
+    ItemBoard *builder = new ItemBoard(itemBoardContainer);
+    builder->setImage(QPixmap(":/images/builder.png"));
+    builder->setText("Programar APK");
+    connect(builder, &ItemBoard::clicked, [this]() {
+        //emit goToBuilder();
+    });
+
+    ItemBoard *templates = new ItemBoard(itemBoardContainer);
+    templates->setImage(QPixmap(":/images/android.png"));
+    templates->setText("Generar APK");
+    connect(templates, &ItemBoard::clicked, [this]() {
+        //emit goToTemplate();
+    });
+
+    // Añadir los ItemBoard al layout del contenedor
+    itemBoardLayout->addWidget(dashBoard);
+    itemBoardLayout->addWidget(builder);
+    itemBoardLayout->addWidget(templates);
+
+    // Aplicar el layout al contenedor
+    itemBoardContainer->setLayout(itemBoardLayout);
+
+    // Añadir el contenedor al layout principal de HomeScreen
+    layout->addWidget(itemBoardContainer, 0, Qt::AlignLeft | Qt::AlignTop);
+
+    // Aplicar el layout principal al widget
     setLayout(layout);
 }
+
 
 void HomeScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
     // Dibujar la imagen de fondo centrada (sin cambios)
-    QPixmap background(":/drawable/background.png");
+    QPixmap background(":/images/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);

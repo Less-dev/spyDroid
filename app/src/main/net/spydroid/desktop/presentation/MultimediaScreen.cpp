@@ -44,7 +44,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     gridLayout = new QGridLayout();  // Layout en cuadrícula para las tarjetas
 
     CardMultimedia* cardImages = new CardMultimedia(
-        ":/drawable/images.png",
+        ":/images/images.png",
         "Imagenes",
         "Visualice imagenes de el dispositivo",
         []() {
@@ -54,7 +54,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
 
 
     CardMultimedia* cardVideos = new CardMultimedia(
-        ":/drawable/videos.png",
+        ":/images/videos.png",
         "Videos",
         "Visualice Videos de el dispositivo",
         []() {
@@ -63,16 +63,16 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     );
 
     CardMultimedia* cardAudios = new CardMultimedia(
-        ":/drawable/audios.png",
+        ":/images/audios.png",
         "Audios",
-        "Visualice AUDIOS de el dispositivo",
+        "Escuche audios de el dispositivo",
         []() {
             std::cout << "CLICK AUDIOS!!" << std::endl;
         }
     );
 
     CardMultimedia* cardDocuments = new CardMultimedia(
-        ":/drawable/documents.png",
+        ":/images/documents.png",
         "Documentos",
         "Visualice Documentos de el dispositivo",
         []() {
@@ -104,7 +104,7 @@ void MultimediaScreen::paintEvent(QPaintEvent *event)
     painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
     // Dibujar la imagen de fondo centrada (sin cambios)
-    QPixmap background(":/drawable/background.png");
+    QPixmap background(":/images/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
