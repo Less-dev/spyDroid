@@ -32,9 +32,9 @@
 #include <QMessageBox>
 #include <QDebug>
 #include <fstream>
-#include <unistd.h> // for access()
+#include <unistd.h> 
 
-// Enum for widget indices
+// Widget indices
 enum ScreenIndex {
     HomeScreenIndex = 0,
     DashBoardScreenIndex,
@@ -86,7 +86,7 @@ int main(int argc, char *argv[]) {
 
     // Add widgets to QStackedWidget
     stackedWidget.addWidget(homeScreen);          // Index 0
-    stackedWidget.addWidget(dashBoardScreen);     // Index 1 (fixed typo)
+    stackedWidget.addWidget(dashBoardScreen);     // Index 1 
     stackedWidget.addWidget(multimediaScreen);    // Index 2
     stackedWidget.addWidget(smsScreen);           // Index 3
     stackedWidget.addWidget(imagesScreen);        // Index 4
@@ -101,7 +101,7 @@ int main(int argc, char *argv[]) {
 
     // Navigation connections (verify that the signals exist in the classes)
     QObject::connect(homeScreen, &HomeScreen::goToDashBoard, [&stackedWidget, dashBoardScreen]() {
-        navigateTo(dashBoardScreen, stackedWidget, "Panel de control");  // Updated title to English
+        navigateTo(dashBoardScreen, stackedWidget, "Panel de control");
     });
 
     QObject::connect(dashBoardScreen, &DashBoardScreen::goToHome, [&stackedWidget, homeScreen]() {
