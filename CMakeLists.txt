@@ -1,6 +1,12 @@
+# Minimum required version of CMake
+cmake_minimum_required(VERSION 3.22)
+
+# Define the project name
+project(spydroid VERSION 1.0 LANGUAGES CXX)
+
 # Check for required packages
 find_package(jsoncpp REQUIRED)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt6 COMPONENTS Widgets REQUIRED)
 find_package(CURL REQUIRED)
 
 # Define directories
@@ -45,12 +51,12 @@ set(SOURCES
 # Create the executable
 add_executable(spydroid ${SOURCES})
 
-# Add MOC sources
-qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
+# Add MOC sources (Qt6 version)
+qt6_wrap_cpp(MOC_SOURCES ${HEADERS})
 target_sources(spydroid PRIVATE ${MOC_SOURCES})
 
-# Add resources
-qt5_add_resources(RESOURCES app/src/main/net/spydroid/desktop/resources.qrc)
+# Add resources (Qt6 version)
+qt6_add_resources(RESOURCES app/src/main/net/spydroid/desktop/resources.qrc)
 target_sources(spydroid PRIVATE ${RESOURCES})
 
 # Link libraries
@@ -58,7 +64,7 @@ target_link_libraries(spydroid
     ${GETTEXT_LIBRARIES}
     ${CURL_LIBRARIES}
     jsoncpp_lib
-    Qt5::Widgets
+    Qt6::Widgets
 )
 
 # Include directories

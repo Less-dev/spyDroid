@@ -32,7 +32,7 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
     this->setMinimumSize(600, 500);
 
     QPalette pal = this->palette();
-    pal.setColor(QPalette::Background, QColor("#000000"));
+    pal.setColor(QPalette::Window, QColor("#000000"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     // Crear un layout principal vertical
