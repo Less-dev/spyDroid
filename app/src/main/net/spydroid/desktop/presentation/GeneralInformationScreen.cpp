@@ -382,7 +382,7 @@ GeneralInformationScreen::GeneralInformationScreen(QWidget *parent) : QWidget(pa
         
         showDevicesTable(devices, layout, table);
     } else {
-        label = new QLabel("No se encontró información", this);
+        label = new QLabel("No se encontraron dispositivos", this);
         label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
         label->setStyleSheet(
             "QLabel { "

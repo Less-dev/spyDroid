@@ -36,7 +36,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        emit goToHome();
+        emit goToDashBoard();
         // Aquí puedes manejar el evento, por ejemplo, navegar hacia atrás
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);

@@ -34,7 +34,7 @@ public:
     explicit MultimediaScreen(QWidget *parent = nullptr);
 
 signals:
-    void goToHome();
+    void goToDashBoard();
 
 protected:
     // Sobrescribir el método paintEvent para manejar el fondo personalizado

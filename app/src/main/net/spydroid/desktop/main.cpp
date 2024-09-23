@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
     QObject::connect(generalInformation, &GeneralInformationScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
         SmsScreen* newSmsScreen = new SmsScreen(alias);
     
-        QObject::connect(newSmsScreen, &SmsScreen::goToHome, [&stackedWidget]() {
+        QObject::connect(newSmsScreen, &SmsScreen::goToDashBoard, [&stackedWidget]() {
             stackedWidget.setCurrentIndex(1);  // Change to General information view
             stackedWidget.setWindowTitle("Información general");
         });
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
 
 
 
-    QObject::connect(multimedia, &MultimediaScreen::goToHome, [&stackedWidget]() {
+    QObject::connect(multimedia, &MultimediaScreen::goToDashBoard, [&stackedWidget]() {
         stackedWidget.setCurrentIndex(1);  // Change to view main
         stackedWidget.setWindowTitle("Información general");
     });

@@ -37,7 +37,7 @@ public:
     explicit SmsScreen(const QString& alias = "", QWidget *parent = nullptr);  // Constructor con alias
 
 signals:
-    void goToHome();  // Señal para navegar a la vista Home
+    void goToDashBoard();  // Señal para navegar a la vista Home
 protected:
     void paintEvent(QPaintEvent *event) override;
 

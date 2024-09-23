@@ -41,20 +41,17 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
     std::vector<SmsHandler> smsList = smsRepository->getSms(alias.toStdString());
     layout = new QVBoxLayout(this);
 
-    if (!smsList.empty())
-    {
-
-
-    layout->setAlignment(Qt::AlignTop);
-    layout->setContentsMargins(30, 30, 30, 30);  // Establecer márgenes del layout principal
-
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        emit goToHome();
+        emit goToDashBoard();
         // Aquí puedes manejar el evento, por ejemplo, navegar hacia atrás
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
+    layout->setAlignment(Qt::AlignTop);
+    layout->setContentsMargins(30, 30, 30, 30);  // Establecer márgenes del layout principal
 
+    if (!smsList.empty())
+    {
 
     // Crear un contenedor para las tarjetas con un QVBoxLayout
     QWidget* cardContainer = new QWidget;
@@ -92,17 +89,28 @@ SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), d
 
     // Asignar el layout principal al widget
     } else {
-        label = new QLabel("No se encontró información", this);
-        label->setAlignment(Qt::AlignCenter);
+        label = new QLabel("No se encontraron mensajes", this);
+        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
         label->setStyleSheet(
             "QLabel { "
-            "    color : white; "            
-            "    font-weight: bold; "            
-            "    font-size: 30px; "             
+            "    color : white; "
+            "    font-weight: bold; "
+            "    font-size: 30px; "
             "}"
         );
 
-        layout->addWidget(label);
+        // Crear un layout vertical para centrar el QLabel
+        QVBoxLayout* centerLayout = new QVBoxLayout();  // Layout independiente para centrar el label
+
+        // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
+        QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        centerLayout->addItem(topSpacer);  // Añadir el espaciador superior
+        centerLayout->addWidget(label);    // Añadir el QLabel
+        centerLayout->addItem(bottomSpacer); // Añadir el espaciador inferior
+
+        layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
     }
     
 
