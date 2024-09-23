@@ -18,6 +18,7 @@
 #include <iostream>
 #include <QPainter>
 #include "../components/ItemBoard.h"
+#include "../components/GoBack.h"
 #include <QDebug>
 
 
@@ -33,6 +34,12 @@ VideosScreen::VideosScreen(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
 
     layout->setContentsMargins(30, 30, 30, 30);  // Márgenes ajustados (izquierda, arriba, derecha, abajo)
+    
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    goBackButton->setOnClick([this]() {
+        emit goToMultimedia();
+    });
+    layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
     setLayout(layout);
 }

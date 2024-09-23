@@ -34,6 +34,10 @@
 #include "presentation/DashBoardScreen.h"
 #include "presentation/SmsScreen.h"
 #include "presentation/MultimediaScreen.h"
+#include "presentation/ImagesScreen.h"
+#include "presentation/VideosScreen.h"
+#include "presentation/AudiosScreen.h"
+#include "presentation/DocumentsScreen.h"
 
 int main(int argc, char *argv[])
 {
@@ -54,37 +58,46 @@ int main(int argc, char *argv[])
     QStackedWidget stackedWidget; 
 
     // Create views 
-    HomeScreen* home = new HomeScreen;
-    SmsScreen* sms = new SmsScreen;
-    MultimediaScreen* multimedia = new MultimediaScreen;
-    DashBoardScreen* generalInformation = new DashBoardScreen;
+    HomeScreen* homeScreen = new HomeScreen;
+    DashBoardScreen* dashBoardScreen = new DashBoardScreen;
+    SmsScreen* smsScreen = new SmsScreen;
+    MultimediaScreen* multimediaScreen = new MultimediaScreen;
+    ImagesScreen* imagesScreen = new ImagesScreen;
+    VideosScreen* videosScreen = new VideosScreen;
+    AudiosScreen* audiosScreen = new AudiosScreen;
+    DocumentsScreen* documentsScreen = new DocumentsScreen;
 
-    stackedWidget.addWidget(home);                      // Index 0
-    stackedWidget.addWidget(generalInformation);        // Index 1
-    stackedWidget.addWidget(multimedia);                // Índex 2
-    stackedWidget.addWidget(sms);                       // Index 3
 
-    // Show view home primary
+    stackedWidget.addWidget(homeScreen);                    // Index 0
+    stackedWidget.addWidget(dashBoardScreen);               // Index 1
+    stackedWidget.addWidget(multimediaScreen);              // Índex 2
+    stackedWidget.addWidget(smsScreen);                     // Index 3
+    stackedWidget.addWidget(imagesScreen);                  // Index 4
+    stackedWidget.addWidget(videosScreen);                  // Index 5
+    stackedWidget.addWidget(audiosScreen);                  // Index 6
+    stackedWidget.addWidget(documentsScreen);               // Index 7
+
+    // Show view homeScreen primary
     stackedWidget.setCurrentIndex(0);
     stackedWidget.showMaximized();
     stackedWidget.setWindowTitle("spydroid");
 
-    QObject::connect(home, &HomeScreen::goToDashBoard, [&stackedWidget, &generalInformation]() {
+    QObject::connect(homeScreen, &HomeScreen::goToDashBoard, [&stackedWidget, &dashBoardScreen]() {
         stackedWidget.setCurrentIndex(1);  // Change to General information view
         stackedWidget.setWindowTitle("Información general");
     });
 
-    QObject::connect(generalInformation, &DashBoardScreen::goToHome, [&stackedWidget, &home]() {
+    QObject::connect(dashBoardScreen, &DashBoardScreen::goToHome, [&stackedWidget, &homeScreen]() {
         stackedWidget.setCurrentIndex(0);  // Change to view main
         stackedWidget.setWindowTitle("spydroid");
     });
 
-    QObject::connect(generalInformation, &DashBoardScreen::goToMultimedia, [&stackedWidget, &multimedia](const QString& alias) {
+    QObject::connect(dashBoardScreen, &DashBoardScreen::goToMultimedia, [&stackedWidget, &multimediaScreen](const QString& alias) {
         stackedWidget.setCurrentIndex(2);  // Change to view main
-        stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
+        stackedWidget.setWindowTitle("Archivos multimediaScreen de " + alias);
     });
 
-    QObject::connect(generalInformation, &DashBoardScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
+    QObject::connect(dashBoardScreen, &DashBoardScreen::goToSms, [&stackedWidget, &smsScreen](const QString& alias) {
         SmsScreen* newSmsScreen = new SmsScreen(alias);
     
         QObject::connect(newSmsScreen, &SmsScreen::goToDashBoard, [&stackedWidget]() {
@@ -92,19 +105,59 @@ int main(int argc, char *argv[])
             stackedWidget.setWindowTitle("Información general");
         });
     
-        stackedWidget.removeWidget(sms);  // Remover la vista antigua
-        delete sms;  // Eliminar la instancia antigua
-        sms = newSmsScreen;  // Asignar la nueva instancia
-        stackedWidget.addWidget(sms);  // Añadir la nueva vista
+        stackedWidget.removeWidget(smsScreen);  // Remover la vista antigua
+        delete smsScreen;  // Eliminar la instancia antigua
+        smsScreen = newSmsScreen;  // Asignar la nueva instancia
+        stackedWidget.addWidget(smsScreen);  // Añadir la nueva vista
         stackedWidget.setCurrentIndex(3);  // Cambiar a la vista SmsScreen
         stackedWidget.setWindowTitle("Mensajes de texto de " + alias);
     });
 
 
 
-    QObject::connect(multimedia, &MultimediaScreen::goToDashBoard, [&stackedWidget]() {
+    QObject::connect(multimediaScreen, &MultimediaScreen::goToDashBoard, [&stackedWidget]() {
         stackedWidget.setCurrentIndex(1);  // Change to view main
         stackedWidget.setWindowTitle("Información general");
+    });
+
+    QObject::connect(multimediaScreen, &MultimediaScreen::goToImages, [&stackedWidget](const QString& alias) {
+        stackedWidget.setCurrentIndex(4);  // Change to view Images
+        stackedWidget.setWindowTitle("Imagenes de " + alias);
+    });
+
+    QObject::connect(multimediaScreen, &MultimediaScreen::goToVideos, [&stackedWidget](const QString& alias) {
+        stackedWidget.setCurrentIndex(5);  // Change to view Videos
+        stackedWidget.setWindowTitle("Videos de " + alias);
+    });
+
+    QObject::connect(multimediaScreen, &MultimediaScreen::goToAudios, [&stackedWidget](const QString& alias) {
+        stackedWidget.setCurrentIndex(6);  // Change to view Audios
+        stackedWidget.setWindowTitle("Audios de " + alias);
+    });
+
+    QObject::connect(multimediaScreen, &MultimediaScreen::goToDocuments, [&stackedWidget](const QString& alias) {
+        stackedWidget.setCurrentIndex(7);  // Change to view Documents
+        stackedWidget.setWindowTitle("Docuementos de " + alias);
+    });
+
+    QObject::connect(imagesScreen, &ImagesScreen::goToMultimedia, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(2);  // Change to view multimedia
+        stackedWidget.setWindowTitle("Archivos multimedia de ");
+    });
+
+    QObject::connect(videosScreen, &VideosScreen::goToMultimedia, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(2);  // Change to view multimedia
+        stackedWidget.setWindowTitle("Archivos multimedia de ");
+    });
+
+    QObject::connect(audiosScreen, &AudiosScreen::goToMultimedia, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(2);  // Change to view multimedia
+        stackedWidget.setWindowTitle("Archivos multimedia de ");
+    });
+
+    QObject::connect(documentsScreen, &DocumentsScreen::goToMultimedia, [&stackedWidget]() {
+        stackedWidget.setCurrentIndex(2);  // Change to view multimedia
+        stackedWidget.setWindowTitle("Archivos multimedia de ");
     });
 
     return app.exec();

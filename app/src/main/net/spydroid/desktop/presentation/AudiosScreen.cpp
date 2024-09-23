@@ -18,7 +18,7 @@
 #include <iostream>
 #include <QPainter>
 #include "../components/ItemBoard.h"
-#include <QDebug>
+#include "../components/GoBack.h"
 
 
 AudiosScreen::AudiosScreen(QWidget *parent) : QWidget(parent) {
@@ -33,6 +33,12 @@ AudiosScreen::AudiosScreen(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
 
     layout->setContentsMargins(30, 30, 30, 30);  // Márgenes ajustados (izquierda, arriba, derecha, abajo)
+    
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    goBackButton->setOnClick([this]() {
+        emit goToMultimedia();
+    });
+    layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
     setLayout(layout);
 }

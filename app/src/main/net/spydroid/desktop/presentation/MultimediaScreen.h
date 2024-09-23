@@ -25,6 +25,7 @@
 #include <QLineEdit>
 #include "../components/GoBack.h"
 #include <QPaintEvent>
+#include <QString>
 
 class MultimediaScreen : public QWidget
 {
@@ -35,9 +36,12 @@ public:
 
 signals:
     void goToDashBoard();
+    void goToImages(const QString& alias);
+    void goToVideos(const QString& alias);
+    void goToAudios(const QString& alias);
+    void goToDocuments(const QString& alias);
 
 protected:
-    // Sobrescribir el método paintEvent para manejar el fondo personalizado
     void paintEvent(QPaintEvent *event) override;
 
 private:

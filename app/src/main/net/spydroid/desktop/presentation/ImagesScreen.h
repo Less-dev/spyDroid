@@ -35,7 +35,7 @@ public:
     explicit ImagesScreen(QWidget *parent = nullptr);
 
 signals:
-    void goToDashBoard();
+    void goToMultimedia();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

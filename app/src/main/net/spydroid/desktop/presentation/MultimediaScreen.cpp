@@ -47,8 +47,8 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         ":/images/images.png",
         "Imagenes",
         "Visualice imagenes de el dispositivo",
-        []() {
-            std::cout << "CLICK IMAGES!!" << std::endl;
+        [this]() {
+            emit goToImages("Juan");
         }
     );
 
@@ -57,8 +57,8 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         ":/images/videos.png",
         "Videos",
         "Visualice Videos de el dispositivo",
-        []() {
-            std::cout << "CLICK VIDEOS!!" << std::endl;
+        [this]() {
+            emit goToVideos("Pedro");
         }
     );
 
@@ -66,8 +66,8 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         ":/images/audios.png",
         "Audios",
         "Escuche audios de el dispositivo",
-        []() {
-            std::cout << "CLICK AUDIOS!!" << std::endl;
+        [this]() {
+            emit goToAudios("Camilo");
         }
     );
 
@@ -75,8 +75,8 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         ":/images/documents.png",
         "Documentos",
         "Visualice Documentos de el dispositivo",
-        []() {
-            std::cout << "CLICK DOCUMENTS!!" << std::endl;
+        [this]() {
+            emit goToDocuments("Lisdi");
         }
     );
 
