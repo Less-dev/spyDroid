@@ -25,6 +25,8 @@
 #include "QDebug"
 #include <QStyledItemDelegate>
 #include <QPainter>
+#include <QLabel>
+#include <QBoxLayout>
 #include "../components/GoBack.h"
 
 class ElidedItemDelegate : public QStyledItemDelegate {
@@ -347,8 +349,7 @@ GeneralInformationScreen::GeneralInformationScreen(QWidget *parent) : QWidget(pa
 
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        //emit goToHome();
-        // Aquí puedes manejar el evento, por ejemplo, navegar hacia atrás
+        emit goToHome();
     });
 
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
@@ -382,17 +383,27 @@ GeneralInformationScreen::GeneralInformationScreen(QWidget *parent) : QWidget(pa
         showDevicesTable(devices, layout, table);
     } else {
         label = new QLabel("No se encontró información", this);
-        label->setAlignment(Qt::AlignCenter);
+        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
         label->setStyleSheet(
             "QLabel { "
-            "    color : white; "            
-            "    font-weight: bold; "            
-            "    font-size: 30px; "             
+            "    color : white; "
+            "    font-weight: bold; "
+            "    font-size: 30px; "
             "}"
         );
 
-        layout->addWidget(label);
+        // Crear un layout vertical para centrar el QLabel
+        QVBoxLayout* centerLayout = new QVBoxLayout();  // Layout independiente para centrar el label
 
+        // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
+        QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        centerLayout->addItem(topSpacer);  // Añadir el espaciador superior
+        centerLayout->addWidget(label);    // Añadir el QLabel
+        centerLayout->addItem(bottomSpacer); // Añadir el espaciador inferior
+
+        layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
     }
     setLayout(layout);
 }

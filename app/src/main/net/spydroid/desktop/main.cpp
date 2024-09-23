@@ -69,8 +69,18 @@ int main(int argc, char *argv[])
     stackedWidget.showMaximized();
     stackedWidget.setWindowTitle("spydroid");
 
-    QObject::connect(generalInformation, &GeneralInformationScreen::goToMultimedia, [&stackedWidget, multimedia](const QString& alias) {
-        stackedWidget.setCurrentIndex(1);  // Change to view main
+    QObject::connect(home, &HomeScreen::goToDashBoard, [&stackedWidget, &generalInformation]() {
+        stackedWidget.setCurrentIndex(1);  // Change to General information view
+        stackedWidget.setWindowTitle("Información general");
+    });
+
+    QObject::connect(generalInformation, &GeneralInformationScreen::goToHome, [&stackedWidget, &home]() {
+        stackedWidget.setCurrentIndex(0);  // Change to view main
+        stackedWidget.setWindowTitle("spydroid");
+    });
+
+    QObject::connect(generalInformation, &GeneralInformationScreen::goToMultimedia, [&stackedWidget, &multimedia](const QString& alias) {
+        stackedWidget.setCurrentIndex(2);  // Change to view main
         stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
     });
 
@@ -78,7 +88,7 @@ int main(int argc, char *argv[])
         SmsScreen* newSmsScreen = new SmsScreen(alias);
     
         QObject::connect(newSmsScreen, &SmsScreen::goToHome, [&stackedWidget]() {
-            stackedWidget.setCurrentIndex(0);  // Change to home view
+            stackedWidget.setCurrentIndex(1);  // Change to General information view
             stackedWidget.setWindowTitle("Información general");
         });
     
@@ -86,14 +96,14 @@ int main(int argc, char *argv[])
         delete sms;  // Eliminar la instancia antigua
         sms = newSmsScreen;  // Asignar la nueva instancia
         stackedWidget.addWidget(sms);  // Añadir la nueva vista
-        stackedWidget.setCurrentIndex(2);  // Cambiar a la vista SmsScreen
+        stackedWidget.setCurrentIndex(3);  // Cambiar a la vista SmsScreen
         stackedWidget.setWindowTitle("Mensajes de texto de " + alias);
     });
 
 
 
     QObject::connect(multimedia, &MultimediaScreen::goToHome, [&stackedWidget]() {
-        stackedWidget.setCurrentIndex(0);  // Change to view main
+        stackedWidget.setCurrentIndex(1);  // Change to view main
         stackedWidget.setWindowTitle("Información general");
     });
 

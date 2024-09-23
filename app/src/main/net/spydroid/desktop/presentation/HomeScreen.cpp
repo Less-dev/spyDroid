@@ -39,13 +39,13 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
     ItemBoard *itemBoard = new ItemBoard(this);
     itemBoard->setImage(QPixmap(":/drawable/home.png"));
     itemBoard->setText("Dashboard");
-    connect(itemBoard, &ItemBoard::clicked, []() {
-        qDebug() << "ItemBoard clicked!";
+    connect(itemBoard, &ItemBoard::clicked, [this]() {
+        emit goToDashBoard();
     });
 
     // Añadir el ItemBoard al layout sin centrar todo el layout (por defecto se alineará arriba)
     layout->addWidget(itemBoard, 0, Qt::AlignLeft | Qt::AlignTop);  // Posiciona el widget en la esquina superior izquierda
-
+    
     // Aplicar el layout al widget
     setLayout(layout);
 }

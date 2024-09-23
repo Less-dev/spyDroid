@@ -34,6 +34,8 @@ class HomeScreen : public QWidget
 public:
     explicit HomeScreen(QWidget *parent = nullptr);
 
+signals:
+    void goToDashBoard();
 
 protected:
     void paintEvent(QPaintEvent *event) override;

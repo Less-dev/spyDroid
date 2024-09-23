@@ -46,6 +46,7 @@ private slots:
 signals:
     void goToMultimedia(const QString& alias);
     void goToSms(const QString& alias);
+    void goToHome();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
