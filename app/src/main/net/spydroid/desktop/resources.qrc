@@ -11,5 +11,6 @@
         <file alias ="videos.png">res/drawable/video_ic.png</file>
         <file alias ="audios.png">res/drawable/audio_ic.png</file>
         <file alias ="documents.png">res/drawable/documents_ic.png</file>
+        <file alias ="home.png">res/drawable/home_ic.png</file>
     </qresource>
 </RCC>

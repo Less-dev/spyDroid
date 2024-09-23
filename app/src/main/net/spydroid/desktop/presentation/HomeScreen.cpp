@@ -14,11 +14,11 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-
 #include "HomeScreen.h"
 #include <iostream>
 #include <QPainter>
-
+#include "../components/ItemBoard.h"
+#include <QDebug>
 
 HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
     
@@ -27,13 +27,28 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
     pal.setColor(QPalette::Background, QColor("#000000"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-
+    
+    // Crear el layout para HomeScreen
     layout = new QVBoxLayout(this);
-    layout->setContentsMargins(30, 30, 30, 30);  
 
+    // Ajustar los márgenes del layout para que los elementos se posicionen
+    // en la esquina superior izquierda de la pantalla. Puedes ajustar los valores según lo necesites.
+    layout->setContentsMargins(30, 30, 30, 30);  // Márgenes ajustados (izquierda, arriba, derecha, abajo)
+
+    // Crear el componente ItemBoard y configurarlo
+    ItemBoard *itemBoard = new ItemBoard(this);
+    itemBoard->setImage(QPixmap(":/drawable/home.png"));
+    itemBoard->setText("Dashboard");
+    connect(itemBoard, &ItemBoard::clicked, []() {
+        qDebug() << "ItemBoard clicked!";
+    });
+
+    // Añadir el ItemBoard al layout sin centrar todo el layout (por defecto se alineará arriba)
+    layout->addWidget(itemBoard, 0, Qt::AlignLeft | Qt::AlignTop);  // Posiciona el widget en la esquina superior izquierda
+
+    // Aplicar el layout al widget
     setLayout(layout);
 }
-
 
 void HomeScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
