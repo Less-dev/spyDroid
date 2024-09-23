@@ -38,12 +38,22 @@ ImagesScreen::ImagesScreen(QWidget *parent) : QWidget(parent) {
     
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        emit goToMultimedia();
+        emit goToMultimedia(deviceAlias);
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
     setLayout(layout);
 }
+
+void ImagesScreen::setAlias(const QString& alias) {
+    deviceAlias = alias;
+    loadAlias();
+}
+
+void ImagesScreen::loadAlias() {
+    
+}
+
 
 
 void ImagesScreen::paintEvent(QPaintEvent *event) {

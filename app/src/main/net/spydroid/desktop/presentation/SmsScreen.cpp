@@ -25,124 +25,138 @@
 #include "QScrollArea"
 #include <QPainter>
 #include <QDebug>
+#include <QTimer>
 
 
-SmsScreen::SmsScreen(const QString& alias, QWidget *parent) : QWidget(parent), deviceAlias(alias)
+SmsScreen::SmsScreen(QWidget *parent)
+    : QWidget(parent)
 {
     this->setMinimumSize(600, 500);
 
+    // Configuración de la paleta de colores de fondo
     QPalette pal = this->palette();
     pal.setColor(QPalette::Window, QColor("#000000"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-    // Crear un layout principal vertical
 
-    smsRepository = new SmsRepositoryImp();
-    std::vector<SmsHandler> smsList = smsRepository->getSms(alias.toStdString());
     layout = new QVBoxLayout(this);
+    layout->setAlignment(Qt::AlignTop);
+    layout->setContentsMargins(30, 30, 30, 30);
 
+    // Botón de regresar al Dashboard
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        emit goToDashBoard();
-        // Aquí puedes manejar el evento, por ejemplo, navegar hacia atrás
+        emit goToDashBoard();  // Emitir la señal cuando se hace clic
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
-    layout->setAlignment(Qt::AlignTop);
-    layout->setContentsMargins(30, 30, 30, 30);  // Establecer márgenes del layout principal
 
-    if (!smsList.empty())
-    {
+    // Inicializar repositorio de SMS
+    smsRepository = new SmsRepositoryImp();
 
-    // Crear un contenedor para las tarjetas con un QVBoxLayout
-    QWidget* cardContainer = new QWidget;
-    cardContainer->setStyleSheet("background: transparent;"); 
-    QVBoxLayout* cardLayout = new QVBoxLayout(cardContainer);
-    cardLayout->setAlignment(Qt::AlignTop);  // Alinea las tarjetas hacia arriba
-    cardLayout->setSpacing(10);              // Espacio entre las tarjetas
+    // Mostrar el mensaje de "Cargando..." al principio
+    label = new QLabel("Cargando...", this);
+    label->setAlignment(Qt::AlignCenter);
+    label->setStyleSheet(
+        "QLabel { "
+        "    color : white; "
+        "    font-weight: bold; "
+        "    font-size: 30px; "
+        "}"
+    );
 
-    for (const auto& smsHandler : smsList) {
-        // Crear una tarjeta de SMS (CardSms)
-        CardSms* card = new CardSms(smsHandler, this);
-        // Crear un layout horizontal (QHBoxLayout) para centrar la tarjeta
-        QHBoxLayout* hLayout = new QHBoxLayout();
-        hLayout->setAlignment(Qt::AlignCenter);  // Centrar horizontalmente
-        //hLayout->addSpacing(20);  // Ajusta el valor de 20 a la cantidad deseada de padding
+    layout->addWidget(label);  // Mostrar "Cargando..." hasta que se carguen los datos
+}
 
-        // Añadir la tarjeta al layout horizontal
-        hLayout->addWidget(card);
+void SmsScreen::setAlias(const QString& alias)
+{
+    // Actualizar el alias del dispositivo y recargar los SMS
+    deviceAlias = alias;
+    loadSms();  // Volver a cargar los SMS con el nuevo alias
+}
 
-        // Añadir el layout horizontal (con la tarjeta centrada) al layout de tarjetas
-        cardLayout->addLayout(hLayout);
-    }
+void SmsScreen::loadSms()
+{
+    // Mostrar "Cargando..." antes de hacer la operación
+    label->setText("Cargando...");
+    label->show();
 
-    // Añadir padding de 30px en los márgenes del contenedor de tarjetas
-    cardLayout->setContentsMargins(0, 30, 0, 30);
+    // Usar un QTimer para simular una operación asíncrona (como acceso a base de datos)
+    QTimer::singleShot(500, this, [this]() {
+        // Simulamos un retraso en la obtención de los datos
+        std::vector<SmsHandler> smsList = smsRepository->getSms(deviceAlias.toStdString());
 
-    // Crear un QScrollArea para hacer las tarjetas desplazables
-    QScrollArea* scrollArea = new QScrollArea;
-    scrollArea->setWidgetResizable(true);  // Permitir que el contenido del área de scroll se redimensione
-    scrollArea->setWidget(cardContainer);  // Asignar el contenedor de las tarjetas al área de scroll
-    scrollArea->setStyleSheet("background: transparent;");
-    // Añadir el área de scroll al layout principal
-    
-    layout->addWidget(scrollArea);
+        // Limpiar el layout actual antes de cargar los nuevos SMS
+        QLayoutItem* item;
+        while ((item = layout->takeAt(1)) != nullptr) {  // Comenzamos en 1 para dejar el botón de volver intacto
+            if (item->widget()) {
+                delete item->widget();  // Eliminar los widgets existentes
+            }
+            delete item;  // Eliminar el layout item
+        }
 
-    // Asignar el layout principal al widget
-    } else {
-        label = new QLabel("No se encontraron mensajes", this);
-        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
-        label->setStyleSheet(
-            "QLabel { "
-            "    color : white; "
-            "    font-weight: bold; "
-            "    font-size: 30px; "
-            "}"
-        );
+        // Si se encuentran SMS, cargar las tarjetas
+        if (!smsList.empty()) {
+            QWidget* cardContainer = new QWidget;
+            cardContainer->setStyleSheet("background: transparent;");
+            QVBoxLayout* cardLayout = new QVBoxLayout(cardContainer);
+            cardLayout->setAlignment(Qt::AlignTop);
+            cardLayout->setSpacing(10);
 
-        // Crear un layout vertical para centrar el QLabel
-        QVBoxLayout* centerLayout = new QVBoxLayout();  // Layout independiente para centrar el label
+            // Crear una tarjeta por cada SMS
+            for (const auto& smsHandler : smsList) {
+                CardSms* card = new CardSms(smsHandler, this);
 
-        // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
-        QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-        QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+                // Centrar la tarjeta horizontalmente
+                QHBoxLayout* hLayout = new QHBoxLayout();
+                hLayout->setAlignment(Qt::AlignCenter);
+                hLayout->addWidget(card);
+                cardLayout->addLayout(hLayout);
+            }
 
-        centerLayout->addItem(topSpacer);  // Añadir el espaciador superior
-        centerLayout->addWidget(label);    // Añadir el QLabel
-        centerLayout->addItem(bottomSpacer); // Añadir el espaciador inferior
+            // Añadir padding de 30px en los márgenes del contenedor de tarjetas
+            cardLayout->setContentsMargins(0, 30, 0, 30);
 
-        layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
-    }
-    
+            // Crear un área de scroll para hacer las tarjetas desplazables
+            QScrollArea* scrollArea = new QScrollArea;
+            scrollArea->setWidgetResizable(true);
+            scrollArea->setWidget(cardContainer);
+            scrollArea->setStyleSheet("background: transparent;");
 
+            // Añadir el área de scroll al layout principal
+            layout->addWidget(scrollArea);
+        } else {
+            // Si no hay SMS, mostrar un mensaje de "No se encontraron mensajes"
+            label->setText("No se encontraron mensajes");
+            label->show();  // Asegurar que el label se muestre
+            layout->addWidget(label);  // Volver a añadir el label al layout
+        }
 
-    this->setLayout(layout);
+        // Aplicar el layout actualizado
+        this->setLayout(layout);
+    });
 }
 
 
-void SmsScreen::paintEvent(QPaintEvent *event) {
+void SmsScreen::paintEvent(QPaintEvent *event)
+{
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
+    painter.setRenderHint(QPainter::Antialiasing);
 
-    // Dibujar la imagen de fondo centrada (sin cambios)
+    // Dibujar el fondo
     QPixmap background(":/images/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
 
-    // Establecer el color y grosor del borde rojo
-    QPen pen(QColor("#FF0000"));  // Color rojo para el borde
-    pen.setWidth(4);  // Grosor del borde
+    // Dibujar un borde rojo alrededor del widget
+    QPen pen(QColor("#FF0000"));
+    pen.setWidth(4);
     painter.setPen(pen);
+    painter.setBrush(Qt::NoBrush);
 
-    // Establecer un brush transparente para que solo se vea el borde
-    QBrush brush(Qt::NoBrush);
-    painter.setBrush(brush);
-
-    // Dibujar un rectángulo redondeado con padding de 20px (para que no toque los bordes)
     int padding = 20;
-    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
+    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);
 
-    // Llamar al método base para asegurar que el evento de pintura continúe normalmente
     QWidget::paintEvent(event);
 }

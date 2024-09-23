@@ -48,7 +48,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         "Imagenes",
         "Visualice imagenes de el dispositivo",
         [this]() {
-            emit goToImages("Juan");
+            emit goToImages(deviceAlias);
         }
     );
 
@@ -58,7 +58,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         "Videos",
         "Visualice Videos de el dispositivo",
         [this]() {
-            emit goToVideos("Pedro");
+            emit goToVideos(deviceAlias);
         }
     );
 
@@ -67,7 +67,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         "Audios",
         "Escuche audios de el dispositivo",
         [this]() {
-            emit goToAudios("Camilo");
+            emit goToAudios(deviceAlias);
         }
     );
 
@@ -76,7 +76,7 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
         "Documentos",
         "Visualice Documentos de el dispositivo",
         [this]() {
-            emit goToDocuments("Lisdi");
+            emit goToDocuments(deviceAlias);
         }
     );
 
@@ -97,6 +97,17 @@ MultimediaScreen::MultimediaScreen(QWidget *parent) : QWidget(parent)
     gridLayout->setVerticalSpacing(20);    // Ajusta el espacio vertical entre las tarjetas (opcional)
     this->setLayout(layout);  // Establecer el layout principal para la ventana
 }
+
+
+void MultimediaScreen::setAlias(const QString& alias) {
+    deviceAlias = alias;
+    loadAlias();
+}
+
+void MultimediaScreen::loadAlias() {
+    
+}
+
 
 void MultimediaScreen::paintEvent(QPaintEvent *event)
 {

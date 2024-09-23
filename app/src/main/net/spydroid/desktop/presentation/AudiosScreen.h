@@ -33,15 +33,18 @@ class AudiosScreen : public QWidget
 
 public:
     explicit AudiosScreen(QWidget *parent = nullptr);
-
+    void setAlias(const QString& alias);
+    
 signals:
-    void goToMultimedia();
+    void goToMultimedia(const QString& alias);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     QVBoxLayout* layout;
+    QString deviceAlias;
+    void loadAlias();
 };
 
 #endif // AUDIOS_SCREEN_H

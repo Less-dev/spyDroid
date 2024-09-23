@@ -34,13 +34,16 @@ class SmsScreen : public QWidget
     Q_OBJECT
 
 public:
-    explicit SmsScreen(const QString& alias = "", QWidget *parent = nullptr);  // Constructor con alias
+    explicit SmsScreen(QWidget *parent = nullptr);  // Constructor con alias
+
+    // Método para actualizar el alias y recargar los SMS
+    void setAlias(const QString& alias);
 
 signals:
     void goToDashBoard();  // Señal para navegar a la vista Home
+
 protected:
     void paintEvent(QPaintEvent *event) override;
-
 
 private:
     QVBoxLayout* layout;
@@ -48,6 +51,9 @@ private:
     SmsRepository* smsRepository;
     std::vector<SmsHandler> smsHandler;
     QString deviceAlias;
+
+    // Método privado para recargar los SMS con el alias actualizado
+    void loadSms();
 };
 
 #endif // SMS_SCREEN_H

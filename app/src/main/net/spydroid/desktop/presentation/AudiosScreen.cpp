@@ -36,12 +36,22 @@ AudiosScreen::AudiosScreen(QWidget *parent) : QWidget(parent) {
     
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        emit goToMultimedia();
+        emit goToMultimedia(deviceAlias);
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
     setLayout(layout);
 }
+
+void AudiosScreen::setAlias(const QString& alias) {
+    deviceAlias = alias;
+    loadAlias();
+}
+
+void AudiosScreen::loadAlias() {
+    
+}
+
 
 
 void AudiosScreen::paintEvent(QPaintEvent *event) {

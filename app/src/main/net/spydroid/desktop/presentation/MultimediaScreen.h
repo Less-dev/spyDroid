@@ -33,6 +33,7 @@ class MultimediaScreen : public QWidget
 
 public:
     explicit MultimediaScreen(QWidget *parent = nullptr);
+    void setAlias(const QString& alias);
 
 signals:
     void goToDashBoard();
@@ -47,6 +48,8 @@ protected:
 private:
     QVBoxLayout* layout;
     QGridLayout* gridLayout;
+    QString deviceAlias;
+    void loadAlias();
 };
 
 #endif // MULTIMEDIA_SCREEN_H

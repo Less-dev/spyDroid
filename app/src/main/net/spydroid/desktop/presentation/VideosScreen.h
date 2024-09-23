@@ -33,15 +33,18 @@ class VideosScreen : public QWidget
 
 public:
     explicit VideosScreen(QWidget *parent = nullptr);
+    void setAlias(const QString& alias);
 
 signals:
-    void goToMultimedia();
+    void goToMultimedia(const QString& alias);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
 
 private:
     QVBoxLayout* layout;
+    QString deviceAlias;
+    void loadAlias();
 };
 
 #endif // VIDEOS_SCREEN_H
