@@ -29,7 +29,6 @@ ItemBoard::ItemBoard(QWidget *parent)
     imageLabel->setAlignment(Qt::AlignCenter);  // Centrar contenido de la imagen
     textLabel->setAlignment(Qt::AlignCenter);   // Centrar contenido del texto
 
-    // Timer para el clic (0.3 segundos)
     clickTimer->setInterval(80);
     clickTimer->setSingleShot(true);
 
@@ -84,7 +83,12 @@ void ItemBoard::paintEvent(QPaintEvent *event)
 void ItemBoard::mousePressEvent(QMouseEvent *event)
 {
     if (event->button() == Qt::LeftButton) {
-        emit clicked();  // Emitir la señal de clic
+        changeColor(darkRedColor);
+        clickTimer->start();
+
+        QTimer::singleShot(100, this, [this]() {
+            emit clicked();  // Emite la señal de clic
+        });
     }
 }
 
