@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef GENERAL_INFORMATION_CREEN_H
-#define GENERAL_INFORMATION_SCREEN_H
+#ifndef DASHBOARD_SCREEN_H
+#define DASHBOARD_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -32,12 +32,12 @@
 #include "../remote/models/DevicesHandler.h"
 #include "../remote/models/InfoHandler.h"
 
-class GeneralInformationScreen : public QWidget
+class DashBoardScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit GeneralInformationScreen(QWidget *parent = nullptr);
+    explicit DashBoardScreen(QWidget *parent = nullptr);
 
 private slots:
     void searchDevice();  // Slot para manejar la búsqueda
@@ -66,4 +66,4 @@ private:
     void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* layout, QTableWidget* &table);
 };
 
-#endif // GENERAL_INFORMATION_SCREEN_H
+#endif // DASHBOARD_SCREEN_H

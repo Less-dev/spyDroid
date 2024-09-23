@@ -31,7 +31,7 @@
 #include <cstdlib>
 #include <unistd.h>  
 #include "presentation/HomeScreen.h"
-#include "presentation/GeneralInformationScreen.h"
+#include "presentation/DashBoardScreen.h"
 #include "presentation/SmsScreen.h"
 #include "presentation/MultimediaScreen.h"
 
@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
     HomeScreen* home = new HomeScreen;
     SmsScreen* sms = new SmsScreen;
     MultimediaScreen* multimedia = new MultimediaScreen;
-    GeneralInformationScreen* generalInformation = new GeneralInformationScreen;
+    DashBoardScreen* generalInformation = new DashBoardScreen;
 
     stackedWidget.addWidget(home);                      // Index 0
     stackedWidget.addWidget(generalInformation);        // Index 1
@@ -74,17 +74,17 @@ int main(int argc, char *argv[])
         stackedWidget.setWindowTitle("Información general");
     });
 
-    QObject::connect(generalInformation, &GeneralInformationScreen::goToHome, [&stackedWidget, &home]() {
+    QObject::connect(generalInformation, &DashBoardScreen::goToHome, [&stackedWidget, &home]() {
         stackedWidget.setCurrentIndex(0);  // Change to view main
         stackedWidget.setWindowTitle("spydroid");
     });
 
-    QObject::connect(generalInformation, &GeneralInformationScreen::goToMultimedia, [&stackedWidget, &multimedia](const QString& alias) {
+    QObject::connect(generalInformation, &DashBoardScreen::goToMultimedia, [&stackedWidget, &multimedia](const QString& alias) {
         stackedWidget.setCurrentIndex(2);  // Change to view main
         stackedWidget.setWindowTitle("Archivos multimedia de " + alias);
     });
 
-    QObject::connect(generalInformation, &GeneralInformationScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
+    QObject::connect(generalInformation, &DashBoardScreen::goToSms, [&stackedWidget, &sms](const QString& alias) {
         SmsScreen* newSmsScreen = new SmsScreen(alias);
     
         QObject::connect(newSmsScreen, &SmsScreen::goToDashBoard, [&stackedWidget]() {

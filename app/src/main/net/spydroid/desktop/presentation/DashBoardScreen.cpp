@@ -15,7 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "GeneralInformationScreen.h"
+#include "DashBoardScreen.h"
 #include <iostream>
 #include <QTableWidget>
 #include <QHeaderView>
@@ -47,11 +47,11 @@ public:
 };
 
 
-void GeneralInformationScreen::handleVncButtonClick() {
+void DashBoardScreen::handleVncButtonClick() {
     qDebug() << "Hola Mundo";
 }
 
-void GeneralInformationScreen::showDevicesTable(
+void DashBoardScreen::showDevicesTable(
     const std::vector<DevicesHandler>& devices,
     QVBoxLayout* layout,
     QTableWidget* &table
@@ -308,7 +308,7 @@ void GeneralInformationScreen::showDevicesTable(
 }
 
 
-void GeneralInformationScreen::searchDevice() {
+void DashBoardScreen::searchDevice() {
     QString searchText = textField->text().trimmed();
 
     if (searchText.isEmpty()) {
@@ -332,7 +332,7 @@ void GeneralInformationScreen::searchDevice() {
 }
 
 
-GeneralInformationScreen::GeneralInformationScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
+DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
     
     devicesRepository = new DevicesRepositoryImp();
     std::string ALL = "ALL";
@@ -368,8 +368,8 @@ GeneralInformationScreen::GeneralInformationScreen(QWidget *parent) : QWidget(pa
         button->setFixedWidth(150);
 
         // Connect button enter to the textfield
-        connect(button, &QPushButton::clicked, this, &GeneralInformationScreen::searchDevice);
-        connect(textField, &QLineEdit::returnPressed, this, &GeneralInformationScreen::searchDevice);
+        connect(button, &QPushButton::clicked, this, &DashBoardScreen::searchDevice);
+        connect(textField, &QLineEdit::returnPressed, this, &DashBoardScreen::searchDevice);
 
         QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
         topLayout->addItem(spacer);
@@ -410,7 +410,7 @@ GeneralInformationScreen::GeneralInformationScreen(QWidget *parent) : QWidget(pa
 
 
 
-void GeneralInformationScreen::paintEvent(QPaintEvent *event) {
+void DashBoardScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 

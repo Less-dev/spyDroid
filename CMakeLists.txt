@@ -16,7 +16,7 @@ set(INCLUDE_DIR ${SOURCE_DIR}/presentation)
 # Define header files
 set(HEADERS
     ${INCLUDE_DIR}/HomeScreen.h
-    ${INCLUDE_DIR}/GeneralInformationScreen.h
+    ${INCLUDE_DIR}/DashBoardScreen.h
     ${INCLUDE_DIR}/MultimediaScreen.h
     ${INCLUDE_DIR}/SmsScreen.h
     ${SOURCE_DIR}/components/CardSms.h
@@ -29,7 +29,7 @@ set(HEADERS
 set(SOURCES
     ${SOURCE_DIR}/main.cpp
     ${INCLUDE_DIR}/HomeScreen.cpp
-    ${INCLUDE_DIR}/GeneralInformationScreen.cpp
+    ${INCLUDE_DIR}/DashBoardScreen.cpp
     ${INCLUDE_DIR}/MultimediaScreen.cpp
     ${INCLUDE_DIR}/SmsScreen.cpp
     ${SOURCE_DIR}/data/colors.cpp
