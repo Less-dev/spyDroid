@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef IMAGES_SCREEN_H
-#define IMAGES_SCREEN_H
+#ifndef AUDIOS_SCREEN_H
+#define AUDIOS_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -27,12 +27,12 @@
 #include <QTableWidget>
 #include <QPaintEvent>
 
-class ImagesScreen : public QWidget
+class AudiosScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ImagesScreen(QWidget *parent = nullptr);
+    explicit AudiosScreen(QWidget *parent = nullptr);
 
 signals:
     void goToDashBoard();
@@ -44,4 +44,4 @@ private:
     QVBoxLayout* layout;
 };
 
-#endif // IMAGES_SCREEN_H
+#endif // AUDIOS_SCREEN_H

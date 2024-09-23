@@ -18,6 +18,10 @@ set(HEADERS
     ${INCLUDE_DIR}/HomeScreen.h
     ${INCLUDE_DIR}/DashBoardScreen.h
     ${INCLUDE_DIR}/MultimediaScreen.h
+    ${INCLUDE_DIR}/ImagesScreen.h
+    ${INCLUDE_DIR}/VideosScreen.h
+    ${INCLUDE_DIR}/AudiosScreen.h
+    ${INCLUDE_DIR}/DocumentsScreen.h
     ${INCLUDE_DIR}/SmsScreen.h
     ${SOURCE_DIR}/components/CardSms.h
     ${SOURCE_DIR}/components/GoBack.h
@@ -31,6 +35,10 @@ set(SOURCES
     ${INCLUDE_DIR}/HomeScreen.cpp
     ${INCLUDE_DIR}/DashBoardScreen.cpp
     ${INCLUDE_DIR}/MultimediaScreen.cpp
+    ${INCLUDE_DIR}/ImagesScreen.cpp
+    ${INCLUDE_DIR}/VideosScreen.cpp
+    ${INCLUDE_DIR}/AudiosScreen.cpp
+    ${INCLUDE_DIR}/DocumentsScreen.cpp
     ${INCLUDE_DIR}/SmsScreen.cpp
     ${SOURCE_DIR}/data/colors.cpp
     ${SOURCE_DIR}/components/GoBack.cpp

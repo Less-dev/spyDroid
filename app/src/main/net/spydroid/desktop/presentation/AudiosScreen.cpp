@@ -14,15 +14,14 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-
-#include "ImagesScreen.h"
+#include "AudiosScreen.h"
 #include <iostream>
 #include <QPainter>
 #include "../components/ItemBoard.h"
 #include <QDebug>
 
 
-ImagesScreen::ImagesScreen(QWidget *parent) : QWidget(parent) {
+AudiosScreen::AudiosScreen(QWidget *parent) : QWidget(parent) {
     
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
@@ -30,7 +29,7 @@ ImagesScreen::ImagesScreen(QWidget *parent) : QWidget(parent) {
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     
-    // Crear el layout para ImagesScreen
+    // Crear el layout para AudiosScreen
     layout = new QVBoxLayout(this);
 
     layout->setContentsMargins(30, 30, 30, 30);  // Márgenes ajustados (izquierda, arriba, derecha, abajo)
@@ -39,7 +38,7 @@ ImagesScreen::ImagesScreen(QWidget *parent) : QWidget(parent) {
 }
 
 
-void ImagesScreen::paintEvent(QPaintEvent *event) {
+void AudiosScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
