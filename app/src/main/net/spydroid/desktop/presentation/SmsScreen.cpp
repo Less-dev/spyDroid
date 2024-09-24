@@ -15,8 +15,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-
 #include "SmsScreen.h"
 #include "../components/GoBack.h"
 #include "../components/CardSms.h"
@@ -43,7 +41,7 @@ SmsScreen::SmsScreen(QWidget *parent)
     layout->setAlignment(Qt::AlignTop);
     layout->setContentsMargins(30, 30, 30, 30);
 
-    // Botón de regresar al Dashboard
+    // Go to dash board view
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
         emit goToDashBoard();
@@ -187,14 +185,12 @@ void SmsScreen::paintEvent(QPaintEvent *event)
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // Dibujar el fondo
     QPixmap background(":/images/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
 
-    // Dibujar un borde rojo alrededor del widget
     QPen pen(QColor("#FF0000"));
     pen.setWidth(4);
     painter.setPen(pen);
