@@ -62,7 +62,8 @@ private:
     MultimediaRepository* multimediaRepository;
     std::vector<InfoHandler> infoHandler;
     std::vector<DevicesHandler> devices;
-
+    void showEvent(QShowEvent* event);
+    void updateDeviceTable();
     void showDevicesTable(const std::vector<DevicesHandler>& devices, QVBoxLayout* layout, QTableWidget* &table);
 };
 

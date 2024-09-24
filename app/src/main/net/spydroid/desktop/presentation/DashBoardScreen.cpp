@@ -331,13 +331,81 @@ void DashBoardScreen::searchDevice() {
     }
 }
 
+void DashBoardScreen::showEvent(QShowEvent* event) {
+    QWidget::showEvent(event);  // Llama al evento base para el comportamiento normal
+    updateDeviceTable();        // Actualiza la tabla cada vez que se muestra la vista
+}
+
+void DashBoardScreen::updateDeviceTable() {
+    std::string alias = "ALL";  // Alias por defecto para obtener todos los dispositivos
+    devices = devicesRepository->getDevice(alias);  // Llama a la API para obtener los dispositivos
+
+    // Limpiar el campo de texto cada vez que se actualiza la tabla
+    textField->clear();
+
+    if (devices.empty()) {
+        // Si no se encuentran dispositivos, oculta la tabla, botón, textfield y muestra el mensaje centrado
+        if (table) {
+            table->hide();  // Ocultar la tabla si no hay dispositivos
+        }
+        textField->hide();  // Ocultar el campo de texto
+        button->hide();     // Ocultar el botón de búsqueda
+
+        label->setText("No se encontraron dispositivos");
+        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
+        label->setStyleSheet(
+            "QLabel { "
+            "    color : #ff0000; "
+            "    font-weight: bold; "
+            "    font-size: 30px; "
+            "}"
+        );
+        label->show();  // Mostrar el label centrado
+
+        // Crear un layout independiente para centrar el QLabel
+        QVBoxLayout* centerLayout = new QVBoxLayout();
+
+        // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
+        QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+        QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        centerLayout->addItem(topSpacer);  // Añadir el espaciador superior
+        centerLayout->addWidget(label);    // Añadir el QLabel
+        centerLayout->addItem(bottomSpacer);  // Añadir el espaciador inferior
+
+        // Remover el layout anterior de la tabla y añadir el layout centrado
+        if (layout) {
+            QLayoutItem* item;
+            while ((item = layout->takeAt(0)) != nullptr) {
+                delete item->widget();
+                delete item;
+            }
+            
+            
+            layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
+        }
+    } else {
+        // Si se encuentran dispositivos, muestra la tabla y oculta el mensaje de error
+        label->hide();  // Ocultar el mensaje de error
+
+        if (table) {
+            table->show();  // Mostrar la tabla
+        }
+
+        // Mostrar el campo de texto y el botón si hay dispositivos
+        textField->show();
+        button->show();
+
+        showDevicesTable(devices, layout, table);  // Actualizar la tabla con los nuevos datos
+    }
+}
+
+
 
 DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
-    
     devicesRepository = new DevicesRepositoryImp();
-    std::string ALL = "ALL";
-    devices = devicesRepository->getDevice(ALL);
-
+    
+    // Configuración visual básica
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
     pal.setColor(QPalette::Window, QColor("#000000"));
@@ -347,66 +415,47 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     layout = new QVBoxLayout(this);
     layout->setContentsMargins(30, 30, 30, 30);  
 
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    // Botón para regresar al menú principal
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
-        emit goToHome();
+        emit goToHome();  // Emitir señal para regresar a la pantalla principal
     });
-
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
-    if (!devices.empty()) {
+    // Crear campo de texto para búsqueda
+    QHBoxLayout* topLayout = new QHBoxLayout();
+    textField = new QLineEdit(this);
+    textField->setPlaceholderText("Buscar dispositivo (por su alias)...");
+    textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #000000; }");
+    textField->setFixedWidth(400);
 
-        // Create TextField
-        QHBoxLayout* topLayout = new QHBoxLayout();
-        textField = new QLineEdit(this);
-        textField->setPlaceholderText("Buscar dispositivo (por su alias)...");
-        textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #000000; }");
-        textField->setFixedWidth(400);
+    // Botón de búsqueda
+    button = new QPushButton("Buscar", this);
+    button->setFixedWidth(150);
 
-        // Create Button Search
-        button = new QPushButton("Buscar", this);
-        button->setFixedWidth(150);
+    // Conectar el botón de búsqueda
+    connect(button, &QPushButton::clicked, this, &DashBoardScreen::searchDevice);
+    connect(textField, &QLineEdit::returnPressed, this, &DashBoardScreen::searchDevice);
 
-        // Connect button enter to the textfield
-        connect(button, &QPushButton::clicked, this, &DashBoardScreen::searchDevice);
-        connect(textField, &QLineEdit::returnPressed, this, &DashBoardScreen::searchDevice);
+    // Crear un spacer para empujar los componentes hacia la derecha
+    QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
+    topLayout->addItem(spacer);         // Añadir el espaciador primero para empujar los siguientes widgets
+    topLayout->addWidget(textField);    // Añadir el campo de texto
+    topLayout->addWidget(button);       // Añadir el botón de búsqueda
 
-        QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-        topLayout->addItem(spacer);
+    // Agregar el layout superior al layout principal
+    layout->addLayout(topLayout);
 
-        // Add widgets to the view
-        topLayout->addWidget(textField);
-        topLayout->addWidget(button);
-        
-        layout->addLayout(topLayout);
-        
-        showDevicesTable(devices, layout, table);
-    } else {
-        label = new QLabel("No se encontraron dispositivos", this);
-        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
-        label->setStyleSheet(
-            "QLabel { "
-            "    color : #ff0000; "
-            "    font-weight: bold; "
-            "    font-size: 30px; "
-            "}"
-        );
-
-        // Crear un layout vertical para centrar el QLabel
-        QVBoxLayout* centerLayout = new QVBoxLayout();  // Layout independiente para centrar el label
-
-        // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
-        QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-        QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-        centerLayout->addItem(topSpacer);  // Añadir el espaciador superior
-        centerLayout->addWidget(label);    // Añadir el QLabel
-        centerLayout->addItem(bottomSpacer); // Añadir el espaciador inferior
-
-        layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
-    }
-    setLayout(layout);
+    // Label que muestra si no hay dispositivos
+    label = new QLabel(this);
+    label->setAlignment(Qt::AlignCenter);
+    label->setStyleSheet("QLabel { color : #ff0000; font-weight: bold; font-size: 30px; }");
+    layout->addWidget(label);
+    
+    label->hide();  // Ocultamos el label inicialmente, lo mostramos solo si no hay dispositivos
 }
+
+
 
 
 
