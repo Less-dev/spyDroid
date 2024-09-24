@@ -15,35 +15,31 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOMESCREEN_H
-#define HOMESCREEN_H
+#ifndef APK_STUDIO_SCREEN_H
+#define APK_STUDIO_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
 #include <QPaintEvent>
 
-class HomeScreen : public QWidget
+#include "../components/GoBack.h"
+
+
+class ApkStudioScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HomeScreen(QWidget *parent = nullptr);
+    explicit ApkStudioScreen(QWidget *parent = nullptr);
 
 signals:
-    void goToDashBoard();
-    void goToBuildApk();
-    void goToGenerateApk();
+    void goToHome();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
-
 private:
     QVBoxLayout* layout;
+    GoBackButton* goBackButton;
 };
 
-#endif // HOMESCREEN_H
+#endif // APK_STUDIO_SCREEN_H

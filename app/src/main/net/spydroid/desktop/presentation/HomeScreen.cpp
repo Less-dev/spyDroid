@@ -49,24 +49,17 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
         emit goToDashBoard();
     });
 
-    ItemBoard *builder = new ItemBoard(itemBoardContainer);
-    builder->setImage(QPixmap(":/images/builder.png"));
-    builder->setText("Programar APK");
-    connect(builder, &ItemBoard::clicked, [this]() {
-        //emit goToBuilder();
+    ItemBoard *apkStudio = new ItemBoard(itemBoardContainer);
+    apkStudio->setImage(QPixmap(":/images/builder.png"));
+    apkStudio->setText("APK Estudio");
+    connect(apkStudio, &ItemBoard::clicked, [this]() {
+        emit goToBuildApk();
     });
 
-    ItemBoard *templates = new ItemBoard(itemBoardContainer);
-    templates->setImage(QPixmap(":/images/android.png"));
-    templates->setText("Generar APK");
-    connect(templates, &ItemBoard::clicked, [this]() {
-        //emit goToTemplate();
-    });
 
     // Añadir los ItemBoard al layout del contenedor
     itemBoardLayout->addWidget(dashBoard);
-    itemBoardLayout->addWidget(builder);
-    itemBoardLayout->addWidget(templates);
+    itemBoardLayout->addWidget(apkStudio);
 
     // Aplicar el layout al contenedor
     itemBoardContainer->setLayout(itemBoardLayout);

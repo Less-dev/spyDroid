@@ -17,6 +17,7 @@ set(INCLUDE_DIR ${SOURCE_DIR}/presentation)
 set(HEADERS
     ${INCLUDE_DIR}/HomeScreen.h
     ${INCLUDE_DIR}/DashBoardScreen.h
+    ${INCLUDE_DIR}/ApkStudioScreen.h
     ${INCLUDE_DIR}/MultimediaScreen.h
     ${INCLUDE_DIR}/ImagesScreen.h
     ${INCLUDE_DIR}/VideosScreen.h
@@ -34,6 +35,7 @@ set(SOURCES
     ${SOURCE_DIR}/main.cpp
     ${INCLUDE_DIR}/HomeScreen.cpp
     ${INCLUDE_DIR}/DashBoardScreen.cpp
+    ${INCLUDE_DIR}/ApkStudioScreen.cpp
     ${INCLUDE_DIR}/MultimediaScreen.cpp
     ${INCLUDE_DIR}/ImagesScreen.cpp
     ${INCLUDE_DIR}/VideosScreen.cpp
