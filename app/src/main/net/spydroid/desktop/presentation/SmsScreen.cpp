@@ -27,7 +27,8 @@
 
 
 SmsScreen::SmsScreen(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent),
+      scrollArea(nullptr)  // Inicializamos el puntero a nullptr
 {
     this->setMinimumSize(600, 500);
 
@@ -47,33 +48,7 @@ SmsScreen::SmsScreen(QWidget *parent)
         emit goToDashBoard();  // Emitir la señal cuando se hace clic
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
-
-    // Inicializar repositorio de SMS
-
-    // Mostrar el mensaje de "Cargando..." al principio
-    /*
-        label = new QLabel("Cargando...", this);
-        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
-        label->setStyleSheet(
-            "QLabel { "
-            "    color : #ff0000; "
-            "    font-weight: bold; "
-            "    font-size: 30px; "
-            "}"
-        );
-
-    QVBoxLayout* centerLayout = new QVBoxLayout();  // Layout independiente para centrar el label
-
-    QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-
-    centerLayout->addItem(topSpacer);
-    centerLayout->addWidget(label);    
-    centerLayout->addItem(bottomSpacer);
-
-    layout->addLayout(centerLayout);*/
     setLayout(layout);
-
 }
 
 void SmsScreen::setAlias(const QString& alias)
@@ -83,10 +58,15 @@ void SmsScreen::setAlias(const QString& alias)
     loadSms();
 }
 
-
 void SmsScreen::loadSms()
 {
-               
+    // Verificar si ya existe un scrollArea en el layout
+    if (scrollArea != nullptr) {
+        layout->removeWidget(scrollArea);  // Lo quitamos del layout
+        delete scrollArea;  // Eliminamos la instancia anterior de scrollArea
+        scrollArea = nullptr;  // Restablecemos el puntero
+    }
+
     std::vector<SmsHandler> smsList = smsRepository->getSms(deviceAlias.toStdString());
 
     QWidget* cardContainer = new QWidget;
@@ -103,11 +83,9 @@ void SmsScreen::loadSms()
         cardLayout->addLayout(hLayout);
     }
 
-    // Añadir padding de 30px en los márgenes del contenedor de tarjetas
     cardLayout->setContentsMargins(0, 30, 0, 30);
 
-    // Crear un área de scroll para hacer las tarjetas desplazables
-    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea = new QScrollArea;  // Creamos una nueva instancia de scrollArea
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(cardContainer);
     scrollArea->setStyleSheet("background: transparent;");
@@ -115,8 +93,6 @@ void SmsScreen::loadSms()
     // Añadir el área de scroll al layout principal
     layout->addWidget(scrollArea, Qt::AlignTop | Qt::AlignCenter);
 }
-
-
 
 
 

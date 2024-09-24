@@ -27,6 +27,7 @@
 #include "../remote/domain/SmsRepository.h"
 #include "../remote/models/SmsHandler.h"
 #include <QPaintEvent>
+#include <QScrollArea>
 
 
 class SmsScreen : public QWidget
@@ -50,6 +51,7 @@ private:
     QLabel* label;
     SmsRepository* smsRepository;
     std::vector<SmsHandler> smsHandler;
+    QScrollArea* scrollArea;
     QString deviceAlias;
 
     // Método privado para recargar los SMS con el alias actualizado
