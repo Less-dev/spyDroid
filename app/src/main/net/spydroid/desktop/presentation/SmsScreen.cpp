@@ -44,97 +44,142 @@ SmsScreen::SmsScreen(QWidget *parent)
     layout->setContentsMargins(30, 30, 30, 30);
 
     // Botón de regresar al Dashboard
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
-        emit goToDashBoard();  // Emitir la señal cuando se hace clic
+        emit goToDashBoard();
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
-    // Inicializar repositorio de SMS
-    smsRepository = new SmsRepositoryImp();
 
-    // Mostrar el mensaje de "Cargando..." al principio
-    label = new QLabel("Cargando...", this);
+    label = new QLabel("Buscando Mensajes...", this);
     label->setAlignment(Qt::AlignCenter);
     label->setStyleSheet(
         "QLabel { "
-        "    color : white; "
+        "    color : black; "
         "    font-weight: bold; "
         "    font-size: 30px; "
         "}"
     );
 
-    layout->addWidget(label);  // Mostrar "Cargando..." hasta que se carguen los datos
+
+    QVBoxLayout* centerLayout = new QVBoxLayout();
+    QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+    centerLayout->addItem(topSpacer);  
+    centerLayout->addWidget(label);    
+    centerLayout->addItem(bottomSpacer);
+    layout->addLayout(centerLayout);
+    
+    setLayout(layout);
 }
 
 void SmsScreen::setAlias(const QString& alias)
 {
-    // Actualizar el alias del dispositivo y recargar los SMS
     deviceAlias = alias;
-    loadSms();  // Volver a cargar los SMS con el nuevo alias
+    smsHandler.clear();
+    clearCards();
+    loadSms();
 }
 
-void SmsScreen::loadSms()
-{
-    // Mostrar "Cargando..." antes de hacer la operación
-    label->setText("Cargando...");
+void SmsScreen::clearCards() {
+    // Delete Cards if exists
+    if (cardContainer) {
+        QLayoutItem* item;
+        while ((item = cardLayout->takeAt(0)) != nullptr) {
+            if (QWidget* widget = item->widget()) {
+                widget->deleteLater();  // Delete items secure
+            }
+            delete item;
+        }
+        cardContainer->hide();
+    }
+
+    label->setText("Buscando Mensajes...");
+    label->setStyleSheet(
+        "QLabel { "
+        "    color : black; "
+        "    font-weight: bold; "
+        "    font-size: 30px; "
+        "}"
+    );
+    label->show();
+    
+    if (scrollArea) {
+        scrollArea->hide();
+    }
+}
+
+void SmsScreen::loadSms() {
+
+    label->setText("Buscando Mensajes...");
+    label->setStyleSheet(
+        "QLabel { "
+        "    color : black; "
+        "    font-weight: bold; "
+        "    font-size: 30px; "
+        "}"
+    );
     label->show();
 
-    // Usar un QTimer para simular una operación asíncrona (como acceso a base de datos)
-    QTimer::singleShot(500, this, [this]() {
-        // Simulamos un retraso en la obtención de los datos
-        std::vector<SmsHandler> smsList = smsRepository->getSms(deviceAlias.toStdString());
+    SmsLoader* loader = new SmsLoader(deviceAlias, this);
 
-        // Limpiar el layout actual antes de cargar los nuevos SMS
-        QLayoutItem* item;
-        while ((item = layout->takeAt(1)) != nullptr) {  // Comenzamos en 1 para dejar el botón de volver intacto
-            if (item->widget()) {
-                delete item->widget();  // Eliminar los widgets existentes
+    connect(loader, &SmsLoader::finished, [this, loader]() {
+        std::vector<SmsHandler> sms = loader->getResult();
+        loader->deleteLater();
+
+        QMetaObject::invokeMethod(this, [this, sms]() {
+            if (sms.empty()) {
+
+                label->setText("No se encontraron mensajes de texto.");
+                label->setStyleSheet(
+                    "QLabel { "
+                    "    color : #ff0000; "
+                    "    font-weight: bold; "
+                    "    font-size: 30px; "
+                    "}"
+                );
+                label->show();
+            } else {
+                label->hide();
+
+                if (!cardContainer) {
+                    cardContainer = new QWidget;
+                    cardContainer->setStyleSheet("background: transparent;");
+                    cardLayout = new QVBoxLayout(cardContainer);
+                    cardLayout->setAlignment(Qt::AlignTop);
+                    cardLayout->setSpacing(10);
+                }
+
+                cardContainer->show();
+
+                for (const auto& _sms : sms) {
+                    CardSms* card = new CardSms(_sms, this);
+                    QHBoxLayout* hLayout = new QHBoxLayout();
+                    hLayout->setAlignment(Qt::AlignCenter);
+                    hLayout->addWidget(card);
+                    cardLayout->addLayout(hLayout);
+                }
+
+                cardLayout->setContentsMargins(0, 30, 0, 30);
+
+                if (!scrollArea) {
+                    scrollArea = new QScrollArea(this);
+                    scrollArea->setWidgetResizable(true);
+                    scrollArea->setStyleSheet("background: transparent;");
+                    scrollArea->setWidget(cardContainer);
+
+                    layout->addWidget(scrollArea, Qt::AlignTop | Qt::AlignCenter);
+                }
+                scrollArea->show();  // Show scroll area
             }
-            delete item;  // Eliminar el layout item
-        }
-
-        // Si se encuentran SMS, cargar las tarjetas
-        if (!smsList.empty()) {
-            QWidget* cardContainer = new QWidget;
-            cardContainer->setStyleSheet("background: transparent;");
-            QVBoxLayout* cardLayout = new QVBoxLayout(cardContainer);
-            cardLayout->setAlignment(Qt::AlignTop);
-            cardLayout->setSpacing(10);
-
-            // Crear una tarjeta por cada SMS
-            for (const auto& smsHandler : smsList) {
-                CardSms* card = new CardSms(smsHandler, this);
-
-                // Centrar la tarjeta horizontalmente
-                QHBoxLayout* hLayout = new QHBoxLayout();
-                hLayout->setAlignment(Qt::AlignCenter);
-                hLayout->addWidget(card);
-                cardLayout->addLayout(hLayout);
-            }
-
-            // Añadir padding de 30px en los márgenes del contenedor de tarjetas
-            cardLayout->setContentsMargins(0, 30, 0, 30);
-
-            // Crear un área de scroll para hacer las tarjetas desplazables
-            QScrollArea* scrollArea = new QScrollArea;
-            scrollArea->setWidgetResizable(true);
-            scrollArea->setWidget(cardContainer);
-            scrollArea->setStyleSheet("background: transparent;");
-
-            // Añadir el área de scroll al layout principal
-            layout->addWidget(scrollArea);
-        } else {
-            // Si no hay SMS, mostrar un mensaje de "No se encontraron mensajes"
-            label->setText("No se encontraron mensajes");
-            label->show();  // Asegurar que el label se muestre
-            layout->addWidget(label);  // Volver a añadir el label al layout
-        }
-
-        // Aplicar el layout actualizado
-        this->setLayout(layout);
+        }, Qt::QueuedConnection);
     });
+
+    // Started thread
+    loader->start();
 }
+
+
 
 
 void SmsScreen::paintEvent(QPaintEvent *event)

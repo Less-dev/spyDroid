@@ -386,7 +386,7 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
         label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
         label->setStyleSheet(
             "QLabel { "
-            "    color : white; "
+            "    color : #ff0000; "
             "    font-weight: bold; "
             "    font-size: 30px; "
             "}"
