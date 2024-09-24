@@ -325,6 +325,7 @@ void DashBoardScreen::searchDevice() {
             QMessageBox::information(this, "No encontrado",
                 "No se encontró un dispositivo con ese alias llamado así. Escriba 'ALL' para visualizar todos los dispositivos"
              );
+             textField->clear();
         } else {
             showDevicesTable(result, layout, table);
         }
@@ -397,9 +398,9 @@ void DashBoardScreen::updateDeviceTable() {
 
         // Volver a agregar los widgets en el orden correcto
         QHBoxLayout* topLayout = new QHBoxLayout();
-        topLayout->addWidget(textField);   // Campo de texto en la parte superior
-        topLayout->addWidget(search);      // Botón de búsqueda en la parte superior
-        layout->addLayout(topLayout);      // Añadir el layout superior al layout principal
+        topLayout->addWidget(textField, 1, Qt::AlignRight);   // Campo de texto en la parte superior
+        topLayout->addWidget(search, 0, Qt::AlignRight);      // Botón de búsqueda en la parte superior
+        layout->addLayout(topLayout, Qt::AlignTop | Qt::AlignRight);      // Añadir el layout superior al layout principal
 
         QSpacerItem* verticalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
         layout->addItem(verticalSpacer);  // Añadir espaciador vertical entre el topLayout y la tabla
@@ -442,7 +443,7 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     textField = new QLineEdit(this);
     textField->setPlaceholderText("Buscar dispositivo (por su alias)...");
     textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #000000; }");
-    textField->setFixedWidth(400);
+    textField->setFixedWidth(270);
 
     // Botón de búsqueda
     search = new QPushButton("Buscar", this);
@@ -455,11 +456,11 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     // Crear un spacer para empujar los componentes hacia la derecha
     QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     topLayout->addItem(spacer);         // Añadir el espaciador primero para empujar los siguientes widgets
-    topLayout->addWidget(textField);    // Añadir el campo de texto
-    topLayout->addWidget(search);       // Añadir el botón de búsqueda
+    topLayout->addWidget(textField, 1, Qt::AlignRight);    // Añadir el campo de texto
+    topLayout->addWidget(search, 1, Qt::AlignRight);       // Añadir el botón de búsqueda
 
     // Agregar el layout superior al layout principal
-    layout->addLayout(topLayout);
+    layout->addLayout(topLayout, Qt::AlignTop | Qt::AlignRight);
 
     // Label que muestra si no hay dispositivos
     label = new QLabel(this);
