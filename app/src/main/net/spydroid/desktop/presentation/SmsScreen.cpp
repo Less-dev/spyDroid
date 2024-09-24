@@ -41,141 +41,81 @@ SmsScreen::SmsScreen(QWidget *parent)
     layout->setAlignment(Qt::AlignTop);
     layout->setContentsMargins(30, 30, 30, 30);
 
-    // Go to dash board view
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
+    // Botón de regresar al Dashboard
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
     goBackButton->setOnClick([this]() {
-        emit goToDashBoard();
+        emit goToDashBoard();  // Emitir la señal cuando se hace clic
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
+    // Inicializar repositorio de SMS
 
-    label = new QLabel("Buscando Mensajes...", this);
-    label->setAlignment(Qt::AlignCenter);
-    label->setStyleSheet(
-        "QLabel { "
-        "    color : black; "
-        "    font-weight: bold; "
-        "    font-size: 30px; "
-        "}"
-    );
+    // Mostrar el mensaje de "Cargando..." al principio
+    /*
+        label = new QLabel("Cargando...", this);
+        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
+        label->setStyleSheet(
+            "QLabel { "
+            "    color : #ff0000; "
+            "    font-weight: bold; "
+            "    font-size: 30px; "
+            "}"
+        );
 
+    QVBoxLayout* centerLayout = new QVBoxLayout();  // Layout independiente para centrar el label
 
-    QVBoxLayout* centerLayout = new QVBoxLayout();
     QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
     QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
-    centerLayout->addItem(topSpacer);  
+
+    centerLayout->addItem(topSpacer);
     centerLayout->addWidget(label);    
     centerLayout->addItem(bottomSpacer);
-    layout->addLayout(centerLayout);
-    
+
+    layout->addLayout(centerLayout);*/
     setLayout(layout);
+
 }
 
 void SmsScreen::setAlias(const QString& alias)
 {
     deviceAlias = alias;
-    smsHandler.clear();
-    clearCards();
+    smsRepository = new SmsRepositoryImp();
     loadSms();
 }
 
-void SmsScreen::clearCards() {
-    // Delete Cards if exists
-    if (cardContainer) {
-        QLayoutItem* item;
-        while ((item = cardLayout->takeAt(0)) != nullptr) {
-            if (QWidget* widget = item->widget()) {
-                widget->deleteLater();  // Delete items secure
-            }
-            delete item;
-        }
-        cardContainer->hide();
+
+void SmsScreen::loadSms()
+{
+               
+    std::vector<SmsHandler> smsList = smsRepository->getSms(deviceAlias.toStdString());
+
+    QWidget* cardContainer = new QWidget;
+    cardContainer->setStyleSheet("background: transparent;");
+    QVBoxLayout* cardLayout = new QVBoxLayout(cardContainer);
+    cardLayout->setAlignment(Qt::AlignTop);
+    cardLayout->setSpacing(10);
+
+    for (const auto& smsHandler : smsList) {
+        CardSms* card = new CardSms(smsHandler, this);
+        QHBoxLayout* hLayout = new QHBoxLayout();
+        hLayout->setAlignment(Qt::AlignCenter);
+        hLayout->addWidget(card);
+        cardLayout->addLayout(hLayout);
     }
 
-    label->setText("Buscando Mensajes...");
-    label->setStyleSheet(
-        "QLabel { "
-        "    color : black; "
-        "    font-weight: bold; "
-        "    font-size: 30px; "
-        "}"
-    );
-    label->show();
-    
-    if (scrollArea) {
-        scrollArea->hide();
-    }
+    // Añadir padding de 30px en los márgenes del contenedor de tarjetas
+    cardLayout->setContentsMargins(0, 30, 0, 30);
+
+    // Crear un área de scroll para hacer las tarjetas desplazables
+    QScrollArea* scrollArea = new QScrollArea;
+    scrollArea->setWidgetResizable(true);
+    scrollArea->setWidget(cardContainer);
+    scrollArea->setStyleSheet("background: transparent;");
+
+    // Añadir el área de scroll al layout principal
+    layout->addWidget(scrollArea, Qt::AlignTop | Qt::AlignCenter);
 }
 
-void SmsScreen::loadSms() {
-
-    label->setText("Buscando Mensajes...");
-    label->setStyleSheet(
-        "QLabel { "
-        "    color : black; "
-        "    font-weight: bold; "
-        "    font-size: 30px; "
-        "}"
-    );
-    label->show();
-
-    SmsLoader* loader = new SmsLoader(deviceAlias, this);
-
-    connect(loader, &SmsLoader::finished, [this, loader]() {
-        std::vector<SmsHandler> sms = loader->getResult();
-        loader->deleteLater();
-
-        QMetaObject::invokeMethod(this, [this, sms]() {
-            if (sms.empty()) {
-
-                label->setText("No se encontraron mensajes de texto.");
-                label->setStyleSheet(
-                    "QLabel { "
-                    "    color : #ff0000; "
-                    "    font-weight: bold; "
-                    "    font-size: 30px; "
-                    "}"
-                );
-                label->show();
-            } else {
-                label->hide();
-
-                if (!cardContainer) {
-                    cardContainer = new QWidget;
-                    cardContainer->setStyleSheet("background: transparent;");
-                    cardLayout = new QVBoxLayout(cardContainer);
-                    cardLayout->setAlignment(Qt::AlignTop);
-                    cardLayout->setSpacing(10);
-                }
-
-                cardContainer->show();
-
-                for (const auto& _sms : sms) {
-                    CardSms* card = new CardSms(_sms, this);
-                    QHBoxLayout* hLayout = new QHBoxLayout();
-                    hLayout->setAlignment(Qt::AlignCenter);
-                    hLayout->addWidget(card);
-                    cardLayout->addLayout(hLayout);
-                }
-
-                cardLayout->setContentsMargins(0, 30, 0, 30);
-
-                if (!scrollArea) {
-                    scrollArea = new QScrollArea(this);
-                    scrollArea->setWidgetResizable(true);
-                    scrollArea->setStyleSheet("background: transparent;");
-                    scrollArea->setWidget(cardContainer);
-
-                    layout->addWidget(scrollArea, Qt::AlignTop | Qt::AlignCenter);
-                }
-                scrollArea->show();  // Show scroll area
-            }
-        }, Qt::QueuedConnection);
-    });
-
-    // Started thread
-    loader->start();
-}
 
 
 
