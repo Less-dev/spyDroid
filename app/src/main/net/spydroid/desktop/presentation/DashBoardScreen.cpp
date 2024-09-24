@@ -343,16 +343,29 @@ void DashBoardScreen::updateDeviceTable() {
     // Limpiar el campo de texto cada vez que se actualiza la tabla
     textField->clear();
 
+    // Limpiar el layout antes de volver a agregar los widgets
+    if (layout) {
+        QLayoutItem* item;
+        while ((item = layout->takeAt(0)) != nullptr) {
+            if (item->widget()) {
+                item->widget()->hide();  // Ocultar el widget sin eliminarlo
+            }
+            delete item;  // Eliminar el layoutItem
+        }
+    }
+
+    // Si no hay dispositivos, muestra el mensaje centrado
     if (devices.empty()) {
-        // Si no se encuentran dispositivos, oculta la tabla, botón, textfield y muestra el mensaje centrado
+        // Ocultar widgets innecesarios
         if (table) {
             table->hide();  // Ocultar la tabla si no hay dispositivos
         }
         textField->hide();  // Ocultar el campo de texto
-        button->hide();     // Ocultar el botón de búsqueda
+        search->hide();     // Ocultar el botón de búsqueda
 
+        // Configurar el mensaje
         label->setText("No se encontraron dispositivos");
-        label->setAlignment(Qt::AlignCenter);  // Centrar horizontal y verticalmente
+        label->setAlignment(Qt::AlignCenter);
         label->setStyleSheet(
             "QLabel { "
             "    color : #ff0000; "
@@ -362,7 +375,7 @@ void DashBoardScreen::updateDeviceTable() {
         );
         label->show();  // Mostrar el label centrado
 
-        // Crear un layout independiente para centrar el QLabel
+        // Centrar el QLabel en el layout principal
         QVBoxLayout* centerLayout = new QVBoxLayout();
 
         // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
@@ -373,33 +386,35 @@ void DashBoardScreen::updateDeviceTable() {
         centerLayout->addWidget(label);    // Añadir el QLabel
         centerLayout->addItem(bottomSpacer);  // Añadir el espaciador inferior
 
-        // Remover el layout anterior de la tabla y añadir el layout centrado
-        if (layout) {
-            QLayoutItem* item;
-            while ((item = layout->takeAt(0)) != nullptr) {
-                delete item->widget();
-                delete item;
-            }
-            
-            
-            layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
-        }
+        layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
     } else {
-        // Si se encuentran dispositivos, muestra la tabla y oculta el mensaje de error
+        // Si hay dispositivos, muestra los elementos y oculta el mensaje de error
         label->hide();  // Ocultar el mensaje de error
 
+        // Mostrar campo de texto y botón de búsqueda
+        textField->show();
+        search->show();
+
+        // Volver a agregar los widgets en el orden correcto
+        QHBoxLayout* topLayout = new QHBoxLayout();
+        topLayout->addWidget(textField);   // Campo de texto en la parte superior
+        topLayout->addWidget(search);      // Botón de búsqueda en la parte superior
+        layout->addLayout(topLayout);      // Añadir el layout superior al layout principal
+
+        QSpacerItem* verticalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
+        layout->addItem(verticalSpacer);  // Añadir espaciador vertical entre el topLayout y la tabla
+
         if (table) {
-            table->show();  // Mostrar la tabla
+            table->show();  // Mostrar la tabla si hay dispositivos
+            layout->addWidget(table);  // Añadir la tabla debajo del campo de texto y el botón
         }
 
-        // Mostrar el campo de texto y el botón si hay dispositivos
-        textField->show();
-        button->show();
-
-        showDevicesTable(devices, layout, table);  // Actualizar la tabla con los nuevos datos
+        // Mostrar los datos en la tabla
+        showDevicesTable(devices, layout, table);
     }
-}
 
+    goBackButton->show();  // Garantiza que siempre esté visible
+}
 
 
 DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
@@ -416,7 +431,7 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     layout->setContentsMargins(30, 30, 30, 30);  
 
     // Botón para regresar al menú principal
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
+    goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
         emit goToHome();  // Emitir señal para regresar a la pantalla principal
     });
@@ -430,18 +445,18 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     textField->setFixedWidth(400);
 
     // Botón de búsqueda
-    button = new QPushButton("Buscar", this);
-    button->setFixedWidth(150);
+    search = new QPushButton("Buscar", this);
+    search->setFixedWidth(150);
 
     // Conectar el botón de búsqueda
-    connect(button, &QPushButton::clicked, this, &DashBoardScreen::searchDevice);
+    connect(search, &QPushButton::clicked, this, &DashBoardScreen::searchDevice);
     connect(textField, &QLineEdit::returnPressed, this, &DashBoardScreen::searchDevice);
 
     // Crear un spacer para empujar los componentes hacia la derecha
     QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
     topLayout->addItem(spacer);         // Añadir el espaciador primero para empujar los siguientes widgets
     topLayout->addWidget(textField);    // Añadir el campo de texto
-    topLayout->addWidget(button);       // Añadir el botón de búsqueda
+    topLayout->addWidget(search);       // Añadir el botón de búsqueda
 
     // Agregar el layout superior al layout principal
     layout->addLayout(topLayout);

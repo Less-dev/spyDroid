@@ -31,6 +31,7 @@
 #include "../remote/domain/MultimediaRepository.h"
 #include "../remote/models/DevicesHandler.h"
 #include "../remote/models/InfoHandler.h"
+#include "../components/GoBack.h"
 
 class DashBoardScreen : public QWidget
 {
@@ -54,7 +55,8 @@ protected:
 private:
     QVBoxLayout* layout;
     QLabel* label;
-    QPushButton* button;
+    QPushButton* search;
+    GoBackButton* goBackButton;
     QLineEdit* textField;
     QTableWidget* table;
     DevicesRepository* devicesRepository;
