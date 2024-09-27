@@ -9,6 +9,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QClipboard>
+#include <QModelIndex>
 
 class FileExplorer : public QWidget
 {
@@ -18,7 +19,8 @@ public:
     explicit FileExplorer(const QString &directoryPath = QDir::homePath(), QWidget *parent = nullptr);
     ~FileExplorer();
     void setRootPath(const QString &newPath);
-
+    void onFileDoubleClicked(const QModelIndex &index);
+    void addToRecentFiles(const QString &filePath);
 
 private:
     QTreeView *treeView;

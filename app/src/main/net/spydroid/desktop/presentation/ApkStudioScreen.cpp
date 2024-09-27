@@ -192,6 +192,7 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
 
     // Editor de código
     codeEditor = new CodeEditor();
+    codeEditor->loadFile("/home/less/Downloads/change_color.html");
     codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     contentLayout->addWidget(codeEditor);
 

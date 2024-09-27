@@ -6,6 +6,7 @@
 #include <QDebug>
 #include <QApplication>
 #include <QHeaderView>
+#include "../local/SettingsManager.h"
 
 FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWidget(parent)
 {
@@ -31,9 +32,9 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     treeView->setMaximumWidth(215);
 
     // Ocultar todas las columnas excepto la de nombre de archivo
-    treeView->header()->hide();  // Ocultar el encabezado de la tabla
+    treeView->header()->hide();
     for (int i = 1; i < fileModel->columnCount(); ++i) {
-        treeView->hideColumn(i);  // Ocultar todas las columnas excepto la de nombre
+        treeView->hideColumn(i);
     }
 
     // Configuración de estilo para el QTreeView
@@ -80,9 +81,9 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     // Configurar el QHBoxLayout para alinear a la izquierda
     QHBoxLayout *hLayout = new QHBoxLayout();
     hLayout->addWidget(containerWidget);
-    hLayout->setContentsMargins(0, 0, 0, 0);  // Eliminar márgenes
-    hLayout->setSpacing(0);  // Eliminar espacio entre widgets
-    hLayout->setAlignment(Qt::AlignLeft);  // Alinear todo a la izquierda
+    hLayout->setContentsMargins(0, 0, 0, 0);  
+    hLayout->setSpacing(0);  
+    hLayout->setAlignment(Qt::AlignLeft);  
 
     setLayout(hLayout);
 
@@ -98,6 +99,28 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     connect(treeView, &QTreeView::customContextMenuRequested, this, [this](const QPoint &pos) {
         contextMenu->exec(treeView->viewport()->mapToGlobal(pos));
     });
+
+    // Conectar el evento de doble clic en un archivo
+    connect(treeView, &QTreeView::doubleClicked, this, &FileExplorer::onFileDoubleClicked);
+}
+
+void FileExplorer::onFileDoubleClicked(const QModelIndex &index) {
+    QString filePath = fileModel->filePath(index);
+    QFileInfo fileInfo(filePath);
+
+    if (fileInfo.isFile()) {
+        addToRecentFiles(filePath);
+    }
+}
+
+void FileExplorer::addToRecentFiles(const QString &filePath) {
+    SettingsManager settingsManager("ApkStudio");
+    QStringList recentFiles = settingsManager.getValue("recentFiles", QStringList()).toStringList();
+
+    if (!recentFiles.contains(filePath)) {
+        recentFiles.append(filePath);
+        settingsManager.setValue("recentFiles", recentFiles);
+    }
 }
 
 void FileExplorer::setRootPath(const QString &newPath) {

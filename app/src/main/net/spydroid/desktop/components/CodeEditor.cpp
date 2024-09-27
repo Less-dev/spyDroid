@@ -5,8 +5,9 @@
 #include <QBrush>
 #include <QFontDatabase>
 #include <QFont>
-
-
+#include <QMessageBox>
+#include <QFileDialog>
+#include <QTextStream>
 
 CodeEditor::CodeEditor(QWidget *parent)
     : QPlainTextEdit(parent), lineNumberArea(new LineNumberArea(this)) {
@@ -134,6 +135,50 @@ void CodeEditor::highlightCurrentLine() {
     }
 
     setExtraSelections(extraSelections);
+}
+
+
+void CodeEditor::loadFile(const QString &filePath) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("Error"), tr("No se puede abrir el archivo: %1").arg(filePath));
+        return;
+    }
+
+    QTextStream in(&file);
+    setPlainText(in.readAll());  // Cargar el contenido del archivo en el editor
+    file.close();
+
+    currentFilePath = filePath;  // Guardar la ruta del archivo abierto
+}
+
+bool CodeEditor::saveFile(const QString &filePath) {
+    QFile file(filePath);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+        QMessageBox::warning(this, tr("Error"), tr("No se puede guardar el archivo: %1").arg(filePath));
+        return false;
+    }
+
+    QTextStream out(&file);
+    out << toPlainText();  // Escribir el contenido actual del editor al archivo
+    file.close();
+
+    currentFilePath = filePath;  // Actualizar la ruta del archivo guardado
+    return true;
+}
+
+void CodeEditor::openFileDialog() {
+    QString filePath = QFileDialog::getOpenFileName(this, tr("Abrir archivo"), "", tr("Archivos de texto (*.txt);;Archivos C++ (*.cpp *.h);;Todos los archivos (*)"));
+    if (!filePath.isEmpty()) {
+        loadFile(filePath);  // Cargar el archivo seleccionado
+    }
+}
+
+void CodeEditor::saveFileDialog() {
+    QString filePath = QFileDialog::getSaveFileName(this, tr("Guardar archivo"), "", tr("Archivos de texto (*.txt);;Archivos C++ (*.cpp *.h);;Todos los archivos (*)"));
+    if (!filePath.isEmpty()) {
+        saveFile(filePath);  // Guardar el archivo en la ruta seleccionada
+    }
 }
 
 //

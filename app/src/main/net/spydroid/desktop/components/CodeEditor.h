@@ -4,6 +4,7 @@
 #include <QPlainTextEdit>
 #include <QObject>
 #include <QWidget>
+#include <QString>
 
 // Forward declaration de LineNumberArea
 class LineNumberArea;
@@ -16,6 +17,17 @@ public:
 
     // Método público para obtener el ancho del área de números de línea.
     int lineNumberAreaWidth() const;
+    
+    void loadFile(const QString &filePath);
+
+    // Método público para guardar el archivo actual
+    bool saveFile(const QString &filePath);
+
+    // Método para solicitar y abrir un archivo
+    void openFileDialog();
+
+    // Método para solicitar y guardar el archivo
+    void saveFileDialog();
 
 protected:
     // Reimplementamos resizeEvent para ajustar el área de números de línea.
@@ -36,7 +48,7 @@ private slots:
 
 private:
     QWidget *lineNumberArea;  // Widget para el área de números de línea.
-
+    QString currentFilePath;
     // Clase interna para definir el área de números de línea.
     class LineNumberArea : public QWidget {
     public:
