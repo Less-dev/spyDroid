@@ -242,15 +242,33 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
 
     // Configurar el layout principal
     codeEditor = new CodeEditor();
+    codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    // Inicialmente ocultar el codeEditor
+    codeEditor->hide();
+
+    // Configurar la lógica para manejar cuando se seleccionan pestañas
     connect(tabBar, &QTabBar::currentChanged, [=](int index) {
-        if (index != -1) {  // Asegurarse de que una pestaña válida esté seleccionada
+        if (index != -1) {  // Una pestaña válida está seleccionada
             QString filePath = tabBar->tabData(index).toString();  // Recuperar la ruta completa del archivo
-            codeEditor->loadFile(filePath);
+            codeEditor->loadFile(filePath);  // Cargar el archivo en el CodeEditor
+            codeEditor->show();  // Mostrar el CodeEditor si está oculto
+        } else {
+            codeEditor->hide();  // Si no hay pestaña seleccionada, ocultar el CodeEditor
         }
     });
-    
+
+    // Conectar la señal de cierre de pestañas para ocultar el CodeEditor si no quedan pestañas
+    connect(tabBar, &QTabBar::tabCloseRequested, [=](int index) {
+        tabBar->removeTab(index);  // Eliminar la pestaña solicitada
+        if (tabBar->count() == 0) {
+            codeEditor->hide();  // Si no quedan pestañas, ocultar el CodeEditor
+        }
+    });
+
+    tabBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);  // Asegura que solo expanda en horizontal
+    contentLayout->addWidget(tabBar, 0, Qt::AlignTop);
     codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    contentLayout->addWidget(tabBar);
     contentLayout->addWidget(codeEditor);
 
     // Terminal
