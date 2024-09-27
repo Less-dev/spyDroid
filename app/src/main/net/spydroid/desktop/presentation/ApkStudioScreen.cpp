@@ -25,7 +25,8 @@
 #include <QBrush>
 #include <QStackedLayout>
 #include <QGuiApplication>
-#include "../local/SettingsManager.h"
+#include <QFileDialog>
+#include <QShortcut>
 
 // Constructor de ClickableLabel como antes
 ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent) {
@@ -116,8 +117,9 @@ void ToolWindowBar::handlePlayIconClick() {
 }
 
 
-ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
+ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsManager(new SettingsManager("ApkStudio", this)) {
     // Crear el layout principal con márgenes exteriores para el borde de la vista
+    pathProject = settingsManager->getValue("projectPath").toString();
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     this->setMinimumSize(600, 500);
@@ -172,8 +174,8 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     sidebarLayout->setSpacing(0);  // Sin espaciado entre widgets
 
     // Contenedor para el FileExplorer (sin márgenes ni espaciado)
-    QString path = "/home/less/Downloads";
-    fileExplorer = new FileExplorer(path);
+    fileExplorer = new FileExplorer();
+    fileExplorer->setRootPath(pathProject);
     fileExplorer->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);  // Fijo en tamaño vertical
     fileExplorer->setVisible(false);   // Inicialmente oculto
     sidebarLayout->addWidget(fileExplorer);  // Añadir el FileExplorer al layout contenedor
@@ -207,6 +209,9 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     mainLayout->addWidget(contentWidget);  // Añadir el contenedor de contenido al layout principal
 
     // Conectar las señales de clic de los íconos con los métodos de acción
+    QShortcut *openFileShortcut = new QShortcut(QKeySequence("Ctrl+O"), this);
+    connect(openFileShortcut, &QShortcut::activated, this, &ApkStudioScreen::openFile);
+
     connect(toolBar, &ToolWindowBar::goToHomeIconClicked, this, &ApkStudioScreen::toggleGoToHome);
     connect(toolBar, &ToolWindowBar::fileIconClicked, this, &ApkStudioScreen::toggleFileExplorer);
     connect(toolBar, &ToolWindowBar::gitIconClicked, this, &ApkStudioScreen::toggleGit);
@@ -256,8 +261,25 @@ void ApkStudioScreen::newFile() {
 }
 
 void ApkStudioScreen::openFile() {
-    // Lógica para abrir archivo
+    QString selectedPath = QFileDialog::getExistingDirectory(this, tr("Seleccionar Directorio"), pathProject);
+
+    // Verificar si el usuario seleccionó un directorio o canceló el diálogo
+    if (!selectedPath.isEmpty()) {
+        // Actualizar pathProject con el nuevo directorio seleccionado
+        pathProject = selectedPath;
+
+        // Guardar el nuevo pathProject en las preferencias utilizando SettingsManager
+        settingsManager->setValue("projectPath", pathProject);
+
+        // Actualizar el FileExplorer con la nueva ruta
+        fileExplorer->setRootPath(pathProject);
+        fileExplorer->setVisible(true);  // Asegurarse de que el FileExplorer esté visible
+    }
+    else {
+        // El usuario canceló la selección, mantener el pathProject actual
+    }
 }
+
 
 void ApkStudioScreen::saveFile() {
     // Lógica para guardar archivo

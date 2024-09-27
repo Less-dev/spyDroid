@@ -17,6 +17,8 @@ class FileExplorer : public QWidget
 public:
     explicit FileExplorer(const QString &directoryPath = QDir::homePath(), QWidget *parent = nullptr);
     ~FileExplorer();
+    void setRootPath(const QString &newPath);
+
 
 private:
     QTreeView *treeView;

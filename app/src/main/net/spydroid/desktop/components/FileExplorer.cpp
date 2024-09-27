@@ -100,6 +100,23 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     });
 }
 
+void FileExplorer::setRootPath(const QString &newPath) {
+    // Verificar si la nueva ruta existe
+    if (!QDir(newPath).exists()) {
+        qWarning() << "El directorio no existe:" << newPath;
+        return;  // Si la ruta no existe, salir del método
+    }
+
+    // Establecer el nuevo directorio raíz en el modelo de sistema de archivos
+    fileModel->setRootPath(newPath);
+
+    // Obtener el índice del nuevo directorio raíz
+    QModelIndex rootIndex = fileModel->index(newPath);
+
+    // Establecer el nuevo índice raíz en el QTreeView para que muestre el nuevo directorio
+    treeView->setRootIndex(rootIndex);
+}
+
 FileExplorer::~FileExplorer() {}
 
 void FileExplorer::setupActions() {

@@ -30,6 +30,7 @@
 #include "../components/Terminal.h"
 #include "../components/CodeEditor.h"
 #include "../components/FileExplorer.h"
+#include "../local/SettingsManager.h"
 #include <QMenuBar>
 
 
@@ -105,11 +106,12 @@ private:
     bool altPressed = false;
     
     QMenuBar *menuBar;
-    
     QMenu *fileMenu;
     QAction *newFileAction;
     QAction *openFileAction;
     QAction *saveFileAction;
+    QString pathProject;
+    SettingsManager* settingsManager;
 };
 
 #endif // APK_STUDIO_SCREEN_H
