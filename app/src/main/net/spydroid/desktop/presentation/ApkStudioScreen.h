@@ -52,12 +52,14 @@ public:
     explicit ToolWindowBar(QWidget *parent = nullptr);
 
 signals:
+    void goToHomeIconClicked();
     void fileIconClicked();
     void gitIconClicked();
     void terminalIconClicked();  // Señal para la interacción con el icono de terminal
     void playIconClicked();      // Señal para la interacción con el icono de play
 
 private slots:
+    void handleGoToHomeIconClick();
     void handleFileIconClick();
     void handleGitIconClick();
     void handleTerminalIconClick();
@@ -79,6 +81,7 @@ protected:
     void paintEvent(QPaintEvent *event) override;
 
 private slots:
+    void toggleGoToHome();
     void toggleFileExplorer();
     void toggleGit();
     void toggleTerminal();

@@ -41,12 +41,12 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
 
-    ClickableLabel *goBack = new ClickableLabel(this);
+    ClickableLabel *goToHomeIcon = new ClickableLabel(this);
     QPixmap pixmapBack(":images/2_go_back.png");
-    goBack->setPixmap(pixmapBack);
-    goBack->setScaledContents(true);
-    goBack->setFixedSize(30, 30);
-    layout->addWidget(goBack);
+    goToHomeIcon->setPixmap(pixmapBack);
+    goToHomeIcon->setScaledContents(true);
+    goToHomeIcon->setFixedSize(30, 30);
+    layout->addWidget(goToHomeIcon);
 
     // Ícono de archivo (file.png)
     ClickableLabel *fileIcon = new ClickableLabel(this);
@@ -83,6 +83,7 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
     layout->addWidget(playIcon);
 
     // Conectar las señales de clic
+    connect(goToHomeIcon, &ClickableLabel::clicked, this, &ToolWindowBar::handleGoToHomeIconClick);
     connect(terminalIcon, &ClickableLabel::clicked, this, &ToolWindowBar::handleTerminalIconClick);
     connect(playIcon, &ClickableLabel::clicked, this, &ToolWindowBar::handlePlayIconClick);
     connect(fileIcon, &ClickableLabel::clicked, this, &ToolWindowBar::handleFileIconClick);
@@ -92,6 +93,10 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
 }
 
 // Manejo del clic del ícono de archivo (fileIcon)
+void ToolWindowBar::handleGoToHomeIconClick() {
+    emit goToHomeIconClicked();
+}
+
 void ToolWindowBar::handleFileIconClick() {
     emit fileIconClicked();
 }
@@ -171,7 +176,9 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     mainLayout->addWidget(contentWidget);  // Añadir el contenedor de contenido al layout principal
 
     // Conectar las señales de clic de los íconos con los métodos de acción
+    connect(toolBar, &ToolWindowBar::goToHomeIconClicked, this, &ApkStudioScreen::toggleGoToHome);
     connect(toolBar, &ToolWindowBar::fileIconClicked, this, &ApkStudioScreen::toggleFileExplorer);
+    connect(toolBar, &ToolWindowBar::gitIconClicked, this, &ApkStudioScreen::toggleGit);
     connect(toolBar, &ToolWindowBar::terminalIconClicked, this, &ApkStudioScreen::toggleTerminal);
 
     setMinimumSize(600, 500);  // Establecer tamaño mínimo del widget principal
@@ -179,6 +186,10 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
 
 
 // Método para manejar la visibilidad del FileExplorer
+void ApkStudioScreen::toggleGoToHome() {
+    emit goToHome();
+}
+
 void ApkStudioScreen::toggleFileExplorer() {
     if (fileExplorer->isVisible()) {
         fileExplorer->setVisible(false);
@@ -189,9 +200,8 @@ void ApkStudioScreen::toggleFileExplorer() {
     this->update();
 }
 
-// Método para manejar la visibilidad de la terminal
 void ApkStudioScreen::toggleGit() {
-    goToHome();
+    // todo
 }
 
 void ApkStudioScreen::toggleTerminal() {
@@ -226,7 +236,7 @@ void ApkStudioScreen::paintEvent(QPaintEvent *event) {
     QBrush brush(Qt::NoBrush);
     painter.setBrush(brush);
 
-    int padding = 20;
+    int padding = 15;
     painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
     QWidget::paintEvent(event);
 }
