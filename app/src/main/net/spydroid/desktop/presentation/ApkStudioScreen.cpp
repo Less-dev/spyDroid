@@ -24,6 +24,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QStackedLayout>
+#include <QGuiApplication>
 #include "../local/SettingsManager.h"
 
 // Constructor de ClickableLabel como antes
@@ -117,6 +118,7 @@ void ToolWindowBar::handlePlayIconClick() {
 
 ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     // Crear el layout principal con márgenes exteriores para el borde de la vista
+
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
@@ -127,9 +129,31 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     mainLayout->setContentsMargins(20, 20, 20, 20);  // Márgenes exteriores
     mainLayout->setSpacing(0);  // Sin espaciado entre widgets del layout principal
     menuBar = new QMenuBar(this);
-    QMenu *fileMenu = menuBar->addMenu(tr("&File"));
-    QMenu *editMenu = menuBar->addMenu(tr("&Edit"));
-    QMenu *viewMenu = menuBar->addMenu(tr("&View"));
+    fileMenu = menuBar->addMenu("&Archivo");
+
+    // Añadir acciones al menú Archivo
+    newFileAction = new QAction("Nuevo Archivo", this);
+    newFileAction->setShortcut(QKeySequence("Ctrl+N"));
+    connect(newFileAction, &QAction::triggered, this, &ApkStudioScreen::newFile);
+
+    openFileAction = new QAction("Abrir Archivo...", this);
+    openFileAction->setShortcut(QKeySequence("Ctrl+O"));
+    connect(openFileAction, &QAction::triggered, this, &ApkStudioScreen::openFile);
+
+    saveFileAction = new QAction("Guardar", this);
+    saveFileAction->setShortcut(QKeySequence("Ctrl+S"));
+    connect(saveFileAction, &QAction::triggered, this, &ApkStudioScreen::saveFile);
+
+    // Añadir las acciones al menú Archivo
+    fileMenu->addAction(newFileAction);
+    fileMenu->addAction(openFileAction);
+    fileMenu->addAction(saveFileAction);
+
+    // Añadir separador y más acciones según sea necesario
+    fileMenu->addSeparator();
+
+    QMenu *editMenu = menuBar->addMenu("&Editar");
+    QMenu *viewMenu = menuBar->addMenu("&Vista");
    menuBar->setStyleSheet("QMenuBar { background-color: black; }"
                            "QMenuBar::item { color: white; }"
                            "QMenuBar::item:selected { background: #800000; }"
@@ -225,6 +249,20 @@ void ApkStudioScreen::toggleTerminal() {
 void ApkStudioScreen::togglePlay() {
     
 }
+
+
+void ApkStudioScreen::newFile() {
+    // Lógica para nuevo archivo
+}
+
+void ApkStudioScreen::openFile() {
+    // Lógica para abrir archivo
+}
+
+void ApkStudioScreen::saveFile() {
+    // Lógica para guardar archivo
+}
+
 
 void ApkStudioScreen::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Alt) {

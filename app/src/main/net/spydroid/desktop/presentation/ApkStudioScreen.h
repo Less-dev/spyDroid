@@ -84,11 +84,18 @@ protected:
     void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
+
+    // Options Lateral Left from the view
     void toggleGoToHome();
     void toggleFileExplorer();
     void toggleGit();
     void toggleTerminal();
     void togglePlay();
+
+    // Option menu bar (File)
+    void newFile();
+    void openFile();
+    void saveFile();
 
 private:
     QVBoxLayout* layout;
@@ -96,7 +103,13 @@ private:
     Terminal* terminal;
     FileExplorer* fileExplorer;
     bool altPressed = false;
+    
     QMenuBar *menuBar;
+    
+    QMenu *fileMenu;
+    QAction *newFileAction;
+    QAction *openFileAction;
+    QAction *saveFileAction;
 };
 
 #endif // APK_STUDIO_SCREEN_H
