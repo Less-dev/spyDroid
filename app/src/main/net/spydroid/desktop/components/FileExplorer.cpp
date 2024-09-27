@@ -11,7 +11,7 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
 {
     // Crear el modelo de sistema de archivos
     fileModel = new QFileSystemModel(this);
-    
+
     // Verificar que la ruta proporcionada sea válida
     QString validPath = directoryPath;
     if (!QDir(validPath).exists()) {
@@ -25,14 +25,13 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     treeView = new QTreeView(this);
     treeView->setModel(fileModel);
 
-        // Establecer el índice raíz en el QTreeView, mostrando el directorio especificado
     // Establecer el índice raíz en el QTreeView, mostrando el directorio especificado
     QModelIndex rootIndex = fileModel->index(validPath);
     treeView->setRootIndex(rootIndex);
-    
+    treeView->setMaximumWidth(215);
+
     // Ocultar todas las columnas excepto la de nombre de archivo
     treeView->header()->hide();  // Ocultar el encabezado de la tabla
-    
     for (int i = 1; i < fileModel->columnCount(); ++i) {
         treeView->hideColumn(i);  // Ocultar todas las columnas excepto la de nombre
     }
@@ -78,8 +77,12 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     containerLayout->addWidget(titleLabel);
     containerLayout->addWidget(treeView);
 
+    // Configurar el QHBoxLayout para alinear a la izquierda
     QHBoxLayout *hLayout = new QHBoxLayout();
     hLayout->addWidget(containerWidget);
+    hLayout->setContentsMargins(0, 0, 0, 0);  // Eliminar márgenes
+    hLayout->setSpacing(0);  // Eliminar espacio entre widgets
+    hLayout->setAlignment(Qt::AlignLeft);  // Alinear todo a la izquierda
 
     setLayout(hLayout);
 

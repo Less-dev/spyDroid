@@ -30,6 +30,7 @@
 #include "../components/Terminal.h"
 #include "../components/CodeEditor.h"
 #include "../components/FileExplorer.h"
+#include <QMenuBar>
 
 
 class ClickableLabel : public QLabel {
@@ -79,6 +80,8 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 
 private slots:
     void toggleGoToHome();
@@ -92,6 +95,8 @@ private:
     CodeEditor* codeEditor;
     Terminal* terminal;
     FileExplorer* fileExplorer;
+    bool altPressed = false;
+    QMenuBar *menuBar;
 };
 
 #endif // APK_STUDIO_SCREEN_H

@@ -126,7 +126,17 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     
     mainLayout->setContentsMargins(20, 20, 20, 20);  // Márgenes exteriores
     mainLayout->setSpacing(0);  // Sin espaciado entre widgets del layout principal
-    
+    menuBar = new QMenuBar(this);
+    QMenu *fileMenu = menuBar->addMenu(tr("&File"));
+    QMenu *editMenu = menuBar->addMenu(tr("&Edit"));
+    QMenu *viewMenu = menuBar->addMenu(tr("&View"));
+   menuBar->setStyleSheet("QMenuBar { background-color: black; }"
+                           "QMenuBar::item { color: white; }"
+                           "QMenuBar::item:selected { background: #800000; }"
+                           "QMenu { background-color: #333333; color: white; }"
+                           "QMenu::item:selected { background: #555555; }");
+    mainLayout->setMenuBar(menuBar);  // Asignar la barra de menú al layout principal
+
     // Barra lateral de herramientas (ToolWindowBar)
     ToolWindowBar *toolBar = new ToolWindowBar(this);
     toolBar->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);  // Fijo en tamaño
@@ -216,24 +226,53 @@ void ApkStudioScreen::togglePlay() {
     
 }
 
+void ApkStudioScreen::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Alt) {
+        altPressed = true;
+    }
+}
+
+// Evento de tecla liberada
+void ApkStudioScreen::keyReleaseEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Alt && altPressed) {
+        // Alternar la visibilidad de la barra de menú
+        menuBar->setVisible(!menuBar->isVisible());
+        altPressed = false;  // Restablecer el estado de altPressed
+        update();  // Solicitar una actualización de la interfaz para reflejar los cambios en el paintEvent
+    }
+}
+
 void ApkStudioScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
+    // Definir el relleno superior adicional de 15px cuando la barra de menús esté visible
+    int topPadding = menuBar->isVisible() ? 15 : 0;
+
+    // Dibujar el fondo de la ventana
     QPixmap background(":/images/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
-    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
+    QRect targetRect((width() - scaledSize.width()) / 2,
+                     (height() - scaledSize.height()) / 2 + topPadding,  // Ajuste vertical basado en el relleno superior
+                     scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
 
+    // Configuración del pincel y estilo de rectángulo
     QPen pen(QColor("#FF0000"));
-    pen.setWidth(4);  
+    pen.setWidth(4);
     painter.setPen(pen);
 
     QBrush brush(Qt::NoBrush);
     painter.setBrush(brush);
 
+    // Definir el relleno de los bordes
     int padding = 15;
-    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
+    int adjustedHeight = height() - 2 * padding - topPadding;
+    adjustedHeight = adjustedHeight > 0 ? adjustedHeight : 1;  // Asegurar que la altura no sea negativa
+
+    painter.drawRoundedRect(padding, padding + topPadding,  // Desplazar el rectángulo según el relleno superior
+                            width() - 2 * padding, adjustedHeight, 20, 20);  // Ajustar la altura
+
     QWidget::paintEvent(event);
 }
