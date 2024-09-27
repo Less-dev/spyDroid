@@ -112,6 +112,7 @@ private:
     QAction *saveFileAction;
     QString pathProject;
     SettingsManager* settingsManager;
+    QList<QVariant> recentFiles;
 };
 
 #endif // APK_STUDIO_SCREEN_H

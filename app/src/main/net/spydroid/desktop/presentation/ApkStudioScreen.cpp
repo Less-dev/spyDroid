@@ -28,6 +28,9 @@
 #include <QFileDialog>
 #include <QShortcut>
 #include "../components/FileWidget.h"
+#include <QDebug>
+#include <QTabBar>
+#include <QFileInfo>
 
 // Constructor de ClickableLabel como antes
 ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent) {
@@ -121,6 +124,7 @@ void ToolWindowBar::handlePlayIconClick() {
 ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsManager(new SettingsManager("ApkStudio", this)) {
     // Crear el layout principal con márgenes exteriores para el borde de la vista
     pathProject = settingsManager->getValue("projectPath").toString();
+    recentFiles = settingsManager->getValue("recentFiles").toList();
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
     this->setMinimumSize(600, 500);
@@ -191,13 +195,62 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
     contentLayout->setContentsMargins(0, 0, 0, 0);
     contentLayout->setSpacing(0);
 
-    // Editor de código
-    FileWidget* fileWidget = new FileWidget("/Home/carlos/file.txt");
-    contentLayout->addWidget(fileWidget);
+    QTabBar *tabBar = new QTabBar();
+    tabBar->setShape(QTabBar::RoundedNorth);  // Estilo de tabs redondeados
+    tabBar->setDocumentMode(true);            // El modo de documento ajusta las pestañas a su contenido
+    tabBar->setExpanding(false);
+    tabBar->setTabsClosable(true);  
     
+    tabBar->setStyleSheet(
+        "QTabBar {"
+        "   padding-bottom: 10px;"            // Espacio entre el QTabBar y el componente de abajo
+        "}"
+        "QTabBar::tab {"
+        "   background: black;"               // Fondo negro para cada pestaña
+        "   color: white;"                    // Color del texto en blanco
+        "   border: 2px solid red;"           // Borde rojo de 2px
+        "   border-radius: 7px;"             // Bordes redondeados
+        "   padding: 7px;"                    // Espaciado dentro de cada pestaña
+        "   margin-right: 10px;" 
+        "}"
+        "QTabBar::tab:selected {"
+        "   background: #333333;"             // Fondo más oscuro para la pestaña seleccionada
+        "}"
+        "QTabBar::tab:hover {"
+        "   background: #444444;"             // Fondo diferente al pasar el mouse
+        "}"
+        "QTabBar::close-button {"
+        "   image: url(:/images/close.png);"         // Imagen personalizada para el botón de cierre
+        "   subcontrol-position: right;"      // Alineación del botón de cierre a la derecha
+        "   subcontrol-origin: padding;"      // Asegura que el botón esté dentro del área de la pestaña
+        "   margin-right: 10px;"               // Espacio final dentro de la pestaña
+        "}"
+    );
+
+    for (const QVariant& file : recentFiles) {
+        QFileInfo fileInfo(file.toString());
+        int tabIndex = tabBar->addTab(fileInfo.fileName());  // Agregar la pestaña con el nombre recortado
+        tabBar->setTabData(tabIndex, file.toString());       // Almacenar la ruta completa como datos de la pestaña
+    }
+
+    connect(tabBar, &QTabBar::tabCloseRequested, tabBar, [=](int index) {
+        tabBar->removeTab(index);             // Remover la pestaña al hacer clic en el botón de cierre
+    });
+
+
+
+
+    // Configurar el layout principal
     codeEditor = new CodeEditor();
-    codeEditor->loadFile("/home/less/Downloads/change_color.html");
+    connect(tabBar, &QTabBar::currentChanged, [=](int index) {
+        if (index != -1) {  // Asegurarse de que una pestaña válida esté seleccionada
+            QString filePath = tabBar->tabData(index).toString();  // Recuperar la ruta completa del archivo
+            codeEditor->loadFile(filePath);
+        }
+    });
+    
     codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    contentLayout->addWidget(tabBar);
     contentLayout->addWidget(codeEditor);
 
     // Terminal
