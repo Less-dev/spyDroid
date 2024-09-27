@@ -34,6 +34,7 @@ set(HEADERS
     ${SOURCE_DIR}/components/CodeEditor.h
     ${SOURCE_DIR}/components/FileExplorer.h
     ${SOURCE_DIR}/presentation/ApkStudioScreen.h
+    ${SOURCE_DIR}/local/SettingsManager.h
 )
 
 # Define source files
@@ -65,6 +66,7 @@ set(SOURCES
     ${SOURCE_DIR}/remote/data/InfoRepositoryImp.cpp
     ${SOURCE_DIR}/remote/data/MultimediaRepositoryImp.cpp
     ${SOURCE_DIR}/remote/data/SmsRepositoryImp.cpp
+    ${SOURCE_DIR}/local/SettingsManager.cpp
 )
 
 # Create the executable

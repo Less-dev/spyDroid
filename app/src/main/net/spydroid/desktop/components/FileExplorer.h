@@ -15,7 +15,7 @@ class FileExplorer : public QWidget
     Q_OBJECT
 
 public:
-    explicit FileExplorer(QWidget *parent = nullptr);
+    explicit FileExplorer(const QString &directoryPath = QDir::homePath(), QWidget *parent = nullptr);
     ~FileExplorer();
 
 private:
@@ -24,14 +24,14 @@ private:
     QLabel *titleLabel;
     QVBoxLayout *layout;
 
-    QMenu *contextMenu;        // Menú contextual
+    QMenu *contextMenu;
     QAction *createAction;
     QAction *renameAction;
     QAction *deleteAction;
     QAction *copyAction;
     QAction *pasteAction;
 
-    QString copiedFilePath;    // Archivo copiado para la acción de pegar
+    QString copiedFilePath;
     QClipboard *clipboard;
 
     void setupContextMenu();

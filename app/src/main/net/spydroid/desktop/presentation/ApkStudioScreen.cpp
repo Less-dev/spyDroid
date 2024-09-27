@@ -24,6 +24,7 @@
 #include <QPen>
 #include <QBrush>
 #include <QStackedLayout>
+#include "../local/SettingsManager.h"
 
 // Constructor de ClickableLabel como antes
 ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent) {
@@ -125,11 +126,6 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     
     mainLayout->setContentsMargins(20, 20, 20, 20);  // Márgenes exteriores
     mainLayout->setSpacing(0);  // Sin espaciado entre widgets del layout principal
-
-    //goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
-    //goBackButton->setOnClick([this]() {
-    //    emit goToHome();
-    //});
     
     // Barra lateral de herramientas (ToolWindowBar)
     ToolWindowBar *toolBar = new ToolWindowBar(this);
@@ -142,7 +138,8 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     sidebarLayout->setSpacing(0);  // Sin espaciado entre widgets
 
     // Contenedor para el FileExplorer (sin márgenes ni espaciado)
-    fileExplorer = new FileExplorer();
+    QString path = "/home/less/Downloads";
+    fileExplorer = new FileExplorer(path);
     fileExplorer->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);  // Fijo en tamaño vertical
     fileExplorer->setVisible(false);   // Inicialmente oculto
     sidebarLayout->addWidget(fileExplorer);  // Añadir el FileExplorer al layout contenedor

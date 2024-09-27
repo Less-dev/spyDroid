@@ -7,79 +7,81 @@
 #include <QApplication>
 #include <QHeaderView>
 
-FileExplorer::FileExplorer(QWidget *parent) : QWidget(parent)
+FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWidget(parent)
 {
     // Crear el modelo de sistema de archivos
     fileModel = new QFileSystemModel(this);
-    fileModel->setRootPath(QDir::rootPath());
+    
+    // Verificar que la ruta proporcionada sea válida
+    QString validPath = directoryPath;
+    if (!QDir(validPath).exists()) {
+        validPath = QDir::homePath();  // Si la ruta no es válida, usar el home por defecto
+    }
+
+    // Establecer el directorio como la raíz del modelo de sistema de archivos
+    fileModel->setRootPath(validPath);
 
     // Crear el QTreeView y asignar el modelo
     treeView = new QTreeView(this);
     treeView->setModel(fileModel);
-    treeView->setRootIndex(fileModel->index(QDir::homePath()));
-    treeView->setMaximumWidth(400);
-    treeView->header()->hide();
 
-    // Solo mostrar la columna de nombre
+        // Establecer el índice raíz en el QTreeView, mostrando el directorio especificado
+    // Establecer el índice raíz en el QTreeView, mostrando el directorio especificado
+    QModelIndex rootIndex = fileModel->index(validPath);
+    treeView->setRootIndex(rootIndex);
+    
+    // Ocultar todas las columnas excepto la de nombre de archivo
+    treeView->header()->hide();  // Ocultar el encabezado de la tabla
+    
     for (int i = 1; i < fileModel->columnCount(); ++i) {
-        treeView->hideColumn(i);
+        treeView->hideColumn(i);  // Ocultar todas las columnas excepto la de nombre
     }
 
+    // Configuración de estilo para el QTreeView
     treeView->setStyleSheet(
         "QTreeView { "
-        "    background-color: black; "            // Fondo negro
-        "    color: white; "                       // Letras blancas
-        "    border: 4px solid red; " 
-        "    border-radius: 10px; "                // Bordes redondeados de 10px
+        "    background-color: black; "
+        "    color: white; "
+        "    border: 4px solid red; "
+        "    border-radius: 10px; "
         "} "
         "QTreeView::item { "
-        "    background-color: black; "            // Fondo de elementos
-        "    color: white; "                       // Texto de elementos
+        "    background-color: black; "
+        "    color: white; "
         "} "
         "QTreeView::item:selected { "
-        "    background-color: #641414; "          // Fondo de selección
-        "    color: white; "                       // Texto seleccionado
+        "    background-color: #641414; "
+        "    color: white; "
         "} "
         "QTreeView::item:hover { "
-        "    background-color: #641414; "          // Fondo al pasar el cursor
-        "    color: white; "                       // Texto al pasar el cursor
+        "    background-color: #641414; "
+        "    color: white; "
         "} "
     );
 
+    // Crear el label del título
+    titleLabel = new QLabel("Explorador de archivos", this);
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setStyleSheet(
+        "QLabel { "
+        "    color: white; "
+        "    font-weight: bold; "
+        "    background-color: black; "
+        "} "
+    );
+    titleLabel->setMaximumWidth(215);
+    titleLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
-titleLabel = new QLabel("Explorador de archivos", this);
-titleLabel->setAlignment(Qt::AlignCenter);
+    // Crear el contenedor principal
+    QWidget *containerWidget = new QWidget(this);
+    QVBoxLayout *containerLayout = new QVBoxLayout(containerWidget);
+    containerLayout->addWidget(titleLabel);
+    containerLayout->addWidget(treeView);
 
-// Aplicar estilo a titleLabel para que sea texto en negrita y con fondo negro
-titleLabel->setStyleSheet(
-    "QLabel { "
-    "    color: white; "                      // Color de texto blanco
-    "    font-weight: bold; "                 // Texto en negrita
-    "    background-color: black; "           // Fondo negro
-    "} "
-);
+    QHBoxLayout *hLayout = new QHBoxLayout();
+    hLayout->addWidget(containerWidget);
 
-// Establecer ancho máximo del título para evitar que ocupe todo el ancho
-titleLabel->setMaximumWidth(215);  // Ajustar según tus necesidades
-titleLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);  // Evitar expansión
-
-// Crear un contenedor para el QLabel (titleLabel) y el QTreeView
-QWidget *containerWidget = new QWidget(this);
-QVBoxLayout *containerLayout = new QVBoxLayout(containerWidget);
-
-// Agregar titleLabel y treeView al layout vertical dentro del contenedor
-containerLayout->addWidget(titleLabel);
-containerLayout->addWidget(treeView);
-
-// Crear el layout horizontal para alinear a la izquierda
-QHBoxLayout *hLayout = new QHBoxLayout();
-hLayout->addWidget(containerWidget);  // Sin expansores
-
-// Configurar el layout principal de FileExplorer
-setLayout(hLayout);
-
-
-
+    setLayout(hLayout);
 
     // Inicializar el portapapeles
     clipboard = QApplication::clipboard();
@@ -94,7 +96,6 @@ setLayout(hLayout);
         contextMenu->exec(treeView->viewport()->mapToGlobal(pos));
     });
 }
-
 
 FileExplorer::~FileExplorer() {}
 
