@@ -33,6 +33,7 @@ set(HEADERS
     ${SOURCE_DIR}/components/Terminal.h
     ${SOURCE_DIR}/components/CodeEditor.h
     ${SOURCE_DIR}/components/FileExplorer.h
+    ${SOURCE_DIR}/components/FileWidget.h
     ${SOURCE_DIR}/presentation/ApkStudioScreen.h
     ${SOURCE_DIR}/local/SettingsManager.h
 )
@@ -57,6 +58,7 @@ set(SOURCES
     ${SOURCE_DIR}/components/Terminal.cpp 
     ${SOURCE_DIR}/components/CodeEditor.cpp 
     ${SOURCE_DIR}/components/FileExplorer.cpp 
+    ${SOURCE_DIR}/components/FileWidget.cpp 
     ${SOURCE_DIR}/remote/network/api/ApiService.cpp
     ${SOURCE_DIR}/remote/network/data/DevicesDaoImp.cpp
     ${SOURCE_DIR}/remote/network/data/InfoDaoImp.cpp

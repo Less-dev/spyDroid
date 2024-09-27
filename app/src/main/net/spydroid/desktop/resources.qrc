@@ -19,5 +19,6 @@
         <file alias ="terminal.png">res/drawable/terminal_ic.png</file>
         <file alias ="run.png">res/drawable/run_ic.png</file>
         <file alias ="2_go_back.png">res/drawable/go_back_ic.png</file>
+        <file alias ="close.png">res/drawable/close_ic.png</file>
     </qresource>
 </RCC>

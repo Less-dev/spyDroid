@@ -27,6 +27,7 @@
 #include <QGuiApplication>
 #include <QFileDialog>
 #include <QShortcut>
+#include "../components/FileWidget.h"
 
 // Constructor de ClickableLabel como antes
 ClickableLabel::ClickableLabel(QWidget *parent) : QLabel(parent) {
@@ -191,6 +192,9 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
     contentLayout->setSpacing(0);
 
     // Editor de código
+    FileWidget* fileWidget = new FileWidget("/Home/carlos/file.txt");
+    contentLayout->addWidget(fileWidget);
+    
     codeEditor = new CodeEditor();
     codeEditor->loadFile("/home/less/Downloads/change_color.html");
     codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
