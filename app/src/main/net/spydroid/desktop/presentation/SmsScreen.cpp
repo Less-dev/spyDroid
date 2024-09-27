@@ -40,7 +40,7 @@ SmsScreen::SmsScreen(QWidget *parent)
 
     layout = new QVBoxLayout(this);
     layout->setAlignment(Qt::AlignTop);
-    layout->setContentsMargins(30, 30, 30, 30);
+    layout->setContentsMargins(20, 20, 20, 20);
 
     // Botón de regresar al Dashboard
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
@@ -112,7 +112,7 @@ void SmsScreen::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
     painter.setBrush(Qt::NoBrush);
 
-    int padding = 20;
+    int padding = 15;
     painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);
 
     QWidget::paintEvent(event);

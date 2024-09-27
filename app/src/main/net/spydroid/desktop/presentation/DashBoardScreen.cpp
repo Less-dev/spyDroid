@@ -429,7 +429,7 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     this->setPalette(pal);
 
     layout = new QVBoxLayout(this);
-    layout->setContentsMargins(30, 30, 30, 30);  
+    layout->setContentsMargins(20, 20, 20, 20);  
 
     // Botón para regresar al menú principal
     goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
@@ -496,7 +496,7 @@ void DashBoardScreen::paintEvent(QPaintEvent *event) {
     painter.setBrush(brush);
 
     // Dibujar un rectángulo redondeado con padding de 20px (para que no toque los bordes)
-    int padding = 20;
+    int padding = 15;
     painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
 
     // Llamar al método base para asegurar que el evento de pintura continúe normalmente
