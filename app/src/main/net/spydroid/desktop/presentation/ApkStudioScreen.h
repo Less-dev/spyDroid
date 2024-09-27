@@ -20,9 +20,49 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QPaintEvent>
-
+#include <QHBoxLayout>
+#include <QPixmap>
+#include <QLabel>
+#include <QTimer>
+#include <QPalette>
+#include <QPainter>
 #include "../components/GoBack.h"
+#include "../components/Terminal.h"
+#include "../components/CodeEditor.h"
+#include "../components/FileExplorer.h"
+
+
+class ClickableLabel : public QLabel {
+    Q_OBJECT
+
+public:
+    explicit ClickableLabel(QWidget *parent = nullptr);
+
+signals:
+    void clicked();
+
+protected:
+    void mousePressEvent(QMouseEvent *event) override;
+};
+
+class ToolWindowBar : public QWidget {
+    Q_OBJECT
+
+public:
+    explicit ToolWindowBar(QWidget *parent = nullptr);
+
+signals:
+    void fileIconClicked();
+    void gitIconClicked();
+    void terminalIconClicked();  // Señal para la interacción con el icono de terminal
+    void playIconClicked();      // Señal para la interacción con el icono de play
+
+private slots:
+    void handleFileIconClick();
+    void handleGitIconClick();
+    void handleTerminalIconClick();
+    void handlePlayIconClick();
+};
 
 
 class ApkStudioScreen : public QWidget
@@ -37,9 +77,18 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+
+private slots:
+    void toggleFileExplorer();
+    void toggleGit();
+    void toggleTerminal();
+    void togglePlay();
+
 private:
     QVBoxLayout* layout;
-    GoBackButton* goBackButton;
+    CodeEditor* codeEditor;
+    Terminal* terminal;
+    FileExplorer* fileExplorer;
 };
 
 #endif // APK_STUDIO_SCREEN_H

@@ -101,11 +101,11 @@ void ItemBoard::mousePressEvent(QMouseEvent *event)
 void ItemBoard::changeColor(const QColor &color)
 {
     // Cambiar el color de la imagen
-    QPixmap resizedImage = QPixmap(imageLabel->pixmap().size());
+    QPixmap resizedImage = QPixmap(imageLabel->pixmap()->size());
     resizedImage.fill(Qt::transparent);
 
     QPainter painter(&resizedImage);
-    painter.drawPixmap(0, 0, imageLabel->pixmap().scaled(imageSize));
+    painter.drawPixmap(0, 0, imageLabel->pixmap()->scaled(imageSize));
 
     painter.setCompositionMode(QPainter::CompositionMode_SourceIn);
     painter.fillRect(resizedImage.rect(), color);
