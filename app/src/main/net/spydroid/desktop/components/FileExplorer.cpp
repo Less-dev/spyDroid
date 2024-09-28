@@ -109,7 +109,8 @@ void FileExplorer::onFileDoubleClicked(const QModelIndex &index) {
     QFileInfo fileInfo(filePath);
 
     if (fileInfo.isFile()) {
-        addToRecentFiles(filePath);
+        //addToRecentFiles(filePath);
+        emit fileOpened(filePath);
     }
 }
 

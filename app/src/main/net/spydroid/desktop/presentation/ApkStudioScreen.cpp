@@ -195,7 +195,7 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
     contentLayout->setContentsMargins(0, 0, 0, 0);
     contentLayout->setSpacing(0);
 
-    QTabBar *tabBar = new QTabBar();
+    tabBar = new QTabBar();
     tabBar->setShape(QTabBar::RoundedNorth);  // Estilo de tabs redondeados
     tabBar->setDocumentMode(true);            // El modo de documento ajusta las pestañas a su contenido
     tabBar->setExpanding(false);
@@ -233,13 +233,6 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
         tabBar->setTabData(tabIndex, file.toString());       // Almacenar la ruta completa como datos de la pestaña
     }
 
-    connect(tabBar, &QTabBar::tabCloseRequested, tabBar, [=](int index) {
-        tabBar->removeTab(index);             // Remover la pestaña al hacer clic en el botón de cierre
-    });
-
-
-
-
     // Configurar el layout principal
     codeEditor = new CodeEditor();
     codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -258,13 +251,28 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
         }
     });
 
-    // Conectar la señal de cierre de pestañas para ocultar el CodeEditor si no quedan pestañas
-    connect(tabBar, &QTabBar::tabCloseRequested, [=](int index) {
-        tabBar->removeTab(index);  // Eliminar la pestaña solicitada
-        if (tabBar->count() == 0) {
-            codeEditor->hide();  // Si no quedan pestañas, ocultar el CodeEditor
+connect(tabBar, &QTabBar::tabCloseRequested, [=](int index) {
+    QString filePath = tabBar->tabData(index).toString();
+    
+    tabBar->removeTab(index);
+
+    if (tabBar->count() == 0) {
+        codeEditor->hide();
+    }
+
+    // Eliminar el archivo cerrado de recentFiles
+    QVariantList recentFiles = settingsManager->getValue("recentFiles").toList();
+    for (int i = recentFiles.size() - 1; i >= 0; --i) {
+        if (recentFiles[i].toString() == filePath) {
+            recentFiles.removeAt(i);  // Eliminar el archivo de la lista
         }
-    });
+    }
+
+    // Guardar el recentFiles actualizado en settings
+    settingsManager->setValue("recentFiles", recentFiles);
+});
+
+
 
     tabBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);  // Asegura que solo expanda en horizontal
     contentLayout->addWidget(tabBar, 0, Qt::AlignTop);
@@ -287,7 +295,7 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
     // Conectar las señales de clic de los íconos con los métodos de acción
     QShortcut *openFileShortcut = new QShortcut(QKeySequence("Ctrl+O"), this);
     connect(openFileShortcut, &QShortcut::activated, this, &ApkStudioScreen::openFile);
-
+    connect(fileExplorer, &FileExplorer::fileOpened, this, &ApkStudioScreen::onFileOpened);
     connect(toolBar, &ToolWindowBar::goToHomeIconClicked, this, &ApkStudioScreen::toggleGoToHome);
     connect(toolBar, &ToolWindowBar::fileIconClicked, this, &ApkStudioScreen::toggleFileExplorer);
     connect(toolBar, &ToolWindowBar::gitIconClicked, this, &ApkStudioScreen::toggleGit);
@@ -300,6 +308,34 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
 // Método para manejar la visibilidad del FileExplorer
 void ApkStudioScreen::toggleGoToHome() {
     emit goToHome();
+}
+
+
+void ApkStudioScreen::onFileOpened(const QString &filePath) {
+    // Verificar si ya existe una pestaña con este archivo
+    for (int i = 0; i < tabBar->count(); ++i) {
+        if (tabBar->tabData(i).toString() == filePath) {
+            tabBar->setCurrentIndex(i);  // Si ya está abierto, selecciona la pestaña
+            return;
+        }
+    }
+
+    // Si el archivo no está abierto, crea una nueva pestaña
+    QFileInfo fileInfo(filePath);
+    int tabIndex = tabBar->addTab(fileInfo.fileName());
+    tabBar->setTabData(tabIndex, filePath);
+    tabBar->setCurrentIndex(tabIndex);
+
+    // Cargar el archivo en el editor de código
+    codeEditor->loadFile(filePath);
+    codeEditor->show();
+
+    // Actualizar recentFiles sin duplicados
+    QVariantList recentFiles = settingsManager->getValue("recentFiles").toList();
+    if (!recentFiles.contains(filePath)) {
+        recentFiles.append(filePath);
+        settingsManager->setValue("recentFiles", recentFiles);
+    }
 }
 
 void ApkStudioScreen::toggleFileExplorer() {

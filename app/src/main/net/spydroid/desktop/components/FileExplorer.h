@@ -40,7 +40,8 @@ private:
 
     void setupContextMenu();
     void setupActions();
-
+signals:
+    void fileOpened(const QString &filePath);  // Señal que emitimos cuando se selecciona un archivo
 private slots:
     void createFile();
     void renameFile();

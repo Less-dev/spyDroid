@@ -32,6 +32,7 @@
 #include "../components/FileExplorer.h"
 #include "../local/SettingsManager.h"
 #include <QMenuBar>
+#include <QTabBar>
 
 
 class ClickableLabel : public QLabel {
@@ -97,6 +98,7 @@ private slots:
     void newFile();
     void openFile();
     void saveFile();
+    void onFileOpened(const QString &filePath);
 
 private:
     QVBoxLayout* layout;
@@ -113,6 +115,7 @@ private:
     QString pathProject;
     SettingsManager* settingsManager;
     QList<QVariant> recentFiles;
+    QTabBar* tabBar;
 };
 
 #endif // APK_STUDIO_SCREEN_H
