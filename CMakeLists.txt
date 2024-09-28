@@ -15,6 +15,9 @@ set(SOURCE_DIR app/src/main/net/spydroid/desktop)
 set(INCLUDE_DIR ${SOURCE_DIR}/presentation)
 include_directories(/usr/include/qtermwidget5)
 
+# Include the resources subdirectory
+add_subdirectory(resources)
+
 # Define header files
 set(HEADERS
     ${INCLUDE_DIR}/HomeScreen.h
@@ -76,23 +79,20 @@ add_executable(spydroid ${SOURCES})
 
 # Add MOC sources (Qt5 version)
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS}) # Cambiado de qt6_wrap_cpp a qt5_wrap_cpp
-target_sources(spydroid PRIVATE ${MOC_SOURCES})
+target_sources(spydroid PRIVATE ${MOC_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/resources/qrc_resources.cpp)
 
-# Add resources (Qt5 version)
-qt5_add_resources(RESOURCES app/src/main/net/spydroid/desktop/resources.qrc) # Cambiado de qt6_add_resources a qt5_add_resources
-target_sources(spydroid PRIVATE ${RESOURCES})
-
-# Link libraries
+# Link the resources library created in the subdirectory 'resources'
 target_link_libraries(spydroid
+    resources        # Link with the static resources library from 'resources/CMakeLists.txt'
     ${GETTEXT_LIBRARIES}
     ${CURL_LIBRARIES}
     ${QTERM_LIBRARY}
     jsoncpp_lib
-    Qt5::Widgets # Cambiado de Qt6::Widgets a Qt5::Widgets
+    Qt5::Widgets     # Cambiado de Qt6::Widgets a Qt5::Widgets
 )
 
 # Include directories
 target_include_directories(spydroid PRIVATE ${INCLUDE_DIR})
 
 # Install targets
-install(TARGETS spydroid DESTINATION ${CMAKE_INSTALL_FULL_BINDIR} )
+install(TARGETS spydroid DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})

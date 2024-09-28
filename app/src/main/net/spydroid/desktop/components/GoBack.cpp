@@ -30,7 +30,7 @@ GoBackButton::GoBackButton(QWidget* parent, const QColor& iconColor)
     button = new QPushButton(this);
 
     // Asignar el ícono al botón desde los recursos
-    QIcon icon = createRecoloredIcon(":/images/goBack.png", iconColor);
+    QIcon icon = createRecoloredIcon(":/icons/goBack.png", iconColor);
     button->setIcon(icon);
 
     // Ajustar el tamaño del ícono y el botón
@@ -68,7 +68,7 @@ void GoBackButton::setOnClick(const std::function<void()>& onClick)
 void GoBackButton::recolorIcon(const QColor& newColor)
 {
     currentColor = newColor;
-    QIcon icon = createRecoloredIcon(":/images/goBack.png", newColor);
+    QIcon icon = createRecoloredIcon(":/icons/goBack.png", newColor);
     button->setIcon(icon);
 }
 

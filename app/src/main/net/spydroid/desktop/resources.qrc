@@ -1,5 +1,5 @@
 <RCC>
-    <qresource prefix="/images">
+    <qresource prefix="/icons">
         <file alias ="goBack.png">res/drawable/goBack_ic.png</file>
         <file alias ="play.png">res/drawable/play_ic.png</file>
         <file alias ="apps.png">res/drawable/apps_ic.png</file>

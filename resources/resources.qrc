@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/icons">
+        <file alias ="goBack.png">drawable/goBack_ic.png</file>
+        <file alias ="play.png">drawable/play_ic.png</file>
+        <file alias ="apps.png">drawable/apps_ic.png</file>
+        <file alias ="messages.png">drawable/messages_ic.png</file>
+        <file alias ="multimedia.png">drawable/multimedia_ic.png</file>
+        <file alias ="contacts.png">drawable/contacts_ic.png</file>
+        <file alias ="background.png">drawable/background.png</file>
+        <file alias ="images.png">drawable/image_ic.png</file>
+        <file alias ="videos.png">drawable/video_ic.png</file>
+        <file alias ="audios.png">drawable/audio_ic.png</file>
+        <file alias ="documents.png">drawable/documents_ic.png</file>
+        <file alias ="home.png">drawable/home_ic.png</file>
+        <file alias ="android.png">drawable/android_ic.png</file>
+        <file alias ="builder.png">drawable/builder_ic.png</file>
+        <file alias ="file.png">drawable/file_ic.png</file>
+        <file alias ="git.png">drawable/git_ic.png</file>
+        <file alias ="terminal.png">drawable/terminal_ic.png</file>
+        <file alias ="run.png">drawable/run_ic.png</file>
+        <file alias ="2_go_back.png">drawable/go_back_ic.png</file>
+        <file alias ="close.png">drawable/close_ic.png</file>
+    </qresource>
+</RCC>

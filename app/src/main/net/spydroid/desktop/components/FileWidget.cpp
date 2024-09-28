@@ -26,7 +26,7 @@ FileWidget::FileWidget(const QString& filePath, QWidget* parent)
     // Botón con el ícono de cerrar
     closeButton = new QPushButton(this);
     closeButton->setFixedSize(25, 25);
-    closeButton->setIcon(QIcon(":/images/close.png"));
+    closeButton->setIcon(QIcon(":/icons/close.png"));
     closeButton->setIconSize(QSize(25, 25));
     closeButton->setStyleSheet("background-color: transparent; border: none;");
     layout->addWidget(closeButton);

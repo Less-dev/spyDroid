@@ -25,7 +25,7 @@
 #include <QDebug>
 #include <fstream>
 #include <unistd.h> 
-#include "res/bin/vnc_viewer.h"
+#include "../../../../../../include/vnc_viewer.h"
 #include "presentation/HomeScreen.h"
 #include "presentation/DashBoardScreen.h"
 #include "presentation/ApkStudioScreen.h"

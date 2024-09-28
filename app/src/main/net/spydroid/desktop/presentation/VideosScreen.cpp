@@ -61,7 +61,7 @@ void VideosScreen::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
     // Dibujar la imagen de fondo centrada (sin cambios)
-    QPixmap background(":/images/background.png");
+    QPixmap background(":/icons/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);

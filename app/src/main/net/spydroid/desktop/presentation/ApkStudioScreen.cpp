@@ -49,7 +49,7 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
 
 
     ClickableLabel *goToHomeIcon = new ClickableLabel(this);
-    QPixmap pixmapBack(":images/2_go_back.png");
+    QPixmap pixmapBack(":icons/2_go_back.png");
     goToHomeIcon->setPixmap(pixmapBack);
     goToHomeIcon->setScaledContents(true);
     goToHomeIcon->setFixedSize(30, 30);
@@ -57,7 +57,7 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
 
     // Ícono de archivo (file.png)
     ClickableLabel *fileIcon = new ClickableLabel(this);
-    QPixmap pixmapFile(":images/file.png");
+    QPixmap pixmapFile(":icons/file.png");
     fileIcon->setPixmap(pixmapFile);
     fileIcon->setScaledContents(true);
     fileIcon->setFixedSize(30, 30);
@@ -65,7 +65,7 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
 
     // Ícono de Git (git.png)
     ClickableLabel *gitIcon = new ClickableLabel(this);
-    QPixmap pixmapGit(":images/git.png");
+    QPixmap pixmapGit(":icons/git.png");
     gitIcon->setPixmap(pixmapGit);
     gitIcon->setScaledContents(true);
     gitIcon->setFixedSize(30, 30);
@@ -75,7 +75,7 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
 
     // Ícono de terminal (terminal.png)
     ClickableLabel *terminalIcon = new ClickableLabel(this);
-    QPixmap pixmap1(":images/terminal.png");
+    QPixmap pixmap1(":icons/terminal.png");
     terminalIcon->setPixmap(pixmap1);
     terminalIcon->setScaledContents(true);
     terminalIcon->setFixedSize(30, 30);
@@ -83,7 +83,7 @@ ToolWindowBar::ToolWindowBar(QWidget *parent) : QWidget(parent) {
 
     // Ícono de play (play.png)
     ClickableLabel *playIcon = new ClickableLabel(this);
-    QPixmap pixmap2(":images/run.png");
+    QPixmap pixmap2(":icons/run.png");
     playIcon->setPixmap(pixmap2);
     playIcon->setScaledContents(true);
     playIcon->setFixedSize(30, 30);
@@ -220,7 +220,7 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
         "   background: #444444;"             // Fondo diferente al pasar el mouse
         "}"
         "QTabBar::close-button {"
-        "   image: url(:/images/close.png);"         // Imagen personalizada para el botón de cierre
+        "   image: url(:/icons/close.png);"         // Imagen personalizada para el botón de cierre
         "   subcontrol-position: right;"      // Alineación del botón de cierre a la derecha
         "   subcontrol-origin: padding;"      // Asegura que el botón esté dentro del área de la pestaña
         "   margin-right: 10px;"               // Espacio final dentro de la pestaña
@@ -422,7 +422,7 @@ void ApkStudioScreen::paintEvent(QPaintEvent *event) {
     int topPadding = menuBar->isVisible() ? 15 : 0;
 
     // Dibujar el fondo de la ventana
-    QPixmap background(":/images/background.png");
+    QPixmap background(":/icons/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2,
                      (height() - scaledSize.height()) / 2 + topPadding,  // Ajuste vertical basado en el relleno superior

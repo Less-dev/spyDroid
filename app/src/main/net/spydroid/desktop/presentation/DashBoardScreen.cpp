@@ -123,7 +123,7 @@ void DashBoardScreen::showDevicesTable(
 
         // Messages
         QPushButton* messagesButton = new QPushButton();
-        QIcon messagesIcon(":/images/messages.png");  
+        QIcon messagesIcon(":/icons/messages.png");  
         
         messagesButton->setIcon(messagesIcon);
         messagesButton->setIconSize(QSize(25, 25));  
@@ -137,7 +137,7 @@ void DashBoardScreen::showDevicesTable(
 
         // Multimedia
         QPushButton* multimediaButton = new QPushButton();
-        QIcon multimediaIcon(":/images/multimedia.png");  
+        QIcon multimediaIcon(":/icons/multimedia.png");  
 
         multimediaButton->setIcon(multimediaIcon);
         multimediaButton->setIconSize(QSize(30, 30));  
@@ -156,7 +156,7 @@ void DashBoardScreen::showDevicesTable(
 
         // Apps
         QPushButton* appsButton = new QPushButton();
-        QIcon appsIcon(":/images/apps.png");  
+        QIcon appsIcon(":/icons/apps.png");  
 
         appsButton->setIcon(appsIcon);
         appsButton->setIconSize(QSize(25, 25));  
@@ -170,7 +170,7 @@ void DashBoardScreen::showDevicesTable(
 
         // Contacts
         QPushButton* contactsButton = new QPushButton();
-        QIcon contactsIcon(":/images/contacts.png");  
+        QIcon contactsIcon(":/icons/contacts.png");  
         
         contactsButton->setIcon(contactsIcon);
         contactsButton->setIconSize(QSize(25, 25));  
@@ -186,7 +186,7 @@ void DashBoardScreen::showDevicesTable(
         if (!infoRepository->getInfo(device.alias).empty()) {
 
             QPushButton* vncButton = new QPushButton();
-            QIcon vncIcon(":/images/play.png");  
+            QIcon vncIcon(":/icons/play.png");  
             
             vncButton->setIcon(vncIcon);
             vncButton->setIconSize(QSize(20, 20));  
@@ -480,7 +480,7 @@ void DashBoardScreen::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
 
     // Dibujar la imagen de fondo centrada (sin cambios)
-    QPixmap background(":/images/background.png");
+    QPixmap background(":/icons/background.png");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
