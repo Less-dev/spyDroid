@@ -1,7 +1,19 @@
 #include "Terminal.h"
+#include <QFrame>
 
 Terminal::Terminal(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
+
+    // Eliminar el espaciado entre los widgets
+    layout->setSpacing(0);
+
+    // Eliminar márgenes del layout
+    layout->setContentsMargins(0, 0, 0, 0);
+
+    // Crear un QFrame para el borde superior
+    QFrame *topBorder = new QFrame(this);
+    topBorder->setFixedHeight(2);  // Grosor del borde de 2 px
+    topBorder->setStyleSheet("background-color: #f0f0f5;");  // Color blanco pastel
 
     // Inicializar el widget de terminal
     terminal = new QTermWidget(this);
@@ -11,21 +23,22 @@ Terminal::Terminal(QWidget *parent) : QWidget(parent) {
 
     // Configurar fuente monoespaciada
     QFont monospaceFont("Monospace", 12);
-    
+
     // Verificar si la fuente monoespaciada está disponible
     if (!QFontDatabase::systemFont(QFontDatabase::FixedFont).fixedPitch()) {
         monospaceFont = QFontDatabase::systemFont(QFontDatabase::FixedFont);
     }
-    
-    terminal->setTerminalFont(monospaceFont);
 
+    terminal->setTerminalFont(monospaceFont);
     terminal->setScrollBarPosition(QTermWidget::ScrollBarRight);
 
-    layout->addWidget(terminal);
+    // Agregar el borde y luego el terminal al layout sin espacio entre ellos
+    layout->addWidget(topBorder);  // Agregar el borde superior
+    layout->addWidget(terminal);   // Agregar el terminal debajo del borde
 }
-
 
 void Terminal::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
     terminal->update();
 }
+
