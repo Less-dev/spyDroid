@@ -58,8 +58,8 @@ signals:
     void goToHomeIconClicked();
     void fileIconClicked();
     void gitIconClicked();
-    void terminalIconClicked();  // Señal para la interacción con el icono de terminal
-    void playIconClicked();      // Señal para la interacción con el icono de play
+    void terminalIconClicked();
+    void playIconClicked();
 
 private slots:
     void handleGoToHomeIconClick();
