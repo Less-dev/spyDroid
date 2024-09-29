@@ -182,6 +182,8 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
     fileExplorer = new FileExplorer();
     fileExplorer->setRootPath(pathProject);
     fileExplorer->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);  // Fijo en tamaño vertical
+    fileExplorer->setMinimumWidth(220);
+    fileExplorer->setMaximumWidth(650);  // Ancho máximo de 600 px
     fileExplorer->setVisible(false);   // Inicialmente oculto
     sidebarLayout->addWidget(fileExplorer);  // Añadir el FileExplorer al layout contenedor
 

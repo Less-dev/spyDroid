@@ -10,6 +10,10 @@
 #include <QAction>
 #include <QClipboard>
 #include <QModelIndex>
+#include <QMouseEvent>
+#include <QObject>
+#include <QCursor>
+
 
 class FileExplorer : public QWidget
 {
@@ -21,6 +25,12 @@ public:
     void setRootPath(const QString &newPath);
     void onFileDoubleClicked(const QModelIndex &index);
     void addToRecentFiles(const QString &filePath);
+
+protected:
+    void enterEvent(QEvent *event) override;
+    void leaveEvent(QEvent *event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
 
 private:
     QTreeView *treeView;

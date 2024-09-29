@@ -25,11 +25,12 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
     // Crear el QTreeView y asignar el modelo
     treeView = new QTreeView(this);
     treeView->setModel(fileModel);
+    treeView->setMouseTracking(true);
+    treeView->installEventFilter(this);
 
     // Establecer el índice raíz en el QTreeView, mostrando el directorio especificado
     QModelIndex rootIndex = fileModel->index(validPath);
     treeView->setRootIndex(rootIndex);
-    treeView->setMaximumWidth(215);
 
     // Ocultar todas las columnas excepto la de nombre de archivo
     treeView->header()->hide();
@@ -69,7 +70,6 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
         "    background-color: black; "
         "} "
     );
-    titleLabel->setMaximumWidth(215);
     titleLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 
     // Crear el contenedor principal
@@ -102,6 +102,70 @@ FileExplorer::FileExplorer(const QString &directoryPath, QWidget *parent) : QWid
 
     // Conectar el evento de doble clic en un archivo
     connect(treeView, &QTreeView::doubleClicked, this, &FileExplorer::onFileDoubleClicked);
+}
+
+
+bool FileExplorer::eventFilter(QObject *watched, QEvent *event)
+{
+    if (watched == treeView && event->type() == QEvent::MouseMove) {
+        QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(event);
+        QPoint cursorPosition = mouseEvent->pos();
+
+        // Obtener el índice del elemento en la posición del cursor
+        QModelIndex index = treeView->indexAt(cursorPosition);
+
+        // Obtener el ancho del QTreeView y un margen derecho de 10 píxeles
+        int componentWidth = treeView->width();
+        int marginRight = 10;
+
+        // Verificar si el cursor está dentro de los últimos 10 píxeles del borde derecho
+        bool isNearRightEdge = cursorPosition.x() >= componentWidth - marginRight;
+
+        // Si el cursor está sobre un elemento válido (archivo/carpeta), cambiar a cursor de mano
+        if (index.isValid()) {
+            treeView->setCursor(Qt::PointingHandCursor);
+        }
+        // Si el cursor está en el borde derecho, cambiar a cursor de redimensionar
+        else if (isNearRightEdge) {
+            treeView->setCursor(Qt::SizeHorCursor);
+
+            // Permitir redimensionar si el botón del mouse está presionado
+            if (mouseEvent->buttons() & Qt::LeftButton) {
+                int newWidth = mapToParent(mouseEvent->pos()).x();
+                // Aplicar los límites de tamaño
+                if (newWidth >= 220 && newWidth <= 650) {
+                    setFixedWidth(newWidth);
+                }
+            }
+        }
+        // Si el cursor no está en el borde derecho ni sobre un elemento válido, usar el cursor predeterminado
+        else {
+            treeView->unsetCursor();  // Quitar el SizeHorCursor y usar el cursor predeterminado
+        }
+        return true;  // Interceptar el evento
+    }
+    return QWidget::eventFilter(watched, event);  // Continuar con el procesamiento predeterminado
+}
+
+
+
+void FileExplorer::enterEvent(QEvent *event)
+{
+    QWidget::enterEvent(event);
+    setCursor(Qt::ArrowCursor);  // Restablece el cursor cuando se entra al componente
+}
+
+void FileExplorer::leaveEvent(QEvent *event)
+{
+    QWidget::leaveEvent(event);
+    unsetCursor();  // Restablece el cursor cuando se sale del componente
+}
+
+void FileExplorer::mouseMoveEvent(QMouseEvent *event)
+{
+    // Llamar al eventFilter para gestionar los eventos de movimiento de ratón
+    eventFilter(treeView, event);
+    QWidget::mouseMoveEvent(event);  // Procesar eventos de movimiento adicionales
 }
 
 void FileExplorer::onFileDoubleClicked(const QModelIndex &index) {
