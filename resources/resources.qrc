@@ -1,4 +1,9 @@
 <RCC>
+    
+    <qresource prefix="">
+        <file alias ="background">drawable/background.png</file>
+    </qresource>
+
     <qresource prefix="/icons">
         <file alias ="goBack.png">drawable/goBack_ic.png</file>
         <file alias ="play.png">drawable/play_ic.png</file>
@@ -6,7 +11,6 @@
         <file alias ="messages.png">drawable/messages_ic.png</file>
         <file alias ="multimedia.png">drawable/multimedia_ic.png</file>
         <file alias ="contacts.png">drawable/contacts_ic.png</file>
-        <file alias ="background.png">drawable/background.png</file>
         <file alias ="images.png">drawable/image_ic.png</file>
         <file alias ="videos.png">drawable/video_ic.png</file>
         <file alias ="audios.png">drawable/audio_ic.png</file>
