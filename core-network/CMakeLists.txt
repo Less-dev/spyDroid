@@ -1,7 +1,20 @@
-# Definir el directorio de los archivos fuente
+#Copyright (C) 2024 Daniel Gómez (Less)
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 set(SOURCE_DIR src/spydroid/network)
 
-# Archivos de encabezado y fuente
 set(HEADERS
     ${SOURCE_DIR}/api/ApiService.h
     ${SOURCE_DIR}/daos/DevicesDao.h
@@ -22,12 +35,9 @@ set(SOURCES
     ${SOURCE_DIR}/data/SmsDaoImp.cpp
 )
 
-# Definir el target como una biblioteca
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 add_library(core-network STATIC ${SOURCES} ${HEADERS} ${MOC_SOURCES})
 
-# Incluir los directorios necesarios
 target_include_directories(core-network PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Vincular las bibliotecas jsoncpp y CURL
 target_link_libraries(core-network JsonCpp::JsonCpp CURL::libcurl)

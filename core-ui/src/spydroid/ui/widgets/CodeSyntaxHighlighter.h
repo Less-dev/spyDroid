@@ -14,15 +14,15 @@ public:
         : QSyntaxHighlighter(parent) {
 
         // Cargar fuentes JetBrains Mono
-        QFontDatabase::addApplicationFont("../assets/fonts/fonts/ttf/JetBrainsMono-Italic.ttf");
-        QFontDatabase::addApplicationFont("../assets/fonts/fonts/ttf/JetBrainsMono-Regular.ttf");
-        QFontDatabase::addApplicationFont("../assets/fonts/fonts/ttf/JetBrainsMono-Bold.ttf");
+        QFontDatabase::addApplicationFont(":fonts/JetBrainsMono-Italic");
+        QFontDatabase::addApplicationFont(":fonts/JetBrainsMono-Regular");
+        QFontDatabase::addApplicationFont(":fonts/JetBrainsMono-Bold");
 
         // Configurar la fuente base para el editor
-        QFont baseFont("JetBrains Mono", 14);
+        QFont baseFont("JetBrains Mono", 12.5);
 
         // 1. Reglas para palabras clave (color cian)
-        QFont boldFont("JetBrains Mono", 14, QFont::Bold);
+        QFont boldFont("JetBrains Mono", 12.5, QFont::Bold);
         addHighlightingRule({
             "class", "fun", "val", "var", "if", "else", "for", "while", "when", "do", "return",
             "null", "is", "in", "as", "break", "continue", "package", "import", "throw", "try",
@@ -31,12 +31,12 @@ public:
         }, QColor("#C792EA"), boldFont);
 
         // 2. Reglas para tipos (color amarillo)
-        QFont typeFont("JetBrains Mono", 14, QFont::Bold);
+        QFont typeFont("JetBrains Mono", 12.5, QFont::Bold);
         addHighlightingRule({"Int", "String", "Boolean", "Float", "Double", "Unit", "Long", "Short", "Byte", "Char"},
                             QColor("#FFCB6B"), typeFont);
 
         // 3. Reglas para literales booleanos (color rosa)
-        QFont literalFont("JetBrains Mono", 14);
+        QFont literalFont("JetBrains Mono", 12.5);
         addHighlightingRule({"true", "false"}, QColor("#F07178"), literalFont);
 
         // 4. Reglas para números (color naranja)
@@ -66,7 +66,7 @@ public:
 
         // 8. Reglas para comentarios de una línea (color gris)
         QTextCharFormat singleLineCommentFormat;
-        singleLineCommentFormat.setFont(QFont("../assets/fonts/fonts/JetBrainsMono-Italic.ttf", 14));
+        singleLineCommentFormat.setFont(QFont(":fonts/JetBrainsMono-Italic", 12.5));
         singleLineCommentFormat.setFontItalic(true);  // Aplicar cursiva
         singleLineCommentFormat.setForeground(QColor(169, 169, 169));  // Gris claro
 
@@ -77,7 +77,7 @@ public:
         commentStartPattern = QRegularExpression("/\\*");
         commentEndPattern = QRegularExpression("\\*/");
 
-        QFont visibilityFont("JetBrains Mono", 14, QFont::ExtraBold);
+        QFont visibilityFont("JetBrains Mono", 12.5, QFont::ExtraBold);
         addHighlightingRule({"protected", "private", "public", "internal"}, QColor("#82AAFF"), visibilityFont);
     }
 

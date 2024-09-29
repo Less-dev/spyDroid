@@ -21,9 +21,9 @@ CodeEditor::CodeEditor(QWidget *parent)
     p.setColor(QPalette::Text, Qt::white);  // Texto en blanco
     this->setPalette(p);
 
-    QFontDatabase::addApplicationFont("../assets/fonts/fonts/ttf/JetBrainsMono-Italic.ttf");
-    QFontDatabase::addApplicationFont("../assets/fonts/fonts/ttf/JetBrainsMono-Regular.ttf");
-    QFontDatabase::addApplicationFont("../assets/fonts/fonts/ttf/JetBrainsMono-Bold.ttf");
+    QFontDatabase::addApplicationFont(":/fonts/JetBrainsMono-Italic");
+    QFontDatabase::addApplicationFont(":/fonts/JetBrainsMono-Regular");
+    QFontDatabase::addApplicationFont(":/fonts/JetBrainsMono-Bold");
 
     CodeSyntaxHighlighter* syntaxHighlighter = new CodeSyntaxHighlighter(this->document());
 

@@ -1,4 +1,18 @@
-# Definir los archivos de encabezado y fuente para core-ui
+#Copyright (C) 2024 Daniel Gómez (Less)
+#
+#This program is free software: you can redistribute it and/or modify
+#it under the terms of the GNU General Public License as published by
+#the Free Software Foundation, either version 3 of the License, or
+#any later version.
+#
+#This program is distributed in the hope that it will be useful,
+#but WITHOUT ANY WARRANTY; without even the implied warranty of
+#MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+#GNU General Public License for more details.
+#
+#You should have received a copy of the GNU General Public License
+#along with this program. If not, see <https://www.gnu.org/licenses/>.
+
 set(HEADERS
     src/spydroid/ui/presentation/HomeScreen.h
     src/spydroid/ui/presentation/DashBoardScreen.h
@@ -39,13 +53,10 @@ set(SOURCES
     src/spydroid/ui/widgets/FileWidget.cpp
 )
 
-# Definir el objetivo core-ui como una biblioteca
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 add_library(core-ui STATIC ${SOURCES} ${HEADERS} ${MOC_SOURCES})
 
 
-# Especificar los directorios de inclusión para core-ui
 target_include_directories(core-ui PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Vincular las bibliotecas necesarias
 target_link_libraries(core-ui Qt5::Widgets)

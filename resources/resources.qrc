@@ -25,4 +25,39 @@
         <file alias ="2_go_back.png">drawable/go_back_ic.png</file>
         <file alias ="close.png">drawable/close_ic.png</file>
     </qresource>
+
+    <qresource prefix="/fonts">
+        <file alias="JetBrainsMono-Bold">fonts/JetBrainsMono-Bold.ttf</file>
+        <file alias="JetBrainsMono-BoldItalic">fonts/JetBrainsMono-BoldItalic.ttf</file>
+        <file alias="JetBrainsMono-ExtraBold">fonts/JetBrainsMono-ExtraBold.ttf</file>
+        <file alias="JetBrainsMono-ExtraBoldItalic">fonts/JetBrainsMono-ExtraBoldItalic.ttf</file>
+        <file alias="JetBrainsMono-ExtraLight">fonts/JetBrainsMono-ExtraLight.ttf</file>
+        <file alias="JetBrainsMono-ExtraLightItalic">fonts/JetBrainsMono-ExtraLightItalic.ttf</file>
+        <file alias="JetBrainsMono-Italic">fonts/JetBrainsMono-Italic.ttf</file>
+        <file alias="JetBrainsMono-Light">fonts/JetBrainsMono-Light.ttf</file>
+        <file alias="JetBrainsMono-LightItalic">fonts/JetBrainsMono-LightItalic.ttf</file>
+        <file alias="JetBrainsMono-Medium">fonts/JetBrainsMono-Medium.ttf</file>
+        <file alias="JetBrainsMono-MediumItalic">fonts/JetBrainsMono-MediumItalic.ttf</file>
+        <file alias="JetBrainsMono-Regular">fonts/JetBrainsMono-Regular.ttf</file>
+        <file alias="JetBrainsMono-SemiBold">fonts/JetBrainsMono-SemiBold.ttf</file>
+        <file alias="JetBrainsMono-SemiBoldItalic">fonts/JetBrainsMono-SemiBoldItalic.ttf</file>
+        <file alias="JetBrainsMono-Thin">fonts/JetBrainsMono-Thin.ttf</file>
+        <file alias="JetBrainsMono-ThinItalic">fonts/JetBrainsMono-ThinItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-Bold">fonts/JetBrainsMonoNL-Bold.ttf</file>
+        <file alias="JetBrainsMonoNL-BoldItalic">fonts/JetBrainsMonoNL-BoldItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-ExtraBold">fonts/JetBrainsMonoNL-ExtraBold.ttf</file>
+        <file alias="JetBrainsMonoNL-ExtraBoldItalic">fonts/JetBrainsMonoNL-ExtraBoldItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-ExtraLight">fonts/JetBrainsMonoNL-ExtraLight.ttf</file>
+        <file alias="JetBrainsMonoNL-ExtraLightItalic">fonts/JetBrainsMonoNL-ExtraLightItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-Italic">fonts/JetBrainsMonoNL-Italic.ttf</file>
+        <file alias="JetBrainsMonoNL-Light">fonts/JetBrainsMonoNL-Light.ttf</file>
+        <file alias="JetBrainsMonoNL-LightItalic">fonts/JetBrainsMonoNL-LightItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-Medium">fonts/JetBrainsMonoNL-Medium.ttf</file>
+        <file alias="JetBrainsMonoNL-MediumItalic">fonts/JetBrainsMonoNL-MediumItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-Regular">fonts/JetBrainsMonoNL-Regular.ttf</file>
+        <file alias="JetBrainsMonoNL-SemiBold">fonts/JetBrainsMonoNL-SemiBold.ttf</file>
+        <file alias="JetBrainsMonoNL-SemiBoldItalic">fonts/JetBrainsMonoNL-SemiBoldItalic.ttf</file>
+        <file alias="JetBrainsMonoNL-Thin">fonts/JetBrainsMonoNL-Thin.ttf</file>
+        <file alias="JetBrainsMonoNL-ThinItalic">fonts/JetBrainsMonoNL-ThinItalic.ttf</file>
+    </qresource>
 </RCC>
