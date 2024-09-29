@@ -15,24 +15,22 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "SmsScreen.h"
-#include "../widgets/GoBack.h"
-#include "../widgets/CardSms.h"
 #include "QString"
 #include "iostream"
 #include "QScrollArea"
 #include <QPainter>
 #include <QDebug>
 #include <QTimer>
-
+#include "SmsScreen.h"
+#include "../widgets/GoBack.h"
+#include "../widgets/CardSms.h"
 
 SmsScreen::SmsScreen(QWidget *parent)
     : QWidget(parent),
-      scrollArea(nullptr)  // Inicializamos el puntero a nullptr
+      scrollArea(nullptr)
 {
     this->setMinimumSize(600, 500);
 
-    // Configuración de la paleta de colores de fondo
     QPalette pal = this->palette();
     pal.setColor(QPalette::Window, QColor("#000000"));
     this->setAutoFillBackground(true);
@@ -42,10 +40,9 @@ SmsScreen::SmsScreen(QWidget *parent)
     layout->setAlignment(Qt::AlignTop);
     layout->setContentsMargins(20, 20, 20, 20);
 
-    // Botón de regresar al Dashboard
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
-        emit goToDashBoard();  // Emitir la señal cuando se hace clic
+        emit goToDashBoard();
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
     setLayout(layout);
@@ -60,11 +57,10 @@ void SmsScreen::setAlias(const QString& alias)
 
 void SmsScreen::loadSms()
 {
-    // Verificar si ya existe un scrollArea en el layout
     if (scrollArea != nullptr) {
-        layout->removeWidget(scrollArea);  // Lo quitamos del layout
-        delete scrollArea;  // Eliminamos la instancia anterior de scrollArea
-        scrollArea = nullptr;  // Restablecemos el puntero
+        layout->removeWidget(scrollArea);
+        delete scrollArea;  
+        scrollArea = nullptr;
     }
 
     std::vector<SmsHandler> smsList = smsRepository->getSms(deviceAlias.toStdString());
@@ -85,15 +81,13 @@ void SmsScreen::loadSms()
 
     cardLayout->setContentsMargins(0, 30, 0, 30);
 
-    scrollArea = new QScrollArea;  // Creamos una nueva instancia de scrollArea
+    scrollArea = new QScrollArea;
     scrollArea->setWidgetResizable(true);
     scrollArea->setWidget(cardContainer);
     scrollArea->setStyleSheet("background: transparent;");
 
-    // Añadir el área de scroll al layout principal
     layout->addWidget(scrollArea, Qt::AlignTop | Qt::AlignCenter);
 }
-
 
 
 void SmsScreen::paintEvent(QPaintEvent *event)
