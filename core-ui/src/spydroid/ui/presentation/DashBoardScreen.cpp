@@ -15,7 +15,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "DashBoardScreen.h"
 #include <iostream>
 #include <QTableWidget>
 #include <QHeaderView>
@@ -27,21 +26,17 @@
 #include <QPainter>
 #include <QLabel>
 #include <QBoxLayout>
-#include "../widgets/GoBack.h"
+#include "DashBoardScreen.h"
 
 class ElidedItemDelegate : public QStyledItemDelegate {
 public:
     explicit ElidedItemDelegate(QObject *parent = nullptr) : QStyledItemDelegate(parent) {}
 
     void paint(QPainter *painter, const QStyleOptionViewItem &option, const QModelIndex &index) const override {
-        // Get text from celd
         QString text = index.data(Qt::DisplayRole).toString();
-
         QString elidedText = option.fontMetrics.elidedText(text, Qt::ElideRight, option.rect.width());
-
         QStyleOptionViewItem elidedOption(option);
         elidedOption.text = elidedText;
-
         QStyledItemDelegate::paint(painter, elidedOption, index);
     }
 };
@@ -181,8 +176,8 @@ void DashBoardScreen::showDevicesTable(
             qDebug() << "Hola Mundo";
         });
 
-        // Vnc Server
 
+        // Vnc Server
         if (!infoRepository->getInfo(device.alias).empty()) {
 
             QPushButton* vncButton = new QPushButton();
@@ -191,7 +186,6 @@ void DashBoardScreen::showDevicesTable(
             vncButton->setIcon(vncIcon);
             vncButton->setIconSize(QSize(20, 20));  
             vncButton->setFlat(true);  
-            
 
             table->setCellWidget(row, 9, vncButton);  
 
@@ -256,23 +250,18 @@ void DashBoardScreen::showDevicesTable(
     table->setStyleSheet(
         "QTableWidget {"
         "    background: transparent;"
-        "    gridline-color: red;"  // Color de las líneas de la cuadrícula (incluyendo los bordes de las celdas)
-        "    border: 2px solid red;"  // Borde exterior de la tabla en rojo
+        "    gridline-color: red;"  
+        "    border: 2px solid red;"  
         "}"
-    
-        /* Fondo rojo y bordes rojos para encabezados de fila y columna */
         "QHeaderView::section {"
-        "    background-color: #390009;"  // Fondo rojo para encabezados
-        "    color: white;"  // Texto blanco en los encabezados
-        "    border: 1px solid red;"  // Bordes rojos en los encabezados
+        "    background-color: #390009;"
+        "    color: white;"  
+        "    border: 1px solid red;"  
         "}"
-    
-        /* Ajuste de color para los números de fila (encabezado vertical) */
         "QTableCornerButton::section {"
-        "    background-color: #390009;"  // Fondo rojo para el botón de esquina superior izquierda
-        "    border: 1px solid #390009;"  // Bordes rojos en la esquina
+        "    background-color: #390009;"  
+        "    border: 1px solid #390009;"
         "}"
-    
         "QScrollBar:vertical {"
         "    background: #390009;"
         "    width: 10px;"
@@ -333,38 +322,32 @@ void DashBoardScreen::searchDevice() {
 }
 
 void DashBoardScreen::showEvent(QShowEvent* event) {
-    QWidget::showEvent(event);  // Llama al evento base para el comportamiento normal
-    updateDeviceTable();        // Actualiza la tabla cada vez que se muestra la vista
+    QWidget::showEvent(event);  
+    updateDeviceTable();        
 }
 
 void DashBoardScreen::updateDeviceTable() {
-    std::string alias = "ALL";  // Alias por defecto para obtener todos los dispositivos
-    devices = devicesRepository->getDevice(alias);  // Llama a la API para obtener los dispositivos
+    std::string alias = "ALL";
+    devices = devicesRepository->getDevice(alias);  
 
-    // Limpiar el campo de texto cada vez que se actualiza la tabla
     textField->clear();
 
-    // Limpiar el layout antes de volver a agregar los widgets
     if (layout) {
         QLayoutItem* item;
         while ((item = layout->takeAt(0)) != nullptr) {
             if (item->widget()) {
-                item->widget()->hide();  // Ocultar el widget sin eliminarlo
+                item->widget()->hide();  // Hide item undelete
             }
-            delete item;  // Eliminar el layoutItem
+            delete item;  // delete layout item
         }
     }
 
-    // Si no hay dispositivos, muestra el mensaje centrado
     if (devices.empty()) {
-        // Ocultar widgets innecesarios
         if (table) {
-            table->hide();  // Ocultar la tabla si no hay dispositivos
+            table->hide();
         }
-        textField->hide();  // Ocultar el campo de texto
-        search->hide();     // Ocultar el botón de búsqueda
-
-        // Configurar el mensaje
+        textField->hide();  
+        search->hide();     
         label->setText("No se encontraron dispositivos");
         label->setAlignment(Qt::AlignCenter);
         label->setStyleSheet(
@@ -374,54 +357,46 @@ void DashBoardScreen::updateDeviceTable() {
             "    font-size: 30px; "
             "}"
         );
-        label->show();  // Mostrar el label centrado
+        label->show();
 
-        // Centrar el QLabel en el layout principal
         QVBoxLayout* centerLayout = new QVBoxLayout();
 
-        // Añadir expansores arriba y abajo del QLabel para centrarlo verticalmente
         QSpacerItem* topSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
         QSpacerItem* bottomSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        centerLayout->addItem(topSpacer);  // Añadir el espaciador superior
-        centerLayout->addWidget(label);    // Añadir el QLabel
-        centerLayout->addItem(bottomSpacer);  // Añadir el espaciador inferior
+        centerLayout->addItem(topSpacer);  
+        centerLayout->addWidget(label);    
+        centerLayout->addItem(bottomSpacer); 
 
-        layout->addLayout(centerLayout);  // Añadir el layout centrado al layout principal
+        layout->addLayout(centerLayout);
     } else {
-        // Si hay dispositivos, muestra los elementos y oculta el mensaje de error
-        label->hide();  // Ocultar el mensaje de error
-
-        // Mostrar campo de texto y botón de búsqueda
+        label->hide(); // Hide error message
         textField->show();
         search->show();
 
-        // Volver a agregar los widgets en el orden correcto
         QHBoxLayout* topLayout = new QHBoxLayout();
-        topLayout->addWidget(textField, 1, Qt::AlignRight);   // Campo de texto en la parte superior
-        topLayout->addWidget(search, 0, Qt::AlignRight);      // Botón de búsqueda en la parte superior
-        layout->addLayout(topLayout, Qt::AlignTop | Qt::AlignRight);      // Añadir el layout superior al layout principal
+        topLayout->addWidget(textField, 1, Qt::AlignRight);   
+        topLayout->addWidget(search, 0, Qt::AlignRight);      
+        layout->addLayout(topLayout, Qt::AlignTop | Qt::AlignRight);
 
         QSpacerItem* verticalSpacer = new QSpacerItem(20, 20, QSizePolicy::Minimum, QSizePolicy::Fixed);
-        layout->addItem(verticalSpacer);  // Añadir espaciador vertical entre el topLayout y la tabla
+        layout->addItem(verticalSpacer);
 
         if (table) {
-            table->show();  // Mostrar la tabla si hay dispositivos
-            layout->addWidget(table);  // Añadir la tabla debajo del campo de texto y el botón
+            table->show();  // Show table if exists devices
+            layout->addWidget(table);
         }
 
-        // Mostrar los datos en la tabla
         showDevicesTable(devices, layout, table);
     }
 
-    goBackButton->show();  // Garantiza que siempre esté visible
+    goBackButton->show();
 }
 
 
 DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullptr) {
     devicesRepository = new DevicesRepositoryImp();
     
-    // Configuración visual básica
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
     pal.setColor(QPalette::Window, QColor("#000000"));
@@ -431,74 +406,58 @@ DashBoardScreen::DashBoardScreen(QWidget *parent) : QWidget(parent), table(nullp
     layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 20, 20, 20);  
 
-    // Botón para regresar al menú principal
     goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
-        emit goToHome();  // Emitir señal para regresar a la pantalla principal
+        emit goToHome();
     });
+
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
-    // Crear campo de texto para búsqueda
     QHBoxLayout* topLayout = new QHBoxLayout();
     textField = new QLineEdit(this);
     textField->setPlaceholderText("Buscar dispositivo (por su alias)...");
     textField->setStyleSheet("QLineEdit { color: #ffffff; background-color: #000000; }");
     textField->setFixedWidth(270);
 
-    // Botón de búsqueda
     search = new QPushButton("Buscar", this);
     search->setFixedWidth(150);
 
-    // Conectar el botón de búsqueda
     connect(search, &QPushButton::clicked, this, &DashBoardScreen::searchDevice);
     connect(textField, &QLineEdit::returnPressed, this, &DashBoardScreen::searchDevice);
 
-    // Crear un spacer para empujar los componentes hacia la derecha
     QSpacerItem* spacer = new QSpacerItem(10, 10, QSizePolicy::Expanding, QSizePolicy::Minimum);
-    topLayout->addItem(spacer);         // Añadir el espaciador primero para empujar los siguientes widgets
-    topLayout->addWidget(textField, 1, Qt::AlignRight);    // Añadir el campo de texto
-    topLayout->addWidget(search, 1, Qt::AlignRight);       // Añadir el botón de búsqueda
+    topLayout->addItem(spacer);        
+    topLayout->addWidget(textField, 1, Qt::AlignRight);    
+    topLayout->addWidget(search, 1, Qt::AlignRight);
 
-    // Agregar el layout superior al layout principal
     layout->addLayout(topLayout, Qt::AlignTop | Qt::AlignRight);
 
-    // Label que muestra si no hay dispositivos
     label = new QLabel(this);
     label->setAlignment(Qt::AlignCenter);
     label->setStyleSheet("QLabel { color : #ff0000; font-weight: bold; font-size: 30px; }");
     layout->addWidget(label);
     
-    label->hide();  // Ocultamos el label inicialmente, lo mostramos solo si no hay dispositivos
+    label->hide();
 }
-
-
-
-
 
 void DashBoardScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
+    painter.setRenderHint(QPainter::Antialiasing);
 
-    // Dibujar la imagen de fondo centrada (sin cambios)
     QPixmap background(":background");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
-
-    // Establecer el color y grosor del borde rojo
-    QPen pen(QColor("#FF0000"));  // Color rojo para el borde
-    pen.setWidth(4);  // Grosor del borde
+    
+    QPen pen(QColor("#FF0000"));
+    pen.setWidth(4);
     painter.setPen(pen);
-
-    // Establecer un brush transparente para que solo se vea el borde
+    
     QBrush brush(Qt::NoBrush);
     painter.setBrush(brush);
-
-    // Dibujar un rectángulo redondeado con padding de 20px (para que no toque los bordes)
     int padding = 15;
-    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
 
-    // Llamar al método base para asegurar que el evento de pintura continúe normalmente
+    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20); 
     QWidget::paintEvent(event);
 }

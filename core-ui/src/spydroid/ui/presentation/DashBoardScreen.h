@@ -26,12 +26,12 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
+#include "../widgets/GoBack.h"
 #include "../../../../../core-data/src/spydroid/data/domain/DevicesRepository.h"
 #include "../../../../../core-data/src/spydroid/data/domain/InfoRepository.h"
 #include "../../../../../core-data/src/spydroid/data/domain/MultimediaRepository.h"
 #include "../../../../../core-data/src/spydroid/data/models/DevicesHandler.h"
 #include "../../../../../core-data/src/spydroid/data/models/InfoHandler.h"
-#include "../widgets/GoBack.h"
 
 class DashBoardScreen : public QWidget
 {
@@ -41,7 +41,7 @@ public:
     explicit DashBoardScreen(QWidget *parent = nullptr);
 
 private slots:
-    void searchDevice();  // Slot para manejar la búsqueda
+    void searchDevice();
     void handleVncButtonClick();
 
 signals:
