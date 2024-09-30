@@ -8,6 +8,7 @@
 #include <QMessageBox>
 #include <QFileDialog>
 #include <QTextStream>
+#include <QMimeDatabase>
 
 CodeEditor::CodeEditor(QWidget *parent)
     : QPlainTextEdit(parent), lineNumberArea(new LineNumberArea(this)) {
@@ -139,10 +140,42 @@ void CodeEditor::highlightCurrentLine() {
 
 
 void CodeEditor::loadFile(const QString &filePath) {
+    // Si la ruta es vacía, no intentar abrir el archivo
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    // Verificar si el archivo ya está abierto
+    if (filePath == currentFilePath) {
+        return;
+    }
+
+    // Detectar el tipo MIME del archivo
+    QMimeDatabase mimeDatabase;
+    QMimeType mimeType = mimeDatabase.mimeTypeForFile(filePath);
+
+    // Comprobar si el archivo es multimedia o binario
+    if (mimeType.name().startsWith("video/") || mimeType.name().startsWith("audio/") ||
+        mimeType.name().startsWith("image/") || mimeType.name().startsWith("application/octet-stream")) {
+        QMessageBox::warning(this, tr("Error"), tr("El archivo no es un archivo de texto compatible"));
+        return; // No intentar abrir archivos multimedia o binarios
+    }
+
     QFile file(filePath);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        QMessageBox::warning(this, tr("Error"), tr("No se puede abrir el archivo: %1").arg(filePath));
+        QMessageBox::warning(this, tr("Error"), tr("No se puede abrir el archivo"));
         return;
+    }
+
+    // Leer una pequeña parte del archivo para verificar si es binario
+    QByteArray fileContent = file.peek(1024); // Leer los primeros 1024 bytes
+    for (char c : fileContent) {
+        if (static_cast<unsigned char>(c) < 0x09 || (static_cast<unsigned char>(c) > 0x0D && static_cast<unsigned char>(c) < 0x20)) {
+            // Si encontramos caracteres no imprimibles fuera de los rangos esperados (tab, salto de línea, etc.)
+            QMessageBox::warning(this, tr("Error"), tr("El archivo parece ser binario y no se puede abrir"));
+            file.close();
+            return;
+        }
     }
 
     QTextStream in(&file);

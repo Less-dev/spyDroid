@@ -445,19 +445,32 @@ void DashBoardScreen::paintEvent(QPaintEvent *event) {
     painter.setRenderHint(QPainter::Antialiasing);
 
     QPixmap background(":background");
-    QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
-    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
+
+    const int maxWidth = 800;
+    const int maxHeight = 800;
+    const qreal scaleFactor = 0.9;
+
+    QSize maxSize(maxWidth, maxHeight);
+    QSize scaledSize = background.size().scaled(this->size().boundedTo(maxSize), Qt::KeepAspectRatio);
+
+    scaledSize.setWidth(scaledSize.width() * scaleFactor);
+    scaledSize.setHeight(scaledSize.height() * scaleFactor);
+
+    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, 
+                     scaledSize.width(), scaledSize.height());
+
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
-    
+
     QPen pen(QColor("#FF0000"));
     pen.setWidth(4);
     painter.setPen(pen);
-    
+
     QBrush brush(Qt::NoBrush);
     painter.setBrush(brush);
-    int padding = 15;
 
-    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20); 
+    int padding = 15;
+    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
+    
     QWidget::paintEvent(event);
 }

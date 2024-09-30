@@ -112,8 +112,9 @@ private:
     QAction *newFileAction;
     QAction *openFileAction;
     QAction *saveFileAction;
-    QString pathProject;
     SettingsManager* settingsManager;
+    QString pathProject;
+    QString ultFileOpen;
     QList<QVariant> recentFiles;
     QTabBar* tabBar;
 };
