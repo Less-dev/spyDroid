@@ -391,10 +391,21 @@ void ApkStudioScreen::paintEvent(QPaintEvent *event) {
     int topPadding = menuBar->isVisible() ? 15 : 0;
 
     QPixmap background(":background");
-    QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
+
+    const int maxWidth = 800;
+    const int maxHeight = 800;
+    const qreal scaleFactor = 0.9;
+
+    QSize maxSize(maxWidth, maxHeight);
+    QSize scaledSize = background.size().scaled(this->size().boundedTo(maxSize), Qt::KeepAspectRatio);
+
+    scaledSize.setWidth(scaledSize.width() * scaleFactor);
+    scaledSize.setHeight(scaledSize.height() * scaleFactor);
+
     QRect targetRect((width() - scaledSize.width()) / 2,
                      (height() - scaledSize.height()) / 2 + topPadding,
                      scaledSize.width(), scaledSize.height());
+
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
 
