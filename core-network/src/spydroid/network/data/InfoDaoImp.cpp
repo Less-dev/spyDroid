@@ -23,6 +23,7 @@ std::vector<InfoHandler> InfoDaoImpl::getInfo(const std::string& alias) const {
     std::vector<Info> info = apiService.getInfo(alias);
     std::vector<InfoHandler> infoHandlers;
 
+    // Parser data Info to InfoHandler
     for (const Info& _info : info) {
         InfoHandler handler;
         handler.id = _info.id;

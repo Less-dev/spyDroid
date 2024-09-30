@@ -19,7 +19,6 @@
 
 SettingsManager::SettingsManager(const QString &appName, QObject *parent) 
     : QObject(parent), settings(new QSettings("SpyDroid", appName, this)) {
-    // Constructor: inicializa QSettings con SpyDroid como organización y appName como la aplicación
 }
 
 void SettingsManager::setValue(const QString &key, const QVariant &value) {

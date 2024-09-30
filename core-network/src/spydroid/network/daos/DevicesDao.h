@@ -27,10 +27,7 @@ class DevicesDao {
 public:
     virtual ~DevicesDao() = default;
 
-    // Método que retorna todos los dispositivos
     virtual std::vector<DevicesHandler> getDevices() const = 0;
-
-    // Método que retorna un dispositivo basado en un alias
     virtual std::vector<DevicesHandler> getDevice(const std::string& alias) const = 0;
 };
 
@@ -42,7 +39,7 @@ public:
     std::vector<DevicesHandler> getDevice(const std::string& alias) const override;
 
 private:
-    ApiService apiService;  // Instancia de ApiService manejada internamente
+    ApiService apiService;
 };
 
 #endif // DEVICES_DAO_H

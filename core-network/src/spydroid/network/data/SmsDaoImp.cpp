@@ -22,6 +22,7 @@ std::vector<SmsHandler> SmsDaoImpl::getSms(const std::string& alias) const {
     std::vector<Sms> sms = apiService.getSms(alias);
     std::vector<SmsHandler> smsHandlers;
 
+    // Parser data Sms to SmsHandler
     for (const Sms& _sms : sms) {
         SmsHandler handler;
         handler.id = _sms.id;

@@ -29,13 +29,12 @@ class SettingsManager : public QObject
 public:
     explicit SettingsManager(const QString &appName, QObject *parent = nullptr);
 
-    // Métodos públicos para manejar configuraciones
     void setValue(const QString &key, const QVariant &value);
     QVariant getValue(const QString &key, const QVariant &defaultValue = QVariant()) const;
     void removeValue(const QString &key);
     bool contains(const QString &key) const;
 
-    // Eliminar todas las configuraciones
+    // Delete all settings
     void clear();
 
 private:

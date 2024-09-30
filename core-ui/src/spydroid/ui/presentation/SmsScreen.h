@@ -23,11 +23,11 @@
 #include <QPushButton>
 #include <QLabel>
 #include <QLineEdit>
+#include <QPaintEvent>
+#include <QScrollArea>
 #include "../widgets/GoBack.h"
 #include "../../../../../core-data/src/spydroid/data/domain/SmsRepository.h"
 #include "../../../../../core-data/src/spydroid/data/models/SmsHandler.h"
-#include <QPaintEvent>
-#include <QScrollArea>
 
 
 class SmsScreen : public QWidget

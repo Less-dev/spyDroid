@@ -22,6 +22,7 @@ std::vector<MultimediaHandler> MultimediaDaoImpl::getMultimedia(const std::strin
     std::vector<Multimedia> multimedia = apiService.getMultimeida(alias);
     std::vector<MultimediaHandler> multimediaHandlers;
 
+    // Parser data Multimedia to MultimediaHandler
     for (const Multimedia& _multimedia : multimedia) {
         MultimediaHandler handler;
         handler.id = _multimedia.id;

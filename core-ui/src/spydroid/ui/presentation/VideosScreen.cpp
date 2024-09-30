@@ -14,12 +14,12 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-#include "VideosScreen.h"
 #include <iostream>
 #include <QPainter>
+#include "VideosScreen.h"
+#include <QDebug>
 #include "../widgets/ItemBoard.h"
 #include "../widgets/GoBack.h"
-#include <QDebug>
 
 
 VideosScreen::VideosScreen(QWidget *parent) : QWidget(parent) {
@@ -30,12 +30,10 @@ VideosScreen::VideosScreen(QWidget *parent) : QWidget(parent) {
     this->setAutoFillBackground(true);
     this->setPalette(pal);
     
-    // Crear el layout para VideosScreen
     layout = new QVBoxLayout(this);
-
-    layout->setContentsMargins(20, 20, 20, 20);  // Márgenes ajustados (izquierda, arriba, derecha, abajo)
+    layout->setContentsMargins(20, 20, 20, 20);
     
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));  // Color blanco pastel
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     
     goBackButton->setOnClick([this]() {
         emit goToMultimedia(deviceAlias);
@@ -58,28 +56,22 @@ void VideosScreen::loadAlias() {
 
 void VideosScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);  // Activar suavizado de bordes
+    painter.setRenderHint(QPainter::Antialiasing);
 
-    // Dibujar la imagen de fondo centrada (sin cambios)
     QPixmap background(":background");
     QSize scaledSize = background.size().scaled(800, 800, Qt::KeepAspectRatio);
     QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, scaledSize.width(), scaledSize.height());
     QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     painter.drawPixmap(targetRect, scaledPixmap);
 
-    // Establecer el color y grosor del borde rojo
-    QPen pen(QColor("#FF0000"));  // Color rojo para el borde
-    pen.setWidth(4);  // Grosor del borde
+    QPen pen(QColor("#FF0000"));
+    pen.setWidth(4);
     painter.setPen(pen);
 
-    // Establecer un brush transparente para que solo se vea el borde
     QBrush brush(Qt::NoBrush);
     painter.setBrush(brush);
 
-    // Dibujar un rectángulo redondeado con padding de 20px (para que no toque los bordes)
     int padding = 15;
-    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
-
-    // Llamar al método base para asegurar que el evento de pintura continúe normalmente
+    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);
     QWidget::paintEvent(event);
 }

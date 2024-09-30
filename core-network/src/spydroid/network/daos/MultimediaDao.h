@@ -28,7 +28,6 @@ class MultimediaDao {
 public:
     virtual ~MultimediaDao() = default;
     
-    // Método que retorna un dispositivo basado en un alias
     virtual std::vector<MultimediaHandler> getMultimedia(const std::string& alias) const = 0;
     virtual void getImages(const std::string& alias) const = 0;
     virtual void getVideos(const std::string& alias) const = 0;
@@ -45,7 +44,7 @@ public:
     void getDocuments(const std::string& alias) const override;
     void getAudios(const std::string& alias) const override;
 private:
-    ApiService apiService;  // Instancia de ApiService manejada internamente
+    ApiService apiService;
 };
 
 #endif // MULTIMEDIA_DAO_H

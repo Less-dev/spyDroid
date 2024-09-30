@@ -27,7 +27,6 @@ class InfoDao {
 public:
     virtual ~InfoDao() = default;
     
-    // Método que retorna un dispositivo basado en un alias
     virtual std::vector<InfoHandler> getInfo(const std::string& alias) const = 0;
 };
 
@@ -36,7 +35,7 @@ public:
     InfoDaoImpl() = default;
     std::vector<InfoHandler> getInfo(const std::string& alias) const override;
 private:
-    ApiService apiService;  // Instancia de ApiService manejada internamente
+    ApiService apiService;
 };
 
 #endif // INFO_DAO_H
