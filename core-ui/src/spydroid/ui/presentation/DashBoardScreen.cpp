@@ -113,7 +113,8 @@ void DashBoardScreen::showDevicesTable(
 
         // Location
         QTableWidgetItem* locationItem = new QTableWidgetItem(QString::fromStdString(device.location));
-        locationItem->setForeground(QColor("#00913f"));
+        locationItem->setFont(boldFont);
+        locationItem->setForeground(QColor("#84b9fb"));
         table->setItem(row, 4, locationItem);
 
         // Messages
