@@ -32,7 +32,7 @@
 <br>
 
 > [!IMPORTANT]
-> ####  Soporte para sistemas basados en UNIX
+> ####  Soporte para sistemas operativos basados en UNIX
 
 
 <p align="center">
