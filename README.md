@@ -15,24 +15,15 @@
   along with this program. If not, see <https://www.gnu.org/licenses/>.
 -->
 
-![banner) (1)](https://github.com/user-attachments/assets/3ef385be-6584-47a1-8e8a-6de2f40a088d)
-
-
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/e000d275-7cde-4e63-af3c-0b8d7a533a2b">
+    <img src="https://github.com/user-attachments/assets/ea2682d3-3799-4749-a4cb-280086e7da45">
 </p>
 
-
-
 <p align="center">
-    <img src="https://github.com/user-attachments/assets/efabd887-70f9-4a6d-8e7f-7ae1bee624cd" width="180" height="180">
+    <img src="https://github.com/user-attachments/assets/6ca3afa2-2401-4dfb-b896-2a69e1cf80f5" width="320" height="245">
 </p>
-
-
 
 <h3 align="center">¿Hacking android? ¡Yoo-hoo!</h3>
-
-
 
 <p align="center">
 <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/gothic_divider_09.gif" width="1000">
@@ -41,15 +32,7 @@
 <br>
 
 > [!IMPORTANT]
-> ####  Los siguientes pasos son para sistemas operativos basados en linux
-
-## 1. [`Guia de instalación`](#guía-de-instalación)  
-    
-  #### 1.1. [`Clone el proyecto`](#clone-el-proyecto)
-     
-  #### 1.2. [`Cambie de directorio`](#cambie-de-directorio-al-del-proyecto)
-  
-  #### 4.2. [`Arquitectura de módulos`](#arquitectura-de-módulos)
+> ####  Soporte para sistemas basados en UNIX
 
 
 <p align="center">
@@ -57,22 +40,6 @@
 </p>
 
 <br>
-
-## Clone el proyecto
-    
-    git clone https://github.com/Less-dev/spyDroid
-
-## Cambie de directorio al del proyecto
-
-    cd spyDroid
-<br>
-
-> [!NOTE]
-> arquitecturas en version `alpha`
-
-## Arquitectura de módulos
-
-![archithecture_modules](https://github.com/user-attachments/assets/ffaa5b9c-433b-4c56-8e4e-a491f2b762a0)
 
 <br>
 
