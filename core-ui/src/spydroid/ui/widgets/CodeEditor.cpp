@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2024 Daniel Gómez(Less)
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program. If not, see <https://www.gnu.org/licenses/>.
+ */
+
 #include "CodeEditor.h"
 #include "CodeSyntaxHighlighter.h"
 #include <QPainter>
@@ -13,13 +30,11 @@
 CodeEditor::CodeEditor(QWidget *parent)
     : QPlainTextEdit(parent), lineNumberArea(new LineNumberArea(this)) {
 
-    // Hacer el fondo del widget completamente transparente
     setAttribute(Qt::WA_TranslucentBackground);
-    setStyleSheet("background: transparent;");  // Asegurar que no haya color de fondo aplicado
+    setStyleSheet("background: transparent;");
 
-    // Configurar el color del texto como blanco
     QPalette p = this->palette();
-    p.setColor(QPalette::Text, Qt::white);  // Texto en blanco
+    p.setColor(QPalette::Text, Qt::white);
     this->setPalette(p);
 
     QFontDatabase::addApplicationFont(":/fonts/JetBrainsMono-Italic");
@@ -28,24 +43,21 @@ CodeEditor::CodeEditor(QWidget *parent)
 
     CodeSyntaxHighlighter* syntaxHighlighter = new CodeSyntaxHighlighter(this->document());
 
-    // Configurar la fuente predeterminada del editor
     QFont font("JetBrains Mono");
     font.setPointSize(14);
     this->setFont(font);
 
-    // Ejemplo: añadir palabras clave dinámicas
-    QFont boldFont("JetBrains Mono", 14, QFont::Bold);  // Fuente JetBrains Mono Bold
+    QFont boldFont("JetBrains Mono", 14, QFont::Bold);
     syntaxHighlighter->addHighlightingRule({"class", "if", "else", "for", "while"}, Qt::cyan, boldFont);
 
-    QFont italicFont("JetBrains Mono", 14, QFont::StyleItalic);  // Fuente JetBrains Mono Italic
+    QFont italicFont("JetBrains Mono", 14, QFont::StyleItalic);
     syntaxHighlighter->addHighlightingRule({"return", "void", "int"}, Qt::magenta, italicFont);
 
 
     this->setLineWrapMode(QPlainTextEdit::NoWrap);
-    this->setTabStopDistance(4 * fontMetrics().horizontalAdvance(' '));  // Tab equivale a 4 espacios
+    this->setTabStopDistance(4 * fontMetrics().horizontalAdvance(' '));  // Tab 4 space
 
 
-    // Conectar señales y slots para el área de los números de línea
     connect(this, &QPlainTextEdit::blockCountChanged, this, [this]() {
         updateLineNumberAreaWidth(0);
     });
@@ -57,15 +69,12 @@ CodeEditor::CodeEditor(QWidget *parent)
 }
 
 void CodeEditor::paintEvent(QPaintEvent *event) {
-    QPainter painter(viewport());  // Usar el viewport para pintar solo el área visible
+    QPainter painter(viewport());  
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // Color de fondo negro con 45% de opacidad (para líneas no seleccionadas)
-    QColor backgroundColor = QColor(0, 0, 0, 115);  // Negro con alfa = 115 (45% de transparencia)
-    // Color rojo para la línea seleccionada
-    QColor selectedLineColor = QColor(147, 23, 25, 115);  // Rojo #931719 con transparencia
+    QColor backgroundColor = QColor(0, 0, 0, 115); 
+    QColor selectedLineColor = QColor(147, 23, 25, 115);  
 
-    // Obtenemos el cursor actual para detectar la línea seleccionada
     QTextCursor cursor = textCursor();
     QTextBlock block = firstVisibleBlock();
 
@@ -127,7 +136,7 @@ void CodeEditor::highlightCurrentLine() {
     if (!isReadOnly()) {
         QTextEdit::ExtraSelection selection;
 
-        QColor lineColor = QColor(147, 23, 25, 166);  // Rojo semitransparente
+        QColor lineColor = QColor(147, 23, 25, 166);
         selection.format.setBackground(lineColor);
         selection.format.setProperty(QTextFormat::FullWidthSelection, true);
         selection.cursor = textCursor();
@@ -140,25 +149,21 @@ void CodeEditor::highlightCurrentLine() {
 
 
 void CodeEditor::loadFile(const QString &filePath) {
-    // Si la ruta es vacía, no intentar abrir el archivo
     if (filePath.isEmpty()) {
         return;
     }
 
-    // Verificar si el archivo ya está abierto
     if (filePath == currentFilePath) {
         return;
     }
 
-    // Detectar el tipo MIME del archivo
     QMimeDatabase mimeDatabase;
     QMimeType mimeType = mimeDatabase.mimeTypeForFile(filePath);
 
-    // Comprobar si el archivo es multimedia o binario
     if (mimeType.name().startsWith("video/") || mimeType.name().startsWith("audio/") ||
         mimeType.name().startsWith("image/") || mimeType.name().startsWith("application/octet-stream")) {
         QMessageBox::warning(this, tr("Error"), tr("El archivo no es un archivo de texto compatible"));
-        return; // No intentar abrir archivos multimedia o binarios
+        return;
     }
 
     QFile file(filePath);
@@ -167,11 +172,9 @@ void CodeEditor::loadFile(const QString &filePath) {
         return;
     }
 
-    // Leer una pequeña parte del archivo para verificar si es binario
-    QByteArray fileContent = file.peek(1024); // Leer los primeros 1024 bytes
+    QByteArray fileContent = file.peek(1024);
     for (char c : fileContent) {
         if (static_cast<unsigned char>(c) < 0x09 || (static_cast<unsigned char>(c) > 0x0D && static_cast<unsigned char>(c) < 0x20)) {
-            // Si encontramos caracteres no imprimibles fuera de los rangos esperados (tab, salto de línea, etc.)
             QMessageBox::warning(this, tr("Error"), tr("El archivo parece ser binario y no se puede abrir"));
             file.close();
             return;
@@ -179,10 +182,10 @@ void CodeEditor::loadFile(const QString &filePath) {
     }
 
     QTextStream in(&file);
-    setPlainText(in.readAll());  // Cargar el contenido del archivo en el editor
+    setPlainText(in.readAll());
     file.close();
 
-    currentFilePath = filePath;  // Guardar la ruta del archivo abierto
+    currentFilePath = filePath;
 }
 
 bool CodeEditor::saveFile(const QString &filePath) {
@@ -193,30 +196,27 @@ bool CodeEditor::saveFile(const QString &filePath) {
     }
 
     QTextStream out(&file);
-    out << toPlainText();  // Escribir el contenido actual del editor al archivo
+    out << toPlainText();
     file.close();
 
-    currentFilePath = filePath;  // Actualizar la ruta del archivo guardado
+    currentFilePath = filePath;
     return true;
 }
 
 void CodeEditor::openFileDialog() {
     QString filePath = QFileDialog::getOpenFileName(this, tr("Abrir archivo"), "", tr("Archivos de texto (*.txt);;Archivos C++ (*.cpp *.h);;Todos los archivos (*)"));
     if (!filePath.isEmpty()) {
-        loadFile(filePath);  // Cargar el archivo seleccionado
+        loadFile(filePath);
     }
 }
 
 void CodeEditor::saveFileDialog() {
     QString filePath = QFileDialog::getSaveFileName(this, tr("Guardar archivo"), "", tr("Archivos de texto (*.txt);;Archivos C++ (*.cpp *.h);;Todos los archivos (*)"));
     if (!filePath.isEmpty()) {
-        saveFile(filePath);  // Guardar el archivo en la ruta seleccionada
+        saveFile(filePath);
     }
 }
 
-//
-
-// Calcula el ancho necesario para los números de línea.
 int CodeEditor::lineNumberAreaWidth() const {
     int digits = 1;
     int max = qMax(1, blockCount());
@@ -229,19 +229,16 @@ int CodeEditor::lineNumberAreaWidth() const {
     return space;
 }
 
-// Responde a los cambios de tamaño y ajusta la geometría del área de números de línea.
 void CodeEditor::resizeEvent(QResizeEvent *event) {
     QPlainTextEdit::resizeEvent(event);
     QRect cr = contentsRect();
     lineNumberArea->setGeometry(QRect(cr.left(), cr.top(), lineNumberAreaWidth(), cr.height()));
 }
 
-// Actualiza el ancho del área de números de línea.
 void CodeEditor::updateLineNumberAreaWidth(int) {
     setViewportMargins(lineNumberAreaWidth(), 0, 0, 0);
 }
 
-// Actualiza el área de números de línea cuando hay cambios en el contenido o se hace scroll.
 void CodeEditor::updateLineNumberArea(const QRect &rect, int dy) {
     if (dy)
         lineNumberArea->scroll(0, dy);
