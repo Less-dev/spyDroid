@@ -34,12 +34,55 @@
 > [!IMPORTANT]
 > ####  Soporte para sistemas operativos basados en UNIX
 
+## DESCRIPCIÓN
+
+**Spydroid es una herramienta para crear, modificar y distribuir APK, brindando acceso remoto a el dispositivo, con una interfáz de usuario agradable.**
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/text_red_divider_03.png" width="1000">
+<img src="https://raw.githubusercontent.com/Less-dev/gifs/refs/heads/master/DIVIDERS/gothic_divider_02.gif">
+</p>
+
+## CARACTERÍSTICAS
+
+- [x] **_RDP (Protocolo de escritorio remoto):_** Acceso remoto a la pantalla del dispositivo.
+
+- [x] **_LOCALIZACIÓN:_** Acceso remoto a la ubicación geográfica del dispositivo en tiempo real.
+
+- [ ]  **_BLOQUEO DE PANTALLA:_** Bloquear la pantalla del dispositivo, mostrando un mensaje emergente.
+
+- [ ] **_CÁMARA FRONTAL/TRASERA:_** Acceso remoto y en tiempo real a cámara frontal y trasera del dispositivo.
+
+- [x] **_MULTIMEDIA:_** Acceso remoto a todos los archivos multimedia del dispositivo (Imagenes, Videos, Audios, Documentos).
+
+- [ ] **_CARGAS:_** Subir y eliminar archivos de forma remota al dispositivo.
+
+- [ ] **_GENERAL:_** Acceso remoto a (portapapeles, aplicaciones instaladas, mensajes de texto, direcciones ip pública/privada) 
+
+
+<p align="center">
+<img src="https://raw.githubusercontent.com/Less-dev/gifs/refs/heads/master/DIVIDERS/gothic_divider_03.gif">
+<img src="https://raw.githubusercontent.com/Less-dev/gifs/refs/heads/master/DIVIDERS/gothic_divider_04.gif">
 </p>
 
 <br>
+
+> [!NOTE]
+> Si no quiere compilarlo, solo descarguelo. [Releases](https://github.com/Less-dev/spyDroid/tags)
+
+
+## COMPILACIÓN: 
+
+**Clone el proyecto**
+
+    git clone https://github.com/Less-dev/spyDroid
+
+**Abra y compile**
+
+    cd spyDroid; cd build && cmake .. && cmake --build .
+
+**Ejecute**
+
+    bash -c spydroid
 
 <br>
 
@@ -60,9 +103,4 @@
 
 <p align="center">
     <img src="https://github.com/user-attachments/assets/0a483af2-fcde-4494-b435-0adea89a4a6e">
-</p>
-
-
-<p align="center">
-    <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/medieval_divider_05.png" width="1000">
 </p>
