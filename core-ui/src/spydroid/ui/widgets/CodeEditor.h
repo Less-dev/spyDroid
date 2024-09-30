@@ -23,7 +23,6 @@
 #include <QWidget>
 #include <QString>
 
-// Forward declaration de LineNumberArea
 class LineNumberArea;
 
 class CodeEditor : public QPlainTextEdit {
@@ -32,41 +31,25 @@ class CodeEditor : public QPlainTextEdit {
 public:
     explicit CodeEditor(QWidget *parent = nullptr);
 
-    // Método público para obtener el ancho del área de números de línea.
     int lineNumberAreaWidth() const;
     
     void loadFile(const QString &filePath);
-
-    // Método público para guardar el archivo actual
     bool saveFile(const QString &filePath);
-
-    // Método para solicitar y abrir un archivo
     void openFileDialog();
-
-    // Método para solicitar y guardar el archivo
     void saveFileDialog();
 
 protected:
-    // Reimplementamos resizeEvent para ajustar el área de números de línea.
     void resizeEvent(QResizeEvent *event) override;
-
-    // Método que será llamado para pintar los números de línea.
     void lineNumberAreaPaintEvent(QPaintEvent *event);
 
 private slots:
-    // Slot para actualizar el ancho del área de números de línea.
     void updateLineNumberAreaWidth(int newBlockCount);
-
-    // Slot para sincronizar el área de números de línea al desplazarse o actualizar el texto.
     void updateLineNumberArea(const QRect &rect, int dy);
-
-    // Slot para resaltar la línea actual donde está el cursor.
     void highlightCurrentLine();
 
 private:
-    QWidget *lineNumberArea;  // Widget para el área de números de línea.
+    QWidget *lineNumberArea;
     QString currentFilePath;
-    // Clase interna para definir el área de números de línea.
     class LineNumberArea : public QWidget {
     public:
         explicit LineNumberArea(CodeEditor *editor) : QWidget(editor), codeEditor(editor) {}
@@ -81,10 +64,9 @@ private:
         }
 
     private:
-        CodeEditor *codeEditor;  // Puntero al editor principal.
+        CodeEditor *codeEditor;
     };
 
-    // Método auxiliar para actualizar la geometría y propiedades del área de números de línea.
     void updateLineNumberAreaWidth();
     void paintEvent(QPaintEvent *event);
 };
