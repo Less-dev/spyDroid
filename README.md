@@ -86,6 +86,54 @@
 
 <br>
 
+## Capturas de pantalla
+
+<br>
+
+ - **Home**
+
+![home_screen](https://github.com/user-attachments/assets/b751cecc-df84-43b6-a452-d1b2055c8412)
+
+<br>
+
+  - **DashBoard**
+
+![dashBoard_screen](https://github.com/user-attachments/assets/ea08727f-6f5d-4e2e-8641-e88c0fef1551)
+
+<br> 
+
+  - **Sms**
+
+![sms_screen](https://github.com/user-attachments/assets/3cb22b4d-3cd1-4d33-a57d-62f0a2f89eba)
+
+<br>
+
+  - **Multimedia**
+
+![multimedia_screen](https://github.com/user-attachments/assets/985e0dbe-3114-4868-9d3e-3ac4db725c7e)
+
+<br>
+
+  - **Remote Desktop Protocol (RDP)**
+
+![remote_desktop_protocol](https://github.com/user-attachments/assets/7562cdab-6859-4d9f-a5dc-ec2988f968cf)
+
+<br>
+
+  - **Apk Studio**
+
+![Screenshot from 2024-09-30 17-00-43](https://github.com/user-attachments/assets/5ee3b30e-d770-40c7-a637-afeec004b358)
+
+<br>
+
+![Screenshot from 2024-09-30 17-01-36](https://github.com/user-attachments/assets/0760260a-8eeb-4776-a969-31267f72a766)
+
+<br>
+
+![Screenshot from 2024-09-30 17-02-01](https://github.com/user-attachments/assets/df9d1e7d-591e-4e76-bb56-27dae3da990d)
+
+<br>
+
 <p align="center">
     <img src="https://raw.githubusercontent.com/Less-dev/gifs/master/DIVIDERS/glitch_divider_11.gif" width="1000" height="5">
 </p>
