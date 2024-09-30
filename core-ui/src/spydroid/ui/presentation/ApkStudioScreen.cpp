@@ -113,7 +113,9 @@ void ToolWindowBar::handlePlayIconClick() {
 
 
 ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsManager(new SettingsManager("ApkStudio", this)) {
+    
     pathProject = settingsManager->getValue("projectPath").toString();
+    ultFileOpen = settingsManager->getValue("ultFileOpen").toString();
     recentFiles = settingsManager->getValue("recentFiles").toList();
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
@@ -224,35 +226,58 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent), settingsMan
     codeEditor->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     codeEditor->hide();
 
+    if (!ultFileOpen.isEmpty()) {
+        codeEditor->loadFile(ultFileOpen);  // Cargar archivo en el editor
+        codeEditor->show();
+            for (int i = 0; i < tabBar->count(); ++i) {
+        if (tabBar->tabData(i).toString() == ultFileOpen) {
+            tabBar->setCurrentIndex(i);  // Seleccionar la pestaña si coincide
+            break;
+        }
+    }
+    } else {
+        codeEditor->hide();  // Si no hay archivo, el editor permanece oculto
+    }
+
     connect(tabBar, &QTabBar::currentChanged, [=](int index) {
         if (index != -1) {
             QString filePath = tabBar->tabData(index).toString();
             codeEditor->loadFile(filePath);
-            codeEditor->show();  
+            codeEditor->show();
+            settingsManager->setValue("ultFileOpen", filePath);  
         } else {
             codeEditor->hide();
         }
     });
 
-    connect(tabBar, &QTabBar::tabCloseRequested, [=](int index) {
-        QString filePath = tabBar->tabData(index).toString();
-        
-        tabBar->removeTab(index);
+connect(tabBar, &QTabBar::tabCloseRequested, [=](int index) {
+    QString filePath = tabBar->tabData(index).toString();
     
-        if (tabBar->count() == 0) {
-            codeEditor->hide();
-        }
-    
-        //  Delete file from recentFiles
-        QVariantList recentFiles = settingsManager->getValue("recentFiles").toList();
-        for (int i = recentFiles.size() - 1; i >= 0; --i) {
-            if (recentFiles[i].toString() == filePath) {
-                recentFiles.removeAt(i);  
-            }
-        }
+    tabBar->removeTab(index);
 
-        settingsManager->setValue("recentFiles", recentFiles);
-    });
+    if (tabBar->count() == 0) {
+        codeEditor->hide();
+        // Limpiar el valor de ultFileOpen en SettingsManager al cerrar la última pestaña
+        settingsManager->setValue("ultFileOpen", "");
+    } else {
+        // Actualizar ultFileOpen con la nueva pestaña activa
+        int currentIndex = tabBar->currentIndex();
+        if (currentIndex != -1) {
+            QString newFilePath = tabBar->tabData(currentIndex).toString();
+            settingsManager->setValue("ultFileOpen", newFilePath);
+        }
+    }
+
+    // Eliminar el archivo cerrado de recentFiles
+    QVariantList recentFiles = settingsManager->getValue("recentFiles").toList();
+    for (int i = recentFiles.size() - 1; i >= 0; --i) {
+        if (recentFiles[i].toString() == filePath) {
+            recentFiles.removeAt(i);
+        }
+    }
+    settingsManager->setValue("recentFiles", recentFiles);
+});
+
 
 
 
