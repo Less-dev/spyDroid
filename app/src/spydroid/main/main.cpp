@@ -15,8 +15,6 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-
-
 #include <QApplication>
 #include <QFile>
 #include <QPointer>
@@ -36,7 +34,7 @@
 #include "../../../../core-ui/src/spydroid/ui/presentation/AudiosScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/DocumentsScreen.h"
 
-// Widget indices
+// Widget index
 enum ScreenIndex {
     HomeScreenIndex = 0,
     DashBoardScreenIndex,
@@ -92,7 +90,7 @@ int main(int argc, char *argv[]) {
     // Add widgets to QStackedWidget
     stackedWidget.addWidget(homeScreen);            // Index 0
     stackedWidget.addWidget(dashBoardScreen);       // Index 1 
-    stackedWidget.addWidget(apkStudioScreen);             // Index 2
+    stackedWidget.addWidget(apkStudioScreen);       // Index 2
     stackedWidget.addWidget(multimediaScreen);      // Index 3
     stackedWidget.addWidget(smsScreen);             // Index 4
     stackedWidget.addWidget(imagesScreen);          // Index 5
