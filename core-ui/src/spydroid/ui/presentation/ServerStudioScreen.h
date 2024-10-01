@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOMESCREEN_H
-#define HOMESCREEN_H
+#ifndef SERVER_STUDIO_SCREEN_H
+#define SERVER_STUDIO_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -27,17 +27,15 @@
 #include <QTableWidget>
 #include <QPaintEvent>
 
-class HomeScreen : public QWidget
+class ServerStudioScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HomeScreen(QWidget *parent = nullptr);
+    explicit ServerStudioScreen(QWidget *parent = nullptr);
 
 signals:
-    void goToDashBoard();
-    void goToBuildApk();
-    void goToBuildServer();
+    void goToHome();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -46,4 +44,4 @@ private:
     QVBoxLayout* layout;
 };
 
-#endif // HOMESCREEN_H
+#endif // SERVER_STUDIO_SCREEN_H

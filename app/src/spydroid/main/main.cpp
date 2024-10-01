@@ -27,6 +27,7 @@
 #include "../../../../core-ui/src/spydroid/ui/presentation/HomeScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/DashBoardScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/ApkStudioScreen.h"
+#include "../../../../core-ui/src/spydroid/ui/presentation/ServerStudioScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/SmsScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/MultimediaScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/ImagesScreen.h"
@@ -39,6 +40,7 @@ enum ScreenIndex {
     HomeScreenIndex = 0,
     DashBoardScreenIndex,
     BuildApkScreenIndex,
+    BuildServerScreenIndex,
     GenerateApkScreenIndex,
     MultimediaScreenIndex,
     SmsScreenIndex,
@@ -78,8 +80,9 @@ int main(int argc, char *argv[]) {
 
     // Using QPointer to manage widget lifetime automatically
     QPointer<HomeScreen> homeScreen = new HomeScreen(&stackedWidget);
-    QPointer<DashBoardScreen> dashBoardScreen = new DashBoardScreen(&stackedWidget);  // Corrected class name
+    QPointer<DashBoardScreen> dashBoardScreen = new DashBoardScreen(&stackedWidget);
     QPointer<ApkStudioScreen> apkStudioScreen = new ApkStudioScreen(&stackedWidget);
+    QPointer<ServerStudioScreen> serverStudioScreen = new ServerStudioScreen(&stackedWidget);
     QPointer<SmsScreen> smsScreen = new SmsScreen(&stackedWidget);
     QPointer<MultimediaScreen> multimediaScreen = new MultimediaScreen(&stackedWidget);
     QPointer<ImagesScreen> imagesScreen = new ImagesScreen(&stackedWidget);
@@ -91,12 +94,13 @@ int main(int argc, char *argv[]) {
     stackedWidget.addWidget(homeScreen);            // Index 0
     stackedWidget.addWidget(dashBoardScreen);       // Index 1 
     stackedWidget.addWidget(apkStudioScreen);       // Index 2
-    stackedWidget.addWidget(multimediaScreen);      // Index 3
-    stackedWidget.addWidget(smsScreen);             // Index 4
-    stackedWidget.addWidget(imagesScreen);          // Index 5
-    stackedWidget.addWidget(videosScreen);          // Index 6
-    stackedWidget.addWidget(audiosScreen);          // Index 7
-    stackedWidget.addWidget(documentsScreen);       // Index 8
+    stackedWidget.addWidget(serverStudioScreen);    // Index 3
+    stackedWidget.addWidget(multimediaScreen);      // Index 4
+    stackedWidget.addWidget(smsScreen);             // Index 5
+    stackedWidget.addWidget(imagesScreen);          // Index 6
+    stackedWidget.addWidget(videosScreen);          // Index 7
+    stackedWidget.addWidget(audiosScreen);          // Index 8
+    stackedWidget.addWidget(documentsScreen);       // Index 9
 
     // Show the initial view
     stackedWidget.setCurrentIndex(HomeScreenIndex);
@@ -110,6 +114,10 @@ int main(int argc, char *argv[]) {
 
     QObject::connect(homeScreen, &HomeScreen::goToBuildApk, [&stackedWidget, apkStudioScreen] () {
         navigateTo(apkStudioScreen, stackedWidget, "APK Estudio");
+    });
+
+    QObject::connect(homeScreen, &HomeScreen::goToBuildServer, [&stackedWidget, serverStudioScreen] () {
+        navigateTo(serverStudioScreen, stackedWidget, "Servidor Estudio");
     });
 
 
@@ -194,6 +202,10 @@ int main(int argc, char *argv[]) {
     });
 
     QObject::connect(apkStudioScreen, &ApkStudioScreen::goToHome, [&stackedWidget, homeScreen] () {
+        navigateTo(homeScreen, stackedWidget, "Panel de control");
+    });
+
+    QObject::connect(serverStudioScreen, &ServerStudioScreen::goToHome, [&stackedWidget, homeScreen] () {
         navigateTo(homeScreen, stackedWidget, "Panel de control");
     });
 
