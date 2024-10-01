@@ -14,6 +14,7 @@
 #along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 set(HEADERS
+    src/spydroid/ui/presentation/InstallerScreen.h
     src/spydroid/ui/presentation/HomeScreen.h
     src/spydroid/ui/presentation/DashBoardScreen.h
     src/spydroid/ui/presentation/ApkStudioScreen.h
@@ -35,6 +36,7 @@ set(HEADERS
 )
 
 set(SOURCES
+    src/spydroid/ui/presentation/InstallerScreen.cpp
     src/spydroid/ui/presentation/HomeScreen.cpp
     src/spydroid/ui/presentation/DashBoardScreen.cpp
     src/spydroid/ui/presentation/ApkStudioScreen.cpp

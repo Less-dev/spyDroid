@@ -24,7 +24,9 @@
 #include <fstream>
 #include <unistd.h> 
 #include "../../../../include/vnc_viewer.h"
+#include "../../../../core-data/src/spydroid/data/local/SettingsManager.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/HomeScreen.h"
+#include "../../../../core-ui/src/spydroid/ui/presentation/InstallerScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/DashBoardScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/ApkStudioScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/ServerStudioScreen.h"
@@ -37,7 +39,8 @@
 
 // Widget index
 enum ScreenIndex {
-    HomeScreenIndex = 0,
+    InstallerScreenIndex = 0,
+    HomeScreenIndex,
     DashBoardScreenIndex,
     BuildApkScreenIndex,
     BuildServerScreenIndex,
@@ -78,7 +81,19 @@ int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
     QStackedWidget stackedWidget;
 
+    SettingsManager settingsManager("init");
+
+    // Verificamos si existe el valor 'isDependencySuccessfully'
+    if (!settingsManager.contains("isDependencySuccessfully")) {
+        // Si no existe, establecer el valor por defecto (false)
+        settingsManager.setValue("isDependencySuccessfully", false);
+    }
+
+    // Obtenemos el valor de 'isDependencySuccessfully'
+    bool isDependencySuccessful = settingsManager.getValue("isDependencySuccessfully", false).toBool();
+
     // Using QPointer to manage widget lifetime automatically
+    QPointer<InstallerScreen> installerScreen = new InstallerScreen(&stackedWidget);
     QPointer<HomeScreen> homeScreen = new HomeScreen(&stackedWidget);
     QPointer<DashBoardScreen> dashBoardScreen = new DashBoardScreen(&stackedWidget);
     QPointer<ApkStudioScreen> apkStudioScreen = new ApkStudioScreen(&stackedWidget);
@@ -91,23 +106,35 @@ int main(int argc, char *argv[]) {
     QPointer<DocumentsScreen> documentsScreen = new DocumentsScreen(&stackedWidget);
 
     // Add widgets to QStackedWidget
-    stackedWidget.addWidget(homeScreen);            // Index 0
-    stackedWidget.addWidget(dashBoardScreen);       // Index 1 
-    stackedWidget.addWidget(apkStudioScreen);       // Index 2
-    stackedWidget.addWidget(serverStudioScreen);    // Index 3
-    stackedWidget.addWidget(multimediaScreen);      // Index 4
-    stackedWidget.addWidget(smsScreen);             // Index 5
-    stackedWidget.addWidget(imagesScreen);          // Index 6
-    stackedWidget.addWidget(videosScreen);          // Index 7
-    stackedWidget.addWidget(audiosScreen);          // Index 8
-    stackedWidget.addWidget(documentsScreen);       // Index 9
+    stackedWidget.addWidget(installerScreen);       // Index 0
+    stackedWidget.addWidget(homeScreen);            // Index 1
+    stackedWidget.addWidget(dashBoardScreen);       // Index 2 
+    stackedWidget.addWidget(apkStudioScreen);       // Index 3
+    stackedWidget.addWidget(serverStudioScreen);    // Index 4
+    stackedWidget.addWidget(multimediaScreen);      // Index 5
+    stackedWidget.addWidget(smsScreen);             // Index 6
+    stackedWidget.addWidget(imagesScreen);          // Index 7
+    stackedWidget.addWidget(videosScreen);          // Index 8
+    stackedWidget.addWidget(audiosScreen);          // Index 9
+    stackedWidget.addWidget(documentsScreen);       // Index 10
 
     // Show the initial view
-    stackedWidget.setCurrentIndex(HomeScreenIndex);
+    if (isDependencySuccessful) {
+        stackedWidget.setCurrentIndex(HomeScreenIndex);
+        stackedWidget.setWindowTitle("SPYDROID");
+    } else {
+        stackedWidget.setCurrentIndex(InstallerScreenIndex);
+        stackedWidget.setWindowTitle("Instalador");
+    }
     stackedWidget.showMaximized();
-    stackedWidget.setWindowTitle("SPYDROID");
 
     // Navigation connections (verify that the signals exist in the classes)
+    QObject::connect(installerScreen, &InstallerScreen::goToHome, [&stackedWidget, homeScreen]() {
+        SettingsManager settingsManager("init");
+        settingsManager.setValue("isDependencySuccessfully", true);
+        navigateTo(homeScreen, stackedWidget, "SPYDROID");
+    });
+
     QObject::connect(homeScreen, &HomeScreen::goToDashBoard, [&stackedWidget, dashBoardScreen]() {
         navigateTo(dashBoardScreen, stackedWidget, "Panel de control");
     });
@@ -202,11 +229,11 @@ int main(int argc, char *argv[]) {
     });
 
     QObject::connect(apkStudioScreen, &ApkStudioScreen::goToHome, [&stackedWidget, homeScreen] () {
-        navigateTo(homeScreen, stackedWidget, "Panel de control");
+        navigateTo(homeScreen, stackedWidget, "SPYDROID");
     });
 
     QObject::connect(serverStudioScreen, &ServerStudioScreen::goToHome, [&stackedWidget, homeScreen] () {
-        navigateTo(homeScreen, stackedWidget, "Panel de control");
+        navigateTo(homeScreen, stackedWidget, "SPYDROID");
     });
 
     return app.exec();
