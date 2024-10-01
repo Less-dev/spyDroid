@@ -309,7 +309,6 @@ void ApkStudioScreen::toggleGoToHome() {
 
 
 void ApkStudioScreen::onFileOpened(const QString &filePath) {
-    // Verify if does exists tab with de file
     for (int i = 0; i < tabBar->count(); ++i) {
         if (tabBar->tabData(i).toString() == filePath) {
             tabBar->setCurrentIndex(i);
@@ -325,12 +324,13 @@ void ApkStudioScreen::onFileOpened(const QString &filePath) {
     codeEditor->loadFile(filePath);
     codeEditor->show();
 
-    // Update recentFiles unduplicated
     QVariantList recentFiles = settingsManager->getValue("recentFiles").toList();
     if (!recentFiles.contains(filePath)) {
         recentFiles.append(filePath);
         settingsManager->setValue("recentFiles", recentFiles);
     }
+
+    settingsManager->setValue("ultFileOpen", filePath);
 }
 
 void ApkStudioScreen::toggleFileExplorer() {
