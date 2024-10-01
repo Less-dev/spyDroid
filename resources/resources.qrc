@@ -24,6 +24,7 @@
         <file alias ="run.png">drawable/run_ic.png</file>
         <file alias ="2_go_back.png">drawable/go_back_ic.png</file>
         <file alias ="close.png">drawable/close_ic.png</file>
+        <file alias="server">drawable/server_ic.png</file>
     </qresource>
 
     <qresource prefix="/fonts">

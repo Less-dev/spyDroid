@@ -53,10 +53,16 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
         emit goToBuildApk();
     });
 
+    ItemBoard *serverStudio = new ItemBoard(itemBoardContainer);
+    serverStudio->setImage(QPixmap(":/icons/server"));
+    serverStudio->setText("Servidor Estudio");
+    connect(serverStudio, &ItemBoard::clicked, [this]() {
+        emit goToBuildApk();
+    });
 
     itemBoardLayout->addWidget(dashBoard);
     itemBoardLayout->addWidget(apkStudio);
-
+    itemBoardLayout->addWidget(serverStudio);
     itemBoardContainer->setLayout(itemBoardLayout);
 
     layout->addWidget(itemBoardContainer, 0, Qt::AlignLeft | Qt::AlignTop);
