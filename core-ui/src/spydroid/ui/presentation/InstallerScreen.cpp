@@ -34,11 +34,6 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 20, 20, 20);
     setup = new Setup();
-    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
-    goBackButton->setOnClick([this]() {
-        emit goToHome();
-    });
-    layout->addWidget(goBackButton);
     layout->addWidget(setup);
     setLayout(layout);
 }

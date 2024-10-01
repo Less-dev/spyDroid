@@ -22,96 +22,77 @@
 #include <QLabel>
 #include <QCheckBox>
 
-
-
-
 Setup::Setup(QWidget *parent)
     : QWidget(parent)
 {
-    // Crear el layout principal y establecer márgenes de 70px
     layout = new QHBoxLayout(this);
-    layout->setContentsMargins(70, 70, 70, 70);
-    layout->setSpacing(0); // Elimina el espacio extra entre widgets
+    layout->setContentsMargins(20, 20, 20, 20);  // Márgenes más pequeños
+    layout->setSpacing(20);
     this->setLayout(layout);
 
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
     QHBoxLayout *imageLayout = new QHBoxLayout();
 
-    // Crear QLabel para la imagen
     QLabel *imageLabel = new QLabel(this);
-    QPixmap pixmap(":setup");  // Ruta al recurso de imagen
+    QPixmap pixmap(":setup");
     imageLabel->setPixmap(pixmap);
     imageLabel->setMaximumWidth(300);
     imageLabel->setScaledContents(true);
     imageLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
-    // Agregar la imagen al layout horizontal
     imageLayout->addWidget(imageLabel, 0, Qt::AlignLeft | Qt::AlignTop);
 
-    // Agregar el layout de la imagen al layout principal
     layout->addLayout(imageLayout);
-
-    // Añadir expansor flexible para equilibrar el espacio entre la imagen y el contenido
     layout->addStretch();
 
-    // Crear un layout vertical para el título, descripción y casilla
     QVBoxLayout *titleLayout = new QVBoxLayout();
 
-    // Crear QLabel para el título "INSTALADOR"
     QLabel *titleLabel = new QLabel("BIENVENIDO A LA CONFIGURACIÓN DE SPYDROID", this);
-
-    // Estilo del texto: color blanco, tamaño 20px y negrita
     QFont titleFont;
     titleFont.setPointSize(20);
     titleFont.setBold(true);
     titleLabel->setFont(titleFont);
     titleLabel->setStyleSheet("color: white;");
-
-    // Alinear el título a la parte superior y centrado horizontalmente
     titleLabel->setAlignment(Qt::AlignHCenter | Qt::AlignTop);
+    titleLabel->setWordWrap(true);  // Ajuste de línea automática
 
-    // Agregar el título al layout vertical
+    titleLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+    titleLabel->setMinimumHeight(50);
+
     titleLayout->addWidget(titleLabel, 0, Qt::AlignTop | Qt::AlignHCenter);
+    titleLayout->addSpacing(40);
 
-    // Añadir espacio de 30px entre el título y la descripción
-    titleLayout->addSpacing(100);
+    QLabel *descriptionLabelPart1 = new QLabel(
+        "La configuración lo guiará a través de la instalación de spydroid.", this);
+    QLabel *descriptionLabelPart2 = new QLabel(
+        "Se recomienda cerrar todas las demás aplicaciones antes de iniciar la instalación. Esto permitirá actualizar los archivos del sistema relevantes sin tener que reiniciar el equipo.", this);
 
-    // Crear QLabel para la descripción "Lorem ipsum"
-    QLabel *descriptionLabel = new QLabel(
-        "La configuración lo guiará a través de la instalación de spydroid. \n Se recomienda cerrar todas las demás aplicaciones antes de iniciar la instalación. Esto permitirá actualizar los archivos del sistema relevantes sin tener que reiniciar el equipo."
-        ,
-        this);
-
-    // Estilo del texto: color blanco pastel y tamaño 12px
     QFont descriptionFont;
     descriptionFont.setPointSize(12);
-    descriptionLabel->setFont(descriptionFont);
-    descriptionLabel->setStyleSheet("color: #D3D3D3;");  // Color blanco pastel
-    descriptionLabel->setWordWrap(true);  // Permitir que el texto sea multilínea
-    descriptionLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    
-    // Establecer un tamaño fijo de altura de 200px para la descripción
-    titleLayout->addWidget(descriptionLabel, 0, Qt::AlignLeft | Qt::AlignTop);
-    
+    descriptionLabelPart1->setFont(descriptionFont);
+    descriptionLabelPart1->setStyleSheet("color: #D3D3D3;");
+    descriptionLabelPart1->setWordWrap(true);
+    descriptionLabelPart1->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    descriptionLabelPart2->setFont(descriptionFont);
+    descriptionLabelPart2->setStyleSheet("color: #D3D3D3;");
+    descriptionLabelPart2->setWordWrap(true);
+    descriptionLabelPart2->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+
+    // Añadir ambos QLabel al layout
+    titleLayout->addWidget(descriptionLabelPart1, 0, Qt::AlignLeft | Qt::AlignTop);
+    titleLayout->addWidget(descriptionLabelPart2, 0, Qt::AlignLeft | Qt::AlignTop);
 
     QCheckBox *startCheckBox = new QCheckBox("Empezar spydroid", this);
-    startCheckBox->setFixedHeight(100);
-    // Estilo del texto: color blanco pastel
+    startCheckBox->setFixedHeight(40);
     startCheckBox->setStyleSheet("color: #D3D3D3;");
+    startCheckBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
-    // Alinear la casilla de verificación a la izquierda
     titleLayout->addWidget(startCheckBox, 0, Qt::AlignLeft | Qt::AlignTop);
-
-    // Añadir expansor para empujar el contenido hacia arriba
     titleLayout->addStretch();
 
-    // Agregar el layout del título al layout principal
     layout->addLayout(titleLayout);
-
-    // Añadir otro expansor para empujar el título y el contenido hacia el centro
     layout->addStretch();
 }
-
 
 
 void Setup::paintEvent(QPaintEvent *event)
@@ -133,6 +114,6 @@ void Setup::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     // Dibujar un rectángulo redondeado con márgenes
-    int margin = 70;
+    int margin = 15;
     painter.drawRoundedRect(margin, margin, width() - 2 * margin, height() - 2 * margin, 15, 15);
 }
