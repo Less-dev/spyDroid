@@ -33,6 +33,7 @@ set(HEADERS
     src/spydroid/ui/widgets/CodeEditor.h
     src/spydroid/ui/widgets/FileExplorer.h
     src/spydroid/ui/widgets/FileWidget.h
+    src/spydroid/ui/widgets/Setup.h
 )
 
 set(SOURCES
@@ -55,6 +56,7 @@ set(SOURCES
     src/spydroid/ui/widgets/CodeEditor.cpp
     src/spydroid/ui/widgets/FileExplorer.cpp
     src/spydroid/ui/widgets/FileWidget.cpp
+    src/spydroid/ui/widgets/Setup.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

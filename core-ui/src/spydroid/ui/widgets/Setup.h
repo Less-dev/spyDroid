@@ -15,31 +15,28 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef INSTALLER_SCREEN_H
-#define INSTALLER_SCREEN_H
+#ifndef SETUP_H
+#define SETUP_H
 
 #include <QWidget>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
-#include <QPaintEvent>
-#include "../widgets/Setup.h"
+#include <QHBoxLayout>
+#include <QPaintEvent>  // Incluir para manejar el paintEvent
 
-class InstallerScreen : public QWidget
+class Setup : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit InstallerScreen(QWidget *parent = nullptr);
-    
-signals:
-    void goToHome();
+    // Constructor
+    explicit Setup(QWidget *parent = nullptr);
+
+protected:
+    // Método protegido para manejar el evento de pintura
+    void paintEvent(QPaintEvent *event) override;
+
 private:
-    QVBoxLayout* layout;
-    Setup* setup;
+    // Layout principal del contenedor
+    QHBoxLayout* layout;
 };
 
-#endif // INSTALLER_SCREEN_H
+#endif // CONTAINER_SETUP_H

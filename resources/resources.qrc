@@ -2,6 +2,7 @@
     
     <qresource prefix="">
         <file alias ="background">drawable/background.png</file>
+        <file alias ="setup">drawable/banner_setup.png</file>
     </qresource>
 
     <qresource prefix="/icons">

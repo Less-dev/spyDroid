@@ -20,6 +20,7 @@
 #include "InstallerScreen.h"
 #include "../widgets/ItemBoard.h"
 #include "../widgets/GoBack.h"
+#include <QSpacerItem>
 
 
 InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
@@ -29,52 +30,15 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
     pal.setColor(QPalette::Window, QColor("#000000"));
     this->setAutoFillBackground(true);
     this->setPalette(pal);
-    
-    layout = new QVBoxLayout(this);
 
+    layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 20, 20, 20);
-    
+    setup = new Setup();
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
         emit goToHome();
     });
-    layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
-
+    layout->addWidget(goBackButton);
+    layout->addWidget(setup);
     setLayout(layout);
-}
-
-
-void InstallerScreen::paintEvent(QPaintEvent *event) {
-    QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    QPixmap background(":background");
-
-    const int maxWidth = 800;
-    const int maxHeight = 800;
-    const qreal scaleFactor = 0.9;
-
-    QSize maxSize(maxWidth, maxHeight);
-    QSize scaledSize = background.size().scaled(this->size().boundedTo(maxSize), Qt::KeepAspectRatio);
-
-    scaledSize.setWidth(scaledSize.width() * scaleFactor);
-    scaledSize.setHeight(scaledSize.height() * scaleFactor);
-
-    QRect targetRect((width() - scaledSize.width()) / 2, (height() - scaledSize.height()) / 2, 
-                     scaledSize.width(), scaledSize.height());
-
-    QPixmap scaledPixmap = background.scaled(scaledSize, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    painter.drawPixmap(targetRect, scaledPixmap);
-
-    QPen pen(QColor("#FF0000"));
-    pen.setWidth(4);
-    painter.setPen(pen);
-
-    QBrush brush(Qt::NoBrush);
-    painter.setBrush(brush);
-
-    int padding = 15;
-    painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
-    
-    QWidget::paintEvent(event);
 }

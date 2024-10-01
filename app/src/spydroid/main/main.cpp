@@ -36,6 +36,8 @@
 #include "../../../../core-ui/src/spydroid/ui/presentation/VideosScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/AudiosScreen.h"
 #include "../../../../core-ui/src/spydroid/ui/presentation/DocumentsScreen.h"
+#include <QScreen>
+
 
 // Widget index
 enum ScreenIndex {
@@ -53,16 +55,40 @@ enum ScreenIndex {
     DocumentsScreenIndex
 };
 
-// Function to handle navigation
+void setInstallerScreenSize(QStackedWidget& stackedWidget) {
+    // Get Size screen user
+    QScreen* screen = QGuiApplication::primaryScreen();
+    QRect screenGeometry = screen->geometry();
+    
+    // 70% size screen
+    int width = screenGeometry.width() * 0.7;
+    int height = screenGeometry.height() * 0.7;
+    stackedWidget.setFixedSize(width, height);
+}
+
+void enableResizableWindow(QStackedWidget& stackedWidget) {
+    // Restablecer la ventana para que sea redimensionable
+    stackedWidget.setMaximumSize(QWIDGETSIZE_MAX, QWIDGETSIZE_MAX);
+    stackedWidget.showMaximized();
+}
+
 void navigateTo(QWidget* widget, QStackedWidget& stackedWidget, const QString& title) {
     if (widget) {
         stackedWidget.setCurrentWidget(widget);
         stackedWidget.setWindowTitle(title);
+
+        // Comprobar si estamos en la InstallerScreen para deshabilitar redimensionamiento
+        if (title == "Instalador") {
+            setInstallerScreenSize(stackedWidget);
+        } else {
+            enableResizableWindow(stackedWidget);
+        }
     } else {
         qWarning() << "Widget is null, cannot navigate.";
         QMessageBox::warning(nullptr, "Navigation Error", "Unable to navigate, target screen is not available.");
     }
 }
+
 
 int main(int argc, char *argv[]) {
     std::string filePath = "/tmp/vnc_viewer";
@@ -122,11 +148,13 @@ int main(int argc, char *argv[]) {
     if (isDependencySuccessful) {
         stackedWidget.setCurrentIndex(HomeScreenIndex);
         stackedWidget.setWindowTitle("SPYDROID");
+        enableResizableWindow(stackedWidget);
     } else {
         stackedWidget.setCurrentIndex(InstallerScreenIndex);
         stackedWidget.setWindowTitle("Instalador");
+        setInstallerScreenSize(stackedWidget);
     }
-    stackedWidget.showMaximized();
+    stackedWidget.show();
 
     // Navigation connections (verify that the signals exist in the classes)
     QObject::connect(installerScreen, &InstallerScreen::goToHome, [&stackedWidget, homeScreen]() {
