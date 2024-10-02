@@ -43,6 +43,7 @@ private:
     Setup* setup;
     SetupSettings* setupSettings;
     void depen();
+    void back();
 };
 
 #endif // INSTALLER_SCREEN_H

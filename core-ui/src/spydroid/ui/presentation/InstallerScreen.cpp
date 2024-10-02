@@ -37,6 +37,7 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
     setupSettings = new SetupSettings();
     setupSettings->setVisible(false);
     connect(setup, &Setup::nextPage, this, &InstallerScreen::depen);
+    connect(setupSettings, &SetupSettings::backPage, this, &InstallerScreen::back);
     layout->addWidget(setup);
     layout->addWidget(setupSettings);
     setLayout(layout);
@@ -46,4 +47,9 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
 void InstallerScreen::depen() {
     setup->setVisible(false);
     setupSettings->setVisible(true);
+}
+
+void InstallerScreen::back() {
+    setupSettings->setVisible(false);
+    setup->setVisible(true);
 }

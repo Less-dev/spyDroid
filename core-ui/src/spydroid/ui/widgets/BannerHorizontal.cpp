@@ -19,19 +19,24 @@ void BannerHorizontal::setupUI()
     setMaximumHeight(heightSize);
 
     // Establecer fondo blanco pastel para el componente
-    //setStyleSheet("background-color: #FDF5E6;"); // Blanco pastel
+    // setStyleSheet("background-color: #FDF5E6;"); // Blanco pastel
 
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
     mainLayout->setContentsMargins(5.5, 5.2, 5.5, 0);  // Márgenes: izquierda, arriba, derecha, abajo
     mainLayout->setSpacing(0);
 
-    // 1. Imagen a la izquierda
+    // 1. Layout horizontal para la imagen y el texto
+    QHBoxLayout *horizontalLayout = new QHBoxLayout();
+    horizontalLayout->setSpacing(0);
+    horizontalLayout->setContentsMargins(0, 0, 0, 0);
+
+    // 2. Imagen a la izquierda
     imageLabel = new QLabel(this);
     QPixmap pixmap(":installer");
     imageLabel->setPixmap(pixmap.scaled(300, heightSize, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
     imageLabel->setFixedSize(300, heightSize);
 
-    mainLayout->addWidget(imageLabel);
+    horizontalLayout->addWidget(imageLabel);
 
     // Layout para el texto
     QVBoxLayout *textLayout = new QVBoxLayout();
@@ -59,7 +64,17 @@ void BannerHorizontal::setupUI()
     descriptionLabel->setStyleSheet("color: black;");
     textLayout->addWidget(descriptionLabel);
 
-    mainLayout->addLayout(textLayout);
+    horizontalLayout->addLayout(textLayout);
+    mainLayout->addLayout(horizontalLayout);
+
+    // 3. Agregar un divisor horizontal (QFrame)
+    QFrame *divider = new QFrame(this);
+    divider->setFrameShape(QFrame::HLine);
+    divider->setFrameShadow(QFrame::Sunken);
+    divider->setStyleSheet("color: red; background-color: red;");
+    divider->setFixedHeight(2);  // Definir la altura del divisor
+
+    mainLayout->addWidget(divider);  // Agregar el divisor al layout principal
 
     setLayout(mainLayout);
 }

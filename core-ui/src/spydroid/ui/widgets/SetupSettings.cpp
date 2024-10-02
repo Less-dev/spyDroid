@@ -38,7 +38,7 @@ SetupSettings::SetupSettings(QWidget *parent)
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
     bottomBarInstaller = new BottomBarInstaller();
     bottomBarInstaller->setCustomButtonText("Siguiente");
-    bottomBarInstaller->setBackButtonEnabled(false);
+    bottomBarInstaller->setBackButtonEnabled(true);
     bottomBarInstaller->setCustomButtonEnabled(false);
     bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
@@ -46,6 +46,7 @@ SetupSettings::SetupSettings(QWidget *parent)
 
     // SIGNALS
     connect(bottomBarInstaller, &BottomBarInstaller::customButtonClicked, this, &SetupSettings::goToNextPage);
+    connect(bottomBarInstaller, &BottomBarInstaller::backButtonClicked, this, &SetupSettings::goToBackPage);
 }
 
 void SetupSettings::onStartCheckBoxStateChanged(int state)
@@ -53,6 +54,11 @@ void SetupSettings::onStartCheckBoxStateChanged(int state)
     // El botón de "Siguiente" se habilita si el checkbox está seleccionado (estado "Qt::Checked")
     bool isChecked = (state == Qt::Checked);
     bottomBarInstaller->setCustomButtonEnabled(isChecked);
+}
+
+
+void SetupSettings::goToBackPage() {
+    emit backPage();
 }
 
 void SetupSettings::goToNextPage() {

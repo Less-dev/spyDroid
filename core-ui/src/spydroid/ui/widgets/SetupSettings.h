@@ -37,6 +37,7 @@ protected:
 
 signals:
     void nextPage();
+    void backPage();
     
 private:
     QVBoxLayout* layout;
@@ -45,6 +46,7 @@ private:
     BottomBarInstaller* bottomBarInstaller;
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();
+    void goToBackPage();
 };
 
 #endif // SETUP_SETTINGS_H
