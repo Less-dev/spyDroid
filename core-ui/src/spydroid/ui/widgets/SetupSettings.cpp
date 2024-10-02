@@ -26,21 +26,13 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QFrame>
+#include "BrowserSetup.h"
 
-// Definición del CardWidget
 class CardWidget : public QWidget {
 public:
     CardWidget(QWidget *parent = nullptr) : QWidget(parent) {
-        // Configurar el marco (la tarjeta) con el borde superior ajustado
+        // Configurar el marco (la tarjeta) sin aplicar tamaños fijos, ajustándose al contenido
         QFrame *card = new QFrame(this);
-
-        // Aplicar un margen negativo en el borde superior para desplazarlo hacia abajo
-        card->setStyleSheet(
-            "QFrame { border: 2px solid red; border-radius: 15px; background-color: black; "
-            "margin-top: 10px; /* Desplazar el borde superior hacia abajo */ }"
-        );
-
-        card->setFixedSize(450, 150);
 
         // Título que sobresale de la parte superior y está alineado a la izquierda
         QLabel *title = new QLabel("Ubicación de instalación de spydroid", this);
@@ -50,12 +42,53 @@ public:
         title->move(25, -2);  // Posicionarlo fuera del borde superior y a la izquierda
         title->raise();  // Asegurar que el título esté por encima de otros widgets
 
-        // Layout vertical para centrar el contenido
+        // Layout para el contenido dentro de la tarjeta
         QVBoxLayout *layout = new QVBoxLayout(card);
-        layout->setAlignment(Qt::AlignCenter);
-        card->setLayout(layout);
+        layout->setContentsMargins(20, 70, 20, 20);  // Padding de 20px en todos los lados
+        layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);  // Alinear los textos en la parte superior izquierda
+
+        // Crear un QLabel para el texto principal (renombrado a textDescription)
+        QLabel *textDescription = new QLabel("La ubicación especificada debe tener al menos 500 MB de espacio libre.", card);
+        textDescription->setStyleSheet("QLabel { color: white; font-size: 20px; }");
+
+        // Crear un segundo QLabel para el texto secundario
+        QLabel *secondaryText = new QLabel("Haga click en Explorador para personalizar", card);
+        secondaryText->setStyleSheet("QLabel { color: white; font-size: 13.5px; }");  // Tamaño de fuente más pequeño
+
+        // Añadir los textos al layout
+        layout->addWidget(textDescription);
+        layout->addWidget(secondaryText);
+
+        layout->addSpacing(20);
+
+        // Añadir el componente BrowserSetup debajo de secondaryText
+        BrowserSetup *browserSetup = new BrowserSetup(card);
+        layout->addWidget(browserSetup);
+
+        card->setLayout(layout);  // Aplicar el layout a la tarjeta
+    }
+
+protected:
+    // Sobrescribir el paintEvent para dibujar el borde manualmente
+    void paintEvent(QPaintEvent *event) override {
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        // Establecer el color del borde y su grosor
+        QPen pen(Qt::red, 2);  // Color rojo, grosor de 2px
+        painter.setPen(pen);
+        painter.setBrush(QBrush(Qt::black));  // Fondo negro
+
+        // Dibujar el borde y el fondo con esquinas redondeadas
+        QRect rect = this->rect();
+        rect.adjust(1, 1, -1, -1);  // Ajustar para evitar que el borde sobresalga del widget
+        painter.drawRoundedRect(rect, 15, 15);  // Esquinas redondeadas de 15px de radio
+
+        // Llamar al evento base para continuar con el procesamiento predeterminado
+        QWidget::paintEvent(event);
     }
 };
+
 
 // Modificación en SetupSettings para centrar el CardWidget
 SetupSettings::SetupSettings(QWidget *parent)
@@ -75,10 +108,11 @@ SetupSettings::SetupSettings(QWidget *parent)
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
 
     // Crear CardWidget y añadirlo centrado
+    layout->addStretch();
     CardWidget* content = new CardWidget();
-    content->setMinimumSize(450, 150);
+    content->setMinimumSize(750, 300);
     layout->addWidget(content, 0, Qt::AlignCenter);  // Alinear al centro del layout
-
+    layout->addStretch();
 
     // Añadir la barra inferior
     bottomBarInstaller = new BottomBarInstaller();

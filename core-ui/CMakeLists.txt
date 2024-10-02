@@ -37,6 +37,7 @@ set(HEADERS
     src/spydroid/ui/widgets/SetupSettings.h
     src/spydroid/ui/widgets/BottomBarInstaller.h
     src/spydroid/ui/widgets/BannerHorizontal.h
+    src/spydroid/ui/widgets/BrowserSetup.h
 )
 
 set(SOURCES
@@ -63,6 +64,7 @@ set(SOURCES
     src/spydroid/ui/widgets/SetupSettings.cpp
     src/spydroid/ui/widgets/BottomBarInstaller.cpp
     src/spydroid/ui/widgets/BannerHorizontal.cpp
+    src/spydroid/ui/widgets/BrowserSetup.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
