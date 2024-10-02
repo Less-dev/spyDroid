@@ -34,6 +34,7 @@ set(HEADERS
     src/spydroid/ui/widgets/FileExplorer.h
     src/spydroid/ui/widgets/FileWidget.h
     src/spydroid/ui/widgets/Setup.h
+    src/spydroid/ui/widgets/BottomBarInstaller.h
 )
 
 set(SOURCES
@@ -57,6 +58,7 @@ set(SOURCES
     src/spydroid/ui/widgets/FileExplorer.cpp
     src/spydroid/ui/widgets/FileWidget.cpp
     src/spydroid/ui/widgets/Setup.cpp
+    src/spydroid/ui/widgets/BottomBarInstaller.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

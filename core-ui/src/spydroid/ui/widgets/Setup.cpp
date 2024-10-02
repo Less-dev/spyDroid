@@ -25,9 +25,10 @@
 Setup::Setup(QWidget *parent)
     : QWidget(parent)
 {
-    layout = new QHBoxLayout(this);
-    layout->setContentsMargins(20, 20, 20, 20);  // Márgenes más pequeños
-    layout->setSpacing(20);
+    layout = new QVBoxLayout(this);
+    content = new QHBoxLayout(this);
+    content->setContentsMargins(20, 20, 20, 20);  // Márgenes más pequeños
+    content->setSpacing(20);
     this->setLayout(layout);
 
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
@@ -42,8 +43,8 @@ Setup::Setup(QWidget *parent)
 
     imageLayout->addWidget(imageLabel, 0, Qt::AlignLeft | Qt::AlignTop);
 
-    layout->addLayout(imageLayout);
-    layout->addStretch();
+    content->addLayout(imageLayout);
+    content->addStretch();
 
     QVBoxLayout *titleLayout = new QVBoxLayout();
 
@@ -78,7 +79,7 @@ Setup::Setup(QWidget *parent)
     descriptionLabelPart2->setWordWrap(true);
     descriptionLabelPart2->setAlignment(Qt::AlignLeft | Qt::AlignTop);
 
-    // Añadir ambos QLabel al layout
+    // Añadir ambos QLabel al content
     titleLayout->addWidget(descriptionLabelPart1, 0, Qt::AlignLeft | Qt::AlignTop);
     titleLayout->addWidget(descriptionLabelPart2, 0, Qt::AlignLeft | Qt::AlignTop);
 
@@ -89,9 +90,24 @@ Setup::Setup(QWidget *parent)
 
     titleLayout->addWidget(startCheckBox, 0, Qt::AlignLeft | Qt::AlignTop);
     titleLayout->addStretch();
+    content->addLayout(titleLayout);
 
-    layout->addLayout(titleLayout);
-    layout->addStretch();
+    bottomBarInstaller = new BottomBarInstaller();
+    bottomBarInstaller->setCustomButtonText("Siguiente");
+    bottomBarInstaller->setBackButtonEnabled(false);
+    bottomBarInstaller->setCustomButtonEnabled(false);
+    bottomBarInstaller->setCancelButtonEnabled(true);
+    layout->addLayout(content);
+    layout->addWidget(bottomBarInstaller);
+    content->addStretch();
+    connect(startCheckBox, &QCheckBox::stateChanged, this, &Setup::onStartCheckBoxStateChanged);
+}
+
+void Setup::onStartCheckBoxStateChanged(int state)
+{
+    // El botón de "Siguiente" se habilita si el checkbox está seleccionado (estado "Qt::Checked")
+    bool isChecked = (state == Qt::Checked);
+    bottomBarInstaller->setCustomButtonEnabled(isChecked);
 }
 
 
@@ -114,6 +130,6 @@ void Setup::paintEvent(QPaintEvent *event)
     painter.setPen(pen);
 
     // Dibujar un rectángulo redondeado con márgenes
-    int margin = 15;
+    int margin = 12.5;
     painter.drawRoundedRect(margin, margin, width() - 2 * margin, height() - 2 * margin, 15, 15);
 }

@@ -61,8 +61,8 @@ void setInstallerScreenSize(QStackedWidget& stackedWidget) {
     QRect screenGeometry = screen->geometry();
     
     // 70% size screen
-    int width = screenGeometry.width() * 0.7;
-    int height = screenGeometry.height() * 0.7;
+    int width = screenGeometry.width() * 0.75;
+    int height = screenGeometry.height() * 0.75;
     stackedWidget.setFixedSize(width, height);
 }
 

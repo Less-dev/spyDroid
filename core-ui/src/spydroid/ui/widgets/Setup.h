@@ -20,23 +20,25 @@
 
 #include <QWidget>
 #include <QHBoxLayout>
-#include <QPaintEvent>  // Incluir para manejar el paintEvent
+#include <QVBoxLayout>
+#include <QPaintEvent>
+#include "BottomBarInstaller.h"
 
 class Setup : public QWidget
 {
     Q_OBJECT
 
 public:
-    // Constructor
     explicit Setup(QWidget *parent = nullptr);
 
 protected:
-    // Método protegido para manejar el evento de pintura
     void paintEvent(QPaintEvent *event) override;
 
 private:
-    // Layout principal del contenedor
-    QHBoxLayout* layout;
+    QVBoxLayout* layout;
+    QHBoxLayout* content;
+    BottomBarInstaller* bottomBarInstaller;
+    void onStartCheckBoxStateChanged(int state);
 };
 
 #endif // CONTAINER_SETUP_H
