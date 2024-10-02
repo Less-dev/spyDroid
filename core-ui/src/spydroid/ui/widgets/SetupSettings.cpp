@@ -22,29 +22,73 @@
 #include <QLabel>
 #include <QCheckBox>
 
+#include <QWidget>
+#include <QLabel>
+#include <QVBoxLayout>
+#include <QFrame>
+
+// Definición del CardWidget
+class CardWidget : public QWidget {
+public:
+    CardWidget(QWidget *parent = nullptr) : QWidget(parent) {
+        // Configurar el marco (la tarjeta) con el borde superior ajustado
+        QFrame *card = new QFrame(this);
+
+        // Aplicar un margen negativo en el borde superior para desplazarlo hacia abajo
+        card->setStyleSheet(
+            "QFrame { border: 2px solid red; border-radius: 15px; background-color: black; "
+            "margin-top: 10px; /* Desplazar el borde superior hacia abajo */ }"
+        );
+
+        card->setFixedSize(450, 150);
+
+        // Título que sobresale de la parte superior y está alineado a la izquierda
+        QLabel *title = new QLabel("Ubicación de instalación de spydroid", this);
+        title->setStyleSheet(
+            "QLabel { color: white; background-color: black; font-size: 16px; padding: 0 10px; }"
+        );
+        title->move(25, -2);  // Posicionarlo fuera del borde superior y a la izquierda
+        title->raise();  // Asegurar que el título esté por encima de otros widgets
+
+        // Layout vertical para centrar el contenido
+        QVBoxLayout *layout = new QVBoxLayout(card);
+        layout->setAlignment(Qt::AlignCenter);
+        card->setLayout(layout);
+    }
+};
+
+// Modificación en SetupSettings para centrar el CardWidget
 SetupSettings::SetupSettings(QWidget *parent)
     : QWidget(parent)
 {
+    // Configurar layout principal
     layout = new QVBoxLayout(this);
-    content = new QHBoxLayout(this);
-    content->setContentsMargins(20, 20, 20, 20);  // Márgenes más pequeños
-    content->setSpacing(20);
     this->setLayout(layout);
 
-    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::MinimumExpanding);
+    // Asegurar que el layout expanda para ocupar todo el espacio disponible
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+
+    // Añadir la barra superior
     topBarInstaller = new BannerHorizontal();
     topBarInstaller->setTitle("Ajustes de Configuración");
     topBarInstaller->setDescription("Ubicaciones de instalación");
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
+
+    // Crear CardWidget y añadirlo centrado
+    CardWidget* content = new CardWidget();
+    content->setMinimumSize(450, 150);
+    layout->addWidget(content, 0, Qt::AlignCenter);  // Alinear al centro del layout
+
+
+    // Añadir la barra inferior
     bottomBarInstaller = new BottomBarInstaller();
     bottomBarInstaller->setCustomButtonText("Siguiente");
     bottomBarInstaller->setBackButtonEnabled(true);
     bottomBarInstaller->setCustomButtonEnabled(false);
     bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
-    content->addStretch();
 
-    // SIGNALS
+    // Conectar señales
     connect(bottomBarInstaller, &BottomBarInstaller::customButtonClicked, this, &SetupSettings::goToNextPage);
     connect(bottomBarInstaller, &BottomBarInstaller::backButtonClicked, this, &SetupSettings::goToBackPage);
 }

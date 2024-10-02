@@ -41,7 +41,6 @@ signals:
     
 private:
     QVBoxLayout* layout;
-    QHBoxLayout* content;
     BannerHorizontal* topBarInstaller;
     BottomBarInstaller* bottomBarInstaller;
     void onStartCheckBoxStateChanged(int state);
