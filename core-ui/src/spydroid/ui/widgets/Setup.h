@@ -34,11 +34,15 @@ public:
 protected:
     void paintEvent(QPaintEvent *event) override;
 
+signals:
+    void nextPage();
+    
 private:
     QVBoxLayout* layout;
     QHBoxLayout* content;
     BottomBarInstaller* bottomBarInstaller;
     void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
 };
 
 #endif // CONTAINER_SETUP_H

@@ -40,6 +40,7 @@ signals:
 private:
     QVBoxLayout* layout;
     Setup* setup;
+    void depen();
 };
 
 #endif // INSTALLER_SCREEN_H

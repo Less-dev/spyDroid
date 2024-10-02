@@ -100,7 +100,10 @@ Setup::Setup(QWidget *parent)
     layout->addLayout(content);
     layout->addWidget(bottomBarInstaller);
     content->addStretch();
+
+    // SIGNALS
     connect(startCheckBox, &QCheckBox::stateChanged, this, &Setup::onStartCheckBoxStateChanged);
+    connect(bottomBarInstaller, &BottomBarInstaller::customButtonClicked, this, &Setup::goToNextPage);
 }
 
 void Setup::onStartCheckBoxStateChanged(int state)
@@ -110,6 +113,9 @@ void Setup::onStartCheckBoxStateChanged(int state)
     bottomBarInstaller->setCustomButtonEnabled(isChecked);
 }
 
+void Setup::goToNextPage() {
+    emit nextPage();
+}
 
 void Setup::paintEvent(QPaintEvent *event)
 {
