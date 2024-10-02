@@ -98,7 +98,7 @@ Setup::Setup(QWidget *parent)
     bottomBarInstaller->setCustomButtonEnabled(false);
     bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addLayout(content);
-    layout->addWidget(bottomBarInstaller);
+    layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
     content->addStretch();
 
     // SIGNALS

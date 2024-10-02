@@ -2,7 +2,8 @@
     
     <qresource prefix="">
         <file alias ="background">drawable/background.png</file>
-        <file alias ="setup">drawable/banner_setup.png</file>
+        <file alias ="setup">drawable/banner_v.png</file>
+        <file alias ="installer">drawable/banner_h.png</file>
     </qresource>
 
     <qresource prefix="/icons">

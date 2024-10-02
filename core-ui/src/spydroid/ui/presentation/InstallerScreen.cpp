@@ -34,12 +34,16 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
     layout->setContentsMargins(20, 20, 20, 20);
     setup = new Setup();
+    setupSettings = new SetupSettings();
+    setupSettings->setVisible(false);
     connect(setup, &Setup::nextPage, this, &InstallerScreen::depen);
     layout->addWidget(setup);
+    layout->addWidget(setupSettings);
     setLayout(layout);
 }
 
 
 void InstallerScreen::depen() {
     setup->setVisible(false);
+    setupSettings->setVisible(true);
 }

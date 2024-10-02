@@ -15,34 +15,36 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef INSTALLER_SCREEN_H
-#define INSTALLER_SCREEN_H
+#ifndef SETUP_SETTINGS_H
+#define SETUP_SETTINGS_H
 
 #include <QWidget>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
 #include <QPaintEvent>
-#include "../widgets/Setup.h"
-#include "../widgets/SetupSettings.h"
+#include "BottomBarInstaller.h"
+#include "BannerHorizontal.h"
 
-class InstallerScreen : public QWidget
+class SetupSettings : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit InstallerScreen(QWidget *parent = nullptr);
-    
+    explicit SetupSettings(QWidget *parent = nullptr);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 signals:
-    void goToHome();
+    void nextPage();
+    
 private:
     QVBoxLayout* layout;
-    Setup* setup;
-    SetupSettings* setupSettings;
-    void depen();
+    QHBoxLayout* content;
+    BannerHorizontal* topBarInstaller;
+    BottomBarInstaller* bottomBarInstaller;
+    void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
 };
 
-#endif // INSTALLER_SCREEN_H
+#endif // SETUP_SETTINGS_H
