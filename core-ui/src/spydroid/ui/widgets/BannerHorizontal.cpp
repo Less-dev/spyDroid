@@ -2,6 +2,11 @@
 #include <QHBoxLayout>
 #include <QFont>
 #include <QPalette>
+#include <QPainter>
+#include <QBrush>
+#include <QPen>
+#include <QRectF>
+#include <QPainterPath>
 
 BannerHorizontal::BannerHorizontal(QWidget *parent) : QWidget(parent)
 {
@@ -14,10 +19,10 @@ void BannerHorizontal::setupUI()
     setMaximumHeight(heightSize);
 
     // Establecer fondo blanco pastel para el componente
-    setStyleSheet("background-color: #FDF5E6;"); // Blanco pastel
+    //setStyleSheet("background-color: #FDF5E6;"); // Blanco pastel
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
-    mainLayout->setContentsMargins(5, 10, 5, 0);
+    mainLayout->setContentsMargins(5.5, 5.2, 5.5, 0);  // Márgenes: izquierda, arriba, derecha, abajo
     mainLayout->setSpacing(0);
 
     // 1. Imagen a la izquierda
@@ -25,9 +30,6 @@ void BannerHorizontal::setupUI()
     QPixmap pixmap(":installer");
     imageLabel->setPixmap(pixmap.scaled(300, heightSize, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation));
     imageLabel->setFixedSize(300, heightSize);
-
-    // Aplicar estilo para el borde redondeado en la esquina superior izquierda
-    imageLabel->setStyleSheet("border-top-left-radius: 15px;"); // Ajusta el radio como desees
 
     mainLayout->addWidget(imageLabel);
 
@@ -60,6 +62,43 @@ void BannerHorizontal::setupUI()
     mainLayout->addLayout(textLayout);
 
     setLayout(mainLayout);
+}
+
+void BannerHorizontal::paintEvent(QPaintEvent *event)
+{
+    QPainter painter(this);
+
+    // Configurar un pincel para el fondo (blanco pastel)
+    QBrush brush(QColor(253, 245, 230));  // Color blanco pastel (equivalente a #FDF5E6)
+    painter.setBrush(brush);
+    painter.setRenderHint(QPainter::Antialiasing);
+
+    // Configurar un borde transparente con grosor
+    QPen pen;
+    pen.setWidth(2);  // Grosor del borde (ajusta según tus necesidades)
+    pen.setColor(QColor(0, 0, 0, 128));  // Color negro con transparencia (alpha = 128)
+    painter.setPen(pen);
+
+    // Definir las dimensiones del componente, excluyendo los márgenes
+    QRectF rect = this->rect().adjusted(5.5, 5.2, -5.5, 0);  // Excluir los márgenes de 5px de izquierda, derecha y arriba
+
+    // Definir el radio para las esquinas superiores redondeadas
+    int radius = 12;
+
+    // Dibujar un rectángulo con esquinas superiores redondeadas y esquinas inferiores rectas
+    QPainterPath path;
+    path.moveTo(rect.topRight());  // Moverse al borde superior derecho
+    path.arcTo(QRectF(rect.right() - 2 * radius, rect.top(), 2 * radius, 2 * radius), 0, 90);  // Esquina superior derecha
+    path.arcTo(QRectF(rect.left(), rect.top(), 2 * radius, 2 * radius), 90, 90);  // Esquina superior izquierda
+    path.lineTo(rect.bottomLeft());  // Línea hasta la esquina inferior izquierda
+    path.lineTo(rect.bottomRight());  // Línea hasta la esquina inferior derecha
+    path.closeSubpath();  // Cerrar el camino
+
+    // Dibujar el camino con el borde y fondo
+    painter.drawPath(path);
+
+    // Llamar al método base para asegurarse de que se manejen otros eventos de pintura
+    QWidget::paintEvent(event);
 }
 
 

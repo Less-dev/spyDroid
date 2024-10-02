@@ -6,6 +6,7 @@
 #include <QPixmap>
 #include <QVBoxLayout>
 #include <QFrame>
+#include <QPaintEvent>
 
 class BannerHorizontal : public QWidget
 {
@@ -17,7 +18,8 @@ public:
     // Setters para el título y la descripción
     void setTitle(const QString &title);
     void setDescription(const QString &description);
-
+protected:
+    void paintEvent(QPaintEvent *event) override;
 private:
     QLabel *imageLabel;
     QLabel *titleLabel;
