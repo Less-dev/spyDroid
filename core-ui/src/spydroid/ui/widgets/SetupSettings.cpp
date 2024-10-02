@@ -118,7 +118,7 @@ SetupSettings::SetupSettings(QWidget *parent)
     bottomBarInstaller = new BottomBarInstaller();
     bottomBarInstaller->setCustomButtonText("Siguiente");
     bottomBarInstaller->setBackButtonEnabled(true);
-    bottomBarInstaller->setCustomButtonEnabled(false);
+    bottomBarInstaller->setCustomButtonEnabled(true);
     bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
 

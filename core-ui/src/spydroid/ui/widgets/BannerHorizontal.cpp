@@ -42,6 +42,7 @@ void BannerHorizontal::setupUI()
     QVBoxLayout *textLayout = new QVBoxLayout();
     textLayout->setContentsMargins(0, 0, 0, 0);
     textLayout->setSpacing(0);
+    
 
     // Título
     titleLabel = new QLabel(this);
@@ -59,6 +60,7 @@ void BannerHorizontal::setupUI()
     QFont descFont = descriptionLabel->font();
     descFont.setPointSize(12);
     descriptionLabel->setFont(descFont);
+    descriptionLabel->setWordWrap(true);
 
     // Cambiar el color del texto de la descripción a negro
     descriptionLabel->setStyleSheet("color: black;");

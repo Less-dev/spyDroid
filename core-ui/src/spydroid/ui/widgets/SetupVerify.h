@@ -15,40 +15,37 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef INSTALLER_SCREEN_H
-#define INSTALLER_SCREEN_H
+#ifndef SETUP_VERIFY_H
+#define SETUP_VERIFY_H
 
 #include <QWidget>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
 #include <QPaintEvent>
-#include "../widgets/Setup.h"
-#include "../widgets/SetupSettings.h"
-#include "../widgets/SetupVerify.h"
+#include "BottomBarInstaller.h"
+#include "BannerHorizontal.h"
 
-class InstallerScreen : public QWidget
+class SetupVerify : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit InstallerScreen(QWidget *parent = nullptr);
-    
+    explicit SetupVerify(QWidget *parent = nullptr);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+
 signals:
-    void goToHome();
+    void nextPage();
+    void backPage();
+    
 private:
     QVBoxLayout* layout;
-    Setup* setup;
-    SetupSettings* setupSettings;
-    SetupVerify* setupVerify;
-    void goToSetup();
-    void goToSetupSettings();
-    void goBackToSetupSettings();
-    void goToSetupVerify();
-    void goToFinished();
+    BannerHorizontal* topBarInstaller;
+    BottomBarInstaller* bottomBarInstaller;
+    void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
+    void goToBackPage();
 };
 
-#endif // INSTALLER_SCREEN_H
+#endif // SETUP_VERIFY_H

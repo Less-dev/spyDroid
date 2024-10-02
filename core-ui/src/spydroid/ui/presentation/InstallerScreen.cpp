@@ -36,20 +36,40 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
     setup = new Setup();
     setupSettings = new SetupSettings();
     setupSettings->setVisible(false);
-    connect(setup, &Setup::nextPage, this, &InstallerScreen::depen);
-    connect(setupSettings, &SetupSettings::backPage, this, &InstallerScreen::back);
+    setupVerify = new SetupVerify();
+    setupVerify->setVisible(false);
+    connect(setup, &Setup::nextPage, this, &InstallerScreen::goToSetupSettings);
+    connect(setupSettings, &SetupSettings::backPage, this, &InstallerScreen::goToSetup);
+    connect(setupSettings, &SetupSettings::nextPage, this, &InstallerScreen::goToSetupVerify);
+    connect(setupVerify, &SetupVerify::backPage, this, &InstallerScreen::goBackToSetupSettings);
+    connect(setupVerify, &SetupVerify::nextPage, this, &InstallerScreen::goToFinished);
     layout->addWidget(setup);
     layout->addWidget(setupSettings);
+    layout->addWidget(setupVerify);
     setLayout(layout);
 }
 
+void InstallerScreen::goToSetup() {
+    setupSettings->setVisible(false);
+    setup->setVisible(true);
+}
 
-void InstallerScreen::depen() {
+void InstallerScreen::goToSetupSettings() {
     setup->setVisible(false);
     setupSettings->setVisible(true);
 }
 
-void InstallerScreen::back() {
+void InstallerScreen::goBackToSetupSettings() {
+    setupVerify->setVisible(false);
+    setupSettings->setVisible(true);
+}
+
+void InstallerScreen::goToSetupVerify() {
     setupSettings->setVisible(false);
-    setup->setVisible(true);
+    setupVerify->setVisible(true);
+}
+
+void InstallerScreen::goToFinished() {
+    setupVerify->setVisible(false);
+    emit goToHome();
 }
