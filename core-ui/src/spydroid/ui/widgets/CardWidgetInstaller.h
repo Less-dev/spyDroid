@@ -23,6 +23,7 @@ protected:
 
 private:
     QFrame* card;
+    QLabel* title;
     QVBoxLayout* layout;
 };
 

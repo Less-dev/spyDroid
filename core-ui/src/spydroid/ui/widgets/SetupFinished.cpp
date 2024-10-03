@@ -31,22 +31,18 @@ SetupFinished::SetupFinished(QWidget *parent)
     layout = new QVBoxLayout(this);
     this->setLayout(layout);
 
-    // Asegurar que el layout expanda para ocupar todo el espacio disponible
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    // Añadir la barra superior
     topBarInstaller = new BannerHorizontal();
     topBarInstaller->setTitle("Descargando Componentes");
     topBarInstaller->setDescription("Este proceso puede tardar unos minutos");
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
 
-    // Crear CardWidgetSettings y añadirlo centrado
     layout->addStretch();
     content = new CardWidgetInstaller();
-    layout->addWidget(content, 0, Qt::AlignCenter);  // Alinear al centro del layout
+    layout->addWidget(content, 0, Qt::AlignCenter);
     layout->addStretch();
 
-    // Añadir la barra inferior
     bottomBarInstaller = new BottomBarInstaller();
     bottomBarInstaller->setCustomButtonText("Instalando");
     bottomBarInstaller->setBackButtonEnabled(false);
@@ -54,14 +50,12 @@ SetupFinished::SetupFinished(QWidget *parent)
     bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
 
-    // Conectar señales
     connect(bottomBarInstaller, &BottomBarInstaller::customButtonClicked, this, &SetupFinished::goToNextPage);
     connect(bottomBarInstaller, &BottomBarInstaller::backButtonClicked, this, &SetupFinished::goToBackPage);
 }
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)
 {
-    // El botón de "Siguiente" se habilita si el checkbox está seleccionado (estado "Qt::Checked")
     bool isChecked = (state == Qt::Checked);
     bottomBarInstaller->setCustomButtonEnabled(isChecked);
 }
@@ -121,7 +115,7 @@ void SetupFinished::resizeEvent(QResizeEvent *event)
     int newHeight = static_cast<int>(availableHeightForContent * 0.85);
 
     // Establecer el nuevo tamaño de CardWidgetVerify
-    //content->setFixedSize(newWidth, newHeight);
+    content->setFixedSize(newWidth, newHeight);
 
     // Esto asegura que CardWidgetVerify no se superpondrá a las barras superior e inferior
 }
