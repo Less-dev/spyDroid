@@ -24,6 +24,7 @@
 #include <QPaintEvent>
 #include "BottomBarInstaller.h"
 #include "BannerHorizontal.h"
+#include "CardWidgetVerify.h"
 
 class SetupVerify : public QWidget
 {
@@ -34,6 +35,7 @@ public:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event);
 
 signals:
     void nextPage();
@@ -42,6 +44,7 @@ signals:
 private:
     QVBoxLayout* layout;
     BannerHorizontal* topBarInstaller;
+    CardWidgetVerify* content;
     BottomBarInstaller* bottomBarInstaller;
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();
