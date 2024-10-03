@@ -27,7 +27,9 @@ CardWidgetVerify::CardWidgetVerify(QWidget *parent)
     float size_jdk = 493.6;
     float size_sdk_build_tools = 55.6;
     float size_sdk_platform_14 = 60.3;
-    float sizeTotal = size_jdk + size_sdk_build_tools + size_sdk_platform_14;
+    float size_sdk_platform_tools = 5.64;
+    float source_android = 43.4;
+    float sizeTotal = size_jdk + size_sdk_build_tools + size_sdk_platform_14 + size_sdk_platform_tools + source_android;
 
     QFrame *scrollableFrame = new QFrame(this);
     QVBoxLayout *scrollableLayout = new QVBoxLayout(scrollableFrame);
@@ -56,11 +58,21 @@ CardWidgetVerify::CardWidgetVerify(QWidget *parent)
     QString sdk_tools = "Android SDK Build-Tools 34  \t\t\t\t\t"+ QString::number(size_sdk_build_tools) + " MB";
     DescriptionLabel* component_2 = new DescriptionLabel(sdk_tools, this);
     scrollableLayout->addWidget(component_2);
+
     scrollableLayout->addSpacing(20);  
-    
     QString sdk_platform = "Android SDK Platform 14  \t\t\t\t\t\t"+ QString::number(size_sdk_platform_14) + " MB";
     DescriptionLabel* component_3 = new DescriptionLabel(sdk_platform, this);
     scrollableLayout->addWidget(component_3);
+
+    scrollableLayout->addSpacing(20);  
+    QString sdk_platform_tools = "Android SDK Platform-Tools  \t\t\t\t\t"+ QString::number(size_sdk_platform_tools) + " MB";
+    DescriptionLabel* component_4 = new DescriptionLabel(sdk_platform_tools, this);
+    scrollableLayout->addWidget(component_4);
+
+    scrollableLayout->addSpacing(20);  
+    QString android_34 = "Sources for Android 34  \t\t\t\t\t\t"+ QString::number(source_android) + " MB";
+    DescriptionLabel* component_5 = new DescriptionLabel(android_34, this);
+    scrollableLayout->addWidget(component_5);
 
     scrollableFrame->setLayout(scrollableLayout);
 
