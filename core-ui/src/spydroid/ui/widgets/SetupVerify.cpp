@@ -47,14 +47,14 @@ CardWidgetVerify(QWidget *parent = nullptr) : QWidget(parent) {
     mainLayout->setContentsMargins(20, 50, 20, 0);  
     mainLayout->setAlignment(Qt::AlignTop | Qt::AlignLeft); 
 
-    // Widgets sin scroll
-
-
-    // Crear el QScrollArea para los widgets que tendrán scroll
     QScrollArea *scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);  // Asegurarse que el contenido sea redimensionable
 
-    // Crear un QFrame que contendrá los widgets dentro del scroll
+    float size_jdk = 493.6;
+    float size_sdk_build_tools = 55.6;
+    float size_sdk_platform_14 = 60.3;
+    float sizeTotal = size_jdk + size_sdk_build_tools + size_sdk_platform_14;
+
     QFrame *scrollableFrame = new QFrame(this);
     QVBoxLayout *scrollableLayout = new QVBoxLayout(scrollableFrame);
     scrollableLayout->setContentsMargins(0, 0, 0, 0);  // Márgenes internos para el contenido del scroll
@@ -66,24 +66,27 @@ CardWidgetVerify(QWidget *parent = nullptr) : QWidget(parent) {
     scrollableLayout->addWidget(folder);
     TitleLabel* total_size_download = new TitleLabel("Tamaño Total de Descarga", this);
     scrollableLayout->addWidget(total_size_download);
-    DescriptionLabel* size_download = new DescriptionLabel("567 GB", this);
+    DescriptionLabel* size_download = new DescriptionLabel(QString::number(sizeTotal, 'f', 1) + " MB", this);
     scrollableLayout->addWidget(size_download);
     TitleLabel* jdk_componentent_download = new TitleLabel("JDK Componentes de Descarga", this);
     scrollableLayout->addWidget(jdk_componentent_download);
-    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
-    DescriptionLabel* component_1 = new DescriptionLabel("Open JDK 17 \t\t\t\t\t493.6 MB", this);
+    scrollableLayout->addSpacing(20); 
+    QString jdk = "Open JDK 17 \t\t\t\t\t"+ QString::number(size_jdk) + " MB";
+    DescriptionLabel* component_1 = new DescriptionLabel(jdk, this);
     scrollableLayout->addWidget(component_1);
-    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
+    scrollableLayout->addSpacing(20);  
     
     TitleLabel* sdk_componentes_download = new TitleLabel("SDK Componentes de Descarga", this);
     scrollableLayout->addWidget(sdk_componentes_download);
-    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
-    DescriptionLabel* component_2 = new DescriptionLabel("Android SDK Build-Tools 34 \t\t\t\t\t55.6 MB", this);
+    scrollableLayout->addSpacing(20); 
+    QString sdk_tools = "Android SDK Build-Tools 34  \t\t\t\t\t"+ QString::number(size_sdk_build_tools) + " MB";
+    DescriptionLabel* component_2 = new DescriptionLabel(sdk_tools, this);
     scrollableLayout->addWidget(component_2);
-    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
+    scrollableLayout->addSpacing(20);  
     
-    DescriptionLabel* component_3 = new DescriptionLabel("Android SDK Platform 14 \t\t\t\t\t\t60.3 MB", this);
-    scrollableLayout->addWidget(component_3);  // Añadir component_3
+    QString sdk_platform = "Android SDK Platform 14  \t\t\t\t\t\t"+ QString::number(size_sdk_platform_14) + " MB";
+    DescriptionLabel* component_3 = new DescriptionLabel(sdk_platform, this);
+    scrollableLayout->addWidget(component_3);
 
     scrollableFrame->setLayout(scrollableLayout);
 
@@ -91,8 +94,8 @@ CardWidgetVerify(QWidget *parent = nullptr) : QWidget(parent) {
     
     mainLayout->addWidget(scrollArea);
 
-    scrollArea->setFixedHeight(220);  // Puedes ajustar el tamaño para ver el scroll en acción
-    scrollArea->setFixedWidth(700);  // Puedes ajustar el tamaño para ver el scroll en acción
+    scrollArea->setFixedHeight(220); 
+    scrollArea->setFixedWidth(700);  
     card->setLayout(mainLayout);
 }
 
@@ -114,20 +117,16 @@ protected:
     }
 
 private:
-    // Definición de TitleLabel dentro de CardWidgetVerify
     class TitleLabel : public QLabel {
     public:
         TitleLabel(const QString &text, QWidget *parent = nullptr) : QLabel(text, parent) {
-            // Establecer estilo de texto: negrita, color blanco pastel y fuente de 15px
             setStyleSheet("QLabel { color: #F5F5F5; font-weight: bold; font-size: 15px; }");
         }
     };
 
-    // Definición de DescriptionLabel dentro de CardWidgetVerify
     class DescriptionLabel : public QLabel {
     public:
         DescriptionLabel(const QString &text, QWidget *parent = nullptr) : QLabel(text, parent) {
-            // Establecer estilo de texto: claro, color blanco pastel y fuente de 12px
             setStyleSheet("QLabel { color: #F5F5F5; font-weight: light; font-size: 12px; }");
         }
     };
@@ -148,7 +147,7 @@ SetupVerify::SetupVerify(QWidget *parent)
     layout->addStretch();
     CardWidgetVerify* content = new CardWidgetVerify();
     content->setMinimumSize(750, 300);
-    layout->addWidget(content, 0, Qt::AlignCenter);  // Alinear al centro del layout
+    layout->addWidget(content, 0, Qt::AlignCenter);
     layout->addStretch();
 
     bottomBarInstaller = new BottomBarInstaller();
@@ -164,7 +163,6 @@ SetupVerify::SetupVerify(QWidget *parent)
 
 void SetupVerify::onStartCheckBoxStateChanged(int state)
 {
-    // El botón de "Siguiente" se habilita si el checkbox está seleccionado (estado "Qt::Checked")
     bool isChecked = (state == Qt::Checked);
     bottomBarInstaller->setCustomButtonEnabled(isChecked);
 }
@@ -178,25 +176,21 @@ void SetupVerify::goToNextPage() {
     emit nextPage();
 }
 
+
 void SetupVerify::paintEvent(QPaintEvent *event)
 {
-    // Llamar al método de la clase base
     QWidget::paintEvent(event);
 
-    // Crear un objeto QPainter
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
-    // Configuración del pincel (brush) con transparencia
-    QBrush brush(QColor(0, 0, 0, 205));  // Color negro con transparencia
+    QBrush brush(QColor(0, 0, 0, 205));
     painter.setBrush(brush);
 
-    // Configuración del bolígrafo (pen) para el borde
-    QPen pen(QColor("#800000"));  // Color del borde (rojo oscuro)
-    pen.setWidth(4);  // Ancho del borde
+    QPen pen(QColor("#800000"));
+    pen.setWidth(4);  // Width border
     painter.setPen(pen);
 
-    // Dibujar un rectángulo redondeado con márgenes
     int margin = 12.5;
     painter.drawRoundedRect(margin, margin, width() - 2 * margin, height() - 2 * margin, 15, 15);
 }
