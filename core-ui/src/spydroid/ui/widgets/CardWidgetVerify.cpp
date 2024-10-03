@@ -24,55 +24,69 @@ CardWidgetVerify::CardWidgetVerify(QWidget *parent)
     scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);  // Asegurarse que el contenido sea redimensionable
 
-    float size_jdk = 493.6;
+    float size_ssdk = 538.65;
+    float size_sdk = 493.6;
     float size_sdk_build_tools = 55.6;
     float size_sdk_platform_14 = 60.3;
     float size_sdk_platform_tools = 5.64;
     float source_android = 43.4;
-    float sizeTotal = size_jdk + size_sdk_build_tools + size_sdk_platform_14 + size_sdk_platform_tools + source_android;
+    float sizeTotal =  size_ssdk + size_sdk + size_sdk_build_tools + size_sdk_platform_14 + size_sdk_platform_tools + source_android;
 
     QFrame *scrollableFrame = new QFrame(this);
     QVBoxLayout *scrollableLayout = new QVBoxLayout(scrollableFrame);
     scrollableLayout->setContentsMargins(0, 0, 0, 0);  // Márgenes internos para el contenido del scroll
     scrollableLayout->setAlignment(Qt::AlignTop);  // Alinear al tope
 
-    TitleLabel* skd_folder = new TitleLabel("Carpeta SDK", this);
-    scrollableLayout->addWidget(skd_folder);
-    DescriptionLabel* folder = new DescriptionLabel("/home/less/SPYDROID/Sdk", this);
-    scrollableLayout->addWidget(folder);
+
+    TitleLabel* ssdk_folder = new TitleLabel("Carpeta SSDK", this);
+    scrollableLayout->addWidget(ssdk_folder);
+    
+    DescriptionLabel* folder_ssdk = new DescriptionLabel("/home/less/SPYDROID/SSdk", this);
+    scrollableLayout->addWidget(folder_ssdk);
+
+    TitleLabel* sdk_folder = new TitleLabel("Carpeta SDK", this);
+    scrollableLayout->addWidget(sdk_folder);
+    DescriptionLabel* folder_sdk = new DescriptionLabel("/home/less/SPYDROID/Sdk", this);
+    scrollableLayout->addWidget(folder_sdk);
     TitleLabel* total_size_download = new TitleLabel("Tamaño Total de Descarga", this);
     scrollableLayout->addWidget(total_size_download);
-    DescriptionLabel* size_download = new DescriptionLabel(QString::number(sizeTotal, 'f', 1) + " MB", this);
+    DescriptionLabel* size_download = new DescriptionLabel(QString::number(sizeTotal / 1024.0, 'f', 1) + " GB", this);
     scrollableLayout->addWidget(size_download);
-    TitleLabel* jdk_componentent_download = new TitleLabel("JDK Componentes de Descarga", this);
+    TitleLabel* jdk_componentent_download = new TitleLabel("Spydroid Componentes de Descarga", this);
     scrollableLayout->addWidget(jdk_componentent_download);
-    scrollableLayout->addSpacing(20); 
-    QString jdk = "Open JDK 17 \t\t\t\t\t"+ QString::number(size_jdk) + " MB";
-    DescriptionLabel* component_1 = new DescriptionLabel(jdk, this);
+
+    scrollableLayout->addSpacing(20);
+    QString ssdk = "Spydroid SDK 0.0.1 \t\t\t\t"+ QString::number(size_ssdk) + " MB";
+    DescriptionLabel* component_1 = new DescriptionLabel(ssdk, this);
     scrollableLayout->addWidget(component_1);
+    scrollableLayout->addSpacing(20);
+
+    QString jdk = "Open JDK 17 \t\t\t\t\t"+ QString::number(size_sdk) + " MB";
+    DescriptionLabel* component_2 = new DescriptionLabel(jdk, this);
+    scrollableLayout->addWidget(component_2);
     scrollableLayout->addSpacing(20);  
     
     TitleLabel* sdk_componentes_download = new TitleLabel("SDK Componentes de Descarga", this);
     scrollableLayout->addWidget(sdk_componentes_download);
     scrollableLayout->addSpacing(20); 
     QString sdk_tools = "Android SDK Build-Tools 34  \t\t\t\t\t"+ QString::number(size_sdk_build_tools) + " MB";
-    DescriptionLabel* component_2 = new DescriptionLabel(sdk_tools, this);
-    scrollableLayout->addWidget(component_2);
-
-    scrollableLayout->addSpacing(20);  
-    QString sdk_platform = "Android SDK Platform 14  \t\t\t\t\t\t"+ QString::number(size_sdk_platform_14) + " MB";
-    DescriptionLabel* component_3 = new DescriptionLabel(sdk_platform, this);
+    DescriptionLabel* component_3 = new DescriptionLabel(sdk_tools, this);
     scrollableLayout->addWidget(component_3);
 
     scrollableLayout->addSpacing(20);  
-    QString sdk_platform_tools = "Android SDK Platform-Tools  \t\t\t\t\t"+ QString::number(size_sdk_platform_tools) + " MB";
-    DescriptionLabel* component_4 = new DescriptionLabel(sdk_platform_tools, this);
+    QString sdk_platform = "Android SDK Platform 14  \t\t\t\t\t\t"+ QString::number(size_sdk_platform_14) + " MB";
+    DescriptionLabel* component_4 = new DescriptionLabel(sdk_platform, this);
     scrollableLayout->addWidget(component_4);
 
     scrollableLayout->addSpacing(20);  
-    QString android_34 = "Sources for Android 34  \t\t\t\t\t\t"+ QString::number(source_android) + " MB";
-    DescriptionLabel* component_5 = new DescriptionLabel(android_34, this);
+    QString sdk_platform_tools = "Android SDK Platform-Tools  \t\t\t\t\t"+ QString::number(size_sdk_platform_tools) + " MB";
+    DescriptionLabel* component_5 = new DescriptionLabel(sdk_platform_tools, this);
     scrollableLayout->addWidget(component_5);
+
+    scrollableLayout->addSpacing(20);  
+    QString android_34 = "Sources for Android 34  \t\t\t\t\t\t"+ QString::number(source_android) + " MB";
+    DescriptionLabel* component_6 = new DescriptionLabel(android_34, this);
+    scrollableLayout->addWidget(component_6);
 
     scrollableFrame->setLayout(scrollableLayout);
 
