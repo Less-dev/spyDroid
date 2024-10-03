@@ -36,8 +36,8 @@ SetupFinished::SetupFinished(QWidget *parent)
 
     // Añadir la barra superior
     topBarInstaller = new BannerHorizontal();
-    topBarInstaller->setTitle("Ajustes de Configuración");
-    topBarInstaller->setDescription("Ubicaciones de instalación");
+    topBarInstaller->setTitle("Descargando Componentes");
+    topBarInstaller->setDescription("Este proceso puede tardar unos minutos");
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
 
     // Crear CardWidgetSettings y añadirlo centrado
@@ -48,10 +48,10 @@ SetupFinished::SetupFinished(QWidget *parent)
 
     // Añadir la barra inferior
     bottomBarInstaller = new BottomBarInstaller();
-    bottomBarInstaller->setCustomButtonText("Siguiente");
+    bottomBarInstaller->setCustomButtonText("Instalando");
     bottomBarInstaller->setBackButtonEnabled(false);
     bottomBarInstaller->setCustomButtonEnabled(false);
-    bottomBarInstaller->setCancelButtonEnabled(false);
+    bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
 
     // Conectar señales
