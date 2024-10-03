@@ -40,6 +40,7 @@ set(HEADERS
     src/spydroid/ui/widgets/BannerHorizontal.h
     src/spydroid/ui/widgets/BrowserSetup.h
     src/spydroid/ui/widgets/CardWidgetVerify.h
+    src/spydroid/ui/widgets/CardWidgetSettings.h
 )
 
 set(SOURCES
@@ -69,6 +70,7 @@ set(SOURCES
     src/spydroid/ui/widgets/BannerHorizontal.cpp
     src/spydroid/ui/widgets/BrowserSetup.cpp
     src/spydroid/ui/widgets/CardWidgetVerify.cpp
+    src/spydroid/ui/widgets/CardWidgetSettings.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

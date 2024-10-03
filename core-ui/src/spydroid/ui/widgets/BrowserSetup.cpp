@@ -12,15 +12,20 @@ BrowserSetup::BrowserSetup(QWidget *parent) : QWidget(parent) {
 
     // Crear un QLineEdit con la ruta inicial
     pathLineEdit = new QLineEdit(initialPath, this);
-    layout->addWidget(pathLineEdit);
+
+    // Configurar QLineEdit para que ocupe todo el espacio disponible
+    layout->addWidget(pathLineEdit, /* stretch */ 1);
 
     // Crear el botón para abrir el explorador
     QPushButton *browseButton = new QPushButton("Explorador", this);
+
+    // Añadir el botón al layout sin stretch para que ocupe su tamaño mínimo
     layout->addWidget(browseButton);
 
     // Conectar la señal del botón a la función openFileDialog()
     connect(browseButton, &QPushButton::clicked, this, &BrowserSetup::openFileDialog);
 }
+
 
 void BrowserSetup::openFileDialog() {
     // Abrir un diálogo de selección de directorio
