@@ -26,25 +26,76 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QFrame>
+#include <QScrollArea>
 
 class CardWidgetVerify : public QWidget {
 public:
-    CardWidgetVerify(QWidget *parent = nullptr) : QWidget(parent) {
-        QFrame *card = new QFrame(this);
+CardWidgetVerify(QWidget *parent = nullptr) : QWidget(parent) {
+    // Crear el QFrame principal
+    QFrame *card = new QFrame(this);
 
-        QLabel *title = new QLabel("Configuración actual", this);
-        title->setStyleSheet(
-            "QLabel { color: white; background-color: black; font-size: 16px; padding: 0 10px; }"
-        );
-        title->move(25, -2);  
-        title->raise();  
+    // Título principal
+    QLabel *title = new QLabel("Configuración actual", this);
+    title->setStyleSheet(
+        "QLabel { color: white; background-color: black; font-size: 16px; padding: 0 10px; }"
+    );
+    title->move(25, -2);  
+    title->raise();  
 
-        QVBoxLayout *layout = new QVBoxLayout(card);
-        layout->setContentsMargins(20, 70, 20, 20);  
-        layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);  
+    // Layout para los elementos que no tendrán scroll (antes de skd_folder)
+    QVBoxLayout *mainLayout = new QVBoxLayout(card);
+    mainLayout->setContentsMargins(20, 50, 20, 0);  
+    mainLayout->setAlignment(Qt::AlignTop | Qt::AlignLeft); 
 
-        card->setLayout(layout);
-    }
+    // Widgets sin scroll
+
+
+    // Crear el QScrollArea para los widgets que tendrán scroll
+    QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea->setWidgetResizable(true);  // Asegurarse que el contenido sea redimensionable
+
+    // Crear un QFrame que contendrá los widgets dentro del scroll
+    QFrame *scrollableFrame = new QFrame(this);
+    QVBoxLayout *scrollableLayout = new QVBoxLayout(scrollableFrame);
+    scrollableLayout->setContentsMargins(0, 0, 0, 0);  // Márgenes internos para el contenido del scroll
+    scrollableLayout->setAlignment(Qt::AlignTop);  // Alinear al tope
+
+    TitleLabel* skd_folder = new TitleLabel("Carpeta SDK", this);
+    scrollableLayout->addWidget(skd_folder);
+    DescriptionLabel* folder = new DescriptionLabel("/home/less/SPYDROID/Sdk", this);
+    scrollableLayout->addWidget(folder);
+    TitleLabel* total_size_download = new TitleLabel("Tamaño Total de Descarga", this);
+    scrollableLayout->addWidget(total_size_download);
+    DescriptionLabel* size_download = new DescriptionLabel("567 GB", this);
+    scrollableLayout->addWidget(size_download);
+    TitleLabel* jdk_componentent_download = new TitleLabel("JDK Componentes de Descarga", this);
+    scrollableLayout->addWidget(jdk_componentent_download);
+    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
+    DescriptionLabel* component_1 = new DescriptionLabel("Open JDK 17 \t\t\t\t\t493.6 MB", this);
+    scrollableLayout->addWidget(component_1);
+    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
+    
+    TitleLabel* sdk_componentes_download = new TitleLabel("SDK Componentes de Descarga", this);
+    scrollableLayout->addWidget(sdk_componentes_download);
+    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
+    DescriptionLabel* component_2 = new DescriptionLabel("Android SDK Build-Tools 34 \t\t\t\t\t55.6 MB", this);
+    scrollableLayout->addWidget(component_2);
+    scrollableLayout->addSpacing(20);  // Espaciado entre widgets
+    
+    DescriptionLabel* component_3 = new DescriptionLabel("Android SDK Platform 14 \t\t\t\t\t\t60.3 MB", this);
+    scrollableLayout->addWidget(component_3);  // Añadir component_3
+
+    scrollableFrame->setLayout(scrollableLayout);
+
+    scrollArea->setWidget(scrollableFrame);
+    
+    mainLayout->addWidget(scrollArea);
+
+    scrollArea->setFixedHeight(220);  // Puedes ajustar el tamaño para ver el scroll en acción
+    scrollArea->setFixedWidth(700);  // Puedes ajustar el tamaño para ver el scroll en acción
+    card->setLayout(mainLayout);
+}
+
 
 protected:
     void paintEvent(QPaintEvent *event) override {
@@ -61,6 +112,25 @@ protected:
 
         QWidget::paintEvent(event);
     }
+
+private:
+    // Definición de TitleLabel dentro de CardWidgetVerify
+    class TitleLabel : public QLabel {
+    public:
+        TitleLabel(const QString &text, QWidget *parent = nullptr) : QLabel(text, parent) {
+            // Establecer estilo de texto: negrita, color blanco pastel y fuente de 15px
+            setStyleSheet("QLabel { color: #F5F5F5; font-weight: bold; font-size: 15px; }");
+        }
+    };
+
+    // Definición de DescriptionLabel dentro de CardWidgetVerify
+    class DescriptionLabel : public QLabel {
+    public:
+        DescriptionLabel(const QString &text, QWidget *parent = nullptr) : QLabel(text, parent) {
+            // Establecer estilo de texto: claro, color blanco pastel y fuente de 12px
+            setStyleSheet("QLabel { color: #F5F5F5; font-weight: light; font-size: 12px; }");
+        }
+    };
 };
 
 
