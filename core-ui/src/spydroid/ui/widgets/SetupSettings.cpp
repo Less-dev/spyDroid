@@ -28,9 +28,9 @@
 #include <QFrame>
 #include "BrowserSetup.h"
 
-class CardWidget : public QWidget {
+class CardWidgetSettings : public QWidget {
 public:
-    CardWidget(QWidget *parent = nullptr) : QWidget(parent) {
+    CardWidgetSettings(QWidget *parent = nullptr) : QWidget(parent) {
         // Configurar el marco (la tarjeta) sin aplicar tamaños fijos, ajustándose al contenido
         QFrame *card = new QFrame(this);
 
@@ -90,7 +90,7 @@ protected:
 };
 
 
-// Modificación en SetupSettings para centrar el CardWidget
+// Modificación en SetupSettings para centrar el CardWidgetSettings
 SetupSettings::SetupSettings(QWidget *parent)
     : QWidget(parent)
 {
@@ -107,9 +107,9 @@ SetupSettings::SetupSettings(QWidget *parent)
     topBarInstaller->setDescription("Ubicaciones de instalación");
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
 
-    // Crear CardWidget y añadirlo centrado
+    // Crear CardWidgetSettings y añadirlo centrado
     layout->addStretch();
-    CardWidget* content = new CardWidget();
+    CardWidgetSettings* content = new CardWidgetSettings();
     content->setMinimumSize(750, 300);
     layout->addWidget(content, 0, Qt::AlignCenter);  // Alinear al centro del layout
     layout->addStretch();

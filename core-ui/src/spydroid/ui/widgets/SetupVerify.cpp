@@ -26,7 +26,42 @@
 #include <QLabel>
 #include <QVBoxLayout>
 #include <QFrame>
-#include "BrowserSetup.h"
+
+class CardWidgetVerify : public QWidget {
+public:
+    CardWidgetVerify(QWidget *parent = nullptr) : QWidget(parent) {
+        QFrame *card = new QFrame(this);
+
+        QLabel *title = new QLabel("Configuración actual", this);
+        title->setStyleSheet(
+            "QLabel { color: white; background-color: black; font-size: 16px; padding: 0 10px; }"
+        );
+        title->move(25, -2);  
+        title->raise();  
+
+        QVBoxLayout *layout = new QVBoxLayout(card);
+        layout->setContentsMargins(20, 70, 20, 20);  
+        layout->setAlignment(Qt::AlignTop | Qt::AlignLeft);  
+
+        card->setLayout(layout);
+    }
+
+protected:
+    void paintEvent(QPaintEvent *event) override {
+        QPainter painter(this);
+        painter.setRenderHint(QPainter::Antialiasing);
+
+        QPen pen(Qt::red, 2);  
+        painter.setPen(pen);
+        painter.setBrush(QBrush(Qt::black));  
+
+        QRect rect = this->rect();
+        rect.adjust(1, 1, -1, -1);  
+        painter.drawRoundedRect(rect, 15, 15); 
+
+        QWidget::paintEvent(event);
+    }
+};
 
 
 SetupVerify::SetupVerify(QWidget *parent)
@@ -39,6 +74,12 @@ SetupVerify::SetupVerify(QWidget *parent)
     topBarInstaller->setTitle("Verificar Configuraciones");
     topBarInstaller->setDescription("Si desea verificar o cambiar alguna de las configuraciones de instalación, haga clic en Volver.");
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
+
+    layout->addStretch();
+    CardWidgetVerify* content = new CardWidgetVerify();
+    content->setMinimumSize(750, 300);
+    layout->addWidget(content, 0, Qt::AlignCenter);  // Alinear al centro del layout
+    layout->addStretch();
 
     bottomBarInstaller = new BottomBarInstaller();
     bottomBarInstaller->setCustomButtonText("Finalizar");
