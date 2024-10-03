@@ -44,7 +44,7 @@ signals:
 private:
     QVBoxLayout* layout;
     BannerHorizontal* topBarInstaller;
-    CardWidgetInstaller* content;
+    CardWidgetInstaller* details;
     BottomBarInstaller* bottomBarInstaller;
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();

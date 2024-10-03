@@ -39,8 +39,9 @@ SetupFinished::SetupFinished(QWidget *parent)
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
 
     layout->addStretch();
-    content = new CardWidgetInstaller();
-    layout->addWidget(content, 0, Qt::AlignCenter);
+    details = new CardWidgetInstaller();
+    details->setVisible(false);
+    layout->addWidget(details, 0, Qt::AlignCenter);
     layout->addStretch();
 
     bottomBarInstaller = new BottomBarInstaller();
@@ -115,7 +116,7 @@ void SetupFinished::resizeEvent(QResizeEvent *event)
     int newHeight = static_cast<int>(availableHeightForContent * 0.85);
 
     // Establecer el nuevo tamaño de CardWidgetVerify
-    content->setFixedSize(newWidth, newHeight);
+    details->setFixedSize(newWidth, newHeight);
 
     // Esto asegura que CardWidgetVerify no se superpondrá a las barras superior e inferior
 }
