@@ -15,42 +15,40 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef INSTALLER_SCREEN_H
-#define INSTALLER_SCREEN_H
+#ifndef SETUP_FINISHED_H
+#define SETUP_FINISHED_H
 
 #include <QWidget>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
 #include <QPaintEvent>
-#include "../widgets/Setup.h"
-#include "../widgets/SetupSettings.h"
-#include "../widgets/SetupVerify.h"
-#include "../widgets/SetupFinished.h"
+#include "BottomBarInstaller.h"
+#include "BannerHorizontal.h"
+#include "CardWidgetInstaller.h"
 
-class InstallerScreen : public QWidget
+class SetupFinished : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit InstallerScreen(QWidget *parent = nullptr);
-    
+    explicit SetupFinished(QWidget *parent = nullptr);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event);
+
 signals:
-    void goToHome();
+    void nextPage();
+    void backPage();
+    
 private:
     QVBoxLayout* layout;
-    Setup* setup;
-    SetupSettings* setupSettings;
-    SetupVerify* setupVerify;
-    SetupFinished* setupFinished;
-    void goToSetup();
-    void goToSetupSettings();
-    void goBackToSetupSettings();
-    void goToSetupVerify();
-    void goToFinished();
+    BannerHorizontal* topBarInstaller;
+    CardWidgetInstaller* content;
+    BottomBarInstaller* bottomBarInstaller;
+    void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
+    void goToBackPage();
 };
 
-#endif // INSTALLER_SCREEN_H
+#endif // SETUP_FINISHED_H

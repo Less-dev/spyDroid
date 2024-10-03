@@ -36,11 +36,13 @@ set(HEADERS
     src/spydroid/ui/widgets/Setup.h
     src/spydroid/ui/widgets/SetupSettings.h
     src/spydroid/ui/widgets/SetupVerify.h
+    src/spydroid/ui/widgets/SetupFinished.h
     src/spydroid/ui/widgets/BottomBarInstaller.h
     src/spydroid/ui/widgets/BannerHorizontal.h
     src/spydroid/ui/widgets/BrowserSetup.h
     src/spydroid/ui/widgets/CardWidgetVerify.h
     src/spydroid/ui/widgets/CardWidgetSettings.h
+    src/spydroid/ui/widgets/CardWidgetInstaller.h
 )
 
 set(SOURCES
@@ -66,11 +68,13 @@ set(SOURCES
     src/spydroid/ui/widgets/Setup.cpp
     src/spydroid/ui/widgets/SetupSettings.cpp
     src/spydroid/ui/widgets/SetupVerify.cpp
+    src/spydroid/ui/widgets/SetupFinished.cpp
     src/spydroid/ui/widgets/BottomBarInstaller.cpp
     src/spydroid/ui/widgets/BannerHorizontal.cpp
     src/spydroid/ui/widgets/BrowserSetup.cpp
     src/spydroid/ui/widgets/CardWidgetVerify.cpp
     src/spydroid/ui/widgets/CardWidgetSettings.cpp
+    src/spydroid/ui/widgets/CardWidgetInstaller.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
