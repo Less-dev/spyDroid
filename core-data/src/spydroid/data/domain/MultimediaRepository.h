@@ -21,7 +21,7 @@
 #include <vector>
 #include <memory>
 #include "../../../../../core-network/src/spydroid/network/models/Multimedia.h"
-#include "../../../../../core-network/src/spydroid/network/api/ApiService.h"
+#include "../../../../../core-network/src/spydroid/network/services/ApiService.h"
 #include "../../../../../core-network/src/spydroid/network/daos/MultimediaDao.h"
 #include "../models/MultimediaHandler.h"
 

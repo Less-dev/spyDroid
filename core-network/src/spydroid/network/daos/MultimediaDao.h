@@ -21,7 +21,7 @@
 #include <string>
 #include <vector>
 #include "../../../../../core-data/src/spydroid/data/models/MultimediaHandler.h"
-#include "../api/ApiService.h"
+#include "../services/ApiService.h"
 
 
 class MultimediaDao {
