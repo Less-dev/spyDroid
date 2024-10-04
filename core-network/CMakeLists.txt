@@ -17,6 +17,7 @@ set(SOURCE_DIR src/spydroid/network)
 
 set(HEADERS
     ${SOURCE_DIR}/services/ApiService.h
+    ${SOURCE_DIR}/services/DownloaderService.h
     ${SOURCE_DIR}/daos/DevicesDao.h
     ${SOURCE_DIR}/daos/InfoDao.h
     ${SOURCE_DIR}/daos/MultimediaDao.h
@@ -29,6 +30,7 @@ set(HEADERS
 
 set(SOURCES
     ${SOURCE_DIR}/services/ApiService.cpp
+    ${SOURCE_DIR}/services/DownloaderService.cpp
     ${SOURCE_DIR}/data/DevicesDaoImp.cpp
     ${SOURCE_DIR}/data/InfoDaoImp.cpp
     ${SOURCE_DIR}/data/MultimediaDaoImp.cpp
