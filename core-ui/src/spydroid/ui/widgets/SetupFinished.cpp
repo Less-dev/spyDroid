@@ -22,27 +22,51 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QResizeEvent>
+#include <QPushButton>
+#include <QProgressBar>
 
-// Modificación en SetupFinished para centrar el CardWidgetSettings
 SetupFinished::SetupFinished(QWidget *parent)
     : QWidget(parent)
 {
-    // Configurar layout principal
-    layout = new QVBoxLayout(this);
-    this->setLayout(layout);
+// Creas el layout principal y lo asignas a la ventana
+QVBoxLayout *layout = new QVBoxLayout(this);
+this->setLayout(layout);
+this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-
+    // Creas el componente de la barra superior
     topBarInstaller = new BannerHorizontal();
     topBarInstaller->setTitle("Descargando Componentes");
     topBarInstaller->setDescription("Este proceso puede tardar unos minutos");
     layout->addWidget(topBarInstaller, 0, Qt::AlignTop);
 
-    layout->addStretch();
+    // Creas los componentes que se deben alinear a la derecha
+    QLabel *downloadTitle = new QLabel("Iniciando Descarga...");
+    downloadTitle->setStyleSheet("color: white; font-weight: bold; font-size: 13.5px;");
+
+    QLabel *downloadDescriptor = new QLabel("https://dl.google.com/android/repository/emulator-linux64X86.zip");
+    downloadDescriptor->setStyleSheet("color: white; font-size: 9.4px;");
+
+    QProgressBar *progressBar = new QProgressBar();
+    progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+    progressBar->setValue(0);
+
+    QPushButton *toggleButton = new QPushButton("Mostrar Detalles");
+    toggleButton->setMaximumSize(125,80);
+    // Creas un QHBoxLayout para alinear los elementos a la derecha
+    QVBoxLayout *vBoxLayout = new QVBoxLayout();
+    vBoxLayout->setContentsMargins(10, 10, 10, 10);
+    vBoxLayout->addWidget(downloadTitle);
+    vBoxLayout->addWidget(downloadDescriptor);
+    vBoxLayout->addWidget(progressBar);
+    vBoxLayout->addWidget(toggleButton);
+    vBoxLayout->addStretch(); // Esto empuja los widgets hacia la derecha
+
+    // Añades el QHBoxLayout al layout principal, alineado en la parte superior
+    layout->addLayout(vBoxLayout, 0);
+
     details = new CardWidgetInstaller();
     details->setVisible(false);
     layout->addWidget(details, 0, Qt::AlignCenter);
-    layout->addStretch();
 
     bottomBarInstaller = new BottomBarInstaller();
     bottomBarInstaller->setCustomButtonText("Instalando");
@@ -51,9 +75,15 @@ SetupFinished::SetupFinished(QWidget *parent)
     bottomBarInstaller->setCancelButtonEnabled(true);
     layout->addWidget(bottomBarInstaller, 0, Qt::AlignBottom);
 
+    // SIGNALS
     connect(bottomBarInstaller, &BottomBarInstaller::customButtonClicked, this, &SetupFinished::goToNextPage);
     connect(bottomBarInstaller, &BottomBarInstaller::backButtonClicked, this, &SetupFinished::goToBackPage);
+
+    connect(toggleButton, &QPushButton::clicked, this, [this]() {
+        details->setVisible(!details->isVisible());
+    });
 }
+
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)
 {
@@ -113,7 +143,7 @@ void SetupFinished::resizeEvent(QResizeEvent *event)
     int newWidth = static_cast<int>(availableSize.width() * 0.85);
 
     // Calcular el 55% del alto del espacio disponible para el contenido (entre las barras)
-    int newHeight = static_cast<int>(availableHeightForContent * 0.85);
+    int newHeight = static_cast<int>(availableHeightForContent * 0.50);
 
     // Establecer el nuevo tamaño de CardWidgetVerify
     details->setFixedSize(newWidth, newHeight);
