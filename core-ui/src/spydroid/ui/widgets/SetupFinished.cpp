@@ -25,13 +25,29 @@
 #include <QPushButton>
 #include <QProgressBar>
 
+/************OPEN JDK 17***************/
+// https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz
+/************Spydroid - app***************/
+// https://github.com/Less-dev/spyDroid/archive/refs/heads/app.zip                      
+/************Spydroid - server***************/
+// https://github.com/Less-dev/spyDroid/archive/refs/heads/server.zip                   
+/************PlatformTools***************/
+// https://dl.google.com/android/repository/platform-tools-latest-linux.zip             
+/************Android SDK Platform 14***************/
+// https://dl.google.com/android/repository/android-14_r01.zip                          
+/************Sources for Android 34***************/
+// https://dl.google.com/android/repository/sources-34_r01.zip                          
+/************Android SDK Platform-Tools***************/
+// https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip   
+
+
 SetupFinished::SetupFinished(QWidget *parent)
     : QWidget(parent)
 {
-// Creas el layout principal y lo asignas a la ventana
-QVBoxLayout *layout = new QVBoxLayout(this);
-this->setLayout(layout);
-this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    // Creas el layout principal y lo asignas a la ventana
+    QVBoxLayout *layout = new QVBoxLayout(this);
+    this->setLayout(layout);
+    this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
     // Creas el componente de la barra superior
     topBarInstaller = new BannerHorizontal();
