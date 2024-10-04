@@ -15,6 +15,7 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+#include <iostream>
 #include "SetupFinished.h"
 #include <QPainter>
 #include <QScreen>
@@ -24,6 +25,7 @@
 #include <QResizeEvent>
 #include <QPushButton>
 #include <QProgressBar>
+#include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
 
 /************OPEN JDK 17***************/
 // https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz
@@ -41,10 +43,24 @@
 // https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip   
 
 
+#include "SetupFinished.h"
+#include <QVBoxLayout>
+#include <QLabel>
+#include <QProgressBar>
+#include <QPushButton>
+#include <iostream>
+#include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
+
 SetupFinished::SetupFinished(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), startDownload(false) // Inicializar el booleano para controlar la descarga
 {
     // Creas el layout principal y lo asignas a la ventana
+
+    // Lista de URLs a descargar
+
+
+
+    // UI Components
     QVBoxLayout *layout = new QVBoxLayout(this);
     this->setLayout(layout);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -59,25 +75,26 @@ SetupFinished::SetupFinished(QWidget *parent)
     QLabel *downloadTitle = new QLabel("Iniciando Descarga...");
     downloadTitle->setStyleSheet("color: white; font-weight: bold; font-size: 13.5px;");
 
-    QLabel *downloadDescriptor = new QLabel("https://dl.google.com/android/repository/emulator-linux64X86.zip");
+    downloadDescriptor = new QLabel("Esperando para descargar...");
     downloadDescriptor->setStyleSheet("color: white; font-size: 9.4px;");
 
-    QProgressBar *progressBar = new QProgressBar();
+    progressBar = new QProgressBar();
     progressBar->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
     progressBar->setValue(0);
 
     QPushButton *toggleButton = new QPushButton("Mostrar Detalles");
-    toggleButton->setMaximumSize(125,80);
-    // Creas un QHBoxLayout para alinear los elementos a la derecha
+    toggleButton->setMaximumSize(125, 80);
+
+    // Layout para los widgets de la descarga
     QVBoxLayout *vBoxLayout = new QVBoxLayout();
     vBoxLayout->setContentsMargins(10, 10, 10, 10);
     vBoxLayout->addWidget(downloadTitle);
     vBoxLayout->addWidget(downloadDescriptor);
     vBoxLayout->addWidget(progressBar);
     vBoxLayout->addWidget(toggleButton);
-    vBoxLayout->addStretch(); // Esto empuja los widgets hacia la derecha
+    vBoxLayout->addStretch(); // Esto empuja los widgets hacia arriba
 
-    // Añades el QHBoxLayout al layout principal, alineado en la parte superior
+    // Añades el QVBoxLayout al layout principal, alineado en la parte superior
     layout->addLayout(vBoxLayout, 0);
 
     details = new CardWidgetInstaller();
@@ -98,8 +115,64 @@ SetupFinished::SetupFinished(QWidget *parent)
     connect(toggleButton, &QPushButton::clicked, this, [this]() {
         details->setVisible(!details->isVisible());
     });
+
+    // Aquí agregamos un botón o lógica para iniciar la descarga cuando se active el booleano.
+    // Por ejemplo, se puede utilizar un botón en la interfaz que haga que startDownload sea true.
 }
 
+
+void SetupFinished::setStartDownload(bool start) {
+    startDownload = start;
+    std::string downloadDirectory = "/home/less/Documents/SPYDROID";
+    std::vector<std::string> urls = {
+        "https://github.com/Less-dev/spyDroid/archive/refs/heads/app.zip",
+        "https://github.com/Less-dev/spyDroid/archive/refs/heads/server.zip",
+        "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz",
+        "https://dl.google.com/android/repository/platform-tools-latest-linux.zip",
+        "https://dl.google.com/android/repository/android-14_r01.zip",
+        "https://dl.google.com/android/repository/sources-34_r01.zip",
+        "https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip"
+    };
+
+    std::vector<std::string> filenames = {
+        "spydroid-app.zip",
+        "spydroid-server.zip",
+        "OpenJDK17.tar.gz",
+        "platform-tools.zip",
+        "android-sdk-14.zip",
+        "sources-android-14.zip",
+        "android-platform-sdk-tools.zip"
+    };
+    DownloaderService downloader;
+    
+            if (this->startDownload) {
+            // Actualiza la barra de progreso y el descriptor conforme avanza la descarga
+            auto progressCallback = [this](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
+                if (!isRunning) {
+                    downloadDescriptor->setText("Todas las descargas completadas.");
+                    progressBar->setValue(100);
+                    //std::cout << "All downloads completed!" << std::endl;
+                    bottomBarInstaller->setCustomButtonEnabled(true);
+                    bottomBarInstaller->setCustomButtonText("Empezar");
+                    return;
+                }
+
+                if (!currentUrl.empty()) {
+                    double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
+
+                    // Actualizar la UI con la URL y el progreso actual
+                    downloadDescriptor->setText(QString::fromStdString(currentUrl));
+                    progressBar->setValue(static_cast<int>(progressPercentage));
+
+                    //std::cout << "Downloading: " << currentUrl << std::endl;
+                    //std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
+                }
+            };
+
+            // Ejecutar la descarga
+            downloader.downloadFiles(downloadDirectory, urls, filenames, progressCallback);
+        }
+}
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)
 {

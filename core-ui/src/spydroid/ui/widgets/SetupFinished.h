@@ -21,6 +21,8 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QProgressBar>
+#include <QLabel>
 #include <QPaintEvent>
 #include "BottomBarInstaller.h"
 #include "BannerHorizontal.h"
@@ -32,6 +34,7 @@ class SetupFinished : public QWidget
 
 public:
     explicit SetupFinished(QWidget *parent = nullptr);
+    void setStartDownload(bool start);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -45,7 +48,10 @@ private:
     QVBoxLayout* layout;
     BannerHorizontal* topBarInstaller;
     CardWidgetInstaller* details;
+    QLabel* downloadDescriptor;
+    QProgressBar* progressBar;
     BottomBarInstaller* bottomBarInstaller;
+    bool startDownload;  
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();
     void goToBackPage();

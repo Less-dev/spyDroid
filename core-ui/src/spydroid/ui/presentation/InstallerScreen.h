@@ -51,6 +51,7 @@ private:
     void goBackToSetupSettings();
     void goToSetupVerify();
     void goToFinished();
+    void goToSpydroid();
 };
 
 #endif // INSTALLER_SCREEN_H

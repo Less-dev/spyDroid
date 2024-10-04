@@ -45,6 +45,7 @@ InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
     connect(setupSettings, &SetupSettings::nextPage, this, &InstallerScreen::goToSetupVerify);
     connect(setupVerify, &SetupVerify::backPage, this, &InstallerScreen::goBackToSetupSettings);
     connect(setupVerify, &SetupVerify::nextPage, this, &InstallerScreen::goToFinished);
+    connect(setupFinished, &SetupFinished::nextPage, this, &InstallerScreen::goToSpydroid);
     layout->addWidget(setup);
     layout->addWidget(setupSettings);
     layout->addWidget(setupVerify);
@@ -75,4 +76,9 @@ void InstallerScreen::goToSetupVerify() {
 void InstallerScreen::goToFinished() {
     setupVerify->setVisible(false);
     setupFinished->setVisible(true);
+    setupFinished->setStartDownload(true);
+}
+
+void InstallerScreen::goToSpydroid() {
+    emit goToHome();
 }

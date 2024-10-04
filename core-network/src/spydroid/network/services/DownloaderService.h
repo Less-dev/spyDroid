@@ -50,11 +50,12 @@ private:
 
 // Estructura para almacenar los datos de progreso de descarga
 struct ProgressData {
-    double downloaded;  // Bytes descargados
-    double totalSize;   // Tamaño total del archivo
-    std::function<void(const std::string&, double, double, bool)> progressCallback; // Callback de progreso
-    std::string currentUrl;  // URL actual que se está descargando
-    bool isRunning;    // Estado de si el proceso sigue corriendo
+    std::string currentUrl;
+    double downloaded = 0.0;
+    double totalSize = 0.0;
+    bool isRunning = false;
+    std::function<void(const std::string&, double, double, bool)> progressCallback;
+    double lastReportedPercentage = 0.0;
 };
 
 #endif // DOWNLOADER_SERVICE_H
