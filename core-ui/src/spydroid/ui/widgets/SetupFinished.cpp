@@ -52,15 +52,9 @@
 #include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
 
 SetupFinished::SetupFinished(QWidget *parent)
-    : QWidget(parent), startDownload(false) // Inicializar el booleano para controlar la descarga
+    : QWidget(parent), startDownload(false)
 {
-    // Creas el layout principal y lo asignas a la ventana
 
-    // Lista de URLs a descargar
-
-
-
-    // UI Components
     QVBoxLayout *layout = new QVBoxLayout(this);
     this->setLayout(layout);
     this->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -111,66 +105,59 @@ SetupFinished::SetupFinished(QWidget *parent)
     // SIGNALS
     connect(bottomBarInstaller, &BottomBarInstaller::customButtonClicked, this, &SetupFinished::goToNextPage);
     connect(bottomBarInstaller, &BottomBarInstaller::backButtonClicked, this, &SetupFinished::goToBackPage);
-
     connect(toggleButton, &QPushButton::clicked, this, [this]() {
         details->setVisible(!details->isVisible());
     });
 
-    // Aquí agregamos un botón o lógica para iniciar la descarga cuando se active el booleano.
-    // Por ejemplo, se puede utilizar un botón en la interfaz que haga que startDownload sea true.
 }
 
 
 void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
     startDownload = start;
-    std::vector<std::string> urls = {
-        "https://github.com/Less-dev/spyDroid/archive/refs/heads/app.zip",
-        "https://github.com/Less-dev/spyDroid/archive/refs/heads/server.zip",
-        "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz",
-        "https://dl.google.com/android/repository/platform-tools-latest-linux.zip",
-        "https://dl.google.com/android/repository/android-14_r01.zip",
-        "https://dl.google.com/android/repository/sources-34_r01.zip",
-        "https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip"
-    };
 
-    std::vector<std::string> filenames = {
-        "spydroid-app.zip",
-        "spydroid-server.zip",
-        "OpenJDK17.tar.gz",
-        "platform-tools.zip",
-        "android-sdk-14.zip",
-        "sources-android-14.zip",
-        "android-platform-sdk-tools.zip"
-    };
-    DownloaderService downloader;
-    
-            if (this->startDownload) {
-            // Actualiza la barra de progreso y el descriptor conforme avanza la descarga
-            auto progressCallback = [this](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
-                if (!isRunning) {
-                    downloadDescriptor->setText("Todas las descargas completadas.");
-                    progressBar->setValue(100);
-                    //std::cout << "All downloads completed!" << std::endl;
-                    bottomBarInstaller->setCustomButtonEnabled(true);
-                    bottomBarInstaller->setCustomButtonText("Empezar");
-                    return;
-                }
+    if (start) {
+        DownloaderService downloader;
+        std::vector<std::string> urls = {
+            "https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip",
+            "https://dl.google.com/android/repository/sources-34_r01.zip",
+            "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz",
+            "https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip",
+            "https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip",
+            "https://dl.google.com/android/repository/platform-tools-latest-linux.zip",
+            "https://dl.google.com/android/repository/android-14_r01.zip"
+        };
 
-                if (!currentUrl.empty()) {
-                    double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
-
-                    // Actualizar la UI con la URL y el progreso actual
-                    downloadDescriptor->setText(QString::fromStdString(currentUrl));
-                    progressBar->setValue(static_cast<int>(progressPercentage));
-
-                    //std::cout << "Downloading: " << currentUrl << std::endl;
-                    //std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
-                }
-            };
-
-            // Ejecutar la descarga
-            downloader.downloadFiles(pathResources.toStdString(), urls, filenames, progressCallback);
+        std::vector<std::string> filenames = {
+            "android-platform-sdk-tools.zip",
+            "sources-android-14.zip",
+            "OpenJDK17.tar.gz",
+            "spydroid-app.zip",
+            "spydroid-server.zip",
+            "platform-tools.zip",
+            "android-sdk-14.zip"
+        };
+auto progressCallback = [this](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
+    QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning]() {
+        if (!isRunning) {
+            downloadDescriptor->setText("Todas las descargas completadas.");
+            progressBar->setValue(100);
+            bottomBarInstaller->setCustomButtonEnabled(true);
+            bottomBarInstaller->setCustomButtonText("Empezar");
+            return;
         }
+
+        if (!currentUrl.empty()) {
+            double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
+            downloadDescriptor->setText(QString::fromStdString(currentUrl));
+            progressBar->setValue(static_cast<int>(progressPercentage));
+            std::cout << "Downloading: " << currentUrl << std::endl;
+            std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
+        }
+    }, Qt::AutoConnection);
+};
+
+        downloader.downloadFiles(pathResources.toStdString(), urls, filenames, progressCallback);
+    }
 }
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)

@@ -87,6 +87,8 @@ void InstallerScreen::goToFinished(const QString& path) {
         if (!dir.mkpath(path)) {
             qDebug() << "No se pudo crear el directorio: " << path;
             return;
+        } else {
+            setupFinished->setStartDownload(true, path);
         }
     } else if (!dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty()) {
         QString spydroidPath = path + "/SPYDROID";
@@ -98,11 +100,11 @@ void InstallerScreen::goToFinished(const QString& path) {
             }
             // Actualizar la ruta en `settingsManager` para reflejar el nuevo directorio.
             settingsManager->setValue("path_resources", spydroidPath);
+            setupFinished->setStartDownload(true, path);
             qDebug() << "Directorio SPYDROID creado exitosamente en: " << spydroidPath;
         }
     }
 
-    setupFinished->setStartDownload(true, path);
 }
 
 

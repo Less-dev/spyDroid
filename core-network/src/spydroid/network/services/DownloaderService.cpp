@@ -26,20 +26,37 @@ size_t writeData(void* ptr, size_t size, size_t nmemb, FILE* stream) {
     return fwrite(ptr, size, nmemb, stream);
 }
 
-// Función de progreso para mostrar el estado de la descarga
+
+size_t headerCallback(char* buffer, size_t size, size_t nitems, void* userdata) {
+    size_t numBytes = size * nitems;
+    ProgressData* progressData = static_cast<ProgressData*>(userdata);
+    
+    std::string header(buffer, numBytes);
+    if (header.find("Content-Length:") != std::string::npos) {
+        std::string contentLengthStr = header.substr(16); // "Content-Length:" tiene 15 caracteres más 1 de espacio.
+        progressData->totalSize = std::stod(contentLengthStr);
+    }
+    return numBytes;
+}
+
 int progressFunction(void* progressDataPtr, curl_off_t total, curl_off_t now, curl_off_t, curl_off_t) {
     auto* progressData = static_cast<ProgressData*>(progressDataPtr);
 
     if (total > 0) {
         progressData->totalSize = static_cast<double>(total);
-        progressData->downloaded = static_cast<double>(now);
+    }
+    progressData->downloaded = static_cast<double>(now);
 
-        // Solo notifica si ha habido un progreso de al menos 1%
-        double progressPercentage = (progressData->totalSize > 0) ? (progressData->downloaded / progressData->totalSize) * 100.0 : 0.0;
+    // Solo notifica si el tamaño total es mayor a 0
+    if (progressData->totalSize > 0) {
+        double progressPercentage = (progressData->downloaded / progressData->totalSize) * 100.0;
         if (progressPercentage - progressData->lastReportedPercentage >= 1.0) {
             progressData->lastReportedPercentage = progressPercentage;
             progressData->progressCallback(progressData->currentUrl, progressData->downloaded, progressData->totalSize, progressData->isRunning);
         }
+    } else {
+        // Notificar progreso con solo bytes descargados
+        progressData->progressCallback(progressData->currentUrl, progressData->downloaded, -1.0, progressData->isRunning);
     }
 
     return 0;  // Continuar la descarga
@@ -83,13 +100,21 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeData);
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, file);
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);  // Sigue redirecciones
-        curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 100L);  // Límite de redirecciones
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0");  // Agente de usuario
-        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);  // Habilita la función de progreso
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_MAXREDIRS, 100L);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0");
+        curl_easy_setopt(curl, CURLOPT_NOPROGRESS, 0L);
         curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progressFunction);
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &progressData);
+        
+        // Habilita el verbose para debug
+        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+        
+        // Manejo de encabezados para inspección
+        curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, headerCallback);
+        curl_easy_setopt(curl, CURLOPT_HEADERDATA, &progressData);
 
+        // Inicializa valores de progreso
         progressData.currentUrl = url;
         progressData.downloaded = 0.0;
         progressData.totalSize = 0.0;
@@ -112,6 +137,8 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
     fclose(file);
     return false;
 }
+
+
 
 std::string DownloaderService::getOutputFilePath(const std::string& directory, const std::string& filename) {
     return directory + "/" + filename;
