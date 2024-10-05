@@ -16,16 +16,18 @@
  */
 
 #include "SetupSettings.h"
+#include <QRegularExpressionMatch>
 #include <QPainter>
 #include <QScreen>
 #include <QApplication>
 #include <QLabel>
 #include <QCheckBox>
 #include <QResizeEvent>
+#include <QTimer>
 
 // Modificación en SetupSettings para centrar el CardWidgetSettings
 SetupSettings::SetupSettings(QWidget *parent)
-    : QWidget(parent)
+    : QWidget(parent), settingsManager(new SettingsManager("init", this)) // Instancia SettingsManager
 {
     // Configurar layout principal
     layout = new QVBoxLayout(this);
@@ -72,8 +74,84 @@ void SetupSettings::goToBackPage() {
 }
 
 void SetupSettings::goToNextPage() {
+    // Obtener el directorio almacenado en path_resources
+    QString path = settingsManager->getValue("path_resources", "").toString();
+
+    // Si el directorio está vacío, mostrar un mensaje de error
+    if (path.isEmpty()) {
+        showToastMessage("La ruta de instalación no está configurada.");
+        return;
+    }
+
+    // Verificar si la ruta contiene caracteres inválidos
+    if (!isValidPath(path)) {
+        showToastMessage("La ruta contiene caracteres inválidos.");
+        return;
+    }
+
+    QDir dir(path);
+
+    // Verificar si ya es el directorio SPYDROID
+    if (dir.dirName() == "SPYDROID" && dir.exists()) {
+        emit nextPage();
+        return;  // No hay más que hacer si ya es el directorio correcto
+    }
+
+    // Verificar si el directorio existe
+    if (!dir.exists()) {
+        // Intentar crearlo
+        if (!dir.mkpath(path)) {
+            showToastMessage("No se pudo crear el directorio.");
+            return;
+        }
+    } else {
+        // El directorio existe, verificar si contiene archivos
+        if (!dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty()) {
+            // Si tiene archivos, crear el subdirectorio SPYDROID
+            QString spydroidPath = path + "/SPYDROID";
+            QDir spydroidDir(spydroidPath);
+            if (!spydroidDir.exists()) {
+                if (!spydroidDir.mkpath(spydroidPath)) {
+                    showToastMessage("No se pudo crear el subdirectorio SPYDROID.");
+                    return;
+                }
+                // Actualizar la ruta en path_resources
+                settingsManager->setValue("path_resources", spydroidPath);
+            }
+        }
+    }
+
+    // Emitir la señal para ir a la siguiente página
     emit nextPage();
 }
+
+// Función para validar si el path contiene caracteres inválidos
+bool SetupSettings::isValidPath(const QString &path) {
+    // Definir caracteres no permitidos en los nombres de directorios
+    QString invalidChars = R"([\\\'"*?<>|:´¨^¸.!¡])";
+
+    // Usar una expresión regular para detectar caracteres no permitidos
+    QRegularExpression regex(invalidChars);
+
+    // Verificar si el path contiene caracteres no permitidos
+    QRegularExpressionMatch match = regex.match(path);
+    return !match.hasMatch();
+}
+
+
+void SetupSettings::showToastMessage(const QString &message) {
+    QLabel *toast = new QLabel(this);
+    toast->setText(message);
+    toast->setStyleSheet("background-color: black; color: white; padding: 10px; border-radius: 5px;");
+    toast->setAlignment(Qt::AlignCenter);
+
+    QVBoxLayout *toastLayout = new QVBoxLayout(toast);
+    layout->addWidget(toast, 0, Qt::AlignBottom);  // Agregar el toast al layout en la parte inferior
+
+    // Configurar un temporizador para ocultar el toast después de 3 segundos
+    QTimer::singleShot(3000, toast, &QLabel::deleteLater);
+}
+
 
 void SetupSettings::paintEvent(QPaintEvent *event)
 {

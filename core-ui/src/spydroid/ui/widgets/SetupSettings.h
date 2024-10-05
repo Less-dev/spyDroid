@@ -25,6 +25,8 @@
 #include "BottomBarInstaller.h"
 #include "BannerHorizontal.h"
 #include "CardWidgetSettings.h"
+#include <QString>
+#include "../../../../../core-data/src/spydroid/data/local/SettingsManager.h"
 
 class SetupSettings : public QWidget
 {
@@ -46,9 +48,12 @@ private:
     BannerHorizontal* topBarInstaller;
     CardWidgetSettings* content;
     BottomBarInstaller* bottomBarInstaller;
+    SettingsManager* settingsManager;
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();
     void goToBackPage();
+    void showToastMessage(const QString &message);
+    bool isValidPath(const QString &path);
 };
 
 #endif // SETUP_SETTINGS_H

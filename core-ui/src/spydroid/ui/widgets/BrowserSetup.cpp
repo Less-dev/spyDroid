@@ -2,7 +2,8 @@
 #include <QFileDialog>
 #include <QDir>
 
-BrowserSetup::BrowserSetup(QWidget *parent) : QWidget(parent) {
+BrowserSetup::BrowserSetup(QWidget *parent)
+    : QWidget(parent), settingsManager(new SettingsManager("init", this)) {
     // Crear layout horizontal
     QHBoxLayout *layout = new QHBoxLayout(this);
 
@@ -24,8 +25,16 @@ BrowserSetup::BrowserSetup(QWidget *parent) : QWidget(parent) {
 
     // Conectar la señal del botón a la función openFileDialog()
     connect(browseButton, &QPushButton::clicked, this, &BrowserSetup::openFileDialog);
+
+    // Conectar la señal editingFinished() para detectar cuando el usuario termina de escribir
+    connect(pathLineEdit, &QLineEdit::editingFinished, this, &BrowserSetup::onPathEditingFinished);
 }
 
+void BrowserSetup::onPathEditingFinished() {
+    // Guardar el valor del QLineEdit en path_resources cuando el usuario deja de escribir
+    QString currentPath = pathLineEdit->text();
+    settingsManager->setValue("path_resources", currentPath);
+}
 
 void BrowserSetup::openFileDialog() {
     // Abrir un diálogo de selección de directorio
@@ -34,5 +43,16 @@ void BrowserSetup::openFileDialog() {
     // Si el usuario selecciona un directorio, actualizar el QLineEdit con la nueva ruta
     if (!selectedDirectory.isEmpty()) {
         pathLineEdit->setText(selectedDirectory);
+
+        // Guardar el valor en path_resources
+        settingsManager->setValue("path_resources", selectedDirectory);
     }
+}
+
+void BrowserSetup::hideEvent(QHideEvent *event) {
+    // Guardar el valor actual de pathLineEdit en path_resources
+    settingsManager->setValue("path_resources", pathLineEdit->text());
+
+    // Llamar al evento base para que continúe el procesamiento normal
+    QWidget::hideEvent(event);
 }
