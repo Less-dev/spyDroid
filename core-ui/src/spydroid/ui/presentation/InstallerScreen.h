@@ -49,8 +49,8 @@ private:
     void goToSetup();
     void goToSetupSettings();
     void goBackToSetupSettings();
-    void goToSetupVerify();
-    void goToFinished();
+    void goToSetupVerify(const QString& path);
+    void goToFinished(const QString& path);
     void goToSpydroid();
 };
 

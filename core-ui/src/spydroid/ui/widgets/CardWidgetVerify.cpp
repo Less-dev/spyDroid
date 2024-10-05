@@ -1,9 +1,9 @@
 #include "CardWidgetVerify.h"
 #include <QResizeEvent>
-
+#include <QDebug>
 // Constructor de CardWidgetVerify
-CardWidgetVerify::CardWidgetVerify(QWidget *parent)
-    : QWidget(parent) {
+CardWidgetVerify::CardWidgetVerify(const QString& path, QWidget *parent)
+    : QWidget(parent), installationPath(path) {
 
     // Crear el QFrame principal
     QFrame *card = new QFrame(this);
@@ -41,12 +41,12 @@ CardWidgetVerify::CardWidgetVerify(QWidget *parent)
     TitleLabel* ssdk_folder = new TitleLabel("Carpeta SSDK", this);
     scrollableLayout->addWidget(ssdk_folder);
     
-    DescriptionLabel* folder_ssdk = new DescriptionLabel("/home/less/SPYDROID/SSdk", this);
+    folder_ssdk = new DescriptionLabel(installationPath + "/SSdk", this);
     scrollableLayout->addWidget(folder_ssdk);
 
     TitleLabel* sdk_folder = new TitleLabel("Carpeta SDK", this);
     scrollableLayout->addWidget(sdk_folder);
-    DescriptionLabel* folder_sdk = new DescriptionLabel("/home/less/SPYDROID/Sdk", this);
+    folder_sdk = new DescriptionLabel(installationPath + "/Sdk", this);
     scrollableLayout->addWidget(folder_sdk);
     TitleLabel* total_size_download = new TitleLabel("Tamaño Total de Descarga", this);
     scrollableLayout->addWidget(total_size_download);
@@ -95,6 +95,20 @@ CardWidgetVerify::CardWidgetVerify(QWidget *parent)
     mainLayout->addWidget(scrollArea);
 
     card->setLayout(mainLayout);
+}
+
+void CardWidgetVerify::setPath(const QString& path) {
+    installationPath = path;
+    if (folder_ssdk) {
+        folder_ssdk->setText(installationPath + "/SSdk");
+    }
+
+    if (folder_sdk) {
+        folder_sdk->setText(installationPath + "/Sdk");
+    }
+
+    // Si es necesario, también podrías hacer un repaint
+    this->update();
 }
 
 // Método paintEvent de CardWidgetVerify

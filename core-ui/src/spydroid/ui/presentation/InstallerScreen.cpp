@@ -21,6 +21,7 @@
 #include "../widgets/ItemBoard.h"
 #include "../widgets/GoBack.h"
 #include <QSpacerItem>
+#include <QDebug>
 
 
 InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
@@ -68,12 +69,13 @@ void InstallerScreen::goBackToSetupSettings() {
     setupSettings->setVisible(true);
 }
 
-void InstallerScreen::goToSetupVerify() {
+void InstallerScreen::goToSetupVerify(const QString& path) {
     setupSettings->setVisible(false);
     setupVerify->setVisible(true);
+    setupVerify->setPath(path);
 }
 
-void InstallerScreen::goToFinished() {
+void InstallerScreen::goToFinished(const QString& path) {
     setupVerify->setVisible(false);
     setupFinished->setVisible(true);
     setupFinished->setStartDownload(true);

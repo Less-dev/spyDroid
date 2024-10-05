@@ -93,8 +93,8 @@ void SetupSettings::goToNextPage() {
 
     // Verificar si ya es el directorio SPYDROID
     if (dir.dirName() == "SPYDROID" && dir.exists()) {
-        emit nextPage();
-        return;  // No hay más que hacer si ya es el directorio correcto
+        emit nextPage(path);  // Emitir la señal con el valor actual de path
+        return;  
     }
 
     // Verificar si el directorio existe
@@ -117,13 +117,15 @@ void SetupSettings::goToNextPage() {
                 }
                 // Actualizar la ruta en path_resources
                 settingsManager->setValue("path_resources", spydroidPath);
+                path = spydroidPath;  // Actualizar la variable path
             }
         }
     }
 
-    // Emitir la señal para ir a la siguiente página
-    emit nextPage();
+    // Emitir la señal para ir a la siguiente página con la ruta actualizada
+    emit nextPage(path);
 }
+
 
 // Función para validar si el path contiene caracteres inválidos
 bool SetupSettings::isValidPath(const QString &path) {

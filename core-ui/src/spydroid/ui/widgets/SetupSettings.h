@@ -40,7 +40,7 @@ protected:
     void resizeEvent(QResizeEvent *event);
 
 signals:
-    void nextPage();
+    void nextPage(const QString& pathResources);;
     void backPage();
     
 private:

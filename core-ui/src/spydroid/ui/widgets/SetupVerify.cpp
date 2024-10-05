@@ -24,7 +24,6 @@
 #include <QResizeEvent>
 
 
-
 SetupVerify::SetupVerify(QWidget *parent)
     : QWidget(parent)
 {
@@ -52,21 +51,23 @@ SetupVerify::SetupVerify(QWidget *parent)
     connect(bottomBarInstaller, &BottomBarInstaller::backButtonClicked, this, &SetupVerify::goToBackPage);
 }
 
-void SetupVerify::onStartCheckBoxStateChanged(int state)
-{
+void SetupVerify::setPath(const QString& path) {
+    installationPath = path;
+    content->setPath(installationPath);
+}
+
+void SetupVerify::onStartCheckBoxStateChanged(int state) {
     bool isChecked = (state == Qt::Checked);
     bottomBarInstaller->setCustomButtonEnabled(isChecked);
 }
-
 
 void SetupVerify::goToBackPage() {
     emit backPage();
 }
 
 void SetupVerify::goToNextPage() {
-    emit nextPage();
+    emit nextPage(installationPath);  // Emitir la señal con el valor de installationPath
 }
-
 
 void SetupVerify::paintEvent(QPaintEvent *event)
 {

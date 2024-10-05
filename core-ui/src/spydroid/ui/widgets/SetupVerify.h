@@ -15,16 +15,18 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
+// Archivo SetupVerify.h
+
 #ifndef SETUP_VERIFY_H
 #define SETUP_VERIFY_H
 
 #include <QWidget>
-#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPaintEvent>
-#include "BottomBarInstaller.h"
+#include <QDebug>
 #include "BannerHorizontal.h"
 #include "CardWidgetVerify.h"
+#include "BottomBarInstaller.h"
+#include <QString>
 
 class SetupVerify : public QWidget
 {
@@ -33,22 +35,29 @@ class SetupVerify : public QWidget
 public:
     explicit SetupVerify(QWidget *parent = nullptr);
 
+    // Método setter para actualizar la ruta de instalación
+    void setPath(const QString& path);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
-    void resizeEvent(QResizeEvent *event);
+    void resizeEvent(QResizeEvent *event) override;
 
 signals:
-    void nextPage();
+    void nextPage(const QString& path);  // Modificación de la señal para aceptar un QString
     void backPage();
-    
+
 private:
     QVBoxLayout* layout;
     BannerHorizontal* topBarInstaller;
     CardWidgetVerify* content;
     BottomBarInstaller* bottomBarInstaller;
+
+    QString installationPath;  // Variable para almacenar la ruta de instalación
+
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();
     void goToBackPage();
 };
 
 #endif // SETUP_VERIFY_H
+
