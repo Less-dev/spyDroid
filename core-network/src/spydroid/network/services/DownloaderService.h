@@ -19,7 +19,7 @@
 #ifndef DOWNLOADER_SERVICE_H
 #define DOWNLOADER_SERVICE_H
 #include <string>
-#include <vector>
+#include <map>  // Cambiamos de vector a map para asociar URLs con nombres de archivos
 #include <functional>
 
 class DownloaderService {
@@ -27,11 +27,10 @@ public:
     // Constructor por defecto
     DownloaderService() = default;
 
-    // Método principal para descargar múltiples archivos
+    // Método principal para descargar múltiples archivos, utilizando un map en lugar de vectores
     void downloadFiles(
         const std::string& directory, 
-        const std::vector<std::string>& urls, 
-        const std::vector<std::string>& filenames, 
+        const std::map<std::string, std::string>& urlToFileMap,  // Diccionario URL -> nombre de archivo
         std::function<void(const std::string&, double, double, bool)> progressCallback);
 
 private:

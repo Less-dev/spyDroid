@@ -22,10 +22,10 @@
 #include <chrono>
 
 // Función para escribir los datos descargados en el archivo
+
 size_t writeData(void* ptr, size_t size, size_t nmemb, FILE* stream) {
     return fwrite(ptr, size, nmemb, stream);
 }
-
 
 size_t headerCallback(char* buffer, size_t size, size_t nitems, void* userdata) {
     size_t numBytes = size * nitems;
@@ -33,7 +33,7 @@ size_t headerCallback(char* buffer, size_t size, size_t nitems, void* userdata) 
     
     std::string header(buffer, numBytes);
     if (header.find("Content-Length:") != std::string::npos) {
-        std::string contentLengthStr = header.substr(16); // "Content-Length:" tiene 15 caracteres más 1 de espacio.
+        std::string contentLengthStr = header.substr(16);  // "Content-Length:" tiene 15 caracteres más 1 de espacio.
         progressData->totalSize = std::stod(contentLengthStr);
     }
     return numBytes;
@@ -47,7 +47,6 @@ int progressFunction(void* progressDataPtr, curl_off_t total, curl_off_t now, cu
     }
     progressData->downloaded = static_cast<double>(now);
 
-    // Solo notifica si el tamaño total es mayor a 0
     if (progressData->totalSize > 0) {
         double progressPercentage = (progressData->downloaded / progressData->totalSize) * 100.0;
         if (progressPercentage - progressData->lastReportedPercentage >= 1.0) {
@@ -55,11 +54,10 @@ int progressFunction(void* progressDataPtr, curl_off_t total, curl_off_t now, cu
             progressData->progressCallback(progressData->currentUrl, progressData->downloaded, progressData->totalSize, progressData->isRunning);
         }
     } else {
-        // Notificar progreso con solo bytes descargados
         progressData->progressCallback(progressData->currentUrl, progressData->downloaded, -1.0, progressData->isRunning);
     }
 
-    return 0;  // Continuar la descarga
+    return 0;
 }
 
 bool DownloaderService::checkUrl(const std::string& url) {
@@ -70,9 +68,9 @@ bool DownloaderService::checkUrl(const std::string& url) {
     curl = curl_easy_init();
     if (curl) {
         curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
-        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);  // Sigue redirecciones
-        curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);  // Realiza una petición HEAD para verificar la URL
-        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0");  // Establece un User-Agent
+        curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);
+        curl_easy_setopt(curl, CURLOPT_NOBODY, 1L);
+        curl_easy_setopt(curl, CURLOPT_USERAGENT, "Mozilla/5.0");
 
         res = curl_easy_perform(curl);
         if (res == CURLE_OK) {
@@ -107,20 +105,15 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
         curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progressFunction);
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &progressData);
         
-        // Habilita el verbose para debug
         curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
-        
-        // Manejo de encabezados para inspección
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, headerCallback);
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, &progressData);
 
-        // Inicializa valores de progreso
         progressData.currentUrl = url;
         progressData.downloaded = 0.0;
         progressData.totalSize = 0.0;
         progressData.lastReportedPercentage = 0.0;
 
-        // Realiza la descarga
         res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
             std::cerr << "Error al descargar: " << curl_easy_strerror(res) << " para la URL: " << url << std::endl;
@@ -138,55 +131,45 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
     return false;
 }
 
-
-
 std::string DownloaderService::getOutputFilePath(const std::string& directory, const std::string& filename) {
     return directory + "/" + filename;
 }
 
 void DownloaderService::downloadFiles(
     const std::string& directory, 
-    const std::vector<std::string>& urls, 
-    const std::vector<std::string>& filenames, 
+    const std::map<std::string, std::string>& urlToFileMap,  // Usamos map en lugar de vectores
     std::function<void(const std::string&, double, double, bool)> progressCallback) {
 
-    // Ejecutar las descargas en un hilo separado
-    std::thread downloadThread([this, directory, urls, filenames, progressCallback]() {
+    std::thread downloadThread([this, directory, urlToFileMap, progressCallback]() {
         ProgressData progressData;
         progressData.progressCallback = progressCallback;
         progressData.isRunning = true;
 
-        for (size_t i = 0; i < urls.size(); ++i) {
-            std::string url = urls[i];
-            std::string filename = filenames[i];
+        for (const auto& entry : urlToFileMap) {  // Iterar sobre cada par URL -> archivo
+            std::string url = entry.first;
+            std::string filename = entry.second;
 
             // Eliminar posibles espacios al final de la URL
             url.erase(url.find_last_not_of(" \n\r\t") + 1);
 
-            // Verifica si la URL es válida
             if (!checkUrl(url)) {
                 std::cerr << "Error: URL inválida o no accesible: " << url << std::endl;
-                continue;  // Saltar a la siguiente URL
+                continue;
             }
 
-            // Obtener el path completo para el archivo de salida
             std::string outputPath = getOutputFilePath(directory, filename);
 
-            // Intentar descargar el archivo
             if (!downloadFile(url, outputPath, progressData)) {
                 std::cerr << "Error: No se pudo descargar el archivo de la URL: " << url << std::endl;
-                continue;  // Saltar a la siguiente URL
+                continue;
             }
 
-            // Pausa entre descargas para evitar ser bloqueado
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));  // Pausar 1 segundo entre descargas
+            std::this_thread::sleep_for(std::chrono::milliseconds(1000));  // Pausar entre descargas
         }
 
-        // Indicar que todas las descargas han terminado
         progressData.isRunning = false;
         progressCallback("", 0, 0, progressData.isRunning);
     });
 
-    // Desvincular el hilo para que se ejecute en segundo plano
     downloadThread.detach();
 }

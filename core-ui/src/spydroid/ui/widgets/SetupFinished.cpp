@@ -27,30 +27,6 @@
 #include <QProgressBar>
 #include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
 
-/************OPEN JDK 17***************/
-// https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz
-/************Spydroid - app***************/
-// https://github.com/Less-dev/spyDroid/archive/refs/heads/app.zip                      
-/************Spydroid - server***************/
-// https://github.com/Less-dev/spyDroid/archive/refs/heads/server.zip                   
-/************PlatformTools***************/
-// https://dl.google.com/android/repository/platform-tools-latest-linux.zip             
-/************Android SDK Platform 14***************/
-// https://dl.google.com/android/repository/android-14_r01.zip                          
-/************Sources for Android 34***************/
-// https://dl.google.com/android/repository/sources-34_r01.zip                          
-/************Android SDK Platform-Tools***************/
-// https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip   
-
-
-#include "SetupFinished.h"
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QProgressBar>
-#include <QPushButton>
-#include <iostream>
-#include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
-
 SetupFinished::SetupFinished(QWidget *parent)
     : QWidget(parent), startDownload(false)
 {
@@ -117,46 +93,39 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
 
     if (start) {
         DownloaderService downloader;
-        std::vector<std::string> urls = {
-            "https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip",
-            "https://dl.google.com/android/repository/sources-34_r01.zip",
-            "https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz",
-            "https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip",
-            "https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip",
-            "https://dl.google.com/android/repository/platform-tools-latest-linux.zip",
-            "https://dl.google.com/android/repository/android-14_r01.zip"
+        std::map<std::string, std::string> urlToFileMap = {
+            {"https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip", "build-tools.zip"},
+            {"https://dl.google.com/android/repository/sources-34_r01.zip", "sources.zip"},
+            {"https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz", "open-jdk-17.tar.gz"},
+            {"https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip", "spydroid-app.zip"},
+            {"https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip", "spydroid-server.zip"},
+            {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"}, 
+            {"https://dl.google.com/android/repository/android-14_r01.zip", "platform.zip"},
+            {"https://dl.google.com/android/repository/android-ndk-r27-linux.zip", "ndk.zip"},
+            {"https://dl.google.com/android/repository/cmake-3.22.1-linux.zip", "cmake.zip"}
         };
 
-        std::vector<std::string> filenames = {
-            "android-platform-sdk-tools.zip",
-            "sources-android-14.zip",
-            "OpenJDK17.tar.gz",
-            "spydroid-app.zip",
-            "spydroid-server.zip",
-            "platform-tools.zip",
-            "android-sdk-14.zip"
-        };
-auto progressCallback = [this](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
-    QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning]() {
-        if (!isRunning) {
-            downloadDescriptor->setText("Todas las descargas completadas.");
-            progressBar->setValue(100);
-            bottomBarInstaller->setCustomButtonEnabled(true);
-            bottomBarInstaller->setCustomButtonText("Empezar");
-            return;
-        }
+    auto progressCallback = [this](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
+        QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning]() {
+            if (!isRunning) {
+                downloadDescriptor->setText("Todas las descargas completadas.");
+                progressBar->setValue(100);
+                bottomBarInstaller->setCustomButtonEnabled(true);
+                bottomBarInstaller->setCustomButtonText("Empezar");
+                return;
+            }
 
-        if (!currentUrl.empty()) {
-            double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
-            downloadDescriptor->setText(QString::fromStdString(currentUrl));
-            progressBar->setValue(static_cast<int>(progressPercentage));
-            std::cout << "Downloading: " << currentUrl << std::endl;
-            std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
-        }
-    }, Qt::AutoConnection);
-};
+            if (!currentUrl.empty()) {
+                double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
+                downloadDescriptor->setText(QString::fromStdString(currentUrl));
+                progressBar->setValue(static_cast<int>(progressPercentage));
+                std::cout << "Downloading: " << currentUrl << std::endl;
+                std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
+            }
+        }, Qt::AutoConnection);
+    };
 
-        downloader.downloadFiles(pathResources.toStdString(), urls, filenames, progressCallback);
+        downloader.downloadFiles(pathResources.toStdString(), urlToFileMap, progressCallback);
     }
 }
 
