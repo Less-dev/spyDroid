@@ -30,6 +30,7 @@
 #include "../widgets/SetupSettings.h"
 #include "../widgets/SetupVerify.h"
 #include "../widgets/SetupFinished.h"
+#include "../../../../../core-data/src/spydroid/data/local/SettingsManager.h"
 
 class InstallerScreen : public QWidget
 {
@@ -46,6 +47,7 @@ private:
     SetupSettings* setupSettings;
     SetupVerify* setupVerify;
     SetupFinished* setupFinished;
+    SettingsManager* settingsManager;
     void goToSetup();
     void goToSetupSettings();
     void goBackToSetupSettings();

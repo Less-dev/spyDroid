@@ -24,6 +24,7 @@
 #include <QCheckBox>
 #include <QResizeEvent>
 #include <QTimer>
+#include <QDebug>
 
 // Modificación en SetupSettings para centrar el CardWidgetSettings
 SetupSettings::SetupSettings(QWidget *parent)
@@ -77,15 +78,15 @@ void SetupSettings::goToNextPage() {
     // Obtener el directorio almacenado en path_resources
     QString path = settingsManager->getValue("path_resources", "").toString();
 
-    // Si el directorio está vacío, mostrar un mensaje de error
+    // Si el directorio está vacío, mostrar un mensaje en consola
     if (path.isEmpty()) {
-        showToastMessage("La ruta de instalación no está configurada.");
+        qDebug() << "La ruta de instalación no está configurada.";
         return;
     }
 
     // Verificar si la ruta contiene caracteres inválidos
     if (!isValidPath(path)) {
-        showToastMessage("La ruta contiene caracteres inválidos.");
+        qDebug() << "La ruta contiene caracteres inválidos.";
         return;
     }
 
@@ -94,35 +95,10 @@ void SetupSettings::goToNextPage() {
     // Verificar si ya es el directorio SPYDROID
     if (dir.dirName() == "SPYDROID" && dir.exists()) {
         emit nextPage(path);  // Emitir la señal con el valor actual de path
-        return;  
+        return;
     }
 
-    // Verificar si el directorio existe
-    if (!dir.exists()) {
-        // Intentar crearlo
-        if (!dir.mkpath(path)) {
-            showToastMessage("No se pudo crear el directorio.");
-            return;
-        }
-    } else {
-        // El directorio existe, verificar si contiene archivos
-        if (!dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty()) {
-            // Si tiene archivos, crear el subdirectorio SPYDROID
-            QString spydroidPath = path + "/SPYDROID";
-            QDir spydroidDir(spydroidPath);
-            if (!spydroidDir.exists()) {
-                if (!spydroidDir.mkpath(spydroidPath)) {
-                    showToastMessage("No se pudo crear el subdirectorio SPYDROID.");
-                    return;
-                }
-                // Actualizar la ruta en path_resources
-                settingsManager->setValue("path_resources", spydroidPath);
-                path = spydroidPath;  // Actualizar la variable path
-            }
-        }
-    }
-
-    // Emitir la señal para ir a la siguiente página con la ruta actualizada
+    // Emitir la señal para ir a la siguiente página con la ruta actual
     emit nextPage(path);
 }
 

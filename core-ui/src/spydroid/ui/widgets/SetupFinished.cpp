@@ -121,9 +121,8 @@ SetupFinished::SetupFinished(QWidget *parent)
 }
 
 
-void SetupFinished::setStartDownload(bool start) {
+void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
     startDownload = start;
-    std::string downloadDirectory = "/home/less/Documents/SPYDROID";
     std::vector<std::string> urls = {
         "https://github.com/Less-dev/spyDroid/archive/refs/heads/app.zip",
         "https://github.com/Less-dev/spyDroid/archive/refs/heads/server.zip",
@@ -170,7 +169,7 @@ void SetupFinished::setStartDownload(bool start) {
             };
 
             // Ejecutar la descarga
-            downloader.downloadFiles(downloadDirectory, urls, filenames, progressCallback);
+            downloader.downloadFiles(pathResources.toStdString(), urls, filenames, progressCallback);
         }
 }
 

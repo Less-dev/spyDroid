@@ -27,6 +27,7 @@
 #include "BottomBarInstaller.h"
 #include "BannerHorizontal.h"
 #include "CardWidgetInstaller.h"
+#include <QString>
 
 class SetupFinished : public QWidget
 {
@@ -34,7 +35,7 @@ class SetupFinished : public QWidget
 
 public:
     explicit SetupFinished(QWidget *parent = nullptr);
-    void setStartDownload(bool start);
+    void setStartDownload(bool start, const QString& pathResources);
 
 protected:
     void paintEvent(QPaintEvent *event) override;

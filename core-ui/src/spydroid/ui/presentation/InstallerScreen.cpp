@@ -24,7 +24,9 @@
 #include <QDebug>
 
 
-InstallerScreen::InstallerScreen(QWidget *parent) : QWidget(parent) {
+InstallerScreen::InstallerScreen(QWidget *parent) 
+   : QWidget(parent), settingsManager(new SettingsManager("init", this)) // Instancia SettingsManager
+ {
     
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
@@ -77,9 +79,32 @@ void InstallerScreen::goToSetupVerify(const QString& path) {
 
 void InstallerScreen::goToFinished(const QString& path) {
     setupVerify->setVisible(false);
-    setupFinished->setVisible(true);
-    setupFinished->setStartDownload(true);
+    setupFinished->setVisible(true);  // Punto de inserción para la creación de directorios
+    
+    // Crear el directorio `SPYDROID` si no existe y el directorio actual tiene archivos.
+    QDir dir(path);
+    if (!dir.exists()) {
+        if (!dir.mkpath(path)) {
+            qDebug() << "No se pudo crear el directorio: " << path;
+            return;
+        }
+    } else if (!dir.entryList(QDir::NoDotAndDotDot | QDir::AllEntries).isEmpty()) {
+        QString spydroidPath = path + "/SPYDROID";
+        QDir spydroidDir(spydroidPath);
+        if (!spydroidDir.exists()) {
+            if (!spydroidDir.mkpath(spydroidPath)) {
+                qDebug() << "No se pudo crear el subdirectorio SPYDROID: " << spydroidPath;
+                return;
+            }
+            // Actualizar la ruta en `settingsManager` para reflejar el nuevo directorio.
+            settingsManager->setValue("path_resources", spydroidPath);
+            qDebug() << "Directorio SPYDROID creado exitosamente en: " << spydroidPath;
+        }
+    }
+
+    setupFinished->setStartDownload(true, path);
 }
+
 
 void InstallerScreen::goToSpydroid() {
     emit goToHome();
