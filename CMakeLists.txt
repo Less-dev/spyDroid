@@ -23,6 +23,7 @@ set(CURL_LIBRARY /usr/lib/x86_64-linux-gnu/libcurl.so)
 find_package(CURL REQUIRED)
 find_package(Qt5 REQUIRED COMPONENTS Core)
 find_library(QTERM_LIBRARY qtermwidget5 /usr/lib)
+find_library(LIBZIPPP_LIBRARY NAMES zippp HINTS /usr/local/lib /usr/lib)
 
 include_directories(/usr/include/qtermwidget5)
 
@@ -52,6 +53,8 @@ target_link_libraries(spydroid
     jsoncpp_lib
     Qt5::Widgets
     Qt5::Core
+    zip
+    archive 
 )
 
 install(TARGETS spydroid DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})

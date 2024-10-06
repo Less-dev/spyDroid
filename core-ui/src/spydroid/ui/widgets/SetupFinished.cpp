@@ -26,6 +26,7 @@
 #include <QPushButton>
 #include <QProgressBar>
 #include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
+#include "../../../../../core-data/src/spydroid/data/local/FilesManager.h"
 
 SetupFinished::SetupFinished(QWidget *parent)
     : QWidget(parent), startDownload(false)
@@ -105,29 +106,71 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
             {"https://dl.google.com/android/repository/cmake-3.22.1-linux.zip", "cmake.zip"}
         };
 
-    auto progressCallback = [this](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
-        QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning]() {
-            if (!isRunning) {
-                downloadDescriptor->setText("Todas las descargas completadas.");
-                progressBar->setValue(100);
-                bottomBarInstaller->setCustomButtonEnabled(true);
-                bottomBarInstaller->setCustomButtonText("Empezar");
-                return;
-            }
+        // Callback para el progreso de la descarga
+        auto progressCallback = [this, pathResources](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
+            QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning, pathResources]() {
+                // Verificar si la descarga está completa y proceder con la descompresión
+                if (!isRunning) {
+                    downloadDescriptor->setText("Descomprimiendo archivos...");
 
-            if (!currentUrl.empty()) {
-                double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
-                downloadDescriptor->setText(QString::fromStdString(currentUrl));
-                progressBar->setValue(static_cast<int>(progressPercentage));
-                std::cout << "Downloading: " << currentUrl << std::endl;
-                std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
-            }
-        }, Qt::AutoConnection);
-    };
+                    // Convertir QString a std::string
+                    std::string rootDirectory = pathResources.toStdString();
 
+                    std::unordered_map<std::string, std::string> fileMap = {
+                        {"build-tools.zip", "Sdk"},
+                        {"sources.zip", "Sdk"},
+                        {"open-jdk-17.tar.gz", "SSdk"},
+                        {"spydroid-app.zip", "SSdk"},
+                        {"spydroid-server.zip", "SSdk"},
+                        {"platform-tools.zip", "Sdk"},
+                        {"platform.zip", "Sdk"},
+                        {"ndk.zip", "Sdk"},
+                        {"cmake.zip", "Sdk"},
+                    };
+
+                    // Crear el manejador de archivos
+                    FilesManager fileManager(rootDirectory, fileMap);
+
+                    // Callback para el progreso del procesamiento de archivos
+                    auto fileProgressCallback = [this](double progress, bool isCompleted) {
+                        std::cout << "Progreso: " << progress << "%" << std::endl;
+                        progressBar->setValue(static_cast<int>(progress));
+
+                        if (isCompleted) {
+                            std::cout << "Todos los archivos han sido procesados." << std::endl;
+                            bottomBarInstaller->setCustomButtonEnabled(true);
+                            bottomBarInstaller->setCustomButtonText("Iniciar");
+                        }
+                    };
+
+                    // Procesar archivos y actualizar el progreso
+                    std::cout << "Iniciando el procesamiento de archivos..." << std::endl;
+                    fileManager.processFiles(fileProgressCallback);  // Procesar en segundo plano
+                    return;
+                }
+
+                // Actualizar la barra de progreso durante la descarga
+                if (!currentUrl.empty()) {
+                    double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
+                    downloadDescriptor->setText(QString::fromStdString(currentUrl));
+                    progressBar->setValue(static_cast<int>(progressPercentage));
+
+                    std::cout << "Downloading: " << currentUrl << std::endl;
+                    std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
+                }
+            }, Qt::AutoConnection);
+        };
+
+        // Iniciar la descarga de archivos
+        std::cout << "Iniciando la descarga de archivos..." << std::endl;
         downloader.downloadFiles(pathResources.toStdString(), urlToFileMap, progressCallback);
+
+        // Agregar un mensaje de depuración para indicar el inicio de la descarga
+        std::cout << "Descarga iniciada, esperando..." << std::endl;
     }
 }
+
+
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)
 {
