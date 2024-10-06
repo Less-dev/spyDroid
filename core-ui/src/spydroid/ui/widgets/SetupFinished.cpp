@@ -111,41 +111,44 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
             QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning, pathResources]() {
                 // Verificar si la descarga está completa y proceder con la descompresión
                 if (!isRunning) {
-                    downloadDescriptor->setText("Descomprimiendo archivos...");
+                   downloadDescriptor->setText("Descomprimiendo archivos...");
 
-                    // Convertir QString a std::string
-                    std::string rootDirectory = pathResources.toStdString();
+// Convertir QString a std::string
+std::string rootDirectory = pathResources.toStdString();
 
-                    std::unordered_map<std::string, std::string> fileMap = {
-                        {"build-tools.zip", "Sdk"},
-                        {"sources.zip", "Sdk"},
-                        {"open-jdk-17.tar.gz", "SSdk"},
-                        {"spydroid-app.zip", "SSdk"},
-                        {"spydroid-server.zip", "SSdk"},
-                        {"platform-tools.zip", "Sdk"},
-                        {"platform.zip", "Sdk"},
-                        {"ndk.zip", "Sdk"},
-                        {"cmake.zip", "Sdk"},
-                    };
+std::unordered_map<std::string, std::string> fileMap = {
+    {"build-tools.zip", "Sdk"},
+    {"sources.zip", "Sdk"},
+    {"open-jdk-17.tar.gz", "SSdk"},
+    {"spydroid-app.zip", "SSdk"},
+    {"spydroid-server.zip", "SSdk"},
+    {"platform-tools.zip", "Sdk"},
+    {"platform.zip", "Sdk"},
+    {"ndk.zip", "Sdk"},
+    {"cmake.zip", "Sdk/cmake"},
+};
 
-                    // Crear el manejador de archivos
-                    FilesManager fileManager(rootDirectory, fileMap);
+// Crear el manejador de archivos
+FilesManager fileManager(rootDirectory, fileMap);
 
-                    // Callback para el progreso del procesamiento de archivos
-                    auto fileProgressCallback = [this](double progress, bool isCompleted) {
-                        std::cout << "Progreso: " << progress << "%" << std::endl;
-                        progressBar->setValue(static_cast<int>(progress));
+// Callback para el progreso de la descompresión
+auto fileProgressCallback = [this](double progress, bool isCompleted) {
+    std::cout << "Progreso: " << progress << "%" << std::endl;
+    progressBar->setValue(static_cast<int>(progress));  // Actualizar la barra de progreso
 
-                        if (isCompleted) {
-                            std::cout << "Todos los archivos han sido procesados." << std::endl;
-                            bottomBarInstaller->setCustomButtonEnabled(true);
-                            bottomBarInstaller->setCustomButtonText("Iniciar");
-                        }
-                    };
+    if (isCompleted) {
+        std::cout << "Todos los archivos han sido descomprimidos." << std::endl;
+        downloadDescriptor->setText("Descarga y descompresión de archivos terminada");
+        bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
+        bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón
+    }
+};
 
-                    // Procesar archivos y actualizar el progreso
-                    std::cout << "Iniciando el procesamiento de archivos..." << std::endl;
-                    fileManager.processFiles(fileProgressCallback);  // Procesar en segundo plano
+// Procesar archivos y luego descomprimirlos
+std::cout << "Iniciando la descompresión de archivos..." << std::endl;
+fileManager.processFiles(fileProgressCallback);
+fileManager.extractFiles(fileProgressCallback);  // Descomprimir en segundo plano
+
                     return;
                 }
 

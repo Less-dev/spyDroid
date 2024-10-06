@@ -14,6 +14,9 @@ public:
     // Función para procesar archivos con un callback para el progreso
     void processFiles(const std::function<void(double, bool)>& progressCallback);
 
+    // Función para descomprimir los archivos después de haberlos movido
+    void extractFiles(const std::function<void(double, bool)>& progressCallback);
+
 private:
     std::unordered_map<std::string, std::string> fileMap;  // Diccionario de archivos y sus directorios
     std::string baseDir;  // Directorio base
@@ -23,6 +26,9 @@ private:
 
     // Función auxiliar para mover un archivo
     void moveFile(const std::string& fileName, const std::string& destinationDir);
+
+    // Función auxiliar para descomprimir un archivo
+    bool extractFile(const std::string& filePath, const std::string& destinationDir);
 };
 
 #endif // FILESMANAGER_H
