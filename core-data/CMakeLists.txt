@@ -26,6 +26,7 @@ set(HEADERS
     ${SOURCE_DIR}/models/SmsHandler.h
     ${SOURCE_DIR}/local/SettingsManager.h
     ${SOURCE_DIR}/local/FilesManager.h
+    ${SOURCE_DIR}/local/CleanManager.h
 )
 
 set(SOURCES
@@ -35,6 +36,7 @@ set(SOURCES
     ${SOURCE_DIR}/data/SmsRepositoryImp.cpp
     ${SOURCE_DIR}/local/SettingsManager.cpp
     ${SOURCE_DIR}/local/FilesManager.cpp
+    ${SOURCE_DIR}/local/CleanManager.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

@@ -14,7 +14,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
-
 #ifndef SETUP_FINISHED_H
 #define SETUP_FINISHED_H
 
@@ -24,10 +23,13 @@
 #include <QProgressBar>
 #include <QLabel>
 #include <QPaintEvent>
+#include <QTimer>
 #include "BottomBarInstaller.h"
 #include "BannerHorizontal.h"
 #include "CardWidgetInstaller.h"
 #include <QString>
+#include <unordered_map>
+#include <string>
 
 class SetupFinished : public QWidget
 {
@@ -53,6 +55,12 @@ private:
     QProgressBar* progressBar;
     BottomBarInstaller* bottomBarInstaller;
     bool startDownload;  
+
+    // Nuevo método para la limpieza después de la descarga
+    void setCleanDownload(const QString& pathResources,
+                          const std::unordered_map<std::string, std::string>& fileMap,
+                          const std::unordered_map<std::string, std::string>& dirMap);
+
     void onStartCheckBoxStateChanged(int state);
     void goToNextPage();
     void goToBackPage();

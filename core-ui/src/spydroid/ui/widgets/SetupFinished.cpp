@@ -27,6 +27,7 @@
 #include <QProgressBar>
 #include "../../../../src/../../core-network/src/spydroid/network/services/DownloaderService.h"
 #include "../../../../../core-data/src/spydroid/data/local/FilesManager.h"
+#include "../../../../../core-data/src/spydroid/data/local/CleanManager.h"
 
 SetupFinished::SetupFinished(QWidget *parent)
     : QWidget(parent), startDownload(false)
@@ -111,7 +112,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
             QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning, pathResources]() {
                 // Verificar si la descarga está completa y proceder con la descompresión
                 if (!isRunning) {
-                   downloadDescriptor->setText("Descomprimiendo archivos...");
+                    downloadDescriptor->setText("Descomprimiendo archivos...");
 
                     std::string rootDirectory = pathResources.toStdString();
 
@@ -127,15 +128,33 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                         {"cmake.zip", "Sdk/cmake"},
                     };
 
+                    std::unordered_map<std::string, std::string> dirMap = {
+                        {"cmdline-tools", "build-tools"},
+                        {"src", "sources"},
+                        {"jdk-17.0.0.0.1+1", "openjdk"},
+                        {"spydroid-app", "spydroid-app"},
+                        {"spydroid-server", "spydroid-server"},
+                        {"platform-tools", "platform-tools"},
+                        {"platform", "platforms"},
+                        {"android-ndk-r27", "ndk"},
+                        {"cmake", "cmake"},
+                    };
+
                     FilesManager fileManager(rootDirectory, fileMap);
 
-                    auto fileProgressCallback = [this](double progress, bool isCompleted) {
+                    // Captura las variables necesarias
+                    auto fileProgressCallback = [this, pathResources, fileMap, dirMap](double progress, bool isCompleted) {
                         std::cout << "Progreso: " << progress << "%" << std::endl;
                         progressBar->setValue(static_cast<int>(progress));  // Actualizar la barra de progreso
 
                         if (isCompleted) {
-                            std::cout << "Todos los archivos han sido descomprimidos." << std::endl;
-                            downloadDescriptor->setText("Descarga y descompresión de archivos terminada");
+                            std::cout << "Descompresión completa. Proceso terminado." << std::endl;
+
+                            // Configurar la limpieza y el renombrado de directorios 10 segundos después
+                            setCleanDownload(pathResources, fileMap, dirMap);
+
+                            // Finalización
+                            downloadDescriptor->setText("Descarga y descompresión completadas");
                             bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
                             bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón
                         }
@@ -167,6 +186,27 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
     }
 }
 
+
+void SetupFinished::setCleanDownload(const QString& pathResources,
+                                     const std::unordered_map<std::string, std::string>& fileMap,
+                                     const std::unordered_map<std::string, std::string>& dirMap) {
+    QTimer::singleShot(10000, [this, pathResources, fileMap, dirMap]() {
+        std::cout << "Iniciando limpieza y renombrado de archivos después de 10 segundos..." << std::endl;
+
+        std::string rootDirectory = pathResources.toStdString();
+        CleanManager cleanManager(rootDirectory, fileMap, dirMap);
+
+        // Limpieza de archivos comprimidos
+        std::cout << "Iniciando limpieza de archivos comprimidos..." << std::endl;
+        cleanManager.cleanCompressedFiles();
+
+        // Renombrado de directorios
+        std::cout << "Iniciando renombrado de directorios..." << std::endl;
+        cleanManager.renameDirectories();
+
+        std::cout << "Limpieza y renombrado completados." << std::endl;
+    });
+}
 
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)
