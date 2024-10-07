@@ -19,8 +19,11 @@
 #include "ApkStudioScreen.h"
 #include <iostream>
 #include <QPainter>
+#include <QHBoxLayout>
+#include "../widgets/CardOptions.h"
 #include "../widgets/ItemBoard.h"
 #include "../widgets/GoBack.h"
+#include <QResizeEvent>
 
 
 ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
@@ -41,6 +44,44 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     });
     
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
+
+    options = new QHBoxLayout(this);
+    options->setContentsMargins(100, 40, 100, 40);
+    options->setSpacing(20);  // Agregar un poco de espacio entre las tarjetas
+
+    // Creamos los dos CardOptions
+    CardOptions *card1 = new CardOptions(this);
+    CardOptions *card2 = new CardOptions(this);
+
+    // Asignamos la imagen y descripción al primer CardOptions
+    QPixmap bannerTemplates(":banner_templates");
+    card1->setImage(bannerTemplates);
+    card1->setDescription("Selecciona una plantilla entre las opciones, "
+                          "ten en cuenta que no podrás modificar nada respecto a la interfaz de usuario.");
+
+    // Asignamos la imagen y descripción al segundo CardOptions
+    QPixmap bannerProgramming(":banner_programming");
+    card2->setImage(bannerProgramming);
+    card2->setDescription("Programa la interfaz de usuario, y personalízala libremente y sin restricciones.");
+
+    // Establecemos las políticas de tamaño para que ambos tengan el mismo tamaño
+    card1->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+    card2->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Expanding);
+
+    // Fijar un tamaño mínimo igual para ambos cards
+    card1->setMinimumWidth(200);  // Ajusta este valor según el tamaño deseado
+    card2->setMinimumWidth(200);
+
+    // Añadimos los dos CardOptions al layout horizontal
+    options->addWidget(card1);
+    options->addWidget(card2);
+
+    // Aseguramos que el layout ocupe todo el espacio disponible
+    options->setStretch(0, 1);
+    options->setStretch(1, 1);
+
+    // Añadimos el layout horizontal al layout principal
+    layout->addLayout(options);
 
     setLayout(layout);
 }
@@ -80,4 +121,19 @@ void ApkStudioScreen::paintEvent(QPaintEvent *event) {
     painter.drawRoundedRect(padding, padding, width() - 2 * padding, height() - 2 * padding, 20, 20);  // Bordes redondeados de 20px
     
     QWidget::paintEvent(event);
+}
+
+void ApkStudioScreen::resizeEvent(QResizeEvent *event){
+    QWidget::resizeEvent(event);
+
+    // Obtenemos el tamaño actual de la ventana
+    int currentWidth = this->width();
+    int currentHeight = this->height();
+
+    // Calculamos los márgenes en proporción al tamaño de la ventana
+    int leftRightMargin = currentWidth * 0.05;  // 10% del ancho
+    int topBottomMargin = currentHeight * 0.08;  // 8% de la altura
+
+    // Establecemos los márgenes dinámicamente
+    options->setContentsMargins(leftRightMargin, topBottomMargin, leftRightMargin, topBottomMargin);
 }

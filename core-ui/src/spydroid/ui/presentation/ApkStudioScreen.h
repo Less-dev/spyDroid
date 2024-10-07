@@ -26,6 +26,8 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
+#include <QHBoxLayout>
+#include <QResizeEvent>
 
 class ApkStudioScreen : public QWidget
 {
@@ -40,11 +42,11 @@ signals:
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 private:
     QVBoxLayout* layout;
-    QString deviceAlias;
-    void loadAlias();
+    QHBoxLayout* options;
 };
 
 #endif // APK_STUDIO_SCREEN_H
