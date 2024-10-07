@@ -42,7 +42,7 @@ void FilesManager::processFiles(const std::function<void(double, bool)>& progres
 // Crear directorio si no existe
 void FilesManager::createDirectoryIfNotExists(const fs::path& dirPath) {
     if (!fs::exists(dirPath)) {
-        std::cout << "Creando directorio: " << dirPath << std::endl;
+        //std::cout << "Creando directorio: " << dirPath << std::endl;
         fs::create_directories(dirPath);  // Crea el directorio y cualquier directorio padre si no existen
     }
 }
@@ -53,10 +53,10 @@ void FilesManager::moveFile(const std::string& fileName, const std::string& dest
     fs::path destinationFile = fs::path(destinationDir) / fileName;  // Destino final
 
     if (fs::exists(sourceFile)) {
-        std::cout << "Moviendo archivo: " << sourceFile << " a " << destinationFile << std::endl;
+        //std::cout << "Moviendo archivo: " << sourceFile << " a " << destinationFile << std::endl;
         fs::rename(sourceFile, destinationFile);  // Mover archivo
     } else {
-        std::cerr << "El archivo " << fileName << " no existe en el directorio base." << std::endl;
+        //std::cerr << "El archivo " << fileName << " no existe en el directorio base." << std::endl;
     }
 }
 

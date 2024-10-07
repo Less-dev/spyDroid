@@ -76,7 +76,7 @@ bool DownloaderService::checkUrl(const std::string& url) {
         if (res == CURLE_OK) {
             isValid = true;
         } else {
-            std::cerr << "Error: " << curl_easy_strerror(res) << " al verificar URL: " << url << std::endl;
+            //std::cerr << "Error: " << curl_easy_strerror(res) << " al verificar URL: " << url << std::endl;
         }
 
         curl_easy_cleanup(curl);
@@ -89,7 +89,7 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
     CURLcode res;
     FILE* file = fopen(outputPath.c_str(), "wb");
     if (!file) {
-        std::cerr << "Error: No se pudo abrir el archivo para escritura: " << outputPath << std::endl;
+        //std::cerr << "Error: No se pudo abrir el archivo para escritura: " << outputPath << std::endl;
         return false;
     }
 
@@ -105,7 +105,7 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
         curl_easy_setopt(curl, CURLOPT_XFERINFOFUNCTION, progressFunction);
         curl_easy_setopt(curl, CURLOPT_XFERINFODATA, &progressData);
         
-        curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
+        curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L);
         curl_easy_setopt(curl, CURLOPT_HEADERFUNCTION, headerCallback);
         curl_easy_setopt(curl, CURLOPT_HEADERDATA, &progressData);
 
@@ -116,7 +116,7 @@ bool DownloaderService::downloadFile(const std::string& url, const std::string& 
 
         res = curl_easy_perform(curl);
         if (res != CURLE_OK) {
-            std::cerr << "Error al descargar: " << curl_easy_strerror(res) << " para la URL: " << url << std::endl;
+            //std::cerr << "Error al descargar: " << curl_easy_strerror(res) << " para la URL: " << url << std::endl;
             fclose(file);
             curl_easy_cleanup(curl);
             return false;
@@ -153,14 +153,14 @@ void DownloaderService::downloadFiles(
             url.erase(url.find_last_not_of(" \n\r\t") + 1);
 
             if (!checkUrl(url)) {
-                std::cerr << "Error: URL inválida o no accesible: " << url << std::endl;
+                //std::cerr << "Error: URL inválida o no accesible: " << url << std::endl;
                 continue;
             }
 
             std::string outputPath = getOutputFilePath(directory, filename);
 
             if (!downloadFile(url, outputPath, progressData)) {
-                std::cerr << "Error: No se pudo descargar el archivo de la URL: " << url << std::endl;
+                //std::cerr << "Error: No se pudo descargar el archivo de la URL: " << url << std::endl;
                 continue;
             }
 

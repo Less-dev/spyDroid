@@ -152,8 +152,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
 
                             // Configurar la limpieza y el renombrado de directorios 10 segundos después
                             setCleanDownload(pathResources, fileMap, dirMap);
-
-                            // Finalización
+                            progressBar->setValue(100);  // Actualizar la barra de progreso
                             downloadDescriptor->setText("Descarga y descompresión completadas");
                             bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
                             bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón
@@ -191,20 +190,11 @@ void SetupFinished::setCleanDownload(const QString& pathResources,
                                      const std::unordered_map<std::string, std::string>& fileMap,
                                      const std::unordered_map<std::string, std::string>& dirMap) {
     QTimer::singleShot(10000, [this, pathResources, fileMap, dirMap]() {
-        std::cout << "Iniciando limpieza y renombrado de archivos después de 10 segundos..." << std::endl;
 
         std::string rootDirectory = pathResources.toStdString();
         CleanManager cleanManager(rootDirectory, fileMap, dirMap);
-
-        // Limpieza de archivos comprimidos
-        std::cout << "Iniciando limpieza de archivos comprimidos..." << std::endl;
         cleanManager.cleanCompressedFiles();
-
-        // Renombrado de directorios
-        std::cout << "Iniciando renombrado de directorios..." << std::endl;
         cleanManager.renameDirectories();
-
-        std::cout << "Limpieza y renombrado completados." << std::endl;
     });
 }
 
