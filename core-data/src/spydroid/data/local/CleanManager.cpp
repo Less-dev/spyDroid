@@ -17,13 +17,13 @@ void CleanManager::cleanCompressedFiles() {
 
         if (fs::exists(fullPath)) {
             try {
-                std::cout << "Deleting file: " << fullPath << std::endl;
+                //std::cout << "Deleting file: " << fullPath << std::endl;
                 fs::remove(fullPath); // Elimina el archivo
             } catch (const std::filesystem::filesystem_error& e) {
-                std::cerr << "Error deleting file: " << e.what() << std::endl;
+                //std::cerr << "Error deleting file: " << e.what() << std::endl;
             }
         } else {
-            std::cerr << "File does not exist: " << fullPath << std::endl;
+            //std::cerr << "File does not exist: " << fullPath << std::endl;
         }
     }
 }
@@ -35,40 +35,43 @@ void CleanManager::renameDirectories() {
             continue;
         }
 
-        // Busca la ruta original basada en el fileMap (directorio donde está el archivo)
+        bool renamed = false;
+
+        // Recorre fileMap para construir la ruta completa donde se espera que esté el directorio
         for (const auto& [fileName, relativePath] : fileMap) {
-            if (fileName.find(oldDirName) != std::string::npos) {
-                // La carpeta original está en relativePath
-                fs::path oldDirPath = fs::path(dirPath) / relativePath / oldDirName;
-                fs::path newDirPath = fs::path(dirPath) / relativePath / newDirName;
+            fs::path oldDirPath = fs::path(dirPath) / relativePath / oldDirName;
+            fs::path newDirPath = fs::path(dirPath) / relativePath / newDirName;
 
-                if (fs::exists(oldDirPath)) {
-                    try {
-                        std::cout << "Renaming directory: " << oldDirPath << " to " << newDirPath << std::endl;
-                        fs::rename(oldDirPath, newDirPath); // Renombra el directorio
-                    } catch (const std::filesystem::filesystem_error& e) {
-                        std::cerr << "Error renaming directory: " << e.what() << std::endl;
-                    }
-                } else {
-                    std::cerr << "Directory does not exist: " << oldDirPath << std::endl;
+            // Comprueba si el directorio existe en la ruta construida
+            if (fs::exists(oldDirPath) && fs::is_directory(oldDirPath)) {
+                try {
+                    //std::cout << "Renaming directory: " << oldDirPath << " to " << newDirPath << std::endl;
+                    fs::rename(oldDirPath, newDirPath);
+                    renamed = true;
+                    break;  // Sale del bucle si se renombró correctamente
+                } catch (const std::filesystem::filesystem_error& e) {
+                    //std::cerr << "Error renaming directory: " << e.what() << std::endl;
                 }
-
-                // Termina el ciclo si se encuentra la carpeta correcta
-                break;
             }
+        }
+
+        if (!renamed) {
+            //std::cerr << "Failed to rename directory: " << oldDirName << " -> " << newDirName << std::endl;
         }
     }
 }
+
+
 
 void CleanManager::removeFile(const std::string& filePath) {
     if (fs::exists(filePath)) {
         try {
             fs::remove(filePath);
         } catch (const std::filesystem::filesystem_error& e) {
-            std::cerr << "Error removing file: " << e.what() << std::endl;
+            //std::cerr << "Error removing file: " << e.what() << std::endl;
         }
     } else {
-        std::cerr << "File does not exist: " << filePath << std::endl;
+        //std::cerr << "File does not exist: " << filePath << std::endl;
     }
 }
 
@@ -80,9 +83,9 @@ void CleanManager::renameDirectory(const std::string& oldName, const std::string
         try {
             fs::rename(oldPath, newPath);
         } catch (const std::filesystem::filesystem_error& e) {
-            std::cerr << "Error renaming directory: " << e.what() << std::endl;
+            //std::cerr << "Error renaming directory: " << e.what() << std::endl;
         }
     } else {
-        std::cerr << "Directory does not exist: " << oldPath << std::endl;
+        //std::cerr << "Directory does not exist: " << oldPath << std::endl;
     }
 }
