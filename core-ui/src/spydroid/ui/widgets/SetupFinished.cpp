@@ -30,7 +30,7 @@
 #include "../../../../../core-data/src/spydroid/data/local/CleanManager.h"
 
 SetupFinished::SetupFinished(QWidget *parent)
-    : QWidget(parent), startDownload(false)
+    : QWidget(parent), startDownload(false), settingsManager(new SettingsManager("init", this))
 {
 
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -153,6 +153,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                             // Configurar la limpieza y el renombrado de directorios 10 segundos después
                             setCleanDownload(pathResources, fileMap, dirMap);
                             progressBar->setValue(100);  // Actualizar la barra de progreso
+                            settingsManager->setValue("isDependencySuccessfully", true);
                             downloadDescriptor->setText("Descarga y descompresión completadas");
                             bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
                             bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón

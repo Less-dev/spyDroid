@@ -158,8 +158,6 @@ int main(int argc, char *argv[]) {
 
     // Navigation connections (verify that the signals exist in the classes)
     QObject::connect(installerScreen, &InstallerScreen::goToHome, [&stackedWidget, homeScreen]() {
-        SettingsManager settingsManager("init");
-        settingsManager.setValue("isDependencySuccessfully", true);
         navigateTo(homeScreen, stackedWidget, "SPYDROID");
     });
 

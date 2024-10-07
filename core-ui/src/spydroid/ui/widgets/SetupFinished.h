@@ -30,6 +30,8 @@
 #include <QString>
 #include <unordered_map>
 #include <string>
+#include "../../../../../core-data/src/spydroid/data/local/SettingsManager.h"
+
 
 class SetupFinished : public QWidget
 {
@@ -54,6 +56,7 @@ private:
     QLabel* downloadDescriptor;
     QProgressBar* progressBar;
     BottomBarInstaller* bottomBarInstaller;
+    SettingsManager* settingsManager;
     bool startDownload;  
 
     // Nuevo método para la limpieza después de la descarga
