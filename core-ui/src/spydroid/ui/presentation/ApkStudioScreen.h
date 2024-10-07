@@ -20,55 +20,12 @@
 
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QHBoxLayout>
-#include <QPixmap>
+#include <QPushButton>
+#include <QString>
 #include <QLabel>
-#include <QTimer>
-#include <QPalette>
-#include <QPainter>
-#include "../widgets/GoBack.h"
-#include "../widgets/Terminal.h"
-#include "../widgets/CodeEditor.h"
-#include "../widgets/FileExplorer.h"
-#include "../../../../../core-data/src/spydroid/data/local/SettingsManager.h"
-#include <QMenuBar>
-#include <QTabBar>
-
-
-class ClickableLabel : public QLabel {
-    Q_OBJECT
-
-public:
-    explicit ClickableLabel(QWidget *parent = nullptr);
-
-signals:
-    void clicked();
-
-protected:
-    void mousePressEvent(QMouseEvent *event) override;
-};
-
-class ToolWindowBar : public QWidget {
-    Q_OBJECT
-
-public:
-    explicit ToolWindowBar(QWidget *parent = nullptr);
-
-signals:
-    void goToHomeIconClicked();
-    void fileIconClicked();
-    void gitIconClicked();
-    void terminalIconClicked();
-    void playIconClicked();
-
-private slots:
-    void handleGoToHomeIconClick();
-    void handleFileIconClick();
-    void handleGitIconClick();
-    void handleTerminalIconClick();
-    void handlePlayIconClick();
-};
-
+#include <QLineEdit>
+#include <QTableWidget>
+#include <QPaintEvent>
 
 class ApkStudioScreen : public QWidget
 {
@@ -76,47 +33,18 @@ class ApkStudioScreen : public QWidget
 
 public:
     explicit ApkStudioScreen(QWidget *parent = nullptr);
-
+    
 signals:
     void goToHome();
+    void goToIDE();
 
 protected:
     void paintEvent(QPaintEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
-    void keyReleaseEvent(QKeyEvent *event) override;
-
-private slots:
-
-    // Options Lateral Left from the view
-    void toggleGoToHome();
-    void toggleFileExplorer();
-    void toggleGit();
-    void toggleTerminal();
-    void togglePlay();
-
-    // Option menu bar (File)
-    void newFile();
-    void openFile();
-    void saveFile();
-    void onFileOpened(const QString &filePath);
 
 private:
     QVBoxLayout* layout;
-    CodeEditor* codeEditor;
-    Terminal* terminal;
-    FileExplorer* fileExplorer;
-    bool altPressed = false;
-    
-    QMenuBar *menuBar;
-    QMenu *fileMenu;
-    QAction *newFileAction;
-    QAction *openFileAction;
-    QAction *saveFileAction;
-    SettingsManager* settingsManager;
-    QString pathProject;
-    QString ultFileOpen;
-    QList<QVariant> recentFiles;
-    QTabBar* tabBar;
+    QString deviceAlias;
+    void loadAlias();
 };
 
 #endif // APK_STUDIO_SCREEN_H

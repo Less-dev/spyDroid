@@ -48,7 +48,7 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
 
     ItemBoard *apkStudio = new ItemBoard(itemBoardContainer);
     apkStudio->setImage(QPixmap(":/icons/builder.png"));
-    apkStudio->setText("APK Estudio");
+    apkStudio->setText("Spydroid Estudio");
     connect(apkStudio, &ItemBoard::clicked, [this]() {
         emit goToBuildApk();
     });
