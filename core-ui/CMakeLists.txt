@@ -19,6 +19,7 @@ set(HEADERS
     src/spydroid/ui/presentation/DashBoardScreen.h
     src/spydroid/ui/presentation/ApkStudioScreen.h
     src/spydroid/ui/presentation/IDEScreen.h
+    src/spydroid/ui/presentation/TemplateScreen.h
     src/spydroid/ui/presentation/ServerStudioScreen.h
     src/spydroid/ui/presentation/MultimediaScreen.h
     src/spydroid/ui/presentation/ImagesScreen.h
@@ -51,8 +52,9 @@ set(SOURCES
     src/spydroid/ui/presentation/InstallerScreen.cpp
     src/spydroid/ui/presentation/HomeScreen.cpp
     src/spydroid/ui/presentation/DashBoardScreen.cpp
-    src/spydroid/ui/presentation/IDEScreen.cpp
     src/spydroid/ui/presentation/ApkStudioScreen.cpp
+    src/spydroid/ui/presentation/IDEScreen.cpp
+    src/spydroid/ui/presentation/TemplateScreen.cpp
     src/spydroid/ui/presentation/ServerStudioScreen.cpp
     src/spydroid/ui/presentation/MultimediaScreen.cpp
     src/spydroid/ui/presentation/ImagesScreen.cpp

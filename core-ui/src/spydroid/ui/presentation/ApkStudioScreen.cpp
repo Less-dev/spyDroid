@@ -40,7 +40,7 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     
     GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
     goBackButton->setOnClick([this]() {
-        emit goToIDE();
+        emit goToHome();
     });
     
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
@@ -72,6 +72,9 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
     card1->setMinimumWidth(200);  // Ajusta este valor según el tamaño deseado
     card2->setMinimumWidth(200);
 
+    connect(card1, &CardOptions::clicked, this, &ApkStudioScreen::goToggleTemplates);
+    connect(card2, &CardOptions::clicked, this, &ApkStudioScreen::goToggleIDE);
+
     // Añadimos los dos CardOptions al layout horizontal
     options->addWidget(card1);
     options->addWidget(card2);
@@ -87,6 +90,13 @@ ApkStudioScreen::ApkStudioScreen(QWidget *parent) : QWidget(parent) {
 }
 
 
+void ApkStudioScreen::goToggleIDE() {
+    emit goToIDE();
+}
+
+void ApkStudioScreen::goToggleTemplates() {
+    emit goToTemplates();
+}
 
 void ApkStudioScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
@@ -129,7 +139,7 @@ void ApkStudioScreen::resizeEvent(QResizeEvent *event){
     // Obtenemos el tamaño actual de la ventana
     int currentWidth = this->width();
     int currentHeight = this->height();
-
+    
     // Calculamos los márgenes en proporción al tamaño de la ventana
     int leftRightMargin = currentWidth * 0.05;  // 10% del ancho
     int topBottomMargin = currentHeight * 0.08;  // 8% de la altura

@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef APK_STUDIO_SCREEN_H
-#define APK_STUDIO_SCREEN_H
+#ifndef TEMPLATE_SCREEN_H
+#define TEMPLATE_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -26,30 +26,22 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
-#include <QHBoxLayout>
-#include <QResizeEvent>
 
-class ApkStudioScreen : public QWidget
+class TemplateScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ApkStudioScreen(QWidget *parent = nullptr);
+    explicit TemplateScreen(QWidget *parent = nullptr);
     
 signals:
-    void goToHome();
-    void goToTemplates();
-    void goToIDE();
-    
+    void goToSpydroidStudio();
+
 protected:
     void paintEvent(QPaintEvent *event) override;
-    void resizeEvent(QResizeEvent *event) override;
 
 private:
     QVBoxLayout* layout;
-    QHBoxLayout* options;
-    void goToggleIDE();
-    void goToggleTemplates();
 };
 
-#endif // APK_STUDIO_SCREEN_H
+#endif // TEMPLATE_SCREEN_H
