@@ -46,6 +46,7 @@ set(HEADERS
     src/spydroid/ui/widgets/CardWidgetSettings.h
     src/spydroid/ui/widgets/CardWidgetInstaller.h
     src/spydroid/ui/widgets/CardOptions.h
+    src/spydroid/ui/widgets/SelectTemplate.h
 )
 
 set(SOURCES
@@ -81,6 +82,7 @@ set(SOURCES
     src/spydroid/ui/widgets/CardWidgetSettings.cpp
     src/spydroid/ui/widgets/CardWidgetInstaller.cpp
     src/spydroid/ui/widgets/CardOptions.cpp
+    src/spydroid/ui/widgets/SelectTemplate.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

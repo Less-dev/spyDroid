@@ -15,36 +15,20 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TEMPLATE_SCREEN_H
-#define TEMPLATE_SCREEN_H
+#include "SelectTemplate.h"
+#include <iostream>
+#include <QPainter>
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
-#include <QPaintEvent>
-#include "../widgets/SelectTemplate.h"
-
-
-class TemplateScreen : public QWidget
-{
-    Q_OBJECT
-
-public:
-    explicit TemplateScreen(QWidget *parent = nullptr);
+SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
     
-signals:
-    void goToSpydroidStudio();
+    layout = new QVBoxLayout(this);
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
+    bottomBar = new BottomBarInstaller();
+    bottomBar->setCustomButtonText("Siguiente");
+    bottomBar->setBackButtonEnabled(false);
+    bottomBar->setCustomButtonEnabled(true);
+    bottomBar->setCancelButtonEnabled(true);
+    layout->addWidget(bottomBar, 0, Qt::AlignBottom);
 
-private:
-    QVBoxLayout* layout;
-    SelectTemplate* selectTemplate;
-};
-
-#endif // TEMPLATE_SCREEN_H
+    setLayout(layout);
+}

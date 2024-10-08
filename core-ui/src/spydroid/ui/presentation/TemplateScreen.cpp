@@ -18,7 +18,6 @@
 #include "TemplateScreen.h"
 #include <iostream>
 #include <QPainter>
-#include "../widgets/ItemBoard.h"
 #include "../widgets/GoBack.h"
 
 
@@ -40,6 +39,8 @@ TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
+    selectTemplate = new SelectTemplate();
+    layout->addWidget(selectTemplate);
     setLayout(layout);
 }
 
