@@ -14,9 +14,13 @@
 #along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 set(HEADERS
+    src/spydroid/ui/presentation/InstallerScreen.h
     src/spydroid/ui/presentation/HomeScreen.h
     src/spydroid/ui/presentation/DashBoardScreen.h
     src/spydroid/ui/presentation/ApkStudioScreen.h
+    src/spydroid/ui/presentation/IDEScreen.h
+    src/spydroid/ui/presentation/TemplateScreen.h
+    src/spydroid/ui/presentation/ServerStudioScreen.h
     src/spydroid/ui/presentation/MultimediaScreen.h
     src/spydroid/ui/presentation/ImagesScreen.h
     src/spydroid/ui/presentation/VideosScreen.h
@@ -31,12 +35,27 @@ set(HEADERS
     src/spydroid/ui/widgets/CodeEditor.h
     src/spydroid/ui/widgets/FileExplorer.h
     src/spydroid/ui/widgets/FileWidget.h
+    src/spydroid/ui/widgets/Setup.h
+    src/spydroid/ui/widgets/SetupSettings.h
+    src/spydroid/ui/widgets/SetupVerify.h
+    src/spydroid/ui/widgets/SetupFinished.h
+    src/spydroid/ui/widgets/BottomBarInstaller.h
+    src/spydroid/ui/widgets/BannerHorizontal.h
+    src/spydroid/ui/widgets/BrowserSetup.h
+    src/spydroid/ui/widgets/CardWidgetVerify.h
+    src/spydroid/ui/widgets/CardWidgetSettings.h
+    src/spydroid/ui/widgets/CardWidgetInstaller.h
+    src/spydroid/ui/widgets/CardOptions.h
 )
 
 set(SOURCES
+    src/spydroid/ui/presentation/InstallerScreen.cpp
     src/spydroid/ui/presentation/HomeScreen.cpp
     src/spydroid/ui/presentation/DashBoardScreen.cpp
     src/spydroid/ui/presentation/ApkStudioScreen.cpp
+    src/spydroid/ui/presentation/IDEScreen.cpp
+    src/spydroid/ui/presentation/TemplateScreen.cpp
+    src/spydroid/ui/presentation/ServerStudioScreen.cpp
     src/spydroid/ui/presentation/MultimediaScreen.cpp
     src/spydroid/ui/presentation/ImagesScreen.cpp
     src/spydroid/ui/presentation/VideosScreen.cpp
@@ -51,6 +70,17 @@ set(SOURCES
     src/spydroid/ui/widgets/CodeEditor.cpp
     src/spydroid/ui/widgets/FileExplorer.cpp
     src/spydroid/ui/widgets/FileWidget.cpp
+    src/spydroid/ui/widgets/Setup.cpp
+    src/spydroid/ui/widgets/SetupSettings.cpp
+    src/spydroid/ui/widgets/SetupVerify.cpp
+    src/spydroid/ui/widgets/SetupFinished.cpp
+    src/spydroid/ui/widgets/BottomBarInstaller.cpp
+    src/spydroid/ui/widgets/BannerHorizontal.cpp
+    src/spydroid/ui/widgets/BrowserSetup.cpp
+    src/spydroid/ui/widgets/CardWidgetVerify.cpp
+    src/spydroid/ui/widgets/CardWidgetSettings.cpp
+    src/spydroid/ui/widgets/CardWidgetInstaller.cpp
+    src/spydroid/ui/widgets/CardOptions.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})

@@ -15,13 +15,14 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#include "HomeScreen.h"
+#include "ServerStudioScreen.h"
 #include <iostream>
 #include <QPainter>
 #include "../widgets/ItemBoard.h"
-#include <QDebug>
+#include "../widgets/GoBack.h"
 
-HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
+
+ServerStudioScreen::ServerStudioScreen(QWidget *parent) : QWidget(parent) {
     
     this->setMinimumSize(600, 500);
     QPalette pal = this->palette();
@@ -32,46 +33,18 @@ HomeScreen::HomeScreen(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
 
     layout->setContentsMargins(20, 20, 20, 20);
-
-    QWidget *itemBoardContainer = new QWidget(this);
-    QHBoxLayout *itemBoardLayout = new QHBoxLayout(itemBoardContainer);
-
-    itemBoardLayout->setAlignment(Qt::AlignLeft | Qt::AlignTop);
-    itemBoardLayout->setSpacing(10);
-
-    ItemBoard *dashBoard = new ItemBoard(itemBoardContainer);
-    dashBoard->setImage(QPixmap(":/icons/home.png"));
-    dashBoard->setText("Panel");
-    connect(dashBoard, &ItemBoard::clicked, [this]() {
-        emit goToDashBoard();
+    
+    GoBackButton* goBackButton = new GoBackButton(this, QColor(255, 255, 255, 200));
+    goBackButton->setOnClick([this]() {
+        emit goToHome();
     });
-
-    ItemBoard *apkStudio = new ItemBoard(itemBoardContainer);
-    apkStudio->setImage(QPixmap(":/icons/builder.png"));
-    apkStudio->setText("Spydroid Estudio");
-    connect(apkStudio, &ItemBoard::clicked, [this]() {
-        emit goToBuildApk();
-    });
-
-    ItemBoard *serverStudio = new ItemBoard(itemBoardContainer);
-    serverStudio->setImage(QPixmap(":/icons/server"));
-    serverStudio->setText("Servidor Estudio");
-    connect(serverStudio, &ItemBoard::clicked, [this]() {
-        emit goToBuildServer();
-    });
-
-    itemBoardLayout->addWidget(dashBoard);
-    itemBoardLayout->addWidget(apkStudio);
-    itemBoardLayout->addWidget(serverStudio);
-    itemBoardContainer->setLayout(itemBoardLayout);
-
-    layout->addWidget(itemBoardContainer, 0, Qt::AlignLeft | Qt::AlignTop);
+    layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
     setLayout(layout);
 }
 
 
-void HomeScreen::paintEvent(QPaintEvent *event) {
+void ServerStudioScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 

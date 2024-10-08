@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOMESCREEN_H
-#define HOMESCREEN_H
+#ifndef INSTALLER_SCREEN_H
+#define INSTALLER_SCREEN_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -26,24 +26,34 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
+#include "../widgets/Setup.h"
+#include "../widgets/SetupSettings.h"
+#include "../widgets/SetupVerify.h"
+#include "../widgets/SetupFinished.h"
+#include "../../../../../core-data/src/spydroid/data/local/SettingsManager.h"
 
-class HomeScreen : public QWidget
+class InstallerScreen : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HomeScreen(QWidget *parent = nullptr);
-
+    explicit InstallerScreen(QWidget *parent = nullptr);
+    
 signals:
-    void goToDashBoard();
-    void goToBuildApk();
-    void goToBuildServer();
-
-protected:
-    void paintEvent(QPaintEvent *event) override;
-
+    void goToHome();
 private:
     QVBoxLayout* layout;
+    Setup* setup;
+    SetupSettings* setupSettings;
+    SetupVerify* setupVerify;
+    SetupFinished* setupFinished;
+    SettingsManager* settingsManager;
+    void goToSetup();
+    void goToSetupSettings();
+    void goBackToSetupSettings();
+    void goToSetupVerify(const QString& path);
+    void goToFinished(const QString& path);
+    void goToSpydroid();
 };
 
-#endif // HOMESCREEN_H
+#endif // INSTALLER_SCREEN_H

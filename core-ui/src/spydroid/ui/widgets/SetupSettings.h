@@ -15,35 +15,45 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef HOMESCREEN_H
-#define HOMESCREEN_H
+#ifndef SETUP_SETTINGS_H
+#define SETUP_SETTINGS_H
 
 #include <QWidget>
+#include <QHBoxLayout>
 #include <QVBoxLayout>
-#include <QPushButton>
-#include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
 #include <QPaintEvent>
+#include "BottomBarInstaller.h"
+#include "BannerHorizontal.h"
+#include "CardWidgetSettings.h"
+#include <QString>
+#include "../../../../../core-data/src/spydroid/data/local/SettingsManager.h"
 
-class HomeScreen : public QWidget
+class SetupSettings : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit HomeScreen(QWidget *parent = nullptr);
-
-signals:
-    void goToDashBoard();
-    void goToBuildApk();
-    void goToBuildServer();
+    explicit SetupSettings(QWidget *parent = nullptr);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent *event);
 
+signals:
+    void nextPage(const QString& pathResources);;
+    void backPage();
+    
 private:
     QVBoxLayout* layout;
+    BannerHorizontal* topBarInstaller;
+    CardWidgetSettings* content;
+    BottomBarInstaller* bottomBarInstaller;
+    SettingsManager* settingsManager;
+    void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
+    void goToBackPage();
+    void showToastMessage(const QString &message);
+    bool isValidPath(const QString &path);
 };
 
-#endif // HOMESCREEN_H
+#endif // SETUP_SETTINGS_H

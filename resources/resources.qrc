@@ -2,6 +2,10 @@
     
     <qresource prefix="">
         <file alias ="background">drawable/background.png</file>
+        <file alias ="setup">drawable/banner_v.png</file>
+        <file alias ="installer">drawable/banner_h.png</file>
+        <file alias ="banner_templates">drawable/banner_templates.png</file>
+        <file alias ="banner_programming">drawable/banner_programming.png</file>
     </qresource>
 
     <qresource prefix="/icons">
@@ -24,6 +28,7 @@
         <file alias ="run.png">drawable/run_ic.png</file>
         <file alias ="2_go_back.png">drawable/go_back_ic.png</file>
         <file alias ="close.png">drawable/close_ic.png</file>
+        <file alias="server">drawable/server_ic.png</file>
     </qresource>
 
     <qresource prefix="/fonts">

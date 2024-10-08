@@ -21,7 +21,7 @@
 #include <vector>
 #include <memory>
 #include "../../../../../core-network/src/spydroid/network/models/Sms.h"
-#include "../../../../../core-network/src/spydroid/network/api/ApiService.h"
+#include "../../../../../core-network/src/spydroid/network/services/ApiService.h"
 #include "../../../../../core-network/src/spydroid/network/daos/SmsDao.h"
 #include "../models/SmsHandler.h"
 

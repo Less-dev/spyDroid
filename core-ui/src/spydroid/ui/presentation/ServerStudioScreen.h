@@ -15,31 +15,33 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICES_DAO_H
-#define DEVICES_DAO_H
+#ifndef SERVER_STUDIO_SCREEN_H
+#define SERVER_STUDIO_SCREEN_H
 
-#include <string>
-#include <vector>
-#include "../../../../../core-data/src/spydroid/data/models/DevicesHandler.h"
-#include "../services/ApiService.h"
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QPushButton>
+#include <QString>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTableWidget>
+#include <QPaintEvent>
 
-class DevicesDao {
+class ServerStudioScreen : public QWidget
+{
+    Q_OBJECT
+
 public:
-    virtual ~DevicesDao() = default;
+    explicit ServerStudioScreen(QWidget *parent = nullptr);
 
-    virtual std::vector<DevicesHandler> getDevices() const = 0;
-    virtual std::vector<DevicesHandler> getDevice(const std::string& alias) const = 0;
-};
+signals:
+    void goToHome();
 
-class DevicesDaoImpl : public DevicesDao {
-public:
-    DevicesDaoImpl() = default;
-
-    std::vector<DevicesHandler> getDevices() const override;
-    std::vector<DevicesHandler> getDevice(const std::string& alias) const override;
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
 private:
-    ApiService apiService;
+    QVBoxLayout* layout;
 };
 
-#endif // DEVICES_DAO_H
+#endif // SERVER_STUDIO_SCREEN_H

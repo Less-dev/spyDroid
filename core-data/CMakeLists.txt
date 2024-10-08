@@ -25,6 +25,8 @@ set(HEADERS
     ${SOURCE_DIR}/models/MultimediaHandler.h
     ${SOURCE_DIR}/models/SmsHandler.h
     ${SOURCE_DIR}/local/SettingsManager.h
+    ${SOURCE_DIR}/local/FilesManager.h
+    ${SOURCE_DIR}/local/CleanManager.h
 )
 
 set(SOURCES
@@ -33,10 +35,12 @@ set(SOURCES
     ${SOURCE_DIR}/data/MultimediaRepositoryImp.cpp
     ${SOURCE_DIR}/data/SmsRepositoryImp.cpp
     ${SOURCE_DIR}/local/SettingsManager.cpp
+    ${SOURCE_DIR}/local/FilesManager.cpp
+    ${SOURCE_DIR}/local/CleanManager.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 add_library(core-data STATIC ${SOURCES} ${HEADERS} ${MOC_SOURCES})
 
 target_include_directories(core-data PUBLIC ${CMAKE_CURRENT_SOURCE_DIR})
-target_link_libraries(core-data Qt5::Core)
+target_link_libraries(core-data Qt5::Core zip archive) 

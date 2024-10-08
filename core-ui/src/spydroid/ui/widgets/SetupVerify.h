@@ -15,41 +15,49 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef APK_STUDIO_SCREEN_H
-#define APK_STUDIO_SCREEN_H
+// Archivo SetupVerify.h
+
+#ifndef SETUP_VERIFY_H
+#define SETUP_VERIFY_H
 
 #include <QWidget>
 #include <QVBoxLayout>
-#include <QPushButton>
+#include <QDebug>
+#include "BannerHorizontal.h"
+#include "CardWidgetVerify.h"
+#include "BottomBarInstaller.h"
 #include <QString>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTableWidget>
-#include <QPaintEvent>
-#include <QHBoxLayout>
-#include <QResizeEvent>
 
-class ApkStudioScreen : public QWidget
+class SetupVerify : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit ApkStudioScreen(QWidget *parent = nullptr);
-    
-signals:
-    void goToHome();
-    void goToTemplates();
-    void goToIDE();
-    
+    explicit SetupVerify(QWidget *parent = nullptr);
+
+    // Método setter para actualizar la ruta de instalación
+    void setPath(const QString& path);
+
 protected:
     void paintEvent(QPaintEvent *event) override;
     void resizeEvent(QResizeEvent *event) override;
 
+signals:
+    void nextPage(const QString& path);  // Modificación de la señal para aceptar un QString
+    void backPage();
+
 private:
     QVBoxLayout* layout;
-    QHBoxLayout* options;
-    void goToggleIDE();
-    void goToggleTemplates();
+    BannerHorizontal* topBarInstaller;
+    CardWidgetVerify* content;
+    BottomBarInstaller* bottomBarInstaller;
+
+    QString installationPath;  // Variable para almacenar la ruta de instalación
+
+    void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
+    void goToBackPage();
 };
 
-#endif // APK_STUDIO_SCREEN_H
+#endif // SETUP_VERIFY_H
+

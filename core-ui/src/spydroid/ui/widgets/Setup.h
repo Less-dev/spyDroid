@@ -15,31 +15,34 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef DEVICES_DAO_H
-#define DEVICES_DAO_H
+#ifndef SETUP_H
+#define SETUP_H
 
-#include <string>
-#include <vector>
-#include "../../../../../core-data/src/spydroid/data/models/DevicesHandler.h"
-#include "../services/ApiService.h"
+#include <QWidget>
+#include <QHBoxLayout>
+#include <QVBoxLayout>
+#include <QPaintEvent>
+#include "BottomBarInstaller.h"
 
-class DevicesDao {
+class Setup : public QWidget
+{
+    Q_OBJECT
+
 public:
-    virtual ~DevicesDao() = default;
+    explicit Setup(QWidget *parent = nullptr);
 
-    virtual std::vector<DevicesHandler> getDevices() const = 0;
-    virtual std::vector<DevicesHandler> getDevice(const std::string& alias) const = 0;
-};
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
-class DevicesDaoImpl : public DevicesDao {
-public:
-    DevicesDaoImpl() = default;
-
-    std::vector<DevicesHandler> getDevices() const override;
-    std::vector<DevicesHandler> getDevice(const std::string& alias) const override;
-
+signals:
+    void nextPage();
+    
 private:
-    ApiService apiService;
+    QVBoxLayout* layout;
+    QHBoxLayout* content;
+    BottomBarInstaller* bottomBarInstaller;
+    void onStartCheckBoxStateChanged(int state);
+    void goToNextPage();
 };
 
-#endif // DEVICES_DAO_H
+#endif // CONTAINER_SETUP_H
