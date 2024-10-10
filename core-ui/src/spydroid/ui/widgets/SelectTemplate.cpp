@@ -46,9 +46,9 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
 
     content->setTemplates(templates);
 
-    // Definir la lambda de selección de tarjeta
     content->onTemplateSelected = [this](QString selectedTemplate) {
-        templateCard = selectedTemplate;        
+        templateCard = selectedTemplate;
+        updateCustomButtonState();  // Verifica y habilita o deshabilita el botón
     };
 
     // Añadir el contenido al QScrollArea
@@ -61,7 +61,7 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
     bottomBar = new BottomBarInstaller();
     bottomBar->setCustomButtonText("Siguiente");
     bottomBar->setBackButtonEnabled(false);
-    bottomBar->setCustomButtonEnabled(true);
+    bottomBar->setCustomButtonEnabled(false);
     bottomBar->setCancelButtonEnabled(true);
 
     layout->addWidget(bottomBar, 0, Qt::AlignBottom);
@@ -71,6 +71,12 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
     connect(bottomBar, &BottomBarInstaller::cancelButtonClicked, this, &SelectTemplate::goToCancel);
 
     setLayout(layout);
+}
+
+
+void SelectTemplate::updateCustomButtonState() {
+    bool isTemplateSelected = !templateCard.isEmpty();
+    bottomBar->setCustomButtonEnabled(isTemplateSelected);
 }
 
 

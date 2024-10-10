@@ -46,6 +46,7 @@ private:
     CardTemplate* content;
     BottomBarInstaller* bottomBar;
     QString templateCard;
+    void updateCustomButtonState();
     void goToNextPage();
     void goToBackPage();
     void goToCancel();
