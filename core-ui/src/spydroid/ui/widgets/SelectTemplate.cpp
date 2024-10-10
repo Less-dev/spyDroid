@@ -19,19 +19,30 @@
 #include <iostream>
 #include <QPainter>
 #include <QDebug>
+#include <QScrollArea>
+#include <QPainter>
+
 
 SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
 
+    // Crear el QScrollArea para envolver el contenido
+    QScrollArea *scrollArea = new QScrollArea(this);
+    scrollArea->setWidgetResizable(true);  // Hace que el contenido cambie de tamaño dinámicamente
+    scrollArea->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);  // Ocupa todo el espacio disponible
+
+    // Hacer que el fondo del QScrollArea sea transparente
+    scrollArea->setStyleSheet("QScrollArea { background: transparent; }"
+                              "QWidget { background: transparent; }");  // Aplicar fondo transparente
+
     content = new CardTemplate();
-    
     content->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
 
     QMap<QString, QString> templates;
-    templates.insert(":template_facebook", "Facebook");
     templates.insert(":template_instagram", "Instagram");
-    templates.insert(":template_calculator", "Calculadora");
+    templates.insert(":template_facebook", "Facebook");
     templates.insert(":template_yt_music", "Youtube Music");
+    templates.insert(":template_calculator", "Calculadora");
 
     content->setTemplates(templates);
 
@@ -40,7 +51,11 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
         qDebug() << "Template seleccionado: " << selectedTemplate;
     };
 
-    layout->addWidget(content, 0, Qt::AlignTop);  // Evita que se expanda totalmente
+    // Añadir el contenido al QScrollArea
+    scrollArea->setWidget(content);
+
+    // Añadir el QScrollArea al layout en la parte superior
+    layout->addWidget(scrollArea, 1);  // Hacer que se expanda y ocupe todo el espacio disponible
 
     // Añadir la barra inferior con los botones
     bottomBar = new BottomBarInstaller();
