@@ -46,6 +46,14 @@ TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
 }
 
 
+void TemplateScreen::goToSettingsTemplate(const QString& templateScreen) {
+
+}
+
+void TemplateScreen::goToSelectTemplate(const QString& templateScreen) {
+    
+}
+
 void TemplateScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);

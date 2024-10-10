@@ -45,6 +45,8 @@ protected:
 private:
     QVBoxLayout* layout;
     SelectTemplate* selectTemplate;
+    void goToSelectTemplate(const QString& templateScreen);
+    void goToSettingsTemplate(const QString& templateScreen);
 };
 
 #endif // TEMPLATE_SCREEN_H

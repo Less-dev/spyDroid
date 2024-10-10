@@ -37,7 +37,7 @@ public:
     explicit SelectTemplate(QWidget *parent = nullptr);
     
 signals:
-    void nextPage(const QString& path);
+    void nextPage(const QString& templateScreen);
     void backPage();
     void cancel();
 
