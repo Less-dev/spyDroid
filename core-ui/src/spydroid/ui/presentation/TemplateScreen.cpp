@@ -43,28 +43,26 @@ TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
     selectTemplate = new SelectTemplate();
     selectTemplate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     connect(selectTemplate, &SelectTemplate::nextPage, this, &TemplateScreen::goToSettingsTemplate);
-    // connect(settingsTemplate, &SettingsTemplate::backPage, this, &TemplateScreen::goToSelectTemplate);
 
+    settingsTemplate = new SettingsTemplate();
+    settingsTemplate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    settingsTemplate->setVisible(false);
+    connect(settingsTemplate, &SettingsTemplate::backPage, this, &TemplateScreen::goToSelectTemplate);
 
     layout->addWidget(selectTemplate);
+    layout->addWidget(settingsTemplate);
     setLayout(layout);
 }
 
 
 void TemplateScreen::goToSettingsTemplate(const QString& templateScreen) {
     selectTemplate->setVisible(false);
-    /* 
     settingsTemplate->setTemplate(templateScreen);
     settingsTemplate->setVisible(true);
-    */
-    qDebug() << "Plantilla desde otra vista: "<< templateScreen;
 }
 
 void TemplateScreen::goToSelectTemplate(const QString& templateScreen) {
-    /*
     settingsTemplate->setVisible(false);
-    */
-
     selectTemplate->setVisible(true);
 }
 

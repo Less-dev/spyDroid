@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TEMPLATE_SCREEN_H
-#define TEMPLATE_SCREEN_H
+#ifndef SETTINGS_TEMPLATE_H
+#define SETTINGS_TEMPLATE_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -26,29 +26,29 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
-#include "../widgets/SelectTemplate.h"
-#include "../widgets/SettingsTemplate.h"
+#include "BottomBarInstaller.h"
 
-
-class TemplateScreen : public QWidget
+class SettingsTemplate : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TemplateScreen(QWidget *parent = nullptr);
-    
-signals:
-    void goToSpydroidStudio();
+    explicit SettingsTemplate(QWidget *parent = nullptr);
+    void setTemplate(const QString& templateScreen);
 
-protected:
-    void paintEvent(QPaintEvent *event) override;
+signals:
+    void nextPage(const QString& templateScreen);
+    void backPage(const QString& templateScreen);
+    void cancel();
 
 private:
     QVBoxLayout* layout;
-    SelectTemplate* selectTemplate;
-    SettingsTemplate* settingsTemplate;
-    void goToSelectTemplate(const QString& templateScreen);
-    void goToSettingsTemplate(const QString& templateScreen);
+    //CardTemplate* content;
+    BottomBarInstaller* bottomBar;
+    QString templateCard;
+    void goToNextPage();
+    void goToBackPage();
+    void goToCancel();
 };
 
-#endif // TEMPLATE_SCREEN_H
+#endif // SETTINGS_TEMPLATE_H

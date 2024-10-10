@@ -47,6 +47,7 @@ set(HEADERS
     src/spydroid/ui/widgets/CardWidgetInstaller.h
     src/spydroid/ui/widgets/CardOptions.h
     src/spydroid/ui/widgets/SelectTemplate.h
+    src/spydroid/ui/widgets/SettingsTemplate.h
     src/spydroid/ui/widgets/CardTemplate.h
 )
 
@@ -84,6 +85,7 @@ set(SOURCES
     src/spydroid/ui/widgets/CardWidgetInstaller.cpp
     src/spydroid/ui/widgets/CardOptions.cpp
     src/spydroid/ui/widgets/SelectTemplate.cpp
+    src/spydroid/ui/widgets/SettingsTemplate.cpp
     src/spydroid/ui/widgets/CardTemplate.cpp
 )
 
