@@ -19,6 +19,7 @@
 #include <iostream>
 #include <QPainter>
 #include "../widgets/GoBack.h"
+#include <QDebug>
 
 
 TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
@@ -56,12 +57,14 @@ void TemplateScreen::goToSettingsTemplate(const QString& templateScreen) {
     settingsTemplate->setTemplate(templateScreen);
     settingsTemplate->setVisible(true);
     */
+    qDebug() << "Plantilla desde otra vista: "<< templateScreen;
 }
 
 void TemplateScreen::goToSelectTemplate(const QString& templateScreen) {
     /*
     settingsTemplate->setVisible(false);
     */
+
     selectTemplate->setVisible(true);
 }
 

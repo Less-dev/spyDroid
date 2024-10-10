@@ -49,7 +49,6 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
     // Definir la lambda de selección de tarjeta
     content->onTemplateSelected = [this](QString selectedTemplate) {
         templateCard = selectedTemplate;        
-        qDebug() << "Template seleccionado: " << templateCard;
     };
 
     // Añadir el contenido al QScrollArea
