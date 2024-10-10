@@ -41,18 +41,30 @@ TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
 
     selectTemplate = new SelectTemplate();
     selectTemplate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    connect(selectTemplate, &SelectTemplate::nextPage, this, &TemplateScreen::goToSettingsTemplate);
+    // connect(settingsTemplate, &SettingsTemplate::backPage, this, &TemplateScreen::goToSelectTemplate);
+
+
     layout->addWidget(selectTemplate);
     setLayout(layout);
 }
 
 
 void TemplateScreen::goToSettingsTemplate(const QString& templateScreen) {
-
+    selectTemplate->setVisible(false);
+    /* 
+    settingsTemplate->setTemplate(templateScreen);
+    settingsTemplate->setVisible(true);
+    */
 }
 
 void TemplateScreen::goToSelectTemplate(const QString& templateScreen) {
-    
+    /*
+    settingsTemplate->setVisible(false);
+    */
+    selectTemplate->setVisible(true);
 }
+
 
 void TemplateScreen::paintEvent(QPaintEvent *event) {
     QPainter painter(this);
