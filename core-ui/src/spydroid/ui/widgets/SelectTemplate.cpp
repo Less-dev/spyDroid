@@ -47,8 +47,9 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
     content->setTemplates(templates);
 
     // Definir la lambda de selección de tarjeta
-    content->onTemplateSelected = [](QString selectedTemplate) {
-        qDebug() << "Template seleccionado: " << selectedTemplate;
+    content->onTemplateSelected = [this](QString selectedTemplate) {
+        templateCard = selectedTemplate;        
+        qDebug() << "Template seleccionado: " << templateCard;
     };
 
     // Añadir el contenido al QScrollArea
@@ -66,5 +67,22 @@ SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
 
     layout->addWidget(bottomBar, 0, Qt::AlignBottom);
 
+    connect(bottomBar, &BottomBarInstaller::customButtonClicked, this, &SelectTemplate::goToNextPage);
+    connect(bottomBar, &BottomBarInstaller::backButtonClicked, this, &SelectTemplate::goToBackPage);
+    connect(bottomBar, &BottomBarInstaller::cancelButtonClicked, this, &SelectTemplate::goToCancel);
+
     setLayout(layout);
+}
+
+
+void SelectTemplate::goToNextPage() {
+    emit nextPage(templateCard);
+}
+
+void SelectTemplate::goToBackPage() {
+    emit backPage();
+}
+
+void SelectTemplate::goToCancel() {
+    emit cancel();
 }

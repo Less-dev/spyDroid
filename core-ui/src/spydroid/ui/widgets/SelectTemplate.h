@@ -37,14 +37,15 @@ public:
     explicit SelectTemplate(QWidget *parent = nullptr);
     
 signals:
-    void NextPage();
-    void BackPage();
-    void Cancel();
+    void nextPage(const QString& path);
+    void backPage();
+    void cancel();
 
 private:
     QVBoxLayout* layout;
     CardTemplate* content;
     BottomBarInstaller* bottomBar;
+    QString templateCard;
     void goToNextPage();
     void goToBackPage();
     void goToCancel();
