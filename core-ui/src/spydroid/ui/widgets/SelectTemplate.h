@@ -27,6 +27,7 @@
 #include <QTableWidget>
 #include <QPaintEvent>
 #include "BottomBarInstaller.h"
+#include "CardTemplate.h"
 
 class SelectTemplate : public QWidget
 {
@@ -42,6 +43,7 @@ signals:
 
 private:
     QVBoxLayout* layout;
+    CardTemplate* content;
     BottomBarInstaller* bottomBar;
     void goToNextPage();
     void goToBackPage();

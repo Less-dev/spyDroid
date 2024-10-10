@@ -40,6 +40,7 @@ TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
     selectTemplate = new SelectTemplate();
+    selectTemplate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     layout->addWidget(selectTemplate);
     setLayout(layout);
 }

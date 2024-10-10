@@ -18,16 +18,37 @@
 #include "SelectTemplate.h"
 #include <iostream>
 #include <QPainter>
+#include <QDebug>
 
 SelectTemplate::SelectTemplate(QWidget *parent) : QWidget(parent) {
-    
     layout = new QVBoxLayout(this);
 
+    content = new CardTemplate();
+    
+    content->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
+    QMap<QString, QString> templates;
+    templates.insert(":template_facebook", "Facebook");
+    templates.insert(":template_instagram", "Instagram");
+    templates.insert(":template_calculator", "Calculadora");
+    templates.insert(":template_yt_music", "Youtube Music");
+
+    content->setTemplates(templates);
+
+    // Definir la lambda de selección de tarjeta
+    content->onTemplateSelected = [](QString selectedTemplate) {
+        qDebug() << "Template seleccionado: " << selectedTemplate;
+    };
+
+    layout->addWidget(content, 0, Qt::AlignTop);  // Evita que se expanda totalmente
+
+    // Añadir la barra inferior con los botones
     bottomBar = new BottomBarInstaller();
     bottomBar->setCustomButtonText("Siguiente");
     bottomBar->setBackButtonEnabled(false);
     bottomBar->setCustomButtonEnabled(true);
     bottomBar->setCancelButtonEnabled(true);
+
     layout->addWidget(bottomBar, 0, Qt::AlignBottom);
 
     setLayout(layout);
