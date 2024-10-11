@@ -85,7 +85,14 @@ Setup::Setup(QWidget *parent)
 
     QCheckBox *startCheckBox = new QCheckBox("Empezar spydroid", this);
     startCheckBox->setFixedHeight(40);
-    startCheckBox->setStyleSheet("color: #D3D3D3;");
+    startCheckBox->setStyleSheet(
+        "QCheckBox { color: white; } "
+        "QCheckBox::indicator { width: 15px; height: 15px; } "
+        "QCheckBox::indicator:unchecked { background-color: black; border: 1px solid white; } "
+        "QCheckBox::indicator:checked { background-color: black; border: 1px solid white; "
+        "  image: url(:/icons/verify); }"
+        );
+
     startCheckBox->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
 
     titleLayout->addWidget(startCheckBox, 0, Qt::AlignLeft | Qt::AlignTop);
