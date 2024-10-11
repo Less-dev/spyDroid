@@ -34,6 +34,7 @@
         <file alias ="close.png">drawable/close_ic.png</file>
         <file alias="server">drawable/server_ic.png</file>
         <file alias="verify">drawable/verify_ic.png</file>
+        <file alias="edit_image">drawable/edit_image_ic.png</file>
     </qresource>
 
     <qresource prefix="/fonts">

@@ -18,11 +18,18 @@
 #include "ConfigurationTemplate.h"
 #include <QPainter>
 #include <QScrollArea>
+#include <QFileDialog>
+#include <QDebug>
 
 ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) {
     layout = new QVBoxLayout(this);
 
     // Título: "Seleccionar servidor"
+    headerTemplate = new HeaderConfigurationTemplate();
+    headerTemplate->setImage("/ruta/a/tu/imagen.png");
+    connect(headerTemplate, &HeaderConfigurationTemplate::editImageRequested, this, &ConfigurationTemplate::editImage);
+
+    layout->addWidget(headerTemplate);
     QLabel* serverLabel = new QLabel("Seleccionar servidor", this);
     QFont font = serverLabel->font();
     font.setBold(true);
@@ -108,11 +115,28 @@ ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) 
 
     // Layout principal con el scroll area
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->setContentsMargins(10, 25, 10, 25);
+    mainLayout->setContentsMargins(10, 25, 10, 30);
     mainLayout->addWidget(scrollArea);
     setLayout(mainLayout);
 }
 
+void ConfigurationTemplate::editImage() {
+    // Abrir un diálogo para seleccionar imágenes
+    QString imagePath = QFileDialog::getOpenFileName(
+        this, 
+        tr("Seleccionar Imagen"),               // Título del diálogo
+        QString(),                              // Directorio inicial (puedes personalizarlo)
+        tr("Imágenes (*.png *.jpg *.jpeg *.bmp)") // Filtros para los tipos de archivo
+    );
+
+    // Si se seleccionó un archivo, pasarlo a setImage
+    if (!imagePath.isEmpty()) {
+        headerTemplate->setImage(imagePath);
+        qDebug() << "Ruta de imagen seleccionada:" << imagePath; // Mostrar la ruta en consola para depuración
+    } else {
+        qDebug() << "No se seleccionó ninguna imagen.";
+    }
+}
 
 void ConfigurationTemplate::selectAllFunctionalities(bool checked) {
     // Al seleccionar "Todos", marcar/desmarcar todos los demás checkboxes
