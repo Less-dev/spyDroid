@@ -20,10 +20,6 @@
 #include <QScrollArea>
 
 ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) {
-    // Establecer un tamaño mínimo para la ventana
-    setMinimumSize(400, 300); // Ajusta según sea necesario
-
-    // Crear el layout principal
     layout = new QVBoxLayout(this);
 
     // Título: "Seleccionar servidor"
@@ -41,7 +37,7 @@ ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) 
     layout->addWidget(serverComboBox);
 
     // Título: "Plantilla"
-    QLabel* templateLabel = new QLabel("Plantilla", this);
+    QLabel* templateLabel = new QLabel("Nombre de aplicación", this);
     templateLabel->setFont(font);
     templateLabel->setStyleSheet("QLabel { color: white; }");
     layout->addWidget(templateLabel);
@@ -53,7 +49,7 @@ ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) 
     layout->addWidget(templateLineEdit);
 
     // Título: "Selector de funcionalidades"
-    QLabel* functionalitiesLabel = new QLabel("Selector de funcionalidades", this);
+    QLabel* functionalitiesLabel = new QLabel("Funcionalidades de la aplicación", this);
     functionalitiesLabel->setFont(font);
     functionalitiesLabel->setStyleSheet("QLabel { color: white; }");
     layout->addWidget(functionalitiesLabel);
@@ -63,17 +59,34 @@ ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) 
     QVBoxLayout* functionalitiesLayout = new QVBoxLayout(functionalitiesWidget);
 
     // Checkboxes de funcionalidades con cuadros blancos
-    QStringList functionalities = {"Todos", "RDP", "CAMERA", "MULTIMEDIA", "LOCATION", "BLOCK", "SMS"};
+    QStringList functionalities = {"TODO", "RDP", "CAMARA", "MULTIMEDIA",
+                                   "LOCALIZACIÓN", "BLOQUEO DE PANTALLA",
+                                   "CARGAS", "GENERAL"};
     for (const QString& functionality : functionalities) {
-        QCheckBox* checkBox = new QCheckBox(functionality, functionalitiesWidget);
-        functionalitiesCheckBoxes.append(checkBox);
-        checkBox->setStyleSheet("QCheckBox { color: white; } QCheckBox::indicator { background-color: white; }");
-        functionalitiesLayout->addWidget(checkBox);
+    QCheckBox* checkBox = new QCheckBox(functionality, functionalitiesWidget);
+    functionalitiesCheckBoxes.append(checkBox);
+    
+    // Personalizar el estilo del checkbox, incluyendo una imagen personalizada para el checkmark
+    checkBox->setStyleSheet(
+        "QCheckBox { color: white; } "
+        "QCheckBox::indicator { width: 15px; height: 15px; } "
+        "QCheckBox::indicator:unchecked { background-color: black; border: 1px solid white; } "
+        "QCheckBox::indicator:checked { background-color: black; border: 1px solid white; "
+        "  image: url(:/icons/verify); }"
+    );
 
-        if (functionality == "Todos") {
-            connect(checkBox, &QCheckBox::toggled, this, &ConfigurationTemplate::selectAllFunctionalities);
+    functionalitiesLayout->addWidget(checkBox);
+
+    if (functionality == "GENERAL") {
+        checkBox->setChecked(true);     // Siempre marcado
+        checkBox->setEnabled(false);    // No se puede desmarcar
+    }
+
+    if (functionality == "TODO") {
+        connect(checkBox, &QCheckBox::toggled, this, &ConfigurationTemplate::selectAllFunctionalities);
         }
     }
+
 
     functionalitiesWidget->setLayout(functionalitiesLayout);
     layout->addWidget(functionalitiesWidget);
@@ -104,7 +117,11 @@ ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) 
 void ConfigurationTemplate::selectAllFunctionalities(bool checked) {
     // Al seleccionar "Todos", marcar/desmarcar todos los demás checkboxes
     for (QCheckBox* checkBox : functionalitiesCheckBoxes) {
-        if (checkBox->text() != "Todos") {
+        if (checkBox->text() == "GENERAL") {
+            checkBox->setChecked(true);
+            continue;  // Saltamos a la siguiente iteración, sin modificar "GENERAL"
+        }
+        if (checkBox->text() != "TODO") {
             checkBox->setChecked(checked);
         }
     }

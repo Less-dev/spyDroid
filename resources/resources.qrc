@@ -33,6 +33,7 @@
         <file alias ="2_go_back.png">drawable/go_back_ic.png</file>
         <file alias ="close.png">drawable/close_ic.png</file>
         <file alias="server">drawable/server_ic.png</file>
+        <file alias="verify">drawable/verify_ic.png</file>
     </qresource>
 
     <qresource prefix="/fonts">
