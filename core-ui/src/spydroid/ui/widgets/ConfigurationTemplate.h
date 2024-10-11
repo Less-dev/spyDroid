@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef SETTINGS_TEMPLATE_H
-#define SETTINGS_TEMPLATE_H
+#ifndef CONFIGURATION_TEMPLATE_H
+#define CONFIGURATION_TEMPLATE_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -26,30 +26,21 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
-#include "BottomBarInstaller.h"
-#include "ConfigurationTemplate.h"
 
-class SettingsTemplate : public QWidget
+class ConfigurationTemplate : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit SettingsTemplate(QWidget *parent = nullptr);
-    void setTemplate(const QString& templateScreen);
-
+    explicit ConfigurationTemplate(QWidget *parent = nullptr);
 signals:
-    void nextPage(const QString& templateScreen);
-    void backPage(const QString& templateScreen);
-    void cancel();
+    void goToMultimedia(const QString& alias);
+
+protected:
+    void paintEvent(QPaintEvent *event) override;
 
 private:
     QVBoxLayout* layout;
-    ConfigurationTemplate* content;
-    BottomBarInstaller* bottomBar;
-    QString templateCard;
-    void goToNextPage();
-    void goToBackPage();
-    void goToCancel();
 };
 
-#endif // SETTINGS_TEMPLATE_H
+#endif // CONFIGURATION_TEMPLATE_H

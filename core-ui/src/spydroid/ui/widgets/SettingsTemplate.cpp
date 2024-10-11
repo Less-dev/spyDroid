@@ -32,6 +32,10 @@ SettingsTemplate::SettingsTemplate(QWidget *parent) : QWidget(parent) {
     bottomBar->setCustomButtonEnabled(true);
     bottomBar->setCancelButtonEnabled(true);
 
+    content = new ConfigurationTemplate();
+    content->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    
+    layout->addWidget(content);
     layout->addWidget(bottomBar, 0, Qt::AlignBottom);
 
     connect(bottomBar, &BottomBarInstaller::customButtonClicked, this, &SettingsTemplate::goToNextPage);
