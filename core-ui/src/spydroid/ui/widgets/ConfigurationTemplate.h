@@ -26,6 +26,10 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
+#include <QComboBox>
+#include <QScrollArea>
+#include <QCheckBox>
+#include <QList>
 
 class ConfigurationTemplate : public QWidget
 {
@@ -33,14 +37,22 @@ class ConfigurationTemplate : public QWidget
 
 public:
     explicit ConfigurationTemplate(QWidget *parent = nullptr);
+
 signals:
     void goToMultimedia(const QString& alias);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent* event) override;
+
+private slots:
+    void selectAllFunctionalities(bool checked);
 
 private:
     QVBoxLayout* layout;
+    QComboBox* serverComboBox;
+    QLineEdit* templateLineEdit;
+    QList<QCheckBox*> functionalitiesCheckBoxes;
 };
 
 #endif // CONFIGURATION_TEMPLATE_H
