@@ -6,6 +6,10 @@
         <file alias ="installer">drawable/banner_h.png</file>
         <file alias ="banner_templates">drawable/banner_templates.png</file>
         <file alias ="banner_programming">drawable/banner_programming.png</file>
+        <file alias ="template_facebook">drawable/template_facebook.png</file>
+        <file alias ="template_instagram">drawable/template_instagram.png</file>
+        <file alias ="template_calculator">drawable/template_calculator.png</file>
+        <file alias ="template_yt_music">drawable/template_youtube_music.png</file>
     </qresource>
 
     <qresource prefix="/icons">
@@ -29,6 +33,7 @@
         <file alias ="2_go_back.png">drawable/go_back_ic.png</file>
         <file alias ="close.png">drawable/close_ic.png</file>
         <file alias="server">drawable/server_ic.png</file>
+        <file alias="verify">drawable/verify_ic.png</file>
     </qresource>
 
     <qresource prefix="/fonts">

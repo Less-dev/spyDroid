@@ -18,8 +18,8 @@
 #include "TemplateScreen.h"
 #include <iostream>
 #include <QPainter>
-#include "../widgets/ItemBoard.h"
 #include "../widgets/GoBack.h"
+#include <QDebug>
 
 
 TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
@@ -40,7 +40,30 @@ TemplateScreen::TemplateScreen(QWidget *parent) : QWidget(parent) {
     });
     layout->addWidget(goBackButton, 0, Qt::AlignTop | Qt::AlignLeft);
 
+    selectTemplate = new SelectTemplate();
+    selectTemplate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    connect(selectTemplate, &SelectTemplate::nextPage, this, &TemplateScreen::goToSettingsTemplate);
+
+    settingsTemplate = new SettingsTemplate();
+    settingsTemplate->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+    settingsTemplate->setVisible(false);
+    connect(settingsTemplate, &SettingsTemplate::backPage, this, &TemplateScreen::goToSelectTemplate);
+
+    layout->addWidget(selectTemplate);
+    layout->addWidget(settingsTemplate);
     setLayout(layout);
+}
+
+
+void TemplateScreen::goToSettingsTemplate(const QString& templateScreen) {
+    selectTemplate->setVisible(false);
+    settingsTemplate->setTemplate(templateScreen);
+    settingsTemplate->setVisible(true);
+}
+
+void TemplateScreen::goToSelectTemplate(const QString& templateScreen) {
+    settingsTemplate->setVisible(false);
+    selectTemplate->setVisible(true);
 }
 
 

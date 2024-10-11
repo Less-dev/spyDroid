@@ -15,8 +15,8 @@
  * along with this program. If not, see <https://www.gnu.org/licenses/>.
  */
 
-#ifndef TEMPLATE_SCREEN_H
-#define TEMPLATE_SCREEN_H
+#ifndef CONFIGURATION_TEMPLATE_H
+#define CONFIGURATION_TEMPLATE_H
 
 #include <QWidget>
 #include <QVBoxLayout>
@@ -26,29 +26,33 @@
 #include <QLineEdit>
 #include <QTableWidget>
 #include <QPaintEvent>
-#include "../widgets/SelectTemplate.h"
-#include "../widgets/SettingsTemplate.h"
+#include <QComboBox>
+#include <QScrollArea>
+#include <QCheckBox>
+#include <QList>
 
-
-class TemplateScreen : public QWidget
+class ConfigurationTemplate : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TemplateScreen(QWidget *parent = nullptr);
-    
+    explicit ConfigurationTemplate(QWidget *parent = nullptr);
+
 signals:
-    void goToSpydroidStudio();
+    void goToMultimedia(const QString& alias);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
+    void resizeEvent(QResizeEvent* event) override;
+
+private slots:
+    void selectAllFunctionalities(bool checked);
 
 private:
     QVBoxLayout* layout;
-    SelectTemplate* selectTemplate;
-    SettingsTemplate* settingsTemplate;
-    void goToSelectTemplate(const QString& templateScreen);
-    void goToSettingsTemplate(const QString& templateScreen);
+    QComboBox* serverComboBox;
+    QLineEdit* templateLineEdit;
+    QList<QCheckBox*> functionalitiesCheckBoxes;
 };
 
-#endif // TEMPLATE_SCREEN_H
+#endif // CONFIGURATION_TEMPLATE_H
