@@ -101,7 +101,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
             {"https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz", "open-jdk-17.tar.gz"},
             {"https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip", "spydroid-app.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip", "spydroid-server.zip"},
-            {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"}, 
+            {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"},
             {"https://dl.google.com/android/repository/android-14_r01.zip", "platform.zip"},
             {"https://dl.google.com/android/repository/android-ndk-r27-linux.zip", "ndk.zip"},
             {"https://dl.google.com/android/repository/cmake-3.22.1-linux.zip", "cmake.zip"}
@@ -110,12 +110,13 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
         // Callback para el progreso de la descarga
         auto progressCallback = [this, pathResources](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
             QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning, pathResources]() {
-                // Verificar si la descarga está completa y proceder con la descompresión
+                // Verificar si la descarga ha terminado
                 if (!isRunning) {
                     downloadDescriptor->setText("Descomprimiendo archivos...");
 
                     std::string rootDirectory = pathResources.toStdString();
 
+                    // Mapas de archivos y directorios para la descompresión
                     std::unordered_map<std::string, std::string> fileMap = {
                         {"build-tools.zip", "Sdk"},
                         {"sources.zip", "Sdk"},
@@ -142,17 +143,14 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
 
                     FilesManager fileManager(rootDirectory, fileMap);
 
-                    // Captura las variables necesarias
+                    // Callback para progreso en descompresión
                     auto fileProgressCallback = [this, pathResources, fileMap, dirMap](double progress, bool isCompleted) {
-                        //std::cout << "Progreso: " << progress << "%" << std::endl;
                         progressBar->setValue(static_cast<int>(progress));  // Actualizar la barra de progreso
 
                         if (isCompleted) {
-                            //std::cout << "Descompresión completa. Proceso terminado." << std::endl;
-
-                            // Configurar la limpieza y el renombrado de directorios 10 segundos después
+                            // Cuando se termina de descomprimir, limpiar archivos
                             setCleanDownload(pathResources, fileMap, dirMap);
-                            progressBar->setValue(100);  // Actualizar la barra de progreso
+                            progressBar->setValue(100);  // Actualizar la barra de progreso a 100%
                             settingsManager->setValue("isDependencySuccessfully", true);
                             downloadDescriptor->setText("Descarga y descompresión completadas");
                             bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
@@ -160,12 +158,11 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                         }
                     };
 
-                    // Procesar archivos y luego descomprimirlos
-                    //std::cout << "Iniciando la descompresión de archivos..." << std::endl;
+                    // Descomprimir los archivos
                     fileManager.processFiles(fileProgressCallback);
                     fileManager.extractFiles(fileProgressCallback);  // Descomprimir en segundo plano
 
-                    return;
+                    return;  // Salir si la descarga ha finalizado
                 }
 
                 // Actualizar la barra de progreso durante la descarga
@@ -173,18 +170,15 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
                     downloadDescriptor->setText(QString::fromStdString(currentUrl));
                     progressBar->setValue(static_cast<int>(progressPercentage));
-
-                    //std::cout << "Downloading: " << currentUrl << std::endl;
-                    //std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
                 }
             }, Qt::AutoConnection);
         };
 
-        //std::cout << "Iniciando la descarga de archivos..." << std::endl;
+        // Iniciar descarga
         downloader.downloadFiles(pathResources.toStdString(), urlToFileMap, progressCallback);
-        //std::cout << "Descarga iniciada, esperando..." << std::endl;
     }
 }
+
 
 
 void SetupFinished::setCleanDownload(const QString& pathResources,

@@ -1,5 +1,6 @@
 #include "FilesManager.h"
 #include <iostream>
+#include <fstream>
 #include <filesystem>
 #include <stdexcept>
 #include <archive.h>
@@ -86,7 +87,7 @@ void FilesManager::extractFiles(const std::function<void(double, bool)>& progres
     }
 }
 
-// Descomprimir un archivo usando libarchive
+
 bool FilesManager::extractFile(const std::string& filePath, const std::string& destinationDir) {
     struct archive* a;
     struct archive* ext;
@@ -95,32 +96,76 @@ bool FilesManager::extractFile(const std::string& filePath, const std::string& d
     int r;
 
     // Configurar opciones para la extracción
-    flags = ARCHIVE_EXTRACT_TIME;
+    flags = ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM | ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS;
+
+    // Crear estructuras de lectura y escritura
     a = archive_read_new();
     ext = archive_write_disk_new();
-    archive_write_disk_set_options(ext, flags);
-    archive_read_support_format_all(a);
-    archive_read_support_compression_all(a);
 
+    // Establecer las opciones de extracción
+    archive_write_disk_set_options(ext, flags);
+
+    // Soporte para todos los formatos y filtros de compresión
+    archive_read_support_format_all(a);       // Soporte para todos los formatos (incluye tar)
+    archive_read_support_filter_all(a);       // Soporte para todas las compresiones (incluye gzip)
+
+    // Abrir el archivo comprimido
     if ((r = archive_read_open_filename(a, filePath.c_str(), 10240))) {
         std::cerr << "No se puede abrir el archivo " << filePath << std::endl;
         return false;
     }
 
+    // Iterar sobre cada entrada del archivo comprimido
     while (archive_read_next_header(a, &entry) == ARCHIVE_OK) {
         const char* currentFile = archive_entry_pathname(entry);
         std::string fullOutputPath = destinationDir + "/" + currentFile;
-        archive_entry_set_pathname(entry, fullOutputPath.c_str());
-        r = archive_write_header(ext, entry);
 
-        if (r == ARCHIVE_OK) {
-            archive_read_data_into_fd(a, archive_entry_filetype(entry));
-        } else {
-            std::cerr << "Error al escribir el archivo " << fullOutputPath << std::endl;
+        // Crear cualquier directorio necesario en la ruta de destino
+        fs::path outputPath(fullOutputPath);
+        fs::create_directories(outputPath.parent_path());
+
+        // Ajustar el nombre de la entrada al nuevo destino
+        archive_entry_set_pathname(entry, fullOutputPath.c_str());
+
+        // Escribir el encabezado del archivo
+        r = archive_write_header(ext, entry);
+        if (r != ARCHIVE_OK) {
+            std::cerr << "Error al escribir el encabezado para " << fullOutputPath << ": " 
+                      << archive_error_string(ext) << std::endl;
+            continue;
         }
-        archive_write_finish_entry(ext);
+
+        // Leer los datos del archivo y escribirlos en el disco
+        const size_t bufferSize = 8192; // Tamaño del buffer de lectura
+        char buffer[bufferSize];
+        ssize_t size;
+
+        // Leer el contenido del archivo en bloques y escribirlo
+        while ((size = archive_read_data(a, buffer, bufferSize)) > 0) {
+            std::ofstream outFile(fullOutputPath, std::ios::binary | std::ios::app);
+            if (!outFile) {
+                std::cerr << "Error al abrir el archivo de salida " << fullOutputPath << std::endl;
+                return false;
+            }
+            outFile.write(buffer, size);
+            outFile.close();
+        }
+
+        if (size < 0) {
+            std::cerr << "Error al leer los datos del archivo " << fullOutputPath << ": " 
+                      << archive_error_string(a) << std::endl;
+            return false;
+        }
+
+        // Finalizar la entrada actual
+        r = archive_write_finish_entry(ext);
+        if (r != ARCHIVE_OK) {
+            std::cerr << "Error al finalizar la entrada para " << fullOutputPath << std::endl;
+            return false;
+        }
     }
 
+    // Cerrar y liberar recursos
     archive_read_close(a);
     archive_read_free(a);
     archive_write_close(ext);
