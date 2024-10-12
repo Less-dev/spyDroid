@@ -150,18 +150,19 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                         if (isCompleted) {
                             // Cuando se termina de descomprimir, limpiar archivos
                             setCleanDownload(pathResources, fileMap, dirMap);
-                            progressBar->setValue(100);  // Actualizar la barra de progreso a 100%
                             settingsManager->setValue("isDependencySuccessfully", true);
                             downloadDescriptor->setText("Descarga y descompresión completadas");
-                            bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
-                            bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón
                         }
                     };
+                    
+                    QTimer::singleShot(8000, [this, fileManager, fileProgressCallback]() mutable {
+                        fileManager.processFiles(fileProgressCallback);
+                        fileManager.extractFiles(fileProgressCallback);  // Descomprimir en segundo plano
+                        progressBar->setValue(100);  // Actualizar la barra de progreso a 100%
+                        bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
+                        bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón
 
-                    // Descomprimir los archivos
-                    fileManager.processFiles(fileProgressCallback);
-                    fileManager.extractFiles(fileProgressCallback);  // Descomprimir en segundo plano
-
+                    });
                     return;  // Salir si la descarga ha finalizado
                 }
 
