@@ -98,7 +98,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
         std::map<std::string, std::string> urlToFileMap = {
             {"https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip", "build-tools.zip"},
             {"https://dl.google.com/android/repository/sources-34_r01.zip", "sources.zip"},
-            {"https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz", "open-jdk-17.tar.gz"},
+            {"https://github.com/Less-dev/spyDroid/releases/download/open-jdk-17/open-jdk-17.zip", "open-jdk-17.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip", "spydroid-app.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip", "spydroid-server.zip"},
             {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"},
@@ -112,6 +112,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
             QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning, pathResources]() {
                 // Verificar si la descarga ha terminado
                 if (!isRunning) {
+                    progressBar->setValue(5);
                     downloadDescriptor->setText("Descomprimiendo archivos...");
 
                     std::string rootDirectory = pathResources.toStdString();
@@ -120,7 +121,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     std::unordered_map<std::string, std::string> fileMap = {
                         {"build-tools.zip", "Sdk"},
                         {"sources.zip", "Sdk"},
-                        {"open-jdk-17.tar.gz", "SSdk"},
+                        {"open-jdk-17.zip", "SSdk"},
                         {"spydroid-app.zip", "SSdk"},
                         {"spydroid-server.zip", "SSdk"},
                         {"platform-tools.zip", "Sdk"},
@@ -132,7 +133,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     std::unordered_map<std::string, std::string> dirMap = {
                         {"cmdline-tools", "build-tools"},
                         {"src", "sources"},
-                        {"jdk-17.0.8.1+1", "openjdk-17"},
+                        {"open-jdk-17", "open-jdk-17"},
                         {"spydroid-app", "spydroid-app"},
                         {"spydroid-server", "spydroid-server"},
                         {"platform-tools", "platform-tools"},
@@ -182,11 +183,15 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
 void SetupFinished::setCleanDownload(const QString& pathResources,
                                      const std::unordered_map<std::string, std::string>& fileMap,
                                      const std::unordered_map<std::string, std::string>& dirMap) {
-    std::string rootDirectory = pathResources.toStdString();
-    CleanManager cleanManager(rootDirectory, fileMap, dirMap);
-    cleanManager.cleanCompressedFiles();
-    cleanManager.renameDirectories();
+    QTimer::singleShot(10000, [this, pathResources, fileMap, dirMap]() {
+
+        std::string rootDirectory = pathResources.toStdString();
+        CleanManager cleanManager(rootDirectory, fileMap, dirMap);
+        cleanManager.cleanCompressedFiles();
+        cleanManager.renameDirectories();
+    });
 }
+
 
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)
