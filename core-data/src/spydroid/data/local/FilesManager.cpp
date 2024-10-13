@@ -5,6 +5,8 @@
 #include <stdexcept>
 #include <archive.h>
 #include <archive_entry.h>
+#include <thread>
+
 
 namespace fs = std::filesystem;
 
@@ -96,7 +98,7 @@ bool FilesManager::extractFile(const std::string& filePath, const std::string& d
     int r;
 
     // Configurar opciones para la extracción
-    flags = ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM | ARCHIVE_EXTRACT_ACL | ARCHIVE_EXTRACT_FFLAGS;
+    flags = ARCHIVE_EXTRACT_TIME | ARCHIVE_EXTRACT_PERM; // Simplificar las banderas
 
     // Crear estructuras de lectura y escritura
     a = archive_read_new();
@@ -142,7 +144,7 @@ bool FilesManager::extractFile(const std::string& filePath, const std::string& d
 
         // Leer el contenido del archivo en bloques y escribirlo
         while ((size = archive_read_data(a, buffer, bufferSize)) > 0) {
-            std::ofstream outFile(fullOutputPath, std::ios::binary | std::ios::app);
+            std::ofstream outFile(fullOutputPath, std::ios::binary | std::ios::trunc);
             if (!outFile) {
                 std::cerr << "Error al abrir el archivo de salida " << fullOutputPath << std::endl;
                 return false;
