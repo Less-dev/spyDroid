@@ -183,7 +183,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
 void SetupFinished::setCleanDownload(const QString& pathResources,
                                      const std::unordered_map<std::string, std::string>& fileMap,
                                      const std::unordered_map<std::string, std::string>& dirMap) {
-    QTimer::singleShot(10000, [this, pathResources, fileMap, dirMap]() {
+    QTimer::singleShot(1000, [this, pathResources, fileMap, dirMap]() {
 
         std::string rootDirectory = pathResources.toStdString();
         CleanManager cleanManager(rootDirectory, fileMap, dirMap);

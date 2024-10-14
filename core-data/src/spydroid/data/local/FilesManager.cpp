@@ -3,7 +3,96 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <filesystem>
 #include <cstring>
+#include <cctype>
+
+
+namespace fs = std::filesystem;
+
+// Función auxiliar para agregar permiso de ejecución a un archivo
+void addExecutePermission(const fs::path& filePath) {
+    std::error_code ec;
+    
+    // Obtenemos los permisos actuales del archivo
+    auto currentPerms = fs::status(filePath, ec).permissions();
+    
+    if (ec) {
+        std::cerr << "Error obtaining file permissions: " << ec.message() << std::endl;
+        return;
+    }
+    
+    // Asignamos el bit de ejecución al propietario
+    fs::permissions(filePath, currentPerms | fs::perms::owner_exec, ec);
+    
+    if (ec) {
+        std::cerr << "Error setting file permissions: " << ec.message() << std::endl;
+    }
+}
+
+// Función para verificar si un archivo es binario
+bool isBinaryFile(const fs::path& filePath) {
+    std::ifstream file(filePath, std::ios::binary);
+    
+    if (!file) {
+        std::cerr << "Error opening file: " << filePath << std::endl;
+        return false;
+    }
+    
+    // Leer los primeros 512 bytes para determinar si es binario
+    char buffer[512];
+    file.read(buffer, sizeof(buffer));
+    std::streamsize bytesRead = file.gcount();
+    
+    // Contar los caracteres no imprimibles
+    int nonPrintableCount = 0;
+    for (std::streamsize i = 0; i < bytesRead; ++i) {
+        if (!std::isprint(static_cast<unsigned char>(buffer[i])) && !std::isspace(static_cast<unsigned char>(buffer[i]))) {
+            nonPrintableCount++;
+        }
+    }
+
+    // Si más del 30% de los caracteres no son imprimibles, consideramos que es binario
+    return nonPrintableCount > (bytesRead * 0.3);
+}
+
+// Función para verificar si un archivo está en un directorio llamado "bin"
+bool isInBinDirectory(const fs::path& filePath) {
+    // Recorremos cada uno de los componentes de la ruta
+    for (const auto& part : filePath.parent_path()) {
+        if (part.filename() == "bin") {
+            return true;  // El archivo está en un directorio llamado "bin"
+        }
+    }
+    return false;
+}
+
+// Función que determina si un archivo debe ser ejecutable
+bool shouldBeExecutable(const fs::path& filePath) {
+    // Regla 1: Revisamos la extensión primero
+    if (filePath.extension() == ".sh") {
+        return true;  // Script de shell
+    }
+
+    // Regla 2: Verificamos si es binario
+    if (isBinaryFile(filePath)) {
+        return true;  // Es un archivo binario
+    }
+
+    // Regla 3: Verificamos si está en un directorio "bin"
+    if (isInBinDirectory(filePath)) {
+        return true;  // Está en un directorio "bin"
+    }
+
+    // Regla 4: Verificamos si el archivo se llama exactamente "gradlew"    
+    if (filePath.filename() == "gradlew") {
+        return true;  // El archivo es "gradlew", así que debe ser ejecutable
+    }
+
+
+    return false;  // No se debe hacer ejecutable
+}
+
 
 // Constructor
 FilesManager::FilesManager(const std::string& baseDir, const std::unordered_map<std::string, std::string>& fileMap)
@@ -100,6 +189,10 @@ bool FilesManager::extractFile(const std::string& zipPath, const std::string& de
             zip_fclose(zf);
             zip_close(archive);
             return false;
+        }
+
+        if (shouldBeExecutable(outputFilePath)) {
+            addExecutePermission(outputFilePath);
         }
 
         zip_fclose(zf);  // Close the ZIP entry
