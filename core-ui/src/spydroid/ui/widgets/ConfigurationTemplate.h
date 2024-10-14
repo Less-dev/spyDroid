@@ -30,6 +30,7 @@
 #include <QScrollArea>
 #include <QCheckBox>
 #include <QList>
+#include "HeaderConfigurationTemplate.h"
 
 class ConfigurationTemplate : public QWidget
 {
@@ -50,9 +51,11 @@ private slots:
 
 private:
     QVBoxLayout* layout;
+    HeaderConfigurationTemplate* headerTemplate;
     QComboBox* serverComboBox;
     QLineEdit* templateLineEdit;
     QList<QCheckBox*> functionalitiesCheckBoxes;
+    void editImage();
 };
 
 #endif // CONFIGURATION_TEMPLATE_H

@@ -137,39 +137,38 @@ std::string DownloaderService::getOutputFilePath(const std::string& directory, c
 
 void DownloaderService::downloadFiles(
     const std::string& directory, 
-    const std::map<std::string, std::string>& urlToFileMap,  // Usamos map en lugar de vectores
-    std::function<void(const std::string&, double, double, bool)> progressCallback) {
-
+    const std::map<std::string, std::string>& urlToFileMap,  
+    std::function<void(const std::string&, double, double, bool)> progressCallback) 
+{
     std::thread downloadThread([this, directory, urlToFileMap, progressCallback]() {
         ProgressData progressData;
         progressData.progressCallback = progressCallback;
         progressData.isRunning = true;
 
-        for (const auto& entry : urlToFileMap) {  // Iterar sobre cada par URL -> archivo
+        // Iterar sobre el mapa de descargas
+        for (const auto& entry : urlToFileMap) {
             std::string url = entry.first;
             std::string filename = entry.second;
 
-            // Eliminar posibles espacios al final de la URL
-            url.erase(url.find_last_not_of(" \n\r\t") + 1);
-
+            // Validar la URL antes de descargar
             if (!checkUrl(url)) {
-                //std::cerr << "Error: URL inválida o no accesible: " << url << std::endl;
+                // Manejar URL no válida
                 continue;
             }
 
             std::string outputPath = getOutputFilePath(directory, filename);
 
+            // Descargar el archivo en segundo plano
             if (!downloadFile(url, outputPath, progressData)) {
-                //std::cerr << "Error: No se pudo descargar el archivo de la URL: " << url << std::endl;
+                // Manejar error en la descarga
                 continue;
             }
-
-            std::this_thread::sleep_for(std::chrono::milliseconds(1000));  // Pausar entre descargas
         }
 
+        // Indicar que todas las descargas han terminado
         progressData.isRunning = false;
-        progressCallback("", 0, 0, progressData.isRunning);
+        progressCallback("", 0, 0, progressData.isRunning); // Llamar al callback
     });
 
-    downloadThread.detach();
+    downloadThread.detach();  // Dejar que el hilo corra en segundo plano
 }

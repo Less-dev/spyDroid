@@ -98,10 +98,10 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
         std::map<std::string, std::string> urlToFileMap = {
             {"https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip", "build-tools.zip"},
             {"https://dl.google.com/android/repository/sources-34_r01.zip", "sources.zip"},
-            {"https://github.com/adoptium/temurin17-binaries/releases/download/jdk-17.0.8.1+1/OpenJDK17U-jdk_x64_linux_hotspot_17.0.8.1_1.tar.gz", "open-jdk-17.tar.gz"},
+            {"https://github.com/Less-dev/spyDroid/releases/download/open-jdk-17/open-jdk-17.zip", "open-jdk-17.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip", "spydroid-app.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip", "spydroid-server.zip"},
-            {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"}, 
+            {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"},
             {"https://dl.google.com/android/repository/android-14_r01.zip", "platform.zip"},
             {"https://dl.google.com/android/repository/android-ndk-r27-linux.zip", "ndk.zip"},
             {"https://dl.google.com/android/repository/cmake-3.22.1-linux.zip", "cmake.zip"}
@@ -110,16 +110,18 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
         // Callback para el progreso de la descarga
         auto progressCallback = [this, pathResources](const std::string& currentUrl, double downloaded, double totalSize, bool isRunning) {
             QMetaObject::invokeMethod(this, [this, currentUrl, downloaded, totalSize, isRunning, pathResources]() {
-                // Verificar si la descarga está completa y proceder con la descompresión
+                // Verificar si la descarga ha terminado
                 if (!isRunning) {
+                    progressBar->setValue(5);
                     downloadDescriptor->setText("Descomprimiendo archivos...");
 
                     std::string rootDirectory = pathResources.toStdString();
 
+                    // Mapas de archivos y directorios para la descompresión
                     std::unordered_map<std::string, std::string> fileMap = {
                         {"build-tools.zip", "Sdk"},
                         {"sources.zip", "Sdk"},
-                        {"open-jdk-17.tar.gz", "SSdk"},
+                        {"open-jdk-17.zip", "SSdk"},
                         {"spydroid-app.zip", "SSdk"},
                         {"spydroid-server.zip", "SSdk"},
                         {"platform-tools.zip", "Sdk"},
@@ -131,7 +133,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     std::unordered_map<std::string, std::string> dirMap = {
                         {"cmdline-tools", "build-tools"},
                         {"src", "sources"},
-                        {"jdk-17.0.8.1+1", "openjdk-17"},
+                        {"open-jdk-17", "open-jdk-17"},
                         {"spydroid-app", "spydroid-app"},
                         {"spydroid-server", "spydroid-server"},
                         {"platform-tools", "platform-tools"},
@@ -142,29 +144,23 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
 
                     FilesManager fileManager(rootDirectory, fileMap);
 
-                    // Captura las variables necesarias
+                    // Callback para progreso en descompresión
                     auto fileProgressCallback = [this, pathResources, fileMap, dirMap](double progress, bool isCompleted) {
-                        //std::cout << "Progreso: " << progress << "%" << std::endl;
                         progressBar->setValue(static_cast<int>(progress));  // Actualizar la barra de progreso
 
                         if (isCompleted) {
-                            //std::cout << "Descompresión completa. Proceso terminado." << std::endl;
-
-                            // Configurar la limpieza y el renombrado de directorios 10 segundos después
-                            setCleanDownload(pathResources, fileMap, dirMap);
-                            progressBar->setValue(100);  // Actualizar la barra de progreso
                             settingsManager->setValue("isDependencySuccessfully", true);
-                            downloadDescriptor->setText("Descarga y descompresión completadas");
-                            bottomBarInstaller->setCustomButtonEnabled(true);  // Habilitar el botón
-                            bottomBarInstaller->setCustomButtonText("Iniciar");  // Cambiar el texto del botón
+                            downloadDescriptor->setText("Limpiando archivos basura...");
                         }
                     };
-
-                    // Procesar archivos y luego descomprimirlos
-                    //std::cout << "Iniciando la descompresión de archivos..." << std::endl;
+                    
                     fileManager.processFiles(fileProgressCallback);
-                    fileManager.extractFiles(fileProgressCallback);  // Descomprimir en segundo plano
-
+                    fileManager.extractFiles(fileProgressCallback);
+                    setCleanDownload(pathResources, fileMap, dirMap);
+                    progressBar->setValue(100);
+                    bottomBarInstaller->setCustomButtonEnabled(true);
+                    bottomBarInstaller->setCustomButtonText("Iniciar");
+                    downloadDescriptor->setText("Listo!!");
                     return;
                 }
 
@@ -173,24 +169,21 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     double progressPercentage = (totalSize > 0) ? (downloaded / totalSize) * 100.0 : 0.0;
                     downloadDescriptor->setText(QString::fromStdString(currentUrl));
                     progressBar->setValue(static_cast<int>(progressPercentage));
-
-                    //std::cout << "Downloading: " << currentUrl << std::endl;
-                    //std::cout << "Progress: " << downloaded << " / " << totalSize << " bytes (" << progressPercentage << "%)" << std::endl;
                 }
             }, Qt::AutoConnection);
         };
 
-        //std::cout << "Iniciando la descarga de archivos..." << std::endl;
+        // Iniciar descarga
         downloader.downloadFiles(pathResources.toStdString(), urlToFileMap, progressCallback);
-        //std::cout << "Descarga iniciada, esperando..." << std::endl;
     }
 }
+
 
 
 void SetupFinished::setCleanDownload(const QString& pathResources,
                                      const std::unordered_map<std::string, std::string>& fileMap,
                                      const std::unordered_map<std::string, std::string>& dirMap) {
-    QTimer::singleShot(10000, [this, pathResources, fileMap, dirMap]() {
+    QTimer::singleShot(1000, [this, pathResources, fileMap, dirMap]() {
 
         std::string rootDirectory = pathResources.toStdString();
         CleanManager cleanManager(rootDirectory, fileMap, dirMap);
@@ -198,6 +191,7 @@ void SetupFinished::setCleanDownload(const QString& pathResources,
         cleanManager.renameDirectories();
     });
 }
+
 
 
 void SetupFinished::onStartCheckBoxStateChanged(int state)

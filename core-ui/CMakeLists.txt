@@ -50,6 +50,7 @@ set(HEADERS
     src/spydroid/ui/widgets/SettingsTemplate.h
     src/spydroid/ui/widgets/CardTemplate.h
     src/spydroid/ui/widgets/ConfigurationTemplate.h
+    src/spydroid/ui/widgets/HeaderConfigurationTemplate.h
 )
 
 set(SOURCES
@@ -89,6 +90,7 @@ set(SOURCES
     src/spydroid/ui/widgets/SettingsTemplate.cpp
     src/spydroid/ui/widgets/CardTemplate.cpp
     src/spydroid/ui/widgets/ConfigurationTemplate.cpp
+    src/spydroid/ui/widgets/HeaderConfigurationTemplate.cpp
 )
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
