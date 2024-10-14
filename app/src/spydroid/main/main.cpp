@@ -110,6 +110,7 @@ int main(int argc, char *argv[]) {
 
     QApplication app(argc, argv);
     QStackedWidget stackedWidget;
+    stackedWidget.setWindowIcon(QIcon(":icon.png"));
 
     SettingsManager settingsManager("init");
 
