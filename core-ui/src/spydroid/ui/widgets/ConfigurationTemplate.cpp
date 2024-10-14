@@ -102,8 +102,31 @@ ConfigurationTemplate::ConfigurationTemplate(QWidget *parent) : QWidget(parent) 
     QScrollArea* scrollArea = new QScrollArea(this);
     scrollArea->setWidgetResizable(true);
 
-    // Hacer que el scrollArea sea transparente
-    scrollArea->setStyleSheet("QScrollArea { background: transparent; }");
+    scrollArea->setStyleSheet(
+        "QScrollArea { background: transparent; }"
+        "QScrollBar:vertical {"
+        "    background: transparent;"
+        "    width: 0px;"  // Ajusta el ancho a 0 para ocultar completamente la barra
+        "}"
+        "QScrollBar:horizontal {"
+        "    background: transparent;"
+        "    height: 0px;"  // Ajusta la altura a 0 para ocultar completamente la barra
+        "}"
+        "QScrollBar::handle:vertical, QScrollBar::handle:horizontal {"
+        "    background: transparent;"
+        "    border: none;"
+        "}"
+        "QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical,"
+        "QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {"
+        "    background: none;"
+        "    border: none;"
+        "}"
+        "QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical,"
+        "QScrollBar::left-arrow:horizontal, QScrollBar::right-arrow:horizontal {"
+        "    background: none;"
+        "    border: none;"
+        "}"
+    );
 
     // Crear un contenedor para los widgets y hacerlo transparente también
     QWidget* containerWidget = new QWidget(this);
