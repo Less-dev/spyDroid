@@ -19,10 +19,21 @@ cmake_minimum_required(VERSION 3.22)
 project(spydroid VERSION 0.0.1 LANGUAGES CXX)
 
 find_package(jsoncpp REQUIRED)
+message(STATUS "jsoncpp version: ${jsoncpp_VERSION}")
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)
+message(STATUS "Qt5Core version: ${Qt5Core_VERSION}")
+message(STATUS "Qt5Widgets version: ${Qt5Widgets_VERSION}")
 find_package(CURL REQUIRED)
+message(STATUS "libcurl version: ${CURL_VERSION}")
 find_library(QTERM_LIBRARY qtermwidget5 /usr/lib)
+message(STATUS "qtermwidget version: unknown, library found at ${QTERM_LIBRARY}")
 find_library(LIBZIPPP_LIBRARY NAMES zippp HINTS /usr/local/lib /usr/lib)
+message(STATUS "libzippp found at ${LIBZIPPP_LIBRARY}")
+
+execute_process(COMMAND pkg-config --modversion libarchive
+                OUTPUT_VARIABLE LIBARCHIVE_VERSION
+                OUTPUT_STRIP_TRAILING_WHITESPACE)
+message(STATUS "libarchive version: ${LIBARCHIVE_VERSION}")
 
 include_directories(/usr/include/qtermwidget5)
 
@@ -72,7 +83,7 @@ set(CPACK_PACKAGE_VERSION "${PROJECT_VERSION}")
 set(CPACK_PACKAGE_CONTACT "Less less.github.gmail.com")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Spydroid - Monitoring devices android")
 set(CPACK_PACKAGE_VENDOR "Less")
-set(CPACK_PACKAGE_MAINTAINER "Less<less.github@gmail.com")
+set(CPACK_PACKAGE_MAINTAINER "Less less.github@gmail.com")
 
 # Set the package type to DEB
 set(CPACK_GENERATOR "DEB")
@@ -81,11 +92,7 @@ set(CPACK_GENERATOR "DEB")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 
 # Define dependencies for the DEB package
-#set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5widgets5, libcurl4, libjsoncpp1, qtermwidget5")
-
-# Set additional metadata
-#set(CPACK_DEBIAN_PACKAGE_SECTION "utils")
-#set(CPACK_DEBIAN_PACKAGE_PRIORITY "optional")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5widgets5, libcurl4, libjsoncpp25, libqtermwidget5-0, libzip4, libarchive13")
 
 # Set the app icon location from the resources.qrc file
 set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-alpha-linux-x64")
