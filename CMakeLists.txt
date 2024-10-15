@@ -63,14 +63,14 @@ target_link_libraries(spydroid
 install(TARGETS spydroid DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 
 
-set(CMAKE_INSTALL_RPATH "/lib/x86_64-linux-gnu:/usr/include:/usr/include/qtermwidget5")
+set(CMAKE_INSTALL_RPATH "/lib/x86_64-linux-gnu:/usr/lib:/usr/lib/qtermwidget5")
 set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 
 # Install DEB
 install(TARGETS spydroid DESTINATION /usr/bin)
 install(FILES ${CMAKE_SOURCE_DIR}/resources/spydroid.desktop DESTINATION /usr/share/applications)
 install(FILES ${CMAKE_SOURCE_DIR}/resources/drawable/spydroid.png DESTINATION /usr/share/icons/hicolor/256x256/apps)
-install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION /usr/include)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION /usr/lib)
 
 
 
