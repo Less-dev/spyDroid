@@ -158,6 +158,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     fileManager.extractFiles(fileProgressCallback);
                     setCleanDownload(pathResources, fileMap, dirMap);
                     progressBar->setValue(100);
+                    settingsManager->setValue("isDependencySuccessfully", true);
                     bottomBarInstaller->setCustomButtonEnabled(true);
                     bottomBarInstaller->setCustomButtonText("Iniciar");
                     downloadDescriptor->setText("Listo!!");

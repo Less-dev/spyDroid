@@ -19,23 +19,16 @@ cmake_minimum_required(VERSION 3.22)
 project(spydroid VERSION 0.0.1 LANGUAGES CXX)
 
 find_package(jsoncpp REQUIRED)
-message(STATUS "jsoncpp version: ${jsoncpp_VERSION}")
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)
-message(STATUS "Qt5Core version: ${Qt5Core_VERSION}")
-message(STATUS "Qt5Widgets version: ${Qt5Widgets_VERSION}")
 find_package(CURL REQUIRED)
-message(STATUS "libcurl version: ${CURL_VERSION}")
 find_library(QTERM_LIBRARY qtermwidget5 /usr/lib)
-message(STATUS "qtermwidget version: unknown, library found at ${QTERM_LIBRARY}")
 find_library(LIBZIPPP_LIBRARY NAMES zippp HINTS /usr/local/lib /usr/lib)
-message(STATUS "libzippp found at ${LIBZIPPP_LIBRARY}")
 
 execute_process(COMMAND pkg-config --modversion libarchive
                 OUTPUT_VARIABLE LIBARCHIVE_VERSION
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
-message(STATUS "libarchive version: ${LIBARCHIVE_VERSION}")
 
-include_directories(/usr/include/qtermwidget5)
+include_directories(/usr/include/qtermwidget5 ${CMAKE_SOURCE_DIR}/include)
 
 add_subdirectory(core-network)
 add_subdirectory(core-ui)
@@ -43,24 +36,19 @@ add_subdirectory(core-data)
 add_subdirectory(resources)
 
 set(SOURCE_DIR app/src/spydroid/main)
-set(SOURCES
-    ${SOURCE_DIR}/main.cpp
-)
+set(SOURCES ${SOURCE_DIR}/main.cpp)
 
-# Add the executable for spydroid
 add_executable(spydroid ${SOURCES})
 
-# If there are MOC sources, include them
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 target_sources(spydroid PRIVATE ${MOC_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/resources/qrc_resources.cpp)
 target_sources(spydroid PRIVATE ${MOC_SOURCES} ${RESOURCES})
 
-# Link libraries with the executable
 target_link_libraries(spydroid
-    core-ui         # Link with core-ui module
-    core-network    # Link with core-network module
-    core-data       # Link with core-data module
-    resources       # Link with the static resources library
+    core-ui
+    core-network
+    core-data
+    resources
     CURL::libcurl
     ${QTERM_LIBRARY}
     jsoncpp_lib
@@ -70,12 +58,15 @@ target_link_libraries(spydroid
     archive 
 )
 
+
 # Installation target
 install(TARGETS spydroid DESTINATION ${CMAKE_INSTALL_FULL_BINDIR})
 
-# Install icon
-install(FILES resources/spydroid.desktop DESTINATION /usr/share/applications)
-install(FILES resources/drawable/spydroid.png DESTINATION /usr/share/icons/hicolor/256x256/apps)
+# Install DEB
+install(TARGETS spydroid DESTINATION /usr/bin)
+install(FILES ${CMAKE_SOURCE_DIR}/resources/spydroid.desktop DESTINATION /usr/share/applications)
+install(FILES ${CMAKE_SOURCE_DIR}/resources/drawable/spydroid.png DESTINATION /usr/share/icons/hicolor/256x256/apps)
+install(DIRECTORY ${CMAKE_SOURCE_DIR}/include/ DESTINATION /usr/include)
 
 # CPack configuration for DEB packaging
 set(CPACK_PACKAGE_NAME "spydroid")
@@ -91,11 +82,8 @@ set(CPACK_GENERATOR "DEB")
 # Set the architecture for the DEB package
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 
-# Define dependencies for the DEB package
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libqt5core5a, libqt5widgets5, libcurl4, libjsoncpp25, libqtermwidget5-0, libzip4, libarchive13")
-
 # Set the app icon location from the resources.qrc file
-set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}-${CMAKE_PROJECT_VERSION}-alpha-linux-x64")
+set(CPACK_PACKAGE_FILE_NAME "${CMAKE_PROJECT_NAME}_${CMAKE_PROJECT_VERSION}_alpha_linux-x64")
 set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/Less-dev/spyDroid")
 
 # Include CPack for package generation
