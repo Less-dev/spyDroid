@@ -28,6 +28,9 @@ cmake_install.cmake
 *.sublime-project
 *.sublime-workspace
 
+cp_dependencies.sh
+*cp_dependencies.sh
+/cp_dependencies.sh
 # system
 .DS_Store
 Thumbs.db

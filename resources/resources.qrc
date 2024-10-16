@@ -1,6 +1,7 @@
 <RCC>
     
     <qresource prefix="">
+        <file alias ="icon">drawable/spydroid.png</file>
         <file alias ="background">drawable/background.png</file>
         <file alias ="setup">drawable/banner_v.png</file>
         <file alias ="installer">drawable/banner_h.png</file>

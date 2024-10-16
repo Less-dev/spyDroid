@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=0.0.0-alpha
+Type=Application
+Name=SpyDroid
+GenericName=Monitoring Android Devices
+Comment=SpyDroid - An application to monitor Android devices
+Exec=/usr/bin/spydroid
+Icon=/usr/share/icons/hicolor/256x256/apps/spydroid.png
+Terminal=false
+Categories=Utility;Network;Security;
+Keywords=monitor;android;security;

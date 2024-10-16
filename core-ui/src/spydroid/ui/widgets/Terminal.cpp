@@ -17,6 +17,7 @@
 
 #include "Terminal.h"
 #include <QFrame>
+#include <QDebug>
 
 Terminal::Terminal(QWidget *parent) : QWidget(parent) {
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -31,13 +32,15 @@ Terminal::Terminal(QWidget *parent) : QWidget(parent) {
     QFrame *topBorder = new QFrame(this);
     topBorder->setFixedHeight(2);  // Grosor del borde de 2 px
     topBorder->setStyleSheet("background-color: #f0f0f5;");  // Color blanco pastel
-
+    this->setStyleSheet(""); 
     // Inicializar el widget de terminal
     terminal = new QTermWidget(this);
 
     // Cambiar el esquema de color del terminal
-    terminal->setColorScheme("WhiteOnBlack");
+    terminal->setColorScheme("Linux");
 
+    QList<QString> availableColorSchemes = QTermWidget::availableColorSchemes();
+    qDebug() << "Available Color Schemes:" << availableColorSchemes;
     // Configurar fuente monoespaciada
     QFont monospaceFont("Monospace", 12);
 

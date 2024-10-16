@@ -98,7 +98,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
         std::map<std::string, std::string> urlToFileMap = {
             {"https://dl.google.com/android/repository/commandlinetools-linux-8512546_latest.zip", "build-tools.zip"},
             {"https://dl.google.com/android/repository/sources-34_r01.zip", "sources.zip"},
-            {"https://github.com/Less-dev/spyDroid/releases/download/open-jdk-17/open-jdk-17.zip", "open-jdk-17.zip"},
+            {"https://github.com/Less-dev/spyDroid/releases/download/open-jdk-17/open_jdk_17_x64_linux_hotspot.zip", "open-jdk-17.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/app-v0.0.0-alpha/spydroid-app.zip", "spydroid-app.zip"},
             {"https://github.com/Less-dev/spyDroid/releases/download/server-v0.0.0-alpha/spydroid-server.zip", "spydroid-server.zip"},
             {"https://dl.google.com/android/repository/platform-tools-latest-linux.zip", "platform-tools.zip"},
@@ -158,6 +158,7 @@ void SetupFinished::setStartDownload(bool start, const QString& pathResources) {
                     fileManager.extractFiles(fileProgressCallback);
                     setCleanDownload(pathResources, fileMap, dirMap);
                     progressBar->setValue(100);
+                    settingsManager->setValue("isDependencySuccessfully", true);
                     bottomBarInstaller->setCustomButtonEnabled(true);
                     bottomBarInstaller->setCustomButtonText("Iniciar");
                     downloadDescriptor->setText("Listo!!");
