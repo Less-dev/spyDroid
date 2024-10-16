@@ -96,7 +96,7 @@ set(CPACK_DEBIAN_PACKAGE_HOMEPAGE "https://github.com/Less-dev/spyDroid")
 include(CPack)
 
 # Custom target to package the DEB file and move it to the outputs directory
-add_custom_target(package_deb
+add_custom_target(deb
     COMMAND ${CMAKE_COMMAND} -E echo "Generating DEB package with CPack..."
     COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/outputs
     COMMAND ${CMAKE_COMMAND} -E chdir ${CMAKE_BINARY_DIR} cpack
