@@ -63,19 +63,23 @@ else()
     message(FATAL_ERROR "libzip not found. Please install libzip development files.")
 endif()
 
+# Include core modules 
 add_subdirectory(core-network)
 add_subdirectory(core-ui)
 add_subdirectory(core-data)
 add_subdirectory(resources)
 
+# Executable
 set(SOURCE_DIR app/src/spydroid/main)
 set(SOURCES ${SOURCE_DIR}/main.cpp)
 add_executable(spydroid ${SOURCES})
 
+# Configuration QT5 Resources
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
 target_sources(spydroid PRIVATE ${MOC_SOURCES} ${CMAKE_CURRENT_BINARY_DIR}/resources/qrc_resources.cpp)
 target_sources(spydroid PRIVATE ${MOC_SOURCES} ${RESOURCES})
 
+# All targets libraries
 target_link_libraries(spydroid
     core-ui
     core-network
@@ -90,7 +94,6 @@ target_link_libraries(spydroid
     archive 
 )
 
-# Targets
 if(NOT WIN32)
     install(TARGETS spydroid DESTINATION /usr/bin)
 else()
