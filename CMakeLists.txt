@@ -18,9 +18,34 @@ cmake_minimum_required(VERSION 3.22)
 
 project(spydroid VERSION 0.0.1 LANGUAGES CXX)
 
+# Find the JsonCpp library
 find_package(jsoncpp REQUIRED)
+if(jsoncpp_FOUND)
+    message(STATUS "JsonCpp found: ${jsoncpp_LIBRARIES}")
+    # Assuming jsoncpp provides a version variable (update this if necessary)
+    message(STATUS "JsonCpp version: ${jsoncpp_VERSION}")
+else()
+    message(FATAL_ERROR "JsonCpp not found. Please install JsonCpp development files.")
+endif()
+
+# Find the Qt5 libraries (Widgets and Core)
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)
+if(Qt5Widgets_FOUND AND Qt5Core_FOUND)
+    message(STATUS "Qt5 Widgets and Core found.")
+    message(STATUS "Qt5 version: ${Qt5_VERSION}")
+else()
+    message(FATAL_ERROR "Qt5 Widgets or Core not found. Ensure Qt5 is installed with both components.")
+endif()
+
+# Find the CURL library
 find_package(CURL REQUIRED)
+if(CURL_FOUND)
+    message(STATUS "CURL found: ${CURL_LIBRARIES}")
+    message(STATUS "CURL version: ${CURL_VERSION}")
+else()
+    message(FATAL_ERROR "CURL not found. Please install CURL development files.")
+endif()
+
 find_library(LIBZIPPP_LIBRARY NAMES zippp HINTS /usr/local/lib /usr/lib)
 
 set(QTERM_LIBRARY "/usr/lib/libqtermwidget5.so")
