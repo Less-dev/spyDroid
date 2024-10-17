@@ -46,22 +46,23 @@ else()
     message(FATAL_ERROR "CURL not found. Please install CURL development files.")
 endif()
 
-find_library(LIBZIPPP_LIBRARY NAMES zippp HINTS /usr/local/lib /usr/lib)
-
 set(QTERM_LIBRARY "/usr/lib/libqtermwidget5.so")
-
-if(NOT EXISTS ${QTERM_LIBRARY})
-    message(FATAL_ERROR "qtermwidget library not found at ${QTERM_LIBRARY}.")
-endif()
-
 find_library(QTERM_LIBRARY qtermwidget)
 include_directories(/usr/include/qtermwidget5)
+if(QTERM_LIBRARY)
+    message(STATUS "QTerm found: ${QTERM_LIBRARY}")
+    message(STATUS "QTerm version: ${QTERM_VERSION}")
+else()
+    message(FATAL_ERROR "QTERM not found. Please install QTerm development files.")
+endif()
 
+find_library(LIBZIP_LIBRARY NAMES zip HINTS /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu)
+if(LIBZIP_LIBRARY)
+    message(STATUS "libzip found: ${LIBZIP_LIBRARY}")
+else()
+    message(FATAL_ERROR "libzip not found. Please install libzip development files.")
+endif()
 
-execute_process(COMMAND pkg-config --modversion libarchive
-                OUTPUT_VARIABLE LIBARCHIVE_VERSION
-                OUTPUT_STRIP_TRAILING_WHITESPACE)
-                
 add_subdirectory(core-network)
 add_subdirectory(core-ui)
 add_subdirectory(core-data)
@@ -89,11 +90,11 @@ target_link_libraries(spydroid
     archive 
 )
 
-# Instalación solo para Linux
+# Targets
 if(NOT WIN32)
     install(TARGETS spydroid DESTINATION /usr/bin)
 else()
-    # Instalación en un directorio relativo para Windows
+    # Relative for windows          # DELETE THIS
     install(TARGETS spydroid DESTINATION bin)
 endif()
 
@@ -126,8 +127,7 @@ if(WIN32)
     set(CPACK_NSIS_CONTACT "less.github@gmail.com")
     set(CPACK_NSIS_MODIFY_PATH ON)
 elseif(APPLE)
-    # Package Apple
-    # IF no is macbook next
+    # Package Apple no is macbook next
     if(CPACK_GENERATOR MATCHES "DragNDrop")
         set(CPACK_GENERATOR "DragNDrop;ZIP")
         set(CPACK_DMG_BACKGROUND_IMAGE "${CMAKE_SOURCE_DIR}/dmg_background.png")
