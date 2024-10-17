@@ -21,15 +21,22 @@ project(spydroid VERSION 0.0.1 LANGUAGES CXX)
 find_package(jsoncpp REQUIRED)
 find_package(Qt5 COMPONENTS Widgets Core REQUIRED)
 find_package(CURL REQUIRED)
-find_library(QTERM_LIBRARY qtermwidget5 /usr/lib)
 find_library(LIBZIPPP_LIBRARY NAMES zippp HINTS /usr/local/lib /usr/lib)
+
+set(QTERM_LIBRARY "/usr/lib/libqtermwidget5.so")
+
+if(NOT EXISTS ${QTERM_LIBRARY})
+    message(FATAL_ERROR "qtermwidget library not found at ${QTERM_LIBRARY}.")
+endif()
+
+find_library(QTERM_LIBRARY qtermwidget)
+include_directories(/usr/include/qtermwidget5)
+
 
 execute_process(COMMAND pkg-config --modversion libarchive
                 OUTPUT_VARIABLE LIBARCHIVE_VERSION
                 OUTPUT_STRIP_TRAILING_WHITESPACE)
-
-include_directories(/usr/include/qtermwidget5 ${CMAKE_SOURCE_DIR}/include)
-
+                
 add_subdirectory(core-network)
 add_subdirectory(core-ui)
 add_subdirectory(core-data)
@@ -37,7 +44,6 @@ add_subdirectory(resources)
 
 set(SOURCE_DIR app/src/spydroid/main)
 set(SOURCES ${SOURCE_DIR}/main.cpp)
-
 add_executable(spydroid ${SOURCES})
 
 qt5_wrap_cpp(MOC_SOURCES ${HEADERS})
@@ -74,7 +80,6 @@ if(UNIX AND NOT APPLE)
     set(CMAKE_INSTALL_RPATH "/lib/x86_64-linux-gnu:/usr/lib:/usr/lib/qtermwidget5")
     set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
 endif()
-
 
 # CPack configuration for DEB packaging
 set(CPACK_PACKAGE_NAME "spydroid")
