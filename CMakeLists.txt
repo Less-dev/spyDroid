@@ -46,6 +46,7 @@ else()
     message(FATAL_ERROR "CURL not found. Please install CURL development files.")
 endif()
 
+# Find the QTERM WIDGETS
 set(QTERM_LIBRARY "/usr/lib/libqtermwidget5.so")
 find_library(QTERM_LIBRARY qtermwidget)
 include_directories(/usr/include/qtermwidget5)
@@ -56,6 +57,7 @@ else()
     message(FATAL_ERROR "QTERM not found. Please install QTerm development files.")
 endif()
 
+# Find the ZIP library
 find_library(LIBZIP_LIBRARY NAMES zip HINTS /usr/local/lib /usr/lib /usr/lib/x86_64-linux-gnu)
 if(LIBZIP_LIBRARY)
     message(STATUS "libzip found: ${LIBZIP_LIBRARY}")
