@@ -60,6 +60,12 @@ class DevicesDaoHandler : DevicesDao {
 
     override suspend fun insertDevice(device: Devices) {
         try {
+
+            Log.i(TAG, "ALIAS: ${device.alias}")
+            Log.i(TAG, "NOMBRE: ${device.name}")
+            Log.i(TAG, "IP PUBLICA: ${device.ip_address_public}")
+            Log.i(TAG, "IP PRIVADA: ${device.ip_address_private}")
+            Log.i(TAG, "LOCATION ${device.location}")
             val response = apiService.createDevice(
                 accessToken = "iygad7618wg8y1f7fgvas71f671",
                 alias = device.alias,

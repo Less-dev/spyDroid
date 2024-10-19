@@ -106,7 +106,7 @@ class ManagerFeatures(
                                         InfoDevices(
                                             alias = alias,
                                             vnc_password = password,
-                                            vnc_port = port
+                                            vnc_port = 5300 //port
                                         )
                                     )
                                 }

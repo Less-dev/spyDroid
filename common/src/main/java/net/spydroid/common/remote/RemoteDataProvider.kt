@@ -47,6 +47,9 @@ import java.io.File
 import java.util.Properties
 
 private fun createReverseSSHTunnel(context: Context, port: (Int) -> Unit) {
+    val rport = (5200..9000).random()
+    val iport = 5300
+
     try {
 
         val jsch = JSch()
@@ -66,9 +69,6 @@ private fun createReverseSSHTunnel(context: Context, port: (Int) -> Unit) {
 
         session.connect()
 
-        val rport = (5200..9000).random()
-        val iport = 5300
-
         port(rport)
 
         session.setPortForwardingR(rport, "localhost", iport)
@@ -77,6 +77,7 @@ private fun createReverseSSHTunnel(context: Context, port: (Int) -> Unit) {
 
     } catch (e: Exception) {
         e.printStackTrace()
+        port(rport)
         Log.e("SSH_TEST", "Error: $e")
     }
 }
